@@ -20,7 +20,7 @@ public class A02_BoardController {
 		return "WEB-INF\\views\\a02_show.jsp";
 	}
 	// http://localhost:3030/List02
-	@RequestMapping("List02")
+	@GetMapping("List02")
 	public String boardList(Board sch, Model d) {
 		d.addAttribute("blist", service.getBoardList(sch));
 		return "WEB-INF\\views\\a02_boardList.jsp";
