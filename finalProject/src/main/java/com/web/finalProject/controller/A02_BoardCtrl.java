@@ -18,7 +18,7 @@ public class A02_BoardCtrl {
 	@Autowired(required = false)
 	private A02_BoardService service;
 	
-	// http://localhost:4040/board/boardList.do  => board 빼야함
+	// http://localhost:4040/finalProject/boardList.do  => board 빼야함
 	// http://localhost:4040/boardList02.do
 	@RequestMapping("boardList02.do")
 	public String boardList(@ModelAttribute("sch") BoardSch sch, Model d) { 
