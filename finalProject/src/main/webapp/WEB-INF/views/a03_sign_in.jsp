@@ -69,46 +69,8 @@
             <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="../pages/dashboard.html">
               HPM main
             </a>
-            <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon mt-2">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </span>
-            </button>
-            <div class="collapse navbar-collapse" id="navigation">
-              <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="../pages/dashboard.html">
-                    <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i>
-                    Dashboard
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link me-2" href="../pages/profile.html">
-                    <i class="fa fa-user opacity-6 text-dark me-1"></i>
-                    Profile
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link me-2" href="../pages/sign-up.html">
-                    <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                    Sign Up
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link me-2" href="../pages/sign-in.html">
-                    <i class="fas fa-key opacity-6 text-dark me-1"></i>
-                    Sign In
-                  </a>
-                </li>
-              </ul>
-              <ul class="navbar-nav d-lg-block d-none">
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/product/material-dashboard" class="btn btn-sm mb-0 me-1 bg-gradient-dark">Free download</a>
-                </li>
-              </ul>
-            </div>
+            
+            
           </div>
         </nav>
         <!-- End Navbar -->
@@ -124,46 +86,29 @@
             <div class="card z-index-0 fadeIn3 fadeInBottom">
               <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1" style="background: linear-gradient(#6A82FB,#B06AB3);">
-                  <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Sign In</h4>
+                  <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Log In</h4>
                   <div class="row mt-3">
-                    <div class="col-2 text-center ms-auto">
-                      <a class="btn btn-link px-3" href="javascript:;">
-                        <i class="fa fa-facebook text-white text-lg"></i>
-                      </a>
-                    </div>
-                    <div class="col-2 text-center px-1">
-                      <a class="btn btn-link px-3" href="javascript:;">
-                        <i class="fa fa-github text-white text-lg"></i>
-                      </a>
-                    </div>
-                    <div class="col-2 text-center me-auto">
-                      <a class="btn btn-link px-3" href="javascript:;">
-                        <i class="fa fa-google text-white text-lg"></i>
-                      </a>
-                    </div>
+                   
                   </div>
                 </div>
               </div>
               <div class="card-body">
                 <form role="form" class="text-start">
                   <div class="input-group input-group-outline my-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control">
+                    <label class="form-label">ID</label>
+                    <input type="text" class="form-control">
                   </div>
                   <div class="input-group input-group-outline mb-3">
                     <label class="form-label">Password</label>
                     <input type="password" class="form-control">
                   </div>
-                  <div class="form-check form-switch d-flex align-items-center mb-3">
-                    <input class="form-check-input" type="checkbox" id="rememberMe">
-                    <label class="form-check-label mb-0 ms-2" for="rememberMe">Remember me</label>
-                  </div>
+                 
                   <div class="text-center">
-                    <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3">Sign in</button>
+                    <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3">Log In</button>
                   </div>
                   <p class="mt-4 text-sm text-center">
-                    Don't have an account?
-                    <a href="../pages/sign-up.html" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Sign up</a>
+                    Forgot your ID?
+                    <a href="/find_id" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Find ID </a>
                   </p>
                 </form>
               </div>

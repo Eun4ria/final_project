@@ -25,19 +25,29 @@ public class A02_BoardController {
 		return "WEB-INF\\views\\a01_find_id.jsp";
 	}
 	// http://localhost:4040/find_pwd
+	@GetMapping("find_id")
+	public String find_id() {
+		return "WEB-INF\\views\\a01_find_id.jsp";
+	}
+	// http://localhost:4040/find_pwd
 	@GetMapping("find_pwd")
 	public String find_pwd() {
-		return "WEB-INF\\views\\a02_find_pwd.jsp";
+		return "WEB-INF\\views\\a01_find_pwd.jsp";
 	}
 	// http://localhost:4040/sign_up
 	@GetMapping("sign_up")
 	public String sign_up() {
 		return "WEB-INF\\views\\a02_sign_up.jsp";
 	}
+	// http://localhost:4040/sign_in
+	@GetMapping("sign_in")
+	public String sign_in() {
+		return "WEB-INF\\views\\a03_sign_in.jsp";
+	}
 	
-	// http://localhost:4040/login
-	@GetMapping("login")
-	public String login() {
+	// http://localhost:4040/chat
+	@GetMapping("chat")
+	public String chat() {
 		return "WEB-INF\\views\\a02_chat.jsp";
 	}
 	
