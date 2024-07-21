@@ -124,35 +124,42 @@
             <div class="card z-index-0 fadeIn3 fadeInBottom">
               <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1" style="background: linear-gradient(#6A82FB,#B06AB3);">
-                  <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Sign In</h4>
+                  <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Sign Up</h4>
                   <div class="row mt-3">
-                    <div class="col-2 text-center ms-auto">
-                      <a class="btn btn-link px-3" href="javascript:;">
-                        <i class="fa fa-facebook text-white text-lg"></i>
-                      </a>
-                    </div>
-                    <div class="col-2 text-center px-1">
-                      <a class="btn btn-link px-3" href="javascript:;">
-                        <i class="fa fa-github text-white text-lg"></i>
-                      </a>
-                    </div>
-                    <div class="col-2 text-center me-auto">
-                      <a class="btn btn-link px-3" href="javascript:;">
-                        <i class="fa fa-google text-white text-lg"></i>
-                      </a>
-                    </div>
+                    
+                    
+                    
                   </div>
                 </div>
               </div>
               <div class="card-body">
                 <form role="form" class="text-start">
                   <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-control">
+                  </div>
+                  <div class="input-group input-group-outline my-3">
+                    <label for="receive_yn_company" class="col-sm-3 col-form-label">Company</label>
+							    <div class="col-sm-10">
+							        <div class="form-check form-check-inline">
+							            <input class="form-check-input" type="radio" name="receive_yn" id="receive_yn_company" value="C" checked>
+							            <label class="form-check-label" for="receive_yn_company">Company name</label>
+							        </div>
+							        <div class="form-check form-check-inline">
+							            <input class="form-check-input" type="radio" name="receive_yn" id="receive_yn_free" value="F">
+							            <label class="form-check-label" for="receive_yn_free">Free</label>
+							           
+							        </div>
+							        <input type="text" name="receive_result" class="form-control" value="C" style="background:lightgray" readonly>
+							    </div>
+                  </div>
+                  <div class="input-group input-group-outline my-3">
                     <label class="form-label">Email</label>
                     <input type="email" class="form-control">
                   </div>
                   <div class="input-group input-group-outline mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-control">
+                    <label class="form-label">Department</label>
+                    <input type="text" class="form-control">
                   </div>
                   <div class="form-check form-switch d-flex align-items-center mb-3">
                     <input class="form-check-input" type="checkbox" id="rememberMe">
@@ -211,7 +218,7 @@
   <script src="${path}/material-dashboard-2/assets/js/core/bootstrap.min.js"></script>
   <script src="${path}/material-dashboard-2/assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="${path}/material-dashboard-2/assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script>
+  <script type="text/javascript">
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {
@@ -219,6 +226,14 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+    
+    $(document).ready(function() {
+        // 라디오 버튼 값 변경 시 처리
+        $("[name=receive_yn]").on('change', function() {
+            var val = $(this).val();
+            $("[name=receive_result]").val(val);
+        });
+    });
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>

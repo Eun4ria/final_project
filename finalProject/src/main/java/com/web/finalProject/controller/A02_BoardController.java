@@ -14,11 +14,27 @@ public class A02_BoardController {
 	private A02_BoardService2 service;
 	
 	
+	// http://localhost:4040/mainpm
+	@GetMapping("mainpm")
+	public String mainpm() {
+		return "WEB-INF\\views\\a00_main_pm.jsp";
+	}
 	// http://localhost:4040/test22
 	@GetMapping("test22")
 	public String start() {
-		return "WEB-INF\\views\\a00_sign_in.jsp";
+		return "WEB-INF\\views\\a01_find_id.jsp";
 	}
+	// http://localhost:4040/find_pwd
+	@GetMapping("find_pwd")
+	public String find_pwd() {
+		return "WEB-INF\\views\\a02_find_pwd.jsp";
+	}
+	// http://localhost:4040/sign_up
+	@GetMapping("sign_up")
+	public String sign_up() {
+		return "WEB-INF\\views\\a02_sign_up.jsp";
+	}
+	
 	// http://localhost:4040/login
 	@GetMapping("login")
 	public String login() {
