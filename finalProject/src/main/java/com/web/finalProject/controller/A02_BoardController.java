@@ -13,16 +13,16 @@ public class A02_BoardController {
 	@Autowired(required = false)
 	private A02_BoardService2 service;
 	
-	// http://localhost:4040/main_pm
-		@GetMapping("main_pm")
-		public String main_pm() {
-			return "WEB-INF\\views\\a00_main_pm.jsp";
-		}
 	
 	// http://localhost:4040/test22
 	@GetMapping("test22")
 	public String start() {
-		return "WEB-INF\\views\\a00_test.jsp";
+		return "WEB-INF\\views\\a00_sign_in.jsp";
+	}
+	// http://localhost:4040/login
+	@GetMapping("login")
+	public String login() {
+		return "WEB-INF\\views\\a02_chat.jsp";
 	}
 	
 	// http://localhost:4040/List02

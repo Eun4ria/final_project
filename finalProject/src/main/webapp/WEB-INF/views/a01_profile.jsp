@@ -25,7 +25,7 @@
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
 	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link rel="shortcut icon" href="${path}/adminkit-3.1.0/static/img/icons/icon-48x48.png" />
+	<link rel="shortcut icon" href="${path}/material-dashboard-2/static/img/icons/icon-48x48.png" />
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/pages-profile.html" />
 
