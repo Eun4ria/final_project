@@ -1,9 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import="java.util.*"
+    %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="path" value="${pageContext.request.contextPath }"/>
+<fmt:requestEncoding value="utf-8"/>     
 <!DOCTYPE html>
-<html lang="en">
+<%--
 
+
+ --%>
+<html>
 <head>
+
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,14 +23,14 @@
 
 <%-- material link --%>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  	<link rel="apple-touch-icon" sizes="85x85" href="${pageContext.request.contextPath}/material-dashboard-2/assets/img/HPM-icon.png">
-  	<link rel="icon" sizes="85x85" type="image/png" href="${pageContext.request.contextPath}/material-dashboard-2/assets/img/HPM-icon.png">
+  	<link rel="apple-touch-icon" sizes="85x85" href="${path}/material-dashboard-2/assets/img/HPM-icon.png">
+  	<link rel="icon" sizes="85x85" type="image/png" href="${path}/material-dashboard-2/assets/img/HPM-icon.png">
 	 <!--     Fonts and icons     
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   -->
   <!-- Nucleo Icons -->
-  <link href="${pageContext.request.contextPath}/material-dashboard-2/assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="${pageContext.request.contextPath}/material-dashboard-2/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="${path}/material-dashboard-2/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="${path}/material-dashboard-2/assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons   -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 
@@ -29,25 +39,28 @@
  -->
   <!-- CSS Files -->
   
-  <link id="pagestyle" href="${pageContext.request.contextPath}/material-dashboard-2/assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+  <link id="pagestyle" href="${path}/material-dashboard-2/assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
 	
 <%--다시 adminkit --%>
 
 	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link rel="shortcut icon" href="${pageContext.request.contextPath}/adminkit-3.1.0/img/icons/icon-48x48.png" />
+	<link rel="shortcut icon" href="${path}/adminkit-3.1.0/img/icons/icon-48x48.png" />
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
 	<title>HPM-Project Manager System</title>
 
-	<link href="${pageContext.request.contextPath}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
+	<link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 <%-- 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
+
 </head>
 
 <body>
+
 	<div class="wrapper">
-		<nav id="sidebar" class="sidebar js-sidebar">
+<jsp:include page="a00_sideBar.jsp"/>	
+		<!-- <nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
 				<a class="sidebar-brand" href="index.html">
           <span class="align-middle">HPM</span>
@@ -59,13 +72,13 @@
 					</li>
 
 					<li class="sidebar-item active">
-						<a class="sidebar-link" href="${pageContext.request.contextPath}/adminkit-3.1.0/static/index.html">
+						<a class="sidebar-link" href="main">
               <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
             </a>
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-profile.html">
+						<a class="sidebar-link" href="pages-profile">
               <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
             </a>
 					</li>
@@ -103,7 +116,7 @@
 					</div>
 				</div>
 			</div>
-		</nav>
+		</nav> -->
 
 		<div class="main">
 			<nav class="navbar navbar-expand navbar-light navbar-bg">
@@ -194,7 +207,7 @@
 									<a href="#" class="list-group-item">
 										<div class="row g-0 align-items-center">
 											<div class="col-2">
-												<img src="img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle" alt="Vanessa Tucker">
+												<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle" alt="Vanessa Tucker">
 											</div>
 											<div class="col-10 ps-2">
 												<div class="text-dark">Vanessa Tucker</div>
@@ -206,7 +219,7 @@
 									<a href="#" class="list-group-item">
 										<div class="row g-0 align-items-center">
 											<div class="col-2">
-												<img src="img/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle" alt="William Harris">
+												<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle" alt="William Harris">
 											</div>
 											<div class="col-10 ps-2">
 												<div class="text-dark">William Harris</div>
@@ -218,7 +231,7 @@
 									<a href="#" class="list-group-item">
 										<div class="row g-0 align-items-center">
 											<div class="col-2">
-												<img src="img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle" alt="Christina Mason">
+												<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle" alt="Christina Mason">
 											</div>
 											<div class="col-10 ps-2">
 												<div class="text-dark">Christina Mason</div>
@@ -230,7 +243,7 @@
 									<a href="#" class="list-group-item">
 										<div class="row g-0 align-items-center">
 											<div class="col-2">
-												<img src="img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle" alt="Sharon Lessman">
+												<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle" alt="Sharon Lessman">
 											</div>
 											<div class="col-10 ps-2">
 												<div class="text-dark">Sharon Lessman</div>
@@ -251,7 +264,7 @@
               </a>
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                <img src="${pageContext.request.contextPath}/material-dashboard-2/img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">Charles Hall</span>
+                <img src="${path}/adminkit-3.1.0/static/img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">Charles Hall</span>
               </a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
@@ -313,7 +326,7 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm me-3" alt="xd">
+                            <img src="${path}/material-dashboard-2/assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm me-3" alt="xd">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">Material XD Version</h6>
@@ -323,16 +336,16 @@
                       <td>
                         <div class="avatar-group mt-2">
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-1.jpg" alt="team1">
+                            <img src="${path}/material-dashboard-2/assets/img/team-1.jpg" alt="team1">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-2.jpg" alt="team2">
+                            <img src="${path}/material-dashboard-2/assets/img/team-2.jpg" alt="team2">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alexander Smith">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-3.jpg" alt="team3">
+                            <img src="${path}/material-dashboard-2/assets/img/team-3.jpg" alt="team3">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-4.jpg" alt="team4">
+                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="team4">
                           </a>
                         </div>
                       </td>
@@ -356,7 +369,7 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/small-logos/logo-atlassian.svg" class="avatar avatar-sm me-3" alt="atlassian">
+                            <img src="${path}/material-dashboard-2/assets/img/small-logos/logo-atlassian.svg" class="avatar avatar-sm me-3" alt="atlassian">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">Add Progress Track</h6>
@@ -366,10 +379,10 @@
                       <td>
                         <div class="avatar-group mt-2">
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-2.jpg" alt="team5">
+                            <img src="${path}/material-dashboard-2/assets/img/team-2.jpg" alt="team5">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-4.jpg" alt="team6">
+                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="team6">
                           </a>
                         </div>
                       </td>
@@ -393,7 +406,7 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/small-logos/logo-slack.svg" class="avatar avatar-sm me-3" alt="team7">
+                            <img src="${path}/material-dashboard-2/assets/img/small-logos/logo-slack.svg" class="avatar avatar-sm me-3" alt="team7">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">Fix Platform Errors</h6>
@@ -403,10 +416,10 @@
                       <td>
                         <div class="avatar-group mt-2">
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-3.jpg" alt="team8">
+                            <img src="${path}/material-dashboard-2/assets/img/team-3.jpg" alt="team8">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-1.jpg" alt="team9">
+                            <img src="${path}/material-dashboard-2/assets/img/team-1.jpg" alt="team9">
                           </a>
                         </div>
                       </td>
@@ -430,7 +443,7 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm me-3" alt="spotify">
+                            <img src="${path}/material-dashboard-2/assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm me-3" alt="spotify">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">Launch our Mobile App</h6>
@@ -440,16 +453,16 @@
                       <td>
                         <div class="avatar-group mt-2">
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-4.jpg" alt="user1">
+                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="user1">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-3.jpg" alt="user2">
+                            <img src="${path}/material-dashboard-2/assets/img/team-3.jpg" alt="user2">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alexander Smith">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-4.jpg" alt="user3">
+                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="user3">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-1.jpg" alt="user4">
+                            <img src="${path}/material-dashboard-2/assets/img/team-1.jpg" alt="user4">
                           </a>
                         </div>
                       </td>
@@ -473,7 +486,7 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/small-logos/logo-jira.svg" class="avatar avatar-sm me-3" alt="jira">
+                            <img src="${path}/material-dashboard-2/assets/img/small-logos/logo-jira.svg" class="avatar avatar-sm me-3" alt="jira">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">Add the New Pricing Page</h6>
@@ -483,7 +496,7 @@
                       <td>
                         <div class="avatar-group mt-2">
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-4.jpg" alt="user5">
+                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="user5">
                           </a>
                         </div>
                       </td>
@@ -507,7 +520,7 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/small-logos/logo-invision.svg" class="avatar avatar-sm me-3" alt="invision">
+                            <img src="${path}/material-dashboard-2/assets/img/small-logos/logo-invision.svg" class="avatar avatar-sm me-3" alt="invision">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">Redesign New Online Shop</h6>
@@ -517,10 +530,10 @@
                       <td>
                         <div class="avatar-group mt-2">
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-1.jpg" alt="user6">
+                            <img src="${path}/material-dashboard-2/assets/img/team-1.jpg" alt="user6">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="${pageContext.request.contextPath}/material-dashboard-2/assets/img/team-4.jpg" alt="user7">
+                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="user7">
                           </a>
                         </div>
                       </td>
@@ -664,7 +677,7 @@
 		</div>
 	</div>
 
-	<script src="${pageContext.request.contextPath}/adminkit-3.1.0/static/js/app.js"></script>
+	<script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
