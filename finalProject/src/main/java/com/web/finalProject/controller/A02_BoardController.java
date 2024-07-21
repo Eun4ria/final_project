@@ -14,12 +14,19 @@ public class A02_BoardController {
 	@Autowired(required = false)
 	private A02_BoardService2 service;
 	
-	// http://localhost:3030/start02
-	@GetMapping("start02")
+	// http://localhost:4040/main_pm
+		@GetMapping("main_pm")
+		public String main_pm() {
+			return "WEB-INF\\views\\a00_main_pm.jsp";
+		}
+	
+	// http://localhost:4040/test22
+	@GetMapping("test22")
 	public String start() {
-		return "WEB-INF\\views\\a02_show.jsp";
+		return "WEB-INF\\views\\a00_test.jsp";
 	}
-	// http://localhost:3030/List02
+	
+	// http://localhost:4040/List02
 	@GetMapping("List02")
 	public String boardList(Board sch, Model d) {
 		d.addAttribute("blist", service.getBoardList(sch));

@@ -18,8 +18,8 @@ public class A02_BoardCtrl {
 	@Autowired(required = false)
 	private A02_BoardService service;
 	
-	// http://localhost:3030/board/boardList.do  => board 빼야함
-	// http://localhost:3030/boardList02.do
+	// http://localhost:4040/board/boardList.do  => board 빼야함
+	// http://localhost:4040/boardList02.do
 	@RequestMapping("boardList02.do")
 	public String boardList(@ModelAttribute("sch") BoardSch sch, Model d) { 
 		// boardSch의 모델명을 변경할 때.. 사용 옵션 : ModelAttribute
