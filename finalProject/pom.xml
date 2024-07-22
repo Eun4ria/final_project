@@ -62,6 +62,7 @@
          <scope>runtime</scope>
          <optional>true</optional>
       </dependency>
+      <!-- 채팅서버 -->
       <dependency>
            <groupId>org.springframework.boot</groupId>
            <artifactId>spring-boot-starter-websocket</artifactId>

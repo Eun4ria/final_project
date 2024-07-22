@@ -32,6 +32,21 @@ public class A01_Controller {
     public String chart() {
         return "WEB-INF\\views\\a01_chart.jsp";
     }
+	// http://223.26.198.130:4040/ganttChart
+	@GetMapping("ganttChart")
+    public String ganttChart() {
+        return "WEB-INF\\views\\a01_chart.jsp";
+    }
+	// http://223.26.198.130:4040/fullcalendar
+	@GetMapping("fullcalendar")
+    public String fullcalendar() {
+        return "WEB-INF\\views\\a01_fullcalendar.jsp";
+    }
+	// http://223.26.198.130:4040/board
+	@GetMapping("board")
+    public String board() {
+        return "WEB-INF\\views\\a02_board.jsp";
+    }
 	
 	
 	
