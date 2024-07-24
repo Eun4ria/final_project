@@ -20,8 +20,7 @@
 <!-- vue-->
 <script src="https://unpkg.com/vue" type="text/javascript"></script> 
 
-<!-- jQuert 선언 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 <%-- material link --%>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -56,6 +55,19 @@
 <%-- 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
 
+<!-- jQuert 선언 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var msg = "${msg}";
+		if (msg !== "") {
+			alert(msg);
+			if (msg === "등록 성공") {
+				location.href = "sign_up_do";
+			}
+		}
+	});
+</script>
 
 </head>
 
@@ -85,7 +97,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start">
+                <form role="form" class="text-start" action="sign_up_do">
      <!-- 사용자 이름  -->
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Name</label>
@@ -101,36 +113,39 @@
                     <label class="form-label">Password</label>
                     <input type="password" class="form-control" name="password" value=""  required>
                   </div>
-      <!-- 권한 --> 
-	                <div class="input-group input-group-outline my-3">
-				      <label for="receive_yn" class="col-sm-4 col-form-label">Role code</label>
-				      <select class="form-control mr-sm-2">
-				        <option value="">부서선택</option>
-				        <option v-for="(dept, key) in department" v-bind:value="key">{{ dept }}</option>
-				      </select>
-				     
-				    </div>
-
-
-                  <div class="input-group input-group-outline my-3">
-                    <label class="form-label">Company Name</label>
+      <!-- 소속-권한 --> 
+	              <div class="input-group input-group-outline mb-3">
+	               <label for="receive_yn" class="col-sm-4 col-form-label">Affiliation</label>
+				      <select class="form-control mr-sm-2" v-model="role_code">
+				         <option v-for="(aff, val) in affiliation" :key="val" :value="val">{{ aff }}</option>
+				      </select>     
+                  </div>  
+       <!-- 회사이름 -->             
+                <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Company ID</label>
                     <input type="text" class="form-control" name="company_id" value=""  >
                   </div>
+       <!-- 이메일 -->     
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Email</label>
                     <input type="email" class="form-control" name="email" value="" required>
                   </div>
-                  <div class="input-group input-group-outline mb-3">
-                    <label class="form-label">Department</label>
-                    <input type="text" class="form-control" name="department" value=""  required>
-                  </div>
+        <!-- 부서 -->          
+                  <div class="input-group input-group-outline my-3">
+				      <label for="department" class="col-sm-4 col-form-label">Department</label>
+				      <select class="form-control mr-sm-2" @change="department">
+				        
+				    	 <option v-for="(dept, key) in department" :key="key" :value="key">{{ dept }}</option>
+				      </select>
+				     
+				    </div>
                   
                   <div class="text-center">
-                    <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3">Sign in</button>
+                    <input type="button"id="regBtn" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3" value="Sign up" />
                   </div>
                   <p class="mt-4 text-sm text-center">
-                    Don't have an account?
-                    <a href="../pages/sign-up.html" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Sign up</a>
+                    "Do you already have an account?"
+                    <a href="../pages/sign-up.html" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Sign in</a>
                   </p>
                 </form>
               </div>
@@ -138,38 +153,7 @@
           </div>
         </div>
       </div>
-      <footer class="footer position-absolute bottom-2 py-2 w-100">
-        <div class="container">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-12 col-md-6 my-auto">
-              <div class="copyright text-center text-sm text-white text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                made with <i class="fa fa-heart" aria-hidden="true"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold text-white" target="_blank">Creative Tim</a>
-                for a better web.
-              </div>
-            </div>
-            <div class="col-12 col-md-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link text-white" target="_blank">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-white" target="_blank">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/blog" class="nav-link text-white" target="_blank">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-white" target="_blank">License</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
+      
     </div>
   </main>
   <!--   Core JS Files   -->
@@ -179,23 +163,19 @@
   <script src="${path}/material-dashboard-2/assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="${path}/material-dashboard-2/assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script type="text/javascript">
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-    
-    $(document).ready(function() {
-        $("[name='receive_yn']").change(function() {
-            var val = $(this).val();
-            $("[name='role_code']").val(val);
-        });
-    });
-    
+  $("#regBtn").click(function() {
+		if (confirm("등록하시겠습니까?")) {
+
+			$("form").submit();
+
+		}
+	});
+        
 	
-    var model = {	department:{10:'인사',20:'재무',30:'회계', 40:'IT개발'}
+    var model = {	
+			department:{10:'인사',20:'재무',30:'회계', 40:'IT개발'},
+    		affiliation:{'C':'회사', 'P':'프로젝트 관리자', 'M':'팀원'},
+			role_code:''
     };
     var vm = Vue.createApp({
       

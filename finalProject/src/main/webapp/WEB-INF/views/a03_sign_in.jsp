@@ -110,6 +110,10 @@
                     Forgot your ID?
                     <a href="/find_id" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Find ID </a>
                   </p>
+                  <p class="mt-4 text-sm text-center">
+                    Don't have an account?
+                    <a href="../pages/sign-up.html" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Sign up</a>
+                  </p>
                 </form>
               </div>
             </div>

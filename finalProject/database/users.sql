@@ -12,6 +12,7 @@ CREATE TABLE users (
 DROP TABLE users;
 SELECT * FROM USERS;
 
+SELECT * FROM DEPARTMENT ;
 
 -- Users 시퀀스 생성
 CREATE SEQUENCE users_seq
@@ -37,8 +38,12 @@ VALUES ('MEM_'||LPAD(users_seq.NEXTVAL, 4, '0'), 'ensu2015', '기믄수', 'ensu@
 
 -/*
 INSERT INTO Users (user_id, login_id, user_name, email, password, company_id, department, role_code) 
-VALUES ('MEM_'||LPAD(users_seq.NEXTVAL, 4, '0'), 'ensu2015', '기믄수', 'ensu@gmail.com', 'Example112!!', 'HPM', 'Develop', 'M')
+VALUES ('MEM_'||LPAD(users_seq.NEXTVAL, 4, '0'), #{login_id},  #{user_name}, #{email},#{password}, #{company_id}, #{department}, #{role_code})
 */
+
+SELECT user_name FROM USERS
+WHERE user_id = 'MEM_0001' 
+AND password='Example112!!';
 
 SELECT * FROM users;
 
