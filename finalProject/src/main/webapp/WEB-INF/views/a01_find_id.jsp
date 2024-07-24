@@ -9,12 +9,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!DOCTYPE html>
-<%--
-
-
- --%>
-<html>
 <head>
 
 	<meta charset="utf-8">

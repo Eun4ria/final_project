@@ -9,12 +9,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!DOCTYPE html>
-<%--
-
-
- --%>
-<html>
 <head>
 
 	<meta charset="utf-8">
@@ -23,6 +17,11 @@
 	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
 	<meta name="author" content="AdminKit">
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+<!-- vue-->
+<script src="https://unpkg.com/vue" type="text/javascript"></script> 
+
+<!-- jQuert 선언 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <%-- material link --%>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -57,6 +56,7 @@
 <%-- 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
 
+
 </head>
 
 <body class="bg-gray-200">
@@ -67,7 +67,7 @@
       </div>
     </div>
   </div>
-  <main class="main-content  mt-0">
+  <main class="main-content  mt-0" id="app">
     <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container my-auto">
@@ -86,32 +86,43 @@
               </div>
               <div class="card-body">
                 <form role="form" class="text-start">
+     <!-- 사용자 이름  -->
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Name</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="user_name" value=""  required>
                   </div>
+     <!-- 로그인 아이디  -->
                   <div class="input-group input-group-outline my-3">
-                    <label for="receive_yn_company" class="col-sm-3 col-form-label">Affiliation</label>
-							    <div class="col-sm-10">
-							        <div class="form-check form-check-inline">
-							            <input class="form-check-input" type="radio" name="receive_yn" id="receive_yn_company" value="C" checked>
-							            <label class="form-check-label" for="receive_yn_company">Company name</label>
-							        </div>
-							        <div class="form-check form-check-inline">
-							            <input class="form-check-input" type="radio" name="receive_yn" id="receive_yn_free" value="F">
-							            <label class="form-check-label" for="receive_yn_free">Free</label>
-							           
-							        </div>
-							        <input type="text" name="receive_result" class="form-control" value="C" style="background:lightgray" readonly>
-							    </div>
+                    <label class="form-label">ID</label>
+                    <input type="text" class="form-control" name="user_id" value=""required>
+                  </div>
+     <!-- 비밀번호  -->
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" value=""  required>
+                  </div>
+      <!-- 권한 --> 
+	                <div class="input-group input-group-outline my-3">
+				      <label for="receive_yn" class="col-sm-4 col-form-label">Role code</label>
+				      <select class="form-control mr-sm-2">
+				        <option value="">부서선택</option>
+				        <option v-for="(dept, key) in department" v-bind:value="key">{{ dept }}</option>
+				      </select>
+				     
+				    </div>
+
+
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Company Name</label>
+                    <input type="text" class="form-control" name="company_id" value=""  >
                   </div>
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control">
+                    <input type="email" class="form-control" name="email" value="" required>
                   </div>
                   <div class="input-group input-group-outline mb-3">
                     <label class="form-label">Department</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="department" value=""  required>
                   </div>
                   
                   <div class="text-center">
@@ -177,13 +188,26 @@
     }
     
     $(document).ready(function() {
-        // 라디오 버튼 값 변경 시 처리
-        $("[name=receive_yn]").on('change', function() {
+        $("[name='receive_yn']").change(function() {
             var val = $(this).val();
-            $("[name=receive_result]").val(val);
+            $("[name='role_code']").val(val);
         });
     });
-  </script>
+    
+	
+    var model = {	department:{10:'인사',20:'재무',30:'회계', 40:'IT개발'}
+    };
+    var vm = Vue.createApp({
+      
+       data(){
+          return model;
+       }
+    });
+    vm.mount("#app");
+
+</script>
+
+
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
