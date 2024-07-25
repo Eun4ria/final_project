@@ -1,12 +1,15 @@
 package com.web.finalProject.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.web.finalProject.service.A01_Service;
+import com.web.finalProject.vo.Users;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -47,6 +50,29 @@ public class A01_Controller {
     public String board() {
         return "WEB-INF\\views\\a02_board.jsp";
     }
+	
+	
+	// 로그인 아이디 찾기 폼 
+	// http://223.26.198.130:4040/find_id
+	@GetMapping("find_id")
+	public String find_id() { 
+		return "WEB-INF\\views\\a01_find_id.jsp"; 
+	}
+	// 아이디
+	// http://223.26.198.130:4040/find_id?user_name=기믄수&email=ensu@gmail.com
+    @PostMapping("find_id")
+	public ResponseEntity<String> find_id(Users user) {		
+		return ResponseEntity.ok(service.find_id(user));
+	} 
+	
+    
+	// 비밀번호 찾기 폼
+	// http://223.26.198.130:4040/find_pwd
+	@GetMapping("find_pwd")
+    public String find_pwd() {
+        return "WEB-INF\\views\\a01_find_pwd.jsp";
+    }
+	
 	
 	
 	
