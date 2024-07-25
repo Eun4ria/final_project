@@ -21,7 +21,7 @@ INCREMENT BY 1
 NOCACHE
 NOCYCLE;
 
-
+SELECT * FROM budget;
 
 -- users 테이블의 트리거 생성 (user_id에 자동으로 시퀀스 값 부여)
 CREATE OR REPLACE TRIGGER users_before_insert

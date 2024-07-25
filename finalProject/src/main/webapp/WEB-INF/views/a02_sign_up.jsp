@@ -103,34 +103,36 @@
                     <label class="form-label">Name</label>
                     <input type="text" class="form-control" name="user_name" value=""  required>
                   </div>
-     <!-- 로그인 아이디  -->
+      <!-- 이메일 -->     
                   <div class="input-group input-group-outline my-3">
-                    <label class="form-label">ID</label>
-                    <input type="text" class="form-control" name="user_id" value=""required>
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" value="" required>
                   </div>
      <!-- 비밀번호  -->
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Password</label>
                     <input type="password" class="form-control" name="password" value=""  required>
                   </div>
+     <!-- 비밀번호 확인 -->
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Password Confirm</label>
+                    <input type="password" class="form-control" name="password_confirm" value=""  required>
+                  </div>
       <!-- 소속-권한 --> 
 	              <div class="input-group input-group-outline mb-3">
-	               <label for="receive_yn" class="col-sm-4 col-form-label">Affiliation</label>
-				      <select class="form-control mr-sm-2" v-model="role_code">
+	               <label for="affiliation" class="col-sm-4 col-form-label">Affiliation</label>
+				      <select class="form-control mr-sm-2" @change="affiliation">
 				         <option v-for="(aff, val) in affiliation" :key="val" :value="val">{{ aff }}</option>
 				      </select>     
                   </div>  
-       <!-- 회사이름 -->             
+      
+       
+		<!-- 회사이름 -->             
                 <div class="input-group input-group-outline my-3">
                     <label class="form-label">Company ID</label>
                     <input type="text" class="form-control" name="company_id" value=""  >
                   </div>
-       <!-- 이메일 -->     
-                  <div class="input-group input-group-outline my-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" value="" required>
-                  </div>
-        <!-- 부서 -->          
+         <!-- 부서 -->          
                   <div class="input-group input-group-outline my-3">
 				      <label for="department" class="col-sm-4 col-form-label">Department</label>
 				      <select class="form-control mr-sm-2" @change="department">
@@ -139,6 +141,7 @@
 				      </select>
 				     
 				    </div>
+				    
                   
                   <div class="text-center">
                     <input type="button"id="regBtn" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3" value="Sign up" />
