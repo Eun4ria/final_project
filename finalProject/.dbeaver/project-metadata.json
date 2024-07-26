@@ -1,1 +1,1 @@
-{"resources":{"Scripts/database/users.sql":{"default-datasource":"oracle_thin-190cfb0d156-588d4f798d04e51a","default-schema":"HPM"}}}
+{"resources":{"Scripts/database/users.sql":{"default-schema":"HPM","default-datasource":"oracle_thin-190cfb0d156-588d4f798d04e51a"},"database/users.sql":{"default-datasource":"oracle_thin-190cfb0d156-588d4f798d04e51a","default-schema":"HPM"}}}

@@ -17,8 +17,7 @@
 	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
 	<meta name="author" content="AdminKit">
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
-<!-- vue-->
-<script src="https://unpkg.com/vue" type="text/javascript"></script> 
+
 
 
 
@@ -57,28 +56,30 @@
 
 <!-- jQuert 선언 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/vue" type="text/javascript"></script> 
 <script type="text/javascript">
 	$(document).ready(function() {
+		
 		var msg = "${msg}";
 		if (msg !== "") {
 			alert(msg);
 			if (msg === "등록 성공") {
-				location.href = "sign_up_do";
+				location.href = "sign_up";
 			}
 		}
+		
+		
 	});
 </script>
+
+
 
 </head>
 
 <body class="bg-gray-200">
-  <div class="container position-sticky z-index-sticky top-0">
-    <div class="row">
-      <div class="col-12">
-        
-      </div>
-    </div>
-  </div>
+<!-- vue-->
+
+  
   <main class="main-content  mt-0" id="app">
     <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
       <span class="mask bg-gradient-dark opacity-6"></span>
@@ -86,6 +87,7 @@
         <div class="row">
           <div class="col-lg-4 col-md-8 col-12 mx-auto">
             <div class="card z-index-0 fadeIn3 fadeInBottom">
+    <!-- title 배경 위한 div -->
               <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1" style="background: linear-gradient(#6A82FB,#B06AB3);">
                   <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Sign Up</h4>
@@ -100,34 +102,34 @@
                 <form role="form" class="text-start" action="sign_up_do">
      <!-- 사용자 이름  -->
                   <div class="input-group input-group-outline my-3">
-                    <label class="form-label">Name</label>
+                    <label for="user_name" class="form-label">Name</label>
                     <input type="text" class="form-control" name="user_name" value=""  required>
                   </div>
       <!-- 이메일 -->     
                   <div class="input-group input-group-outline my-3">
-                    <label class="form-label">Email</label>
+                    <label for="email"  class="form-label">Email</label>
                     <input type="email" class="form-control" name="email" value="" required>
                   </div>
      <!-- 비밀번호  -->
                   <div class="input-group input-group-outline my-3">
-                    <label class="form-label">Password</label>
+                    <label for="password"  class="form-label">Password</label>
                     <input type="password" class="form-control" name="password" value=""  required>
                   </div>
      <!-- 비밀번호 확인 -->
                   <div class="input-group input-group-outline my-3">
-                    <label class="form-label">Password Confirm</label>
-                    <input type="password" class="form-control" name="password_confirm" value=""  required>
+                    <label for="password_confirm"  class="form-label">Password Confirm</label>
+                    <input type="password" class="form-control" id="password_confirm" required>
                   </div>
-      <!-- 소속-권한 --> 
+      <!-- 소속-권한  -->
 	              <div class="input-group input-group-outline mb-3">
 	               <label for="affiliation" class="col-sm-4 col-form-label">Affiliation</label>
-				      <select class="form-control mr-sm-2" @change="affiliation">
-				         <option v-for="(aff, val) in affiliation" :key="val" :value="val">{{ aff }}</option>
+				      <select class="form-control mr-sm-2" id="affiliation" v-model="selectedAffiliation">
+				         <option v-for="(aff, role_code) in affiliation" :key="role_code" :value="role_code">{{ aff }}</option>
 				      </select>     
                   </div>  
       
        
-		<!-- 회사이름 -->             
+		<!-- 회사아이디 -->             
                 <div class="input-group input-group-outline my-3">
                     <label class="form-label">Company ID</label>
                     <input type="text" class="form-control" name="company_id" value=""  >
@@ -135,22 +137,25 @@
          <!-- 부서 -->          
                   <div class="input-group input-group-outline my-3">
 				      <label for="department" class="col-sm-4 col-form-label">Department</label>
-				      <select class="form-control mr-sm-2" @change="department">
+				      <select id="department" class="form-control mr-sm-2" @change="department">
 				        
-				    	 <option v-for="(dept, key) in department" :key="key" :value="key">{{ dept }}</option>
+				    	 <option v-for="(dept, deptno) in department" :key="deptno" :value="deptno">{{ dept }}</option>
 				      </select>
 				     
 				    </div>
 				    
                   
                   <div class="text-center">
-                    <input type="button"id="regBtn" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3" value="Sign up" />
+                    <input type="button" class="btn bg-gradient-primary w-100 my-4 mb-2" value="Sign up" style="background:#B06AB3"	id="regBtn" /> 
                   </div>
-                  <p class="mt-4 text-sm text-center">
-                    "Do you already have an account?"
-                    <a href="../pages/sign-up.html" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Sign in</a>
-                  </p>
+                 
                 </form>
+                
+           
+                 <p class="mt-4 text-sm text-center">
+                    "Do you already have an account?"
+                    <a href="sign_in" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Sign in</a>
+                  </p>
               </div>
             </div>
           </div>
@@ -165,36 +170,35 @@
   <script src="${path}/material-dashboard-2/assets/js/core/bootstrap.min.js"></script>
   <script src="${path}/material-dashboard-2/assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="${path}/material-dashboard-2/assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script type="text/javascript">
-  $("#regBtn").click(function() {
-		if (confirm("등록하시겠습니까?")) {
-
-			$("form").submit();
-
-		}
-	});
-        
-	
+  
+ <script type="text/javascript">
     var model = {	
-			department:{10:'인사',20:'재무',30:'회계', 40:'IT개발'},
+			department:{10:'관리', 20:'인사', 30:'재무',40:'마케팅', 50:'개발', 60:'IT', 70:'품질 보증'},
     		affiliation:{'C':'회사', 'P':'프로젝트 관리자', 'M':'팀원'},
 			role_code:''
-    };
+    }
     var vm = Vue.createApp({
       
        data(){
           return model;
        }
-    });
-    vm.mount("#app");
-
+    }).mount("#app");
 </script>
 
+<script type="text/javascript">
+	$("#regBtn").click(function() {
+		if (confirm("등록하시겠습니까?")) {
+	
+			$("form").submit();
+	
+		}
+	});
+</script>
 
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="${path}/material-dashboard-2/assets/js/material-dashboard.min.js?v=3.0.0"></script>
+ <!--   <script src="${path}/material-dashboard-2/assets/js/material-dashboard.min.js?v=3.0.0"></script>-->
 </body>
 
 </html>

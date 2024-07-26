@@ -41,6 +41,13 @@ public class A02_Controller {
 		return "WEB-INF\\views\\a01_find_pwd.jsp";
 	}
 	
+	// http://localhost:4040/chat
+		@GetMapping("chat")
+		public String chat() {
+			return "WEB-INF\\views\\a02_chat.jsp";
+		}
+		
+
 //사용자 등록
 	//사용자 처음 폼
 	// http://localhost:4040/sign_up
@@ -48,27 +55,25 @@ public class A02_Controller {
 	public String sign_up() {
 		return "WEB-INF\\views\\a02_sign_up.jsp";
 	}
-	
+
 	//사용자 등록 시
 	// http://localhost:4040/sign_up_do
 		@GetMapping("sign_up_do")
 		public String sign_up_do(Users ins, Model d) {
 			d.addAttribute("msg", service.insertUser(ins));
+			
 			return "WEB-INF\\views\\a02_sign_up.jsp";
 		}
+		
 	
 	
+// 로그인
 	// http://localhost:4040/sign_in
 	@GetMapping("sign_in")
 	public String sign_in() {
-		return "WEB-INF\\views\\a03_sign_in.jsp";
+		return "WEB-INF\\views\\a02_sign_in.jsp";
 	}
 	
-	// http://localhost:4040/chat
-	@GetMapping("chat")
-	public String chat() {
-		return "WEB-INF\\views\\a02_chat.jsp";
-	}
 	
 
 }

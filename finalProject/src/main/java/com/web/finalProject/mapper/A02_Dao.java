@@ -21,9 +21,8 @@ public interface A02_Dao {
 	int loginCk(Users user);
 	
 	//회원가입
-	@Insert("INSERT INTO users (user_id, login_id, user_name, email, password, company_id, department, role_code) \r\n"
-			+ "VALUES ('MEM_'||LPAD(users_seq.NEXTVAL, 4, '0'), #{login_id}, #{user_name}, \r\n "
-			+ "	#{email},#{password}, #{company_id}, #{department}, #{role_code} \r\n")
+	@Insert("INSERT INTO users (user_id, user_name, email, password, deptno, company_id)\r\n"
+			+ "VALUES ('P_'||TO_CHAR(users_seq_ex.nextval, 'FM0000'), '김은수', 'ensu2015@gmail.com', 'rose112!!', 50, 'COM_0002') ")
 	int insertUser(Users ins);
 	
 
