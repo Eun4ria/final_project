@@ -15,6 +15,7 @@ public interface A02_Dao {
 			+ "WHERE user_id = #{user_id} \r\n"
 			+ "AND password=#{password}")
 	Users login(Users user);
+	
 	@Select("SELECT count(*) FROM USERS \r\n"
 			+ "WHERE user_id = #{user_id} \r\n"
 			+  "AND password=#{password}")

@@ -63,7 +63,7 @@ SELECT * FROM users;
 DELETE FROM users 
 WHERE user_name = '김은수';
 
-INSERT INTO users (user_id, user_name, email, password, deptno, company_id)\r\n"
-			+ "VALUES ('P_'||TO_CHAR(users_seq_ex.nextval, 'FM0000'), '김은수', 'ensu2015@gmail.com', 'rose112!!', 50, 'COM_0002'
+INSERT INTO users (user_id, user_name, email, password, deptno, company_id)
+VALUES ('P_'||TO_CHAR(users_seq_ex.nextval, 'FM0000'), '김은수', 'ensu2015@gmail.com', 'rose112!!', 50, 'COM_0002');
 			
 SELECT * FROM DEPARTMENT d ;

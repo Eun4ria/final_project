@@ -12,11 +12,13 @@ public class A02_Service {
 	@Autowired(required=false)
 	private A02_Dao dao;
 	
+	
+	//로그인
 	public int loginCk(Users user) {
 		return dao.loginCk(user); 
 	} 
 	public String loginCkMsg(Users user) {
-		return dao.loginCk(user)>0?"":"로그인 정보가 일치하지 않습니다"; 
+		return dao.loginCk(user)>0?"로그인 성공":"로그인 정보가 일치하지 않습니다"; 
 	}
 	public Users login(Users user) {
 		return dao.login(user);

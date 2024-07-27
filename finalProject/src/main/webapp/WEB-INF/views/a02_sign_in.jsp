@@ -57,23 +57,28 @@
 <%-- 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
 
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+		var msg = "${msg}";
+		if (msg !== "") {
+			alert(msg);
+			if (msg === "로그인 성공") {
+				location.href = "sign_up";
+			}
+		}
+		
+		
+	});
+</script>
 </head>
 
 <body class="bg-gray-200">
   <div class="container position-sticky z-index-sticky top-0">
     <div class="row">
       <div class="col-12">
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg blur border-radius-xl top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
-          <div class="container-fluid ps-2 pe-0">
-            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="../pages/dashboard.html">
-              HPM main
-            </a>
-            
-            
-          </div>
-        </nav>
-        <!-- End Navbar -->
+       
       </div>
     </div>
   </div>
@@ -93,82 +98,53 @@
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start">
+                <form role="form" class="text-start" action="signin">
                   <div class="input-group input-group-outline my-3">
-                    <label class="form-label">ID</label>
-                    <input type="text" class="form-control">
+                    <label for="user_id" class="form-label">ID</label>
+                    <input type="text" class="form-control" name="user_id" value="" >
                   </div>
                   <div class="input-group input-group-outline mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-control">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" value="" >
                   </div>
                  
                   <div class="text-center">
-                    <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3">Log In</button>
-                  </div>
-                  <p class="mt-4 text-sm text-center">
+                    <input type="button" id="inBtn" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3" value="SIGN IN">
+                  </div>     
+                </form>    
+                
+                 <div class="mt-4 text-sm text-center"style="margin-bottom:0">
                     Forgot your ID?
-                    <a href="/find_id" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Find ID </a>
-                  </p>
-                  <p class="mt-4 text-sm text-center">
+                    <a href="/find_id" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Find ID</a>
+                 <br>
                     Don't have an account?
                     <a href="../pages/sign-up.html" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Sign up</a>
-                  </p>
-                </form>
+                  </div>
+                  
               </div>
             </div>
           </div>
         </div>
       </div>
-      <footer class="footer position-absolute bottom-2 py-2 w-100">
-        <div class="container">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-12 col-md-6 my-auto">
-              <div class="copyright text-center text-sm text-white text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                made with <i class="fa fa-heart" aria-hidden="true"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold text-white" target="_blank">Creative Tim</a>
-                for a better web.
-              </div>
-            </div>
-            <div class="col-12 col-md-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link text-white" target="_blank">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-white" target="_blank">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/blog" class="nav-link text-white" target="_blank">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-white" target="_blank">License</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
+     
     </div>
   </main>
+  <script type="text/javascript">
+  $("#regBtn").click(function() {
+		if (confirm("등록하시겠습니까?")) {
+	
+			$("form").submit();
+	
+		}
+	});
+</script>
   <!--   Core JS Files   -->
   <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
   <script src="${path}/material-dashboard-2/assets/js/core/popper.min.js"></script>
   <script src="${path}/material-dashboard-2/assets/js/core/bootstrap.min.js"></script>
   <script src="${path}/material-dashboard-2/assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="${path}/material-dashboard-2/assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-  </script>
+ 
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
