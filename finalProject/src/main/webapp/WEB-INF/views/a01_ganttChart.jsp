@@ -29,7 +29,7 @@
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/pages-profile.html" />
 
-	<title>Profile | AdminKit Demo</title>
+	<title>HPM-Project Manager System</title>
 
 	<link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -38,13 +38,42 @@
 	<script src="${path}/a00_com/bootstrap.min.js"></script>
 	<script src="${path}/a00_com/jquery-ui.js"></script>
 	<script src="${path}/a00_com/dist/index.global.js"></script>
+	
+	<!-- gantt -->
+	<script src="${path}/gantt_trial/codebase/dhtmlxgantt.js?v=8.0.9"></script>
+	<link rel="stylesheet" href="${path}/gantt_trial/codebase/dhtmlxgantt.css?v=8.0.9">
+	<link rel="stylesheet" href="${path}/gantt_trial/common/controls_styles.css?v=8.0.9">
+	
+<style>
+	html, body {
+		height: 80%;
+		padding: 0px;
+		margin: 0px;
+		overflow: hidden;
+	}
+
+	.summary-row,
+	.summary-row.odd {
+		background-color: #EEEEEE;
+		font-weight: bold;
+	}
+
+	.gantt_grid div,
+	.gantt_data_area div {
+		font-size: 12px;
+	}
+
+	.summary-bar {
+		opacity: 0.4;
+	}
+</style>
 </head>
 	
-<body>
+<body style="overflow: hidden">
 	<div class="wrapper">
 	<jsp:include page="a00_sideBar.jsp"/> 
 
-
+<!-- top -->
 		<div class="main">
 			<nav class="navbar navbar-expand navbar-light navbar-bg">
 				<a class="sidebar-toggle js-sidebar-toggle">
@@ -206,336 +235,146 @@
 					</ul>
 				</div>
 			</nav>
-
-			<main class="content">
-				<div class="container-fluid p-0">
-
-					<div class="mb-3">
-						<h1 class="h3 d-inline align-middle">Chart.js</h1>
-						<a class="badge bg-dark text-white ms-2" href="upgrade-to-pro.html">
-      Get more chart examples
-  </a>
-					</div>
-					<div class="row">
-						<div class="col-12 col-lg-6">
-							<div class="card flex-fill w-100">
-								<div class="card-header">
-									<h5 class="card-title">Line Chart</h5>
-									<h6 class="card-subtitle text-muted">A line chart is a way of plotting data points on a line.</h6>
-								</div>
-								<div class="card-body">
-									<div class="chart">
-										<canvas id="chartjs-line"></canvas>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-12 col-lg-6">
-							<div class="card">
-								<div class="card-header">
-									<h5 class="card-title">Bar Chart</h5>
-									<h6 class="card-subtitle text-muted">A bar chart provides a way of showing data values represented as vertical bars.</h6>
-								</div>
-								<div class="card-body">
-									<div class="chart">
-										<canvas id="chartjs-bar"></canvas>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-12 col-lg-6">
-							<div class="card">
-								<div class="card-header">
-									<h5 class="card-title">Doughnut Chart</h5>
-									<h6 class="card-subtitle text-muted">Doughnut charts are excellent at showing the relational proportions between data.</h6>
-								</div>
-								<div class="card-body">
-									<div class="chart chart-sm">
-										<canvas id="chartjs-doughnut"></canvas>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-12 col-lg-6">
-							<div class="card">
-								<div class="card-header">
-									<h5 class="card-title">Pie Chart</h5>
-									<h6 class="card-subtitle text-muted">Pie charts are excellent at showing the relational proportions between data.</h6>
-								</div>
-								<div class="card-body">
-									<div class="chart chart-sm">
-										<canvas id="chartjs-pie"></canvas>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-			</main>
-
-			<footer class="footer">
-				<div class="container-fluid">
-					<div class="row text-muted">
-						<div class="col-6 text-start">
-							<p class="mb-0">
-								<a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> &copy;
-							</p>
-						</div>
-						<div class="col-6 text-end">
-							<ul class="list-inline">
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</footer>
-		</div>
+			
+			<!-- gantt -->
+	<div class="gantt_control">
+	<input type='button' id='default' onclick="showGroups()" value="Tree">
+	<input type='button' id='priority' onclick="showGroups('priority')" value="Group by priority">
+	<input type='button' id='user' onclick="showGroups('user')" value="Group by owner">
+	<input type='button' id='stage' onclick="showGroups('stage')" value="Group by stage">
 	</div>
+	<div id="gantt_here" style='width:100%; height:calc(100vh - 90px);'></div>
+	</div>
+	</div>
+	<script type="text/javascript">
+		gantt.plugins({
+			grouping: true
+		});
+		// test data
+		var tasks = {
+			data: [
+				// id='작업id' text='작업명' start_date : '시작날짜' dutation : 업무기간, 우선순위 : 3~1 (lo~high), stage: 단계, user : 작업자, 'open'
+				{id: 1, text: "Task #1", start_date: "02-04-2023 00:00", duration: 3, priority: 3, stage: 1, user: 3, open: true, parent: 0},
+				{id: 5, text: "Task #1.1", start_date: "05-04-2023 00:00", duration: 4, parent: 1, open: true, priority: 1, stage: 1, user: 1},
+				{id: 6, text: "Task #1.2", start_date: "11-04-2023 00:00", duration: 6, parent: 1, open: true, priority: 2, stage: 2, user: 3},
+				{id: 2, text: "Task #2", start_date: "11-04-2023 00:00", duration: 2, priority: 1, stage: 3, user: 0, open: true, parent: 0},
+				{id: 7, text: "Task #2.1", start_date: "13-04-2023 00:00", duration: 2, parent: 2, open: true, priority: 3, stage: 2, user: 2},
+				{id: 3, text: "Task #3", start_date: "11-04-2023 00:00", duration: 6, priority: 2, stage: 2, user: 1, open: true, parent: 0},
+				{id: 8, text: "Task #3.1", start_date: "09-04-2023 00:00", duration: 3, parent: 3, open: true, priority: 1, stage: 1, user: 3},
+				{id: 9, text: "Task #3.2", start_date: "12-04-2023 00:00", duration: 2, parent: 3, open: true, priority: 3, stage: 3, user: 1},
+				{id: 10, text: "Task #3.3", start_date: "17-04-2023 00:00", duration: 4, parent: 3, open: true, priority: 2, stage: 2, user: 0}
+			], links: [ // type:1~3
+				{source: "1", target: "5", type: "0"},
+				{source: "5", target: "8", type: "0"},
+				{source: "3", target: "7", type: "0"},
+				{source: "6", target: "7", type: "0"},
+				{source: "2", target: "10", type: "0"}
+			]
+		};
+		// 구분 단계
+		gantt.serverList("stage", [
+			{key: 1, label: "Planning"},
+			{key: 2, label: "Dev"},
+			{key: 3, label: "Testing"}
+		]);
+		// 역할자 리스트
+		gantt.serverList("user", [
+			{key: 0, label: "N/A"},
+			{key: 1, label: "John"},
+			{key: 2, label: "Mike"},
+			{key: 3, label: "Anna"}
+		]); 
+		// 우선순위 리스트
+		gantt.serverList("priority", [
+			{key: 1, label: "High"},
+			{key: 2, label: "Normal"},
+			{key: 3, label: "Low"}
+		]);
+	
+		// end text data
+	
+		gantt.config.order_branch = true;
+		gantt.config.grid_width = 420;
+		gantt.config.row_height = 24;
+		gantt.config.grid_resize = true;
+	
+		gantt.i18n.setLocale({
+			labels:{
+				column_priority: 'Priority',
+				section_priority: 'Priority',
+				column_owner: 'Owner',
+				section_owner: 'Owner',
+				column_stage: 'Stage',
+				section_stage: 'Stage',
+				section_resources: 'Resources',
+			}
+		});
+	
+		function byId(list, id) {
+			for (var i = 0; i < list.length; i++) {
+				if (list[i].key == id)
+					return list[i].label || "";
+			}
+			return "";
+		}
+	
+		gantt.config.columns = [
+			{ name: "text", label: "Task name", tree: true, width: '*' },
+			{ name: "priority", width: 80, align: "center", template: function (item) {
+				return byId(gantt.serverList('priority'), item.priority)
+			}},
+			{ name: "owner", width: 80, align: "center", template: function (item) {
+				return byId(gantt.serverList('user'), item.user)
+			}},
+			{ name: "stage", width: 80, align: "center", template: function (item) {
+				return byId(gantt.serverList('stage'), item.stage)
+			}},
+			{ name: "add", width: 40}
+		];
+	
+		gantt.config.lightbox.sections = [
+			{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
+			{name: "priority", height: 22, map_to: "priority", type: "select", options: gantt.serverList("priority")},
+			{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},
+			{name: "stage", height: 22, map_to: "stage", type: "select", options: gantt.serverList("stage")},
+			{name: "time", type: "duration", map_to: "auto"}
+		];
+	
+		gantt.templates.grid_row_class =
+			gantt.templates.task_row_class = function (start, end, task) {
+				if (task.$virtual)
+					return "summary-row"
+			};
+		gantt.templates.task_class = function (start, end, task) {
+			if (task.$virtual)
+				return "summary-bar";
+		};
+	
+		gantt.init("gantt_here");
+		gantt.sort("start_date");
+		gantt.parse(tasks);
+	
+		function showGroups(listname) {
+			if (listname) {
+				gantt.groupBy({
+					groups: gantt.serverList(listname),
+					relation_property: listname,
+					group_id: "key",
+					group_text: "label"
+				});
+				gantt.sort("start_date");
+			} else {
+				gantt.groupBy(false);
+	
+			}
+		}
+	
+	
+	</script>
+	
+
 
 	<script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
-
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			// Line chart
-			new Chart(document.getElementById("chartjs-line"), {
-				type: "line",
-				data: {
-					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-					datasets: [{
-						label: "Sales ($)",
-						fill: true,
-						backgroundColor: "transparent",
-						borderColor: window.theme.primary,
-						data: [2115, 1562, 1584, 1892, 1487, 2223, 2966, 2448, 2905, 3838, 2917, 3327]
-					}, {
-						label: "Orders",
-						fill: true,
-						backgroundColor: "transparent",
-						borderColor: "#adb5bd",
-						borderDash: [4, 4],
-						data: [958, 724, 629, 883, 915, 1214, 1476, 1212, 1554, 2128, 1466, 1827]
-					}]
-				},
-				options: {
-					maintainAspectRatio: false,
-					legend: {
-						display: false
-					},
-					tooltips: {
-						intersect: false
-					},
-					hover: {
-						intersect: true
-					},
-					plugins: {
-						filler: {
-							propagate: false
-						}
-					},
-					scales: {
-						xAxes: [{
-							reverse: true,
-							gridLines: {
-								color: "rgba(0,0,0,0.05)"
-							}
-						}],
-						yAxes: [{
-							ticks: {
-								stepSize: 500
-							},
-							display: true,
-							borderDash: [5, 5],
-							gridLines: {
-								color: "rgba(0,0,0,0)",
-								fontColor: "#fff"
-							}
-						}]
-					}
-				}
-			});
-		});
-	</script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			// Bar chart
-			new Chart(document.getElementById("chartjs-bar"), {
-				type: "bar",
-				data: {
-					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-					datasets: [{
-						label: "Last year",
-						backgroundColor: window.theme.primary,
-						borderColor: window.theme.primary,
-						hoverBackgroundColor: window.theme.primary,
-						hoverBorderColor: window.theme.primary,
-						data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
-						barPercentage: .75,
-						categoryPercentage: .5
-					}, {
-						label: "This year",
-						backgroundColor: "#dee2e6",
-						borderColor: "#dee2e6",
-						hoverBackgroundColor: "#dee2e6",
-						hoverBorderColor: "#dee2e6",
-						data: [69, 66, 24, 48, 52, 51, 44, 53, 62, 79, 51, 68],
-						barPercentage: .75,
-						categoryPercentage: .5
-					}]
-				},
-				options: {
-					maintainAspectRatio: false,
-					legend: {
-						display: false
-					},
-					scales: {
-						yAxes: [{
-							gridLines: {
-								display: false
-							},
-							stacked: false,
-							ticks: {
-								stepSize: 20
-							}
-						}],
-						xAxes: [{
-							stacked: false,
-							gridLines: {
-								color: "transparent"
-							}
-						}]
-					}
-				}
-			});
-		});
-	</script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			// Doughnut chart
-			new Chart(document.getElementById("chartjs-doughnut"), {
-				type: "doughnut",
-				data: {
-					labels: ["Social", "Search Engines", "Direct", "Other"],
-					datasets: [{
-						data: [260, 125, 54, 146],
-						backgroundColor: [
-							window.theme.primary,
-							window.theme.success,
-							window.theme.warning,
-							"#dee2e6"
-						],
-						borderColor: "transparent"
-					}]
-				},
-				options: {
-					maintainAspectRatio: false,
-					cutoutPercentage: 65,
-					legend: {
-						display: false
-					}
-				}
-			});
-		});
-	</script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			// Pie chart
-			new Chart(document.getElementById("chartjs-pie"), {
-				type: "pie",
-				data: {
-					labels: ["Social", "Search Engines", "Direct", "Other"],
-					datasets: [{
-						data: [260, 125, 54, 146],
-						backgroundColor: [
-							window.theme.primary,
-							window.theme.warning,
-							window.theme.danger,
-							"#dee2e6"
-						],
-						borderColor: "transparent"
-					}]
-				},
-				options: {
-					maintainAspectRatio: false,
-					legend: {
-						display: false
-					}
-				}
-			});
-		});
-	</script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			// Radar chart
-			new Chart(document.getElementById("chartjs-radar"), {
-				type: "radar",
-				data: {
-					labels: ["Speed", "Reliability", "Comfort", "Safety", "Efficiency"],
-					datasets: [{
-						label: "Model X",
-						backgroundColor: "rgba(0, 123, 255, 0.2)",
-						borderColor: window.theme.primary,
-						pointBackgroundColor: window.theme.primary,
-						pointBorderColor: "#fff",
-						pointHoverBackgroundColor: "#fff",
-						pointHoverBorderColor: window.theme.primary,
-						data: [70, 53, 82, 60, 33]
-					}, {
-						label: "Model S",
-						backgroundColor: "rgba(220, 53, 69, 0.2)",
-						borderColor: window.theme.danger,
-						pointBackgroundColor: window.theme.danger,
-						pointBorderColor: "#fff",
-						pointHoverBackgroundColor: "#fff",
-						pointHoverBorderColor: window.theme.danger,
-						data: [35, 38, 65, 85, 84]
-					}]
-				},
-				options: {
-					maintainAspectRatio: false
-				}
-			});
-		});
-	</script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			// Polar Area chart
-			new Chart(document.getElementById("chartjs-polar-area"), {
-				type: "polarArea",
-				data: {
-					labels: ["Speed", "Reliability", "Comfort", "Safety", "Efficiency"],
-					datasets: [{
-						label: "Model S",
-						data: [35, 38, 65, 70, 24],
-						backgroundColor: [
-							window.theme.primary,
-							window.theme.success,
-							window.theme.danger,
-							window.theme.warning,
-							window.theme.info
-						]
-					}]
-				},
-				options: {
-					maintainAspectRatio: false
-				}
-			});
-		});
-	</script>
 
 </body>
 

@@ -55,30 +55,9 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		
-		$("#idBtn").click(function() { 
-	        idFind();
-	    });
-		
-		
-	});
-	function idFind() {
-	    $.ajax({
-	        url: "find_id",
-	        type:"POST",
-	        data: $("form").serialize(),
-	        success: function(id) {
-	            if(id=="해당 계정 정보 없습니다.") {
-					alert(id)
-	            } else{					
-	            	$("form").submit()	
-	            }
-	         
-	        },
-	        error: function(err) {
-	            console.log(err);
-	        }
-	    });
+		$("#goLogBtn").click(function(){
+			location.href="login"
+		})
 	}
 	
 </script>
@@ -120,19 +99,10 @@
                 </div>
               </div>
               <div class="card-body">
-                <form class="text-start" method="post" action="find_id_result">
-                  <div class="input-group input-group-outline my-3">
-                    <label for="user_name" class="form-label">Name</label>
-                    <input id="user_name" type="text" name="user_name" class="form-control">
-                  </div>
-                  <div class="input-group input-group-outline mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input id="email" type="text" name="email" class="form-control">
-                  </div>  
-                </form>
+                회원님의 아이디는 <strong>${result}</strong> 입니다.
                 
                 <div class="text-center">
-                    <button type="button" id="idBtn" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3">Find ID</button>
+                    <button type="button" id="goLogBtn" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3">Go to Login</button>
                   </div>  
                   <p class="mt-4 text-sm text-center">
                     Forgot your password?

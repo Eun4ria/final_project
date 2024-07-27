@@ -50,7 +50,7 @@ CREATE SEQUENCE users_seq START WITH 0001 INCREMENT BY 1;
 
 -- 샘플 데이터
 INSERT INTO users (user_id, user_name, email, password, deptno, company_id)
-VALUES ('P_'||TO_CHAR(users_seq.nextval, 'FM0000'), '박민경', 'loverymin1213@gmail.com', 'min1213!', '10', 'COM_0001');
+VALUES ('P_'||TO_CHAR(users_seq.nextval, 'FM0000'), '박민경', 'loverymin1213@gmail.com', 'min1213!', 10, 'COM_0001');
 
 -- 보기
 SELECT * FROM users;

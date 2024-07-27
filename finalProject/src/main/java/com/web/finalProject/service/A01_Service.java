@@ -12,9 +12,12 @@ public class A01_Service {
 	private A01_Dao dao;
 	
 	public String find_id(Users user) {
-		String id = dao.find_id(user);
-		
-		return id==null?"해당 계정 정보 없습니다.":"해당 계정의 아이디:"+id;
+		String id = dao.find_id(user);		
+		return id==null?"해당 계정 정보 없습니다.":id;
+	}
+	public String tempPwd(Users user) {
+		String id = dao.find_id(user);		
+		return id==null?"해당 계정 정보 없습니다.":id;
 	}
 	
 }

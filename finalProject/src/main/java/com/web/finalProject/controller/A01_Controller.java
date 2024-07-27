@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.web.finalProject.service.A01_Service;
+import com.web.finalProject.util.Util;
 import com.web.finalProject.vo.Users;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,12 +34,12 @@ public class A01_Controller {
 	// http://223.26.198.130:4040/chart
 	@GetMapping("chart")
     public String chart() {
-        return "WEB-INF\\views\\a01_chart.jsp";
+        return "WEB-INF\\views\\a02_chart.jsp";
     }
 	// http://223.26.198.130:4040/ganttChart
 	@GetMapping("ganttChart")
     public String ganttChart() {
-        return "WEB-INF\\views\\a01_chart.jsp";
+        return "WEB-INF\\views\\a01_ganttChart.jsp";
     }
 	// http://223.26.198.130:4040/fullcalendar
 	@GetMapping("fullcalendar")
@@ -58,21 +59,28 @@ public class A01_Controller {
 	public String find_id() { 
 		return "WEB-INF\\views\\a01_find_id.jsp"; 
 	}
-	// 아이디
+	// 아이디 결과
 	// http://223.26.198.130:4040/find_id?user_name=기믄수&email=ensu@gmail.com
     @PostMapping("find_id")
-	public ResponseEntity<String> find_id(Users user) {		
+	public ResponseEntity<String> find_id(Users user) {	
 		return ResponseEntity.ok(service.find_id(user));
 	} 
-	
+    // 로그인 성공할 경우 아이디 보여줄 페이지
+ 	// http://223.26.198.130:4040/find_id_result
+ 	@PostMapping("find_id_result")
+ 	public String find_id_result(Users user, Model d) { 
+ 		d.addAttribute("result", service.find_id(user));
+ 		return "WEB-INF\\views\\a01_find_id_result.jsp"; 
+ 	}
     
+ 	
 	// 비밀번호 찾기 폼
 	// http://223.26.198.130:4040/find_pwd
 	@GetMapping("find_pwd")
     public String find_pwd() {
         return "WEB-INF\\views\\a01_find_pwd.jsp";
     }
-	
+
 	
 	
 	
