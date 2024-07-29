@@ -11,7 +11,7 @@ import com.web.finalProject.vo.Users;
 public interface A02_Dao {
 	
 	//로그인
-	@Select("SELECT user_name FROM USERS\r\n"
+	@Select("SELECT user_name, role_code FROM USERS\r\n"
 			+ "WHERE user_id = #{user_id} \r\n"
 			+ "AND password=#{password}")
 	Users login(Users user);

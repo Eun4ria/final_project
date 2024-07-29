@@ -60,10 +60,18 @@ VALUES ('P_'||TO_CHAR(users_seq_ex.nextval, 'FM0000'), '김은수', 'ensu2015@gm
 
 SELECT * FROM users;
 
-DELETE FROM users 
-WHERE user_name = '김은수';
 
-INSERT INTO users (user_id, user_name, email, password, deptno, company_id)
-VALUES ('P_'||TO_CHAR(users_seq_ex.nextval, 'FM0000'), '김은수', 'ensu2015@gmail.com', 'rose112!!', 50, 'COM_0002');
+INSERT INTO users (user_id, user_name, email, password, deptno, company_id, role_code)
+VALUES ('M_0003', '파힘', 'samadi59@gmail.com', 'fahim11!!', 20, 'COM_0000','M');
 			
-SELECT * FROM DEPARTMENT d ;
+UPDATE users 
+SET role_code = 'P'
+WHERE USER_name = '김은수';
+
+ALTER TABLE users ADD role_code char(1);
+
+
+
+COMMIT;
+
+SELECT user_id, role_code FROM users WHERE user_id = 'P_0012';

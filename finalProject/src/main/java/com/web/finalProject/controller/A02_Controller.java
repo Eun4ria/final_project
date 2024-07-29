@@ -1,15 +1,18 @@
 package com.web.finalProject.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.web.finalProject.service.A02_Service;
 import com.web.finalProject.vo.Users;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -20,26 +23,33 @@ public class A02_Controller {
 	@Autowired(required=false)
 	private A02_Service service;
 	
-//회사메인-프로젝트 만들기	
+	
 	// http://localhost:4040/maincom
-	@GetMapping("maincom")
+	@PostMapping("maincom")
 	public String maincom() {
-		return "WEB-INF\\views\\a00_main_com.jsp";
+		return "WEB-INF\\views\\a00_main.jsp";
 	}
-//PM메인-팀 만들기
-	// http://localhost:4040/mainpm
-	@GetMapping("mainpm")
+	// http://localhost:4040/mainpmFrm
+	@PostMapping("mainpmFrm")
 	public String mainpm() {
 		return "WEB-INF\\views\\a00_main_pm.jsp";
 	}
-//팀멤버메인-작업위해
-	// http://localhost:4040/mainmem
-	@GetMapping("mainmem")
+	// http://localhost:4040/mainmemFrm
+	@PostMapping("mainmemFrm")
 	public String mainmem() {
-		return "WEB-INF\\views\\a00_main.jsp";
+		return "WEB-INF\\views\\a00_main_mem.jsp";
 	}
-
-//채팅Frm	
+	// http://localhost:4040/find_id
+	@GetMapping("find_id")
+	public String find_id() {
+		return "WEB-INF\\views\\a01_find_id.jsp";
+	}
+	// http://localhost:4040/find_pwd
+	@GetMapping("find_pwd")
+	public String find_pwd() {
+		return "WEB-INF\\views\\a01_find_pwd.jsp";
+	}
+	
 	// http://localhost:4040/chat
 		@GetMapping("chat")
 		public String chat() {
@@ -66,9 +76,9 @@ public class A02_Controller {
 		
 	
 	
-// 로그인
+// 로그인 처음 폼
 	// http://localhost:4040/signinFrm
-	@RequestMapping("signinFrm")
+	@GetMapping("signinFrm")
 	public String sign_in() {
 		return "WEB-INF\\views\\a02_sign_in.jsp";
 	}
@@ -81,38 +91,43 @@ public class A02_Controller {
 	           session.setAttribute("user_id", user.getUser_id());
 	           session.setAttribute("user_name", user.getUser_name());
 	           session.setAttribute("role_code", user.getRole_code());
-	         
-	           return "mainmem";
-	       } else {
-	           d.addAttribute("msg", service.loginCkMsg(login));
-	           return "WEB-INF\\views\\a02_sign_in.jsp";
-	       }
-	   }
-	   @RequestMapping("mainmem")
-	   public String mainPage(HttpServletRequest request) {
-	       HttpSession session = request.getSession(false);
-	       if (session != null && session.getAttribute("user_id") != null) {
-	           String role_code = (String) session.getAttribute("role_code");
+	           // 권한에 따라 리다이렉트
+	           System.out.println("Role code:" + user.getRole_code());
+
+	           String role_code = user.getRole_code();
 	           if ("C".equals(role_code)) {
-	               return "maincom";
+	               return "maincom"; // 회사 페이지
 	           } else if ("P".equals(role_code)) {
-	               return "mainpm";
+	               return "mainpmFrm"; // PM 페이지
 	           } else {
-	               return "mainmem";
-	           } 
+	               return "mainmemFrm"; // 일반 사용자 페이지
+	           }
 	       } else {
-	           return "signinFrm";
+	           d.addAttribute("errorMessage", "일치하는 회원이 없습니다");
+	           return "signinFrm"; // 로그인 페이지
 	       }
 	   }
-	   @PostMapping("signout")
-	   public String logout(HttpServletRequest request, HttpServletResponse response) {
-	       HttpSession session = request.getSession(false); // 세션이 존재하면 가져옴, 없으면 null 반환
-	       if (session != null) {
-	           session.invalidate(); // 세션 무효화
-	       }
-	       return "signinFrm"; // 로그인 페이지로
-	   }
-	
-	
+//	
+//	   @PostMapping("signout")
+//	   public String logout(HttpServletRequest request, HttpServletResponse response) {
+//	       HttpSession session = request.getSession(false); // 세션이 존재하면 가져옴, 없으면 null 반환
+//	       if (session != null) {
+//	           session.invalidate(); // 세션 무효화
+//	       }
+//	       return "signinFrm"; // 로그인 페이지로
+//	   }
+	@PostMapping("/logout")
+	public RedirectView logout(HttpServletRequest request, HttpServletResponse response) {
+	    // 세션 무효화 및 쿠키 삭제
+	    request.getSession().invalidate();
+	    Cookie cookie = new Cookie("JSESSIONID", null);
+	    cookie.setMaxAge(0);
+	    cookie.setPath("/");
+	    response.addCookie(cookie);
+
+	    // 로그인 페이지로 리다이렉트
+	    return new RedirectView("/signinFrm");
+	}
+
 
 }
