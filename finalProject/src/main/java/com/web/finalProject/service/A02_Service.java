@@ -30,5 +30,7 @@ public class A02_Service {
 		msg = dao.insertUser(ins)>0?"등록 성공":"등록 실패";
 		return msg;
 	}
+	
+	//채팅 리스트
 
 }

@@ -1,15 +1,17 @@
 package com.web.finalProject.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.web.finalProject.service.A02_Service;
+import com.web.finalProject.vo.ChatSch;
 import com.web.finalProject.vo.Users;
 
 import jakarta.servlet.http.Cookie;
@@ -23,7 +25,7 @@ public class A02_Controller {
 	@Autowired(required=false)
 	private A02_Service service;
 	
-	
+//메인 화면(Dash Board)	
 	// http://localhost:4040/maincom
 	@PostMapping("maincom")
 	public String maincom() {
@@ -39,23 +41,32 @@ public class A02_Controller {
 	public String mainmem() {
 		return "WEB-INF\\views\\a00_main_mem.jsp";
 	}
+	
+//아이디 찾기
 	// http://localhost:4040/find_id
 	@GetMapping("find_id")
 	public String find_id() {
 		return "WEB-INF\\views\\a01_find_id.jsp";
 	}
+//비밀번호 찾기
 	// http://localhost:4040/find_pwd
 	@GetMapping("find_pwd")
 	public String find_pwd() {
 		return "WEB-INF\\views\\a01_find_pwd.jsp";
 	}
 	
-	// http://localhost:4040/chat
-		@GetMapping("chat")
-		public String chat() {
-			return "WEB-INF\\views\\a02_chat.jsp";
-		}
-		
+// 채팅
+//	@Value("${socketServer}")
+//	private String socketServer;
+//	// http://localhost:4040/chat
+//	@RequestMapping("chat")
+//	public String chat(@ModelAttribute("sch") ChatSch sch, Model d) { 
+//		// boardSch의 모델명을 변경할 때.. 사용 옵션 : ModelAttribute
+//		d.addAttribute("socketServer", socketServer);
+//		d.addAttribute("blist", service.getChatList(sch));
+//		return "WEB-INF\\views\\a02_chat.jsp";
+//	}
+
 
 //사용자 등록
 	//사용자 처음 폼
@@ -82,7 +93,7 @@ public class A02_Controller {
 	public String sign_in() {
 		return "WEB-INF\\views\\a02_sign_in.jsp";
 	}
-	@RequestMapping("signin")
+	@PostMapping("signin")
 	   public String login(Users login, Model d, HttpServletRequest request) {
 	       int loginCk = service.loginCk(login);
 	       if (loginCk > 0) {
@@ -128,6 +139,10 @@ public class A02_Controller {
 	    // 로그인 페이지로 리다이렉트
 	    return new RedirectView("/signinFrm");
 	}
-
+//	// http://localhost:4040/logout
+//		@PostMapping("logout")
+//		public String logout() {
+//			return "WEB-INF\\views\\a02_logout.jsp";
+//		}
 
 }

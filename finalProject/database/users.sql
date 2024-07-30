@@ -12,8 +12,6 @@ CREATE TABLE users (
 DROP TABLE users;
 SELECT * FROM USERS;
 
-SELECT * FROM DEPARTMENT ;
-
 
 
 -- Users 시퀀스 생성
