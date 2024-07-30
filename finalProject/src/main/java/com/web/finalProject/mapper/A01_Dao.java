@@ -22,20 +22,29 @@ public interface A01_Dao {
 	int tempPwd(Users user);
 	
 	@Select("SELECT \r\n"
-			+ "    project_id AS project_id, \r\n"
-			+ "    task_id AS id, \r\n"
-			+ "    task_name AS text, \r\n"
-			+ "    start_date, \r\n"
-			+ "    (end_date - start_date) AS duration,\r\n"
-			+ "    priority,\r\n"
-			+ "    user_id AS \"user\",\r\n"
+			+ "    t.task_id AS id, \r\n"
+			+ "    t.task_name AS text, \r\n"
+			+ "    t.start_date, \r\n"
+			+ "    (t.end_date - t.start_date) AS duration,\r\n"
+			+ "    t.priority,\r\n"
+			+ "    u.user_name AS \"user\",\r\n"
 			+ "    CASE \r\n"
 			+ "        WHEN parent_id IS NULL THEN 1\r\n"
 			+ "        ELSE 0\r\n"
 			+ "    END AS open, -- TRUE FALSE 값으로 받기 위해 parent_id가 null일 경우 1, null이 아닐 경우 0\r\n"
 			+ "    NVL(parent_id, '0') AS parent -- parent_id가 null일 경우 0\r\n"
-			+ "FROM task\r\n"
+			+ "FROM task t\r\n"
+			+ "JOIN \r\n"
+			+ "    users u ON t.user_id = u.user_id\r\n"
 			+ "WHERE project_id=#{project_id}")
 	List<GanttTask> getGantt(@Param("project_id") String project_id);
+	
+	@Select("SELECT u.user_name AS name,\r\n"
+			+ " u.user_id AS id\r\n"
+			+ "FROM users u\r\n"
+			+ "JOIN team t ON u.user_id = t.user_id\r\n"
+			+ "WHERE t.project_id=#{project_id}")
+	List<Users> getUser(@Param("project_id") String project_id);
+	
 	
 }

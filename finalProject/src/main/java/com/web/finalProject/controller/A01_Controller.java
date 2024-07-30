@@ -103,6 +103,11 @@ public class A01_Controller {
 	public ResponseEntity<List<GanttTask>> getGantt(@RequestParam(value = "project_id", defaultValue = "PRO_0001") String project_id) {
 	    return ResponseEntity.ok(service.getGantt(project_id));
 	}
+	// http://223.26.198.130:4040/userList
+	@RequestMapping("userList")
+	public ResponseEntity<List<Users>> getUserList(@RequestParam(value = "project_id", defaultValue = "PRO_0001") String project_id) {
+	    return ResponseEntity.ok(service.getUser(project_id));
+	}
 	
 
 	

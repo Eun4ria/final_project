@@ -30,9 +30,12 @@ public class A01_Service {
     }
     
     public List<GanttTask> getGantt(String project_id){
-    	if(project_id==null) project_id="PRO_0001";
     	return dao.getGantt(project_id);
     }
+    
+    public List<Users> getUser(String project_id){
+    	return dao.getUser(project_id)
+;    }
 	
 	
 	

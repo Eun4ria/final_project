@@ -125,20 +125,23 @@
 		}},
 		{ name: "add", width: 40}
 	];
-
+	// 상세 팝업 섹션
 	gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
 		{name: "priority", height: 22, map_to: "priority", type: "select", options: gantt.serverList("priority")},
 		{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},
-		{name: "stage", height: 22, map_to: "stage", type: "select", options: gantt.serverList("stage")},
+		{name: "stage", height: 22, map_to: "stage", type: "select", options: gantt.sergrid_row_classverList("stage")},
 		{name: "time", type: "duration", map_to: "auto"}
 	];
 
-	gantt.templates.grid_row_class =
-		gantt.templates.task_row_class = function (start, end, task) {
-			if (task.$virtual)
-				return "summary-row"
-		};
+	// gantt.templates.grid_row_class =
+		
+	// 간트 작업 행 변경
+	gantt.templates.task_row_class = function (start, end, task) {
+		if (task.$virtual)
+			return "summary-row"
+	};
+	// 간트 작업 변경
 	gantt.templates.task_class = function (start, end, task) {
 		if (task.$virtual)
 			return "summary-bar";
@@ -147,7 +150,9 @@
 	gantt.init("gantt_here");
 	gantt.sort("start_date");
 	gantt.parse(tasks);
-
+	
+	
+	// 그룹 함수
 	function showGroups(listname) {
 		if (listname) {
 			gantt.groupBy({
