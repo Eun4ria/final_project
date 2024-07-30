@@ -1,9 +1,13 @@
 package com.web.finalProject.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.web.finalProject.vo.GanttTask;
 import com.web.finalProject.vo.Users;
 
 @Mapper
@@ -14,6 +18,24 @@ public interface A01_Dao {
 	
 	@Update("UPDATE USERS\r\n"
 			+ "SET PASSWORD = ''\r\n"
-			+ "WHERE USER_ID = 'P_0001' AND USER_NAME = '박민경' AND EMAIL = 'loverymin1213@gmail.com'")
-	int tempPwd();
+			+ "WHERE USER_ID = #{user_id} AND USER_NAME = #{user_name} AND EMAIL = #{email}")
+	int tempPwd(Users user);
+	
+	@Select("SELECT \r\n"
+			+ "    project_id AS project_id, \r\n"
+			+ "    task_id AS id, \r\n"
+			+ "    task_name AS text, \r\n"
+			+ "    start_date, \r\n"
+			+ "    (end_date - start_date) AS duration,\r\n"
+			+ "    priority,\r\n"
+			+ "    user_id AS \"user\",\r\n"
+			+ "    CASE \r\n"
+			+ "        WHEN parent_id IS NULL THEN 1\r\n"
+			+ "        ELSE 0\r\n"
+			+ "    END AS open, -- TRUE FALSE 값으로 받기 위해 parent_id가 null일 경우 1, null이 아닐 경우 0\r\n"
+			+ "    NVL(parent_id, '0') AS parent -- parent_id가 null일 경우 0\r\n"
+			+ "FROM task\r\n"
+			+ "WHERE project_id=#{project_id}")
+	List<GanttTask> getGantt(@Param("project_id") String project_id);
+	
 }

@@ -247,30 +247,36 @@
 	</div>
 	</div>
 	<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
 		gantt.plugins({
 			grouping: true
 		});
+		
 		// test data
 		var tasks = {
-			data: [
-				// id='작업id' text='작업명' start_date : '시작날짜' dutation : 업무기간, 우선순위 : 3~1 (lo~high), stage: 단계, user : 작업자, 'open'
-				{id: 1, text: "Task #1", start_date: "02-04-2023 00:00", duration: 3, priority: 3, stage: 1, user: 3, open: true, parent: 0},
-				{id: 5, text: "Task #1.1", start_date: "05-04-2023 00:00", duration: 4, parent: 1, open: true, priority: 1, stage: 1, user: 1},
-				{id: 6, text: "Task #1.2", start_date: "11-04-2023 00:00", duration: 6, parent: 1, open: true, priority: 2, stage: 2, user: 3},
-				{id: 2, text: "Task #2", start_date: "11-04-2023 00:00", duration: 2, priority: 1, stage: 3, user: 0, open: true, parent: 0},
-				{id: 7, text: "Task #2.1", start_date: "13-04-2023 00:00", duration: 2, parent: 2, open: true, priority: 3, stage: 2, user: 2},
-				{id: 3, text: "Task #3", start_date: "11-04-2023 00:00", duration: 6, priority: 2, stage: 2, user: 1, open: true, parent: 0},
-				{id: 8, text: "Task #3.1", start_date: "09-04-2023 00:00", duration: 3, parent: 3, open: true, priority: 1, stage: 1, user: 3},
-				{id: 9, text: "Task #3.2", start_date: "12-04-2023 00:00", duration: 2, parent: 3, open: true, priority: 3, stage: 3, user: 1},
-				{id: 10, text: "Task #3.3", start_date: "17-04-2023 00:00", duration: 4, parent: 3, open: true, priority: 2, stage: 2, user: 0}
-			], links: [ // type:1~3
+			data: 
+		       $.ajax({
+                     type : "get",
+                     url : "ganttList",
+                     async : true,
+                     dataType : "json",
+                     success : function(data) {
+                        console.log("데이터 출력");
+                        console.log(data.ganttList)
+                        gantttasks = data.ganttList;
+                        //gantt.parse(gantttasks);
+                     }error{
+						console.log(err)
+                     }
+                  })
+			, links: [ // type:1~3
 				{source: "1", target: "5", type: "0"},
 				{source: "5", target: "8", type: "0"},
 				{source: "3", target: "7", type: "0"},
 				{source: "6", target: "7", type: "0"},
 				{source: "2", target: "10", type: "0"}
-			]
-		};
+			] 
+		}
 		// 구분 단계
 		gantt.serverList("stage", [
 			{key: 1, label: "Planning"},
@@ -368,6 +374,7 @@
 	
 			}
 		}
+	});
 	
 	
 	</script>

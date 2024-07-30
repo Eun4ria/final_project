@@ -57,19 +57,40 @@
 	$(document).ready(function(){
 		
 		$("#idBtn").click(function() { 
-	        idFind();
+			var nameInput = document.querySelector('[name=user_name]');
+	        var name = nameInput.value;
+			var emailInput = document.querySelector('[name=email]');
+	        var email = emailInput.value;
+	        var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;	
+	        
+			if(name!=null&&name!=""){ // 이름 입력필드가 empty가 아닐 경우
+				if(email!=null&&email!=""){	// 이메일 입력필드가 empty가 아닐 경우
+			        if (emailPattern.test(email)) { // 모든 조건에 부합 할 경우
+			            idFind() // 아이디 찾기 전송 함수			            
+			        }else{ // 이메일 패턴 미일치 시
+			        	alert('올바른 이메일 주소를 입력해 주세요.');
+			            emailInput.focus();
+			        }				        
+				}else{ // 이메일 미입력 시	
+					alert("이메일을 입력하세요")	
+					emailInput.focus();
+				}				
+			}else{ // 이름 미입력 시
+				alert("이름을 입력하세요")
+				nameInput.focus();
+			}	        
 	    });
 		
-		
 	});
+    
 	function idFind() {
 	    $.ajax({
 	        url: "find_id",
 	        type:"POST",
 	        data: $("form").serialize(),
-	        success: function(id) {
-	            if(id=="해당 계정 정보 없습니다.") {
-					alert(id)
+	        success: function(result) {
+	            if(result=="해당 계정 정보 없습니다.") {
+					alert(result)
 	            } else{					
 	            	$("form").submit()	
 	            }
