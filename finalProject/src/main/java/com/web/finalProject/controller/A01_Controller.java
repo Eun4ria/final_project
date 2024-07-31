@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.web.finalProject.service.A01_Service;
 import com.web.finalProject.util.Util;
 import com.web.finalProject.vo.GanttTask;
+import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Users;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -92,22 +93,30 @@ public class A01_Controller {
 		return "";
 	}
 	
-	
+	// 간트 페이지
 	// http://223.26.198.130:4040/gantt
 	@GetMapping("gantt")
 	public String gantt(Users user) {		
 		return "WEB-INF\\views\\a01_ganttChart.jsp";
 	}
+	// 간트 조회
 	// http://223.26.198.130:4040/ganttList
 	@RequestMapping("ganttList")
 	public ResponseEntity<List<GanttTask>> getGantt(@RequestParam(value = "project_id", defaultValue = "PRO_0001") String project_id) {
 	    return ResponseEntity.ok(service.getGantt(project_id));
 	}
-	// http://223.26.198.130:4040/userList
-	@RequestMapping("userList")
-	public ResponseEntity<List<Users>> getUserList(@RequestParam(value = "project_id", defaultValue = "PRO_0001") String project_id) {
-	    return ResponseEntity.ok(service.getUser(project_id));
+	// 팀원 리스트
+	// http://223.26.198.130:4040/teamList
+	@RequestMapping("teamList")
+	public ResponseEntity<List<Users>> getTeamList(@RequestParam(value = "project_id", defaultValue = "PRO_0001") String project_id) {
+	    return ResponseEntity.ok(service.getTeam(project_id));
 	}
+	// project 생성
+	@PostMapping("insertProject")
+	public String insertProject(Project ins) {
+	    return service.insertProject(ins);
+	}
+	
 	
 
 	

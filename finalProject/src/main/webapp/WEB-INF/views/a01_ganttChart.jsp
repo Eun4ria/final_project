@@ -42,7 +42,7 @@
 	<!-- gantt -->
 	<script src="${path}/gantt_trial/codebase/dhtmlxgantt.js?v=8.0.9"></script>
 	<link rel="stylesheet" href="${path}/gantt_trial/codebase/dhtmlxgantt.css?v=8.0.9">
-	<link rel="stylesheet" href="${path}/gantt_trial/common/controls_styles.css?v=8.0.9">
+	<link rel="stylesheet" href="${path}/gantt_trial/samples/common/controls_styles.css?v=8.0.9">
 	
 <style>
 	html, body {
@@ -251,41 +251,57 @@
 		gantt.plugins({
 			grouping: true
 		});
+		   
+		// 페이지 로딩될 때 간트 조회
+		ajaxFun("ganttList")
 		
-		// 간트 차트 데이터 보기
-		$.ajax({
-			type: "post",
-		    url: "ganttList",
-		    data: { project_id: 'PRO_0001' },
-		    async: true,
-		    dataType: "json",
-		    success: function(data) { // data는 이미 배열형태
-		        console.log("간트 데이터 출력");
-		        console.log(data);        
-		 	  			 	  	
-		 	  	var tasks={
-	 	  			data: data.map(function(task) {
-	 	                return {
-	 	                    id: task.id,
-	 	                    text: task.text,
-	 	                    start_date: formatDate(task.start_date), // 날짜 형식 변환
-	 	                    duration: task.duration || 1, // duration 기본값 설정
-	 	                    priority: task.priority,
-	 	                    user: task.user,
-	 	                    open: task.open,
-	 	                    parent: task.parent
-	 	                };
-	 	            }),
-					links:[]
-		 	  	}		 	  	
-			 	// 간트에 데이터 적용
-		 	  	gantt.parse(tasks);
-			},
-			error:function(err){
-				console.log(err)
-			}
+		/* console.log("데이터 출력");
+        console.log(data.ganttList)
+        console.log("자원 출력");
+        console.log(data.resource)
+        gantttasks = data.ganttList;
+        resourcesStore.parse(data.resource);
+        gantt.parse(data.ganttList); */
+        
+		// ajax함수
+		function ajaxFun(url){
+			$.ajax({
+				type:"post",
+				url:url,
+				data:$("form").serialize(),
+				dataType:"json",
+				success: function(data) { // data는 이미 배열형태
+			        console.log("간트 데이터 출력");
+			        console.log(data);        
+			 	  			 	  	
+			 	  	var tasks={
+		 	  			data: data.map(function(task) {
+		 	                return {
+		 	                    id: task.id,
+		 	                    text: task.text,
+		 	                    start_date: formatDate(task.start_date), // 날짜 형식 변환
+		 	                    duration: task.duration || 1, // duration 기본값 설정
+		 	                    priority: task.priority,
+		 	                    user: task.user,
+		 	                    open: task.open,
+		 	                    parent: task.parent,
+		 	                    progress: task.progress || 0,
+		 	                    color:task.color,
+		 	                    textColor:task.textcolor
+		 	           
+		 	                };
+		 	            }),
+						links:[]
+			 	  	}				 	  	
+			 	  	
+			 	  	gantt.parse(tasks)
+				},
+				error:function(err){
+					console.log(err)
+				}
+			})
 			
-		})	
+		}
 		
 		// 날짜 포맷 변환 함수
 		function formatDate(dateStr) {
@@ -293,14 +309,13 @@
 		    return gantt.date.date_to_str(gantt.config.date_format)(date);
 		}
 		
+		
 		/*
 		// 일정 추가	
-		gantt.addTask({
-		    id:10,
-		    text:"Project #1",
-		    start_date:"02-09-2013",
-		    duration:28
-		});
+		
+		gantt.addTask(task, parentId, index)/////
+		task는 작업 객체이며, parentId는 부모 작업의 ID, index는 추가할 위치입니다.
+		
 		
 		var taskId = gantt.addTask({
 		    id:10,
@@ -311,10 +326,23 @@
 		 
 		
 		// 일정 수정
-		gantt.changeTaskId(10, 15); //changes the task's id '10 -> 15'
+		gantt.changeTaskId(이전아이디, 새로운 아이디); //changes the task's id '10 -> 15'
+		gantt.updateTask(taskId)
 		
 		// 일정 삭제
-		gantt.deleteTask(10); 
+		gantt.deleteTask(아이디); 
+		
+		// 라이트박스 닫기
+		gantt.hideLightbox()
+		
+		// 특정 날짜로 스크롤
+		gantt.scrollTo(date)
+		gantt.scrollTo(new Date());
+		
+		// 지정 작업의 id를 열어 하위작업 표시
+		gantt.open(taskId)
+		
+		gantt.close(taskId)
 		
 		// 컨펌 창
 		var box = gantt.confirm({
@@ -354,49 +382,76 @@
 		
 		// 구분 단계
 		gantt.serverList("stage", [
-			{key: 1, label: "계획"},
-			{key: 2, label: "개발"},
-			{key: 3, label: "테스트"}
+			{key: "계획", label: "계획"},
+			{key: "개발", label: "개발"},
+			{key: "테스트", label: "테스트"}
 		]);
-		// 역할자 리스트
+		gantt.init("gantt_here");
+		
+		// 역할자 리스트		
 		$.ajax({
 			type: "post",
-		    url: "userList",
+		    url: "teamList",
 		    data: { project_id: 'PRO_0001' },
 		    async: true,
 		    dataType: "json",
 		    success: function(data) { // data는 이미 배열형태
 		        console.log("users 데이터 출력");
-		        console.log(data);        
+		        console.log(data);      
 		 	  			 	  	
-		 	  	var users={
+		 	  	var users ={
 	 	  			data: data.map(function(user) {
 	 	                return {
 	 	                    key: user.id,
 	 	                    label: user.name
 	 	                };
 	 	            })
-		 	  	}		 	  				 	
-		 	  	gantt.serverList("user",users) // 간트에 데이터 적용
+		 	  	}		
+		 	  	console.log("####사용자 ###")
+		 	  	console.log(users)
+		 	  	gantt.serverList(users); // 간트에 데이터 적용
 			},
 			error:function(err){
 				console.log(err)
 			}
 		})
-		/*
+		
 		gantt.serverList("user", [
-			{key: 0, label: "N/A"},
-			{key: 1, label: "박민경"},
-			{key: 2, label: "김은수"},
-			{key: 3, label: "파힘"}
+			{key: "M_003", label: "N/A"},
+			{key:  "M_004", label: "박민경"},
+			{key:  "M_005", label: "김은수"},
+			{key:  "M_006", label: "파힘"}
 		]);
-		*/
+		
+		// data에 쓰이는 key값을 지정
 		// 우선순위 리스트
 		gantt.serverList("priority", [
-			{key: 1, label: "상"},
-			{key: 2, label: "중"},
-			{key: 3, label: "하"}
+			{key: "상", label: "상"},
+			{key: "중", label: "중"},
+			{key: "하", label: "하"}
 		]);
+		gantt.serverList("progress", [
+			{key: 0, label: "진행전"},
+			{key: 25, label: "초기"},
+			{key: 50, label: "중반"},
+			{key: 75, label: "후반"},
+			{key: 100, label: "진행완료"}
+		]); 
+		// 배경색 리스트
+		gantt.serverList("background", [
+		    {key: "red", label: "Red"},
+		    {key: "orange", label: "Orange"},
+		    {key: "yellow", label: "Yellow"},
+		    {key: "green", label: "Green"},
+		    {key: "blue", label: "Blue"},
+		    {key: "navy", label: "navy"},
+		    {key: "purple", label: "Purple"}
+		]);
+		gantt.serverList("textcolor", [
+		    {key: "black", label: "Black"},
+		    {key: "white", label: "White"}
+		]);
+		
 	
 		// end text data	
 		gantt.config.order_branch = true;
@@ -411,11 +466,14 @@
 				section_priority: 'Priority',
 				column_owner: 'Owner',
 				section_owner: 'Owner',
-				column_stage: 'Stage',
-				section_stage: 'Stage',
-				section_resources: 'Resources',
+				column_progress: 'Progress',
+				section_progress: 'Progress',
+				section_background: 'Background',
+				section_textcolor: 'Text color',
+				section_resources: 'Resources'
 			}
 		});
+		
 	
 		function byId(list, id) {
 			for (var i = 0; i < list.length; i++) {
@@ -424,7 +482,7 @@
 			}
 			return "";
 		}
-		// 간트 일정 컬럼
+		// 간트 메인 화면 상단 컬럼
 		gantt.config.columns = [
 			{ name: "text", label: "Task name", tree: true, width: '*' },
 			{ name: "priority", width: 80, align: "center", template: function (item) {
@@ -433,19 +491,19 @@
 			{ name: "owner", width: 80, align: "center", template: function (item) {
 				return byId(gantt.serverList('user'), item.user)
 			}},
-			{ name: "stage", width: 80, align: "center", template: function (item) {
-				return byId(gantt.serverList('stage'), item.stage)
-			}},
+			{ name: "progress", width: 80, align: "center", label: "Progress", width: '*' },
 			{ name: "add", width: 40}
-		];
-		// 일정상세 화면
+		];		
+		// 일정상세 화면에서의 label
 		gantt.config.lightbox.sections = [
 			{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
 			{name: "priority", height: 22, map_to: "priority", type: "select", options: gantt.serverList("priority")},
 			{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},
-			{name: "stage", height: 22, map_to: "stage", type: "select", options: gantt.serverList("stage")},
+			{name: "progress", height: 22, map_to: "progress", type: "select", options: gantt.serverList("progress")},
+			{name: "background", height: 22, map_to: "background", type: "select", options: gantt.serverList("background")},
+			{name: "textcolor", height: 22, map_to: "textcolor", type: "select", options: gantt.serverList("textcolor")},
 			{name: "time", type: "duration", map_to: "auto"}
-		];		
+		];	
 		
 		gantt.templates.grid_row_class =
 			gantt.templates.task_row_class = function (start, end, task) {
@@ -462,7 +520,9 @@
 		gantt.init("gantt_here");
 		gantt.sort("start_date");
 		gantt.parse(tasks);
-	
+		
+		
+		// 작업그룹화 함수
 		function showGroups(listname) {
 			if (listname) {
 				gantt.groupBy({

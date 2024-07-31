@@ -285,6 +285,11 @@
             <div class="container-fluid p-0">
 
                <h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
+               
+               <!-- 프로젝트 생성 버튼 -->
+               <button class="btn btn-success" data-toggle="modal" data-target="#ModalCenter"
+	        type="button">프로젝트 생성</button>
+	        
             <div class="row mb-4">
         <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
           <div class="card">
@@ -647,36 +652,55 @@
 
             </div>
          </main>
-
-         <footer class="footer">
-            <div class="container-fluid">
-               <div class="row text-muted">
-                  <div class="col-6 text-start">
-                     <p class="mb-0">
-                        <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> &copy;
-                     </p>
-                  </div>
-                  <div class="col-6 text-end">
-                     <ul class="list-inline">
-                        <li class="list-inline-item">
-                           <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
-                        </li>
-                        <li class="list-inline-item">
-                           <a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
-                        </li>
-                        <li class="list-inline-item">
-                           <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
-                        </li>
-                        <li class="list-inline-item">
-                           <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
-                        </li>
-                     </ul>
-                  </div>
-               </div>
-            </div>
-         </footer>
+<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLongTitle">Create Project</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<form id="frm02" class="form"  method="post">
+		<input type="hidden" name="company_id" value="COM_0001"/>
+	     <div class="row">
+	      <div class="col">	 
+	      <span>Project Name</span>     	      
+	        <input type="text" class="form-control" name="project_name">
+	      </div>
+	     </div>
+	     <div class="row">
+	      <div class="col">
+	      <span>Extra Comment</span>
+	      	<textarea name="etc" rows="3" cols="10" class="form-control"></textarea>
+	      </div>
+	     </div>
+	     <div class="row">
+	      <div class="col">
+	      <span>Start Date</span>
+	        <input type="date" class="form-control" placeholder="직책명 입력" name="start_date">
+	      </div>
+	     </div>
+	     <div class="row">
+	      <div class="col">
+	      <span>End Date</span>
+	        <input type="date" class="form-control" placeholder="직책명 입력" name="end_date">
+	      </div>
+	     </div>	     
+	    </form> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success">regist</button>
+      </div>
+    </div>
+  </div>
+</div>
+         
       </div>
    </div>
+   
 
    <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
 

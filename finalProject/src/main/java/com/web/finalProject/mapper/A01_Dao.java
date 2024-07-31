@@ -2,12 +2,14 @@ package com.web.finalProject.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.web.finalProject.vo.GanttTask;
+import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Users;
 
 @Mapper
@@ -27,7 +29,10 @@ public interface A01_Dao {
 			+ "    t.start_date, \r\n"
 			+ "    (t.end_date - t.start_date) AS duration,\r\n"
 			+ "    t.priority,\r\n"
-			+ "    u.user_name AS \"user\",\r\n"
+			+ "    t.backgroundcolor AS color,\r\n"
+			+ "    t.textcolor,\r\n"
+			+ "    t.progress,\r\n"
+			+ "    u.user_id AS \"user\",\r\n"
 			+ "    CASE \r\n"
 			+ "        WHEN parent_id IS NULL THEN 1\r\n"
 			+ "        ELSE 0\r\n"
@@ -44,7 +49,14 @@ public interface A01_Dao {
 			+ "FROM users u\r\n"
 			+ "JOIN team t ON u.user_id = t.user_id\r\n"
 			+ "WHERE t.project_id=#{project_id}")
-	List<Users> getUser(@Param("project_id") String project_id);
+	List<Users> getTeam(@Param("project_id") String project_id);
+	
+	@Insert("INSERT INTO project (project_id, project_name, etc, start_date, end_date, create_date, company_id)\r\n"
+			+ "VALUES ('PRO_'||TO_CHAR(project_seq.nextval, 'FM0000'),"
+			+ " #{project_name}, #{etc}, TO_DATE(#{start_date}, 'YYYY-MM-DD'), TO_DATE(#{end_date}, 'YYYY-MM-DD'), sysdate, #{company_id})")
+	int insertProject(Project ins);
+	
+	
 	
 	
 }

@@ -13,6 +13,27 @@ public class GanttTask {
 	private String user;
 	private boolean open;
 	private String parent;
+	private String color;
+	private String textcolor;
+	private int progress;
+	public int getProgress() {
+		return progress;
+	}
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
+	public String getTextcolor() {
+		return textcolor;
+	}
+	public void setTextcolor(String textcolor) {
+		this.textcolor = textcolor;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
 	public String getProject_id() {
 		return project_id;
 	}

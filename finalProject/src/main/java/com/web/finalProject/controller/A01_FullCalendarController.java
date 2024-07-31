@@ -38,7 +38,7 @@ public class A01_FullCalendarController {
 		return ResponseEntity.ok(
 				new MsgList( service.insertCalendar(ins), 
 						     service.getCalendarList()));
-		// new MsgList( "등록성공", List<Calendar>)  메시지와 캘리더리스트
+		// new MsgList( "등록성공", List<Calendar>)  메시지와 캘린더리스트
 	}
 	@PostMapping("updateCalendar")
 	public ResponseEntity<?> updateCalendar(Calendar upt){
