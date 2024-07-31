@@ -1,27 +1,25 @@
 package com.web.finalProject.vo;
 
+import java.util.Date;
+
 public class ChatSch {
-	/*
-	주요 속성 : 검색-제목(subject),작성자(owner_id)  
-	기본페이지처리 - 전체데이터건수(count), 한번에 보여줄 데이터 건수(pageSize), 
-		총페이지수(pageCount), 현재 클릭한 페이지 번호(curPage),
-		시작번호(start), 마지막번호(end)
-	페이지블럭처리 - 한번에 보여줄 block의 크기(blockSize), block 시작번호(startBlock),
-				 block 마지막번호(endBlock)
-* */
-	private String chatroom_id;
-	private String chatroom_name;
-	private String owner_id;
-	private String chatmem_id;
-	private int count;
-	private int pageSize;
-	private int pageCount;
-	private int curPage;
-	private int start;
-	private int end;
-	private int blockSize;
-	private int startBlock;
-	private int endBlock;
+	
+	private int cnt;
+	private int level;
+	
+	private String user_id;
+	private String user_name;
+	private String email;
+	
+	
+    private String chatroom_id;
+    private String chatroom_name;
+    private String owner_id;
+    private String chatmem_id;
+    private String ban_status;
+    private Date ban_Date;
+    private Date uptDate;
+    private String project_id;
 	/**
 	 * 
 	 */
@@ -30,36 +28,67 @@ public class ChatSch {
 		// TODO Auto-generated constructor stub
 	}
 	/**
+	 * @param cnt
+	 * @param level
+	 * @param user_id
+	 * @param user_name
+	 * @param email
 	 * @param chatroom_id
 	 * @param chatroom_name
 	 * @param owner_id
 	 * @param chatmem_id
-	 * @param count
-	 * @param pageSize
-	 * @param pageCount
-	 * @param curPage
-	 * @param start
-	 * @param end
-	 * @param blockSize
-	 * @param startBlock
-	 * @param endBlock
+	 * @param ban_status
+	 * @param ban_Date
+	 * @param uptDate
+	 * @param project_id
 	 */
-	public ChatSch(String chatroom_id, String chatroom_name, String owner_id, String chatmem_id, int count,
-			int pageSize, int pageCount, int curPage, int start, int end, int blockSize, int startBlock, int endBlock) {
+	public ChatSch(int cnt, int level, String user_id, String user_name, String email, String chatroom_id,
+			String chatroom_name, String owner_id, String chatmem_id, String ban_status, Date ban_Date, Date uptDate,
+			String project_id) {
 		super();
+		this.cnt = cnt;
+		this.level = level;
+		this.user_id = user_id;
+		this.user_name = user_name;
+		this.email = email;
 		this.chatroom_id = chatroom_id;
 		this.chatroom_name = chatroom_name;
 		this.owner_id = owner_id;
 		this.chatmem_id = chatmem_id;
-		this.count = count;
-		this.pageSize = pageSize;
-		this.pageCount = pageCount;
-		this.curPage = curPage;
-		this.start = start;
-		this.end = end;
-		this.blockSize = blockSize;
-		this.startBlock = startBlock;
-		this.endBlock = endBlock;
+		this.ban_status = ban_status;
+		this.ban_Date = ban_Date;
+		this.uptDate = uptDate;
+		this.project_id = project_id;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getChatroom_id() {
 		return chatroom_id;
@@ -85,59 +114,32 @@ public class ChatSch {
 	public void setChatmem_id(String chatmem_id) {
 		this.chatmem_id = chatmem_id;
 	}
-	public int getCount() {
-		return count;
+	public String getBan_status() {
+		return ban_status;
 	}
-	public void setCount(int count) {
-		this.count = count;
+	public void setBan_status(String ban_status) {
+		this.ban_status = ban_status;
 	}
-	public int getPageSize() {
-		return pageSize;
+	public Date getBan_Date() {
+		return ban_Date;
 	}
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
+	public void setBan_Date(Date ban_Date) {
+		this.ban_Date = ban_Date;
 	}
-	public int getPageCount() {
-		return pageCount;
+	public Date getUptDate() {
+		return uptDate;
 	}
-	public void setPageCount(int pageCount) {
-		this.pageCount = pageCount;
+	public void setUptDate(Date uptDate) {
+		this.uptDate = uptDate;
 	}
-	public int getCurPage() {
-		return curPage;
+	public String getProject_id() {
+		return project_id;
 	}
-	public void setCurPage(int curPage) {
-		this.curPage = curPage;
-	}
-	public int getStart() {
-		return start;
-	}
-	public void setStart(int start) {
-		this.start = start;
-	}
-	public int getEnd() {
-		return end;
-	}
-	public void setEnd(int end) {
-		this.end = end;
-	}
-	public int getBlockSize() {
-		return blockSize;
-	}
-	public void setBlockSize(int blockSize) {
-		this.blockSize = blockSize;
-	}
-	public int getStartBlock() {
-		return startBlock;
-	}
-	public void setStartBlock(int startBlock) {
-		this.startBlock = startBlock;
-	}
-	public int getEndBlock() {
-		return endBlock;
-	}
-	public void setEndBlock(int endBlock) {
-		this.endBlock = endBlock;
+	public void setProject_id(String project_id) {
+		this.project_id = project_id;
 	}
 	
+	
+    
+    
 }

@@ -1,9 +1,13 @@
 package com.web.finalProject.service;
 
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.finalProject.mapper.A02_Dao;
+import com.web.finalProject.vo.ChatSch;
 import com.web.finalProject.vo.Users;
 
 @Service
@@ -24,6 +28,7 @@ public class A02_Service {
 		return dao.login(user);
 	}
 	
+	
 	//회원가입
 	public String insertUser(Users ins) {
 		String msg=null;
@@ -31,6 +36,10 @@ public class A02_Service {
 		return msg;
 	}
 	
-	//채팅 리스트
+	// 채팅 리스트
+	public List<ChatSch> getmemList(ChatSch sch){
+		if(sch.getProject_id()==null) sch.setProject_id("");
+		return dao.getmemList(sch);
+	}
 
 }

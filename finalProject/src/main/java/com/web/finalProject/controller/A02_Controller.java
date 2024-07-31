@@ -1,11 +1,9 @@
 package com.web.finalProject.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
@@ -55,17 +53,6 @@ public class A02_Controller {
 		return "WEB-INF\\views\\a01_find_pwd.jsp";
 	}
 	
-// 채팅
-//	@Value("${socketServer}")
-//	private String socketServer;
-//	// http://localhost:4040/chat
-//	@RequestMapping("chat")
-//	public String chat(@ModelAttribute("sch") ChatSch sch, Model d) { 
-//		// boardSch의 모델명을 변경할 때.. 사용 옵션 : ModelAttribute
-//		d.addAttribute("socketServer", socketServer);
-//		d.addAttribute("blist", service.getChatList(sch));
-//		return "WEB-INF\\views\\a02_chat.jsp";
-//	}
 
 
 //사용자 등록
@@ -144,5 +131,21 @@ public class A02_Controller {
 //		public String logout() {
 //			return "WEB-INF\\views\\a02_logout.jsp";
 //		}
+	
+	// 채팅
+	//채팅 조회
+	// http://localhost:4040/chatmemListstart
+	@RequestMapping("chatmemListstart")
+	public String memList() {
+		return "WEB-INF\\views\\a02_chat.jsp";
+	}
+	// 채팅 검색
+	// http://localhost:4040/chatmemlist
+	@RequestMapping("chatmemlist")
+	public String memList(ChatSch sch, Model d) {
+		d.addAttribute("sch", service.getmemList(sch));
+		return "jasonView";
+	}
+	
 
 }

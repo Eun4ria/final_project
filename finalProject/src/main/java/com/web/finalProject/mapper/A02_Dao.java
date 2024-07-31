@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.web.finalProject.vo.ChatSch;
@@ -29,13 +30,32 @@ public interface A02_Dao {
 			+ "VALUES (#{role_code}||'_'||TO_CHAR(users_seq_ex.nextval, 'FM0000'), #{user_name}, #{email}, #{password}, #{deptno}, #{company_id}, #{role_code}) ")
 	int insertUser(Users ins);
 	
-//채팅 리스트 
-	@Select("SELECT count(*) FROM CHAT \r\n"
-			+ "WHERE OWNER_ID =#{user_id}")
-	int getChatCount(ChatSch sch);
-	
-	@Select("")
-	List<ChatSch> getChatList(ChatSch sch);
+////채팅 리스트-프젝에 속한 모든 팀원
+	@Select("SELECT \r\n"
+			+ "    u.USER_ID,\r\n"
+			+ "    u.USER_NAME\r\n"
+			+ "FROM \r\n"
+			+ "    TEAM t\r\n"
+			+ "JOIN \r\n"
+			+ "    USERS u ON t.USER_ID = u.USER_ID\r\n"
+			+ "WHERE \r\n"
+			+ "    t.PROJECT_ID = '%'||#{project_id}||'%' \r\n")
+	List<ChatSch> getmemList(ChatSch sch);
+//	
+////채팅 리스트-로그인 유저가 속한 팀채팅
+//	@Select("SELECT \r\n"
+//			+ "    c.CHATROOM_ID,\r\n"
+//			+ "    c.CHATROOM_NAME,\r\n"
+//			+ "    c.OWNER_ID,\r\n"
+//			+ "    c.UPTDATE\r\n"
+//			+ "FROM \r\n"
+//			+ "    CHAT c\r\n"
+//			+ "WHERE \r\n"
+//			+ "    c.OWNER_ID = #{user_id}\r\n"
+//			+ "   OR c.CHATMEM_ID = #{user_id}\r\n"
+//			+ "ORDER BY \r\n"
+//			+ "    c.UPTDATE DESC")
+//	List<Chat> getchatroomList(@Param("user_id") String user_id);
 	
 
 }

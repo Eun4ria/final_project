@@ -258,76 +258,12 @@
 		$('#action_menu_btn').click(function(){
 			$('.action_menu').toggle();
 		});
-		
+
 	});
 	
 </script>
 	<script type="text/javascript">
-var wsocket=null;
-$(document).ready(function(){
-	$("#id").keyup(function(){
-		if(event.keyCode == 13){
-			ws_conn()
-		}
-	})
-	
-	function ws_conn(){
-		var socketServer = '${socketServer}'.replace(/^"|"$/g,'')
-		//alert(socketServer)
-		//var socketServer = 'ws:localhost:3030/chat'
-		wsocket = new WebSocket(socketServer)
-		//console.log(wsocket)
-		wsocket.onopen=function(evt){
-			//console.log(evt)
-			wsocket.send($("${user_name}").val()+":접속하셨습니다!")
-		}
-		// 전송한 메시지를 받는 메서드 선언. 서버단에서 ws.sendMessage(message)로 보냈을 때
-		// 받는 처리하는 메서드..
-		wsocket.onmessage = function(evt){
-			revMsg(evt.data)
-		}
-		wsocket.onclose =function(){
-			wsocket.close()
-		}			
-	}
-	
-	// sndBtn msg
-	$("#sndBtn").click(function(){
-		sendMsg()
-	})
-	$("#msg").keyup(function(){
-		if(event.keyCode==13){
-			sendMsg()
-		}
-	})
-});
-function sendMsg(){
-	wsocket.send($("#id").val()+":"+$("#msg").val())
-	$("#msg").val("")		
-}
-// 최대 크기 함수 위에 전역변수로 선언..
-var mx = 0
-function revMsg(msg){
-	// 1. 보내는 메시지 오른쪽, 받는 메시지 왼쪽 정렬 처리..
-	var alignOpt = "left"
-	var msgArr = msg.split(":") // 사용자명:메시지  구분하여 처리
-	var sndId = msgArr[0]// 보내는 사람 메시지 id
-	if($("#id").val() == sndId){
-		// 보내는 사람과 받는 사람의 아이디가 동일 하면 현재 접속한 사람이 보낸 메시지. ==> 정렬 오른쪽
-		alignOpt = "right"
-		msg = msgArr[1]  // 내가 보낸 메시지이기에 id삭제..
-	}
-	// 정렬 처리된 메시지 
-	var msgObj = $("<div></div>").text(msg).attr("align", alignOpt).css("width",$("#chatArea").width()-20)
-	$("#chatMessageArea").append(msgObj)
-	//$("#chatMessageArea").append(msg+"<br>")
-	// 2. 메시지 스크롤 처리..(최하단에 있는 메시지 내용 확인할 수 있게 자동 스크롤 처리..)
-	//   1) 전체 해당 데이터의 높이를 구하기
-	// 	 2) 포함하고 있는 부모 객체(#chatArea)에서 스크롤 기능 메서드로 스크롤되게 처리 scrollTop()
-	var height = parseInt($("#chatMessageArea").height())
-	mx += height + 20
-	$("#chatArea").scrollTop(mx)
-	
+
 </script>
 	</head>
 	<!--Coded With Love By Mutiullah Samim-->
@@ -336,26 +272,46 @@ function revMsg(msg){
 			<div class="row justify-content-center h-100">
 				<div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
 					<div class="card-header">
+						<form id="frm01" class="form"  method="post">
 						<div class="input-group">
-							<input type="text" placeholder="Search..." name="" class="form-control search">
-							<div class="input-group-prepend">
-								<span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
-							</div>
+							<input placeholder="Search..." name="user_id" value="${param.user_id}" class="form-control search">
+							
+							  <button class="input-group-text search_btn" type="submit" ><i class="fas fa-search"></i></button>
+							
+						
+							
 						</div>
+						</form>
 					</div>
 <!-- 채팅 왼쪽 리스트 -->
 					<div class="card-body contacts_body">
-				<%--		<div class="d-flex bd-highlight">
-								<div class="img_cont">
-									<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-									<span class="online_icon"></span>
-								</div>
+						<div class="d-flex bd-highlight">
+								
 								<div class="user_info">
 									<span><c:out value="${sessionScope.user_name}" /></span>
 								</div>
+								<table>
+								<col width="25%">
+			   					<col width="75%">
+									<thead>
+									<tr>
+									<th>프로필</th>
+									<th>이름</th>
+									</tr>
+									</thead>
+									<tbody>
+									
+									</tbody>
+								</table>
+								<script type="text/javascript">
+									function detail(user_id){
+										location.href="users100.do?store_id="+store_id
+									}
+								</script>
 								
+							
 							</div>
-						 --%>
+						
 						 	
 							
 					</div>
