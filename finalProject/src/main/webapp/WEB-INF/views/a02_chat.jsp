@@ -286,31 +286,29 @@
 <!-- 채팅 왼쪽 리스트 -->
 					<div class="card-body contacts_body">
 						<div class="d-flex bd-highlight">
-								
-								<div class="user_info">
-									<span><c:out value="${sessionScope.user_name}" /></span>
-								</div>
-								<table>
-								<col width="25%">
-			   					<col width="75%">
-									<thead>
-									<tr>
-									<th>프로필</th>
-									<th>이름</th>
-									</tr>
-									</thead>
-									<tbody>
-									
-									</tbody>
-								</table>
-								<script type="text/javascript">
-									function detail(user_id){
-										location.href="users100.do?store_id="+store_id
-									}
-								</script>
-								
-							
+							<div class="user_info" style="padding-right:6rem;">
+								<span><c:out value="${sessionScope.user_name}" /></span>
 							</div>
+						
+							<div style="display:block"  >
+							<button type="button" id="memList" style="background-color:transparent;" >팀원</button>
+							<button type="button" id="chatList" style="background-color:transparent;" >채팅</button>
+							</div>
+						</div>
+						
+						<table>
+							<tr>
+								<td></td>
+							</tr>
+						</table>
+						<script type="text/javascript">
+							function detail(user_id){
+								location.href="users100.do?store_id="+store_id
+							}
+						</script>
+						
+				
+				
 						
 						 	
 							
@@ -326,7 +324,7 @@
 									<span class="online_icon"></span>
 								</div>
 								<div class="user_info">
-									<span><c:out value="${sessionScope.user_name}" /></span>
+									<span><c:out value="${sessionScope.chatroom_name}" /></span>
 								</div>
 								
 							</div>

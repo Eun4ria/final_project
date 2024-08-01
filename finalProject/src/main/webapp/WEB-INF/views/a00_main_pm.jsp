@@ -135,7 +135,7 @@
 							</div>
 						</li>
 						<li class="nav-item ">
-							<a class="nav-icon dropdown-toggle" href="chatList" id="messagesDropdown">
+							<a class="nav-icon dropdown-toggle" href="chatmemListstart" id="messagesDropdown">
 									<i class="align-middle" data-feather="message-square"></i>
 							</a>
 							
