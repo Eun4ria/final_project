@@ -102,8 +102,9 @@ public class A02_Controller {
 	           }
 	       } else {
 	           d.addAttribute("errorMessage", "일치하는 회원이 없습니다");
-	           return "signinFrm"; // 로그인 페이지
+	          
 	       }
+	       return "WEB-INF\\views\\a02_sign_in.jsp";
 	   }
 //	
 //	   @PostMapping("signout")
