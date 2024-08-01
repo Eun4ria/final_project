@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +30,8 @@ public class A01_Controller {
 	
 	// http://223.26.198.130:4040/main
 	@GetMapping("main")
-    public String main(HttpServletRequest request, Model model) {
-        model.addAttribute("currentUrl", request.getRequestURI());
+    public String main(HttpServletRequest request, Model d) {
+        d.addAttribute("currentUrl", request.getRequestURI());
         return "WEB-INF\\views\\a00_main_pm.jsp";
     }
 	// http://223.26.198.130:4040/sideBar
@@ -77,8 +78,7 @@ public class A01_Controller {
  	public String find_id_result(Users user, Model d) { 
  		d.addAttribute("result", service.find_id(user));
  		return "WEB-INF\\views\\a01_find_id_result.jsp"; 
- 	}
-    
+ 	}    
  	
 	// 비밀번호 찾기 폼
 	// http://223.26.198.130:4040/find_pwd
@@ -88,11 +88,10 @@ public class A01_Controller {
     }
 	// http://223.26.198.130:4040/find_pwd
 	@PostMapping("temp_pwd")
-	public String temp_pwd(Users user) {
-		
+	public String temp_pwd(Users user) {		
 		return "";
 	}
-	
+			
 	// 간트 페이지
 	// http://223.26.198.130:4040/gantt
 	@GetMapping("gantt")
@@ -112,9 +111,11 @@ public class A01_Controller {
 	    return ResponseEntity.ok(service.getTeam(project_id));
 	}
 	// project 생성
+	// http://223.26.198.130:4040/insertProject
 	@PostMapping("insertProject")
-	public String insertProject(Project ins) {
-	    return service.insertProject(ins);
+	public String insertProject(Project ins, Model d) {
+		d.addAttribute("msg", service.insertProject(ins));	
+		return "WEB-INF\\views\\a00_main_pm.jsp";
 	}
 	
 	

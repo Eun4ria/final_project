@@ -54,6 +54,14 @@
    <link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 <%--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
+<script>
+	$(document).ready(function(){
+		var msg = "${msg}"
+		if(msg!=""){
+			alert(msg)
+		}
+	});
+</script>
 
 </head>
 
@@ -662,7 +670,7 @@
         </button>
       </div>
       <div class="modal-body">
-		<form id="frm02" class="form"  method="post">
+		<form id="modalFrm" class="form"  method="post" action="insertProject">
 		<input type="hidden" name="company_id" value="COM_0001"/>
 	     <div class="row">
 	      <div class="col">	 
@@ -687,20 +695,25 @@
 	      <span>End Date</span>
 	        <input type="date" class="form-control" placeholder="직책명 입력" name="end_date">
 	      </div>
-	     </div>	     
+	     </div>	  
+	     <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" id="regBtn" class="btn btn-success">regist</button>        
+      </div>   
 	    </form> 
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success">regist</button>
-      </div>
+      
     </div>
   </div>
 </div>
          
       </div>
    </div>
-   
+   <script>
+   $("#regBtn").click(function(){
+		("#modalFrm").submit()				
+	}); 
+   </script>
 
    <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
 
