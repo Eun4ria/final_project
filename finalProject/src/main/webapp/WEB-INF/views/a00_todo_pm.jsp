@@ -135,9 +135,9 @@
 							</div>
 						</li>
 						<li class="nav-item ">
-							<span class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.project_i}')" id="messagesDropdown">
+							<a class="nav-icon dropdown-toggle" href="chatmemListstart" id="messagesDropdown">
 									<i class="align-middle" data-feather="message-square"></i>
-							</span>
+							</a>
 							
 						</li>
 						<li class="nav-item dropdown">
@@ -146,7 +146,7 @@
               </a>
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                <img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> <span class="text-dark">Welcome, PM_${user_name}</span>
+                <img src="${path}/adminkit-3.1.0/static/img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">Welcome, PM_${user_name}</span>
               </a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
@@ -209,7 +209,6 @@
                     <tr>
                       <td>
                         <div class="d-flex px-2 py-1">
-                      
                           <div>
                             <img src="${path}/material-dashboard-2/assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm me-3" alt="xd">
                           </div>
@@ -611,12 +610,6 @@
 
 	<script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
 
-<script>
-
-function goChat(user_id){
-location.href="chatmemListstart?user_id="+user_id
-}
-</script>
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {

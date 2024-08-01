@@ -78,11 +78,10 @@ $(document).ready(function() {
    var errorMessage = "${errorMessage}";
    if (errorMessage) {
        alert(errorMessage);
-<<<<<<< HEAD
+
        location.href="signinFrm";
-=======
-       locatin.href="signinFrm"
->>>>>>> branch 'final_eun' of https://github.com/Eun4ria/final_project.git
+
+      
    }
    });
 </script>

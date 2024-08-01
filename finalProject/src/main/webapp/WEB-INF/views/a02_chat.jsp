@@ -260,59 +260,117 @@
 		});
 
 	});
-	
-</script>
-	<script type="text/javascript">
 
-</script>
+	$(document).ready(function(){
+		/* $("#regBtn").click(function(){
+			location.href="usersInsertFrm.do"
+		}); */
+		// 첫 로딩 시
+	    userSch();
+	    
+	 	// 엔터눌러도 submit처리되지 않게 하기 위함
+/*		$("form").on("keydown",function(event){
+			if(event.key === "Enter"){
+				event.preventDefault();
+				return false;
+			}
+		})
+	*/
+	 	// 검색처리 event enter입력 시 
+		$("[name=user_name]").keyup(function(event){
+			if(event.key === "Enter"){
+				userSch()
+			}
+		})
+	    // 검색버튼 클릭 시
+	    $("#schBtn").click(function() {
+	    	userSch()
+	    });  
+		
+		// 서치 버튼 클릭 시 
+	    function userSch() {
+	        $.ajax({
+	            url: "chatmemlist",
+	            data: $("form").serialize(),
+	            dataType: "json",
+	            success: function(data) {
+	                renderTable(data.sch); // 모델데이터로 지정한 sch의 데이터를 전달
+	            },
+	            error: function(err) {
+	                console.log(err);
+	            }
+	        });
+	    }
+		
+	/*	// 테이블 데이터
+	    function renderTable(data) {
+	        var addHTML = "";
+	        $(data).each(function(idx, sch) {
+	            addHTML += "<tr class='text-center' ondblclick=\"detail('" +sch.user_name+ "')\">";
+	            addHTML += "<td >" + (idx+1)     + "</td>";
+	            addHTML += "<td align='left'>" + sch.user_name+ "</td>";
+	            addHTML += "</tr>";
+	        });
+	        $("tbody").html(addHTML);
+	    }
+  */
+	});
+	</script>
 	</head>
-	<!--Coded With Love By Mutiullah Samim-->
-	<body>
+	<!--Coded With Love By Mutiullah Samim
+	
+	<c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
+    <script>
+        alert("로그인이 필요한 서비스입니다");
+        location.href = 'signinFrm';
+    </script>
+</c:if>-->
+<body>
 		<div class="container-fluid h-100">
 			<div class="row justify-content-center h-100">
 				<div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
 					<div class="card-header">
-						<form id="frm01" class="form"  method="post">
+						<form id="frm01" class="form" method="post">
 						<div class="input-group">
-							<input placeholder="Search..." name="user_id" value="${param.user_id}" class="form-control search">
-							
-							  <button class="input-group-text search_btn" type="submit" ><i class="fas fa-search"></i></button>
-							
+							<input placeholder="Search..." name="user_name" value="${param.user_name}" class="form-control search">
+							 <button id="schBtn" class="input-group-text search_btn" type="submit" ><i class="fas fa-search"></i></button>
 						
-							
 						</div>
 						</form>
 					</div>
 <!-- 채팅 왼쪽 리스트 -->
 					<div class="card-body contacts_body">
 						<div class="d-flex bd-highlight">
-							<div class="user_info" style="padding-right:6rem;">
-								<span><c:out value="${sessionScope.user_name}" /></span>
+							<div class="user_info" style="padding-right:7rem;">
+								<span style="font-size:0.9rem;"><c:out value="${sessionScope.user_name}" /></span>
 							</div>
 				
-							<div style="display:block"  >
-							<button type="button" id="memList" style="background-color:transparent;" >팀원</button>
-							<button type="button" id="chatList" style="background-color:transparent;" >채팅</button>
-							</div>
+							<div >
+							  <button type="button" id="memList" class="active" onclick="showMem()">팀원</button>
+                              <button type="button" id="chatList" onclick="showChatRoom()">채팅</button></div>
 						</div>
 						
 						<table>
-							<tr>
-								<td></td>
-							</tr>
-						</table>
-						<script type="text/javascript">
-							function detail(user_id){
-								location.href="users100.do?store_id="+store_id
-							}
-						</script>
+						 <col width="30%">
+   						 <col width="70%">
+						 <tbody>
+					    	<c:forEach var="mem" items="${memList}">
+					    	<tr style="" ondblclick="goDetail('${mem.user_id}')">
+					    	<td>사진</td>
+					    	<td style="">${mem.user_id}</td>
+					    	</tr>
+					    	</c:forEach>
+					     </tbody>
+						</table>  
 						
-				
-				
+	<script type="text/javascript">
+		function goDetail(user_id){
+			location.href="mainpmFrm"
+		}
+	</script>  
 						
-						 	
-							
-					</div>
+	</div>
+<!-- 오른쪽 채팅 창 -->
 					<div class="card-footer"></div>
 				</div></div>
 				<div class="col-md-8 col-xl-6 chat">
@@ -348,9 +406,11 @@
 									<i class="fas fa-ban"></i> Block
 								</form>
 								<form method="post" action="mainpmFrm">
-									<input type="submit" id="exitBtn" hidden >
-									<i class="fas fa-sign-out-alt">&nbsp;&nbsp;Exit</i>
+									
+									<button type="submit" id="exitBtn" style="background-color:transparent; border:none; color:white"><i class="fas fa-sign-out-alt"></i> Exit</button>
+									
 								</form>
+							
 								</div>	
 								
 								
@@ -365,10 +425,7 @@
 								
 								<div class="input-group mb-3">	
 		
-	
-	
-	
-								<input id="msg" name="" class="form-control type_msg" placeholder="Type your message..."/>
+						<input id="msg" name="" class="form-control type_msg" placeholder="Type your message..."/>
 								<div class="input-group-text send_btn"  >
 									<i class="fas fa-location-arrow"></i>
 									<input type="button" id="sndBtn" hidden>
@@ -380,5 +437,24 @@
 			</div>
 		</div>
 </div>
+<script style="text/javascript">
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('memList').classList.add('active');
+    loadTeamList();
+});
+
+function showMem() {
+    document.getElementById('memList').classList.add('active');
+    document.getElementById('chatList').classList.remove('active');
+    loadTeamList();
+}
+
+function showChatRoom() {
+    document.getElementById('memList').classList.remove('active');
+    document.getElementById('chatList').classList.add('active');
+    loadChatList();
+}
+
+</script>
 	</body>
 </html>

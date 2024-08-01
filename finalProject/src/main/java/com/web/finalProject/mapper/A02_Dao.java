@@ -8,14 +8,15 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import com.web.finalProject.vo.ChatSch;
+import com.web.finalProject.vo.Chat;
+import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Users;
 
 @Mapper
 public interface A02_Dao {
 	
 //로그인
-	@Select("SELECT user_name, role_code FROM USERS\r\n"
+	@Select("SELECT * FROM USERS\r\n"
 			+ "WHERE user_id = #{user_id} \r\n"
 			+ "AND password=#{password}")
 	Users login(Users user);
@@ -31,16 +32,35 @@ public interface A02_Dao {
 	int insertUser(Users ins);
 	
 ////채팅 리스트-프젝에 속한 모든 팀원
-	@Select("SELECT \r\n"
-			+ "    u.USER_ID,\r\n"
-			+ "    u.USER_NAME\r\n"
-			+ "FROM \r\n"
-			+ "    TEAM t\r\n"
-			+ "JOIN \r\n"
-			+ "    USERS u ON t.USER_ID = u.USER_ID\r\n"
-			+ "WHERE \r\n"
-			+ "    t.PROJECT_ID = '%'||#{project_id}||'%' \r\n")
-	List<ChatSch> getmemList(ChatSch sch);
+	@Select("SELECT * FROM Team\r\n"
+			+ "WHERE PROJECT_ID = #{PROJECT_ID}\r\n"
+			+ "AND USER_ID <> #{USER_ID}")
+	List<Chat> getMemList(Chat sch);
+	   
+	   @Select("SELECT p.*,\r\n"
+	         + "   t.*,\r\n"
+	         + "   b.AMOUNT ,\r\n"
+	         + "   u.image\r\n"
+	         + "FROM\r\n"
+	         + "    project p \r\n"
+	         + "JOIN team t ON p.project_id = t.project_id\r\n"
+	         + "JOIN users u ON p.company_id=u.company_id\r\n"
+	         + "JOIN BUDGET b ON p.project_id=b.project_id\r\n"
+	         + "WHERE\r\n"
+	         + "    t.user_id = #{user_id}")
+	   List<Project> getProjectList(@Param("user_id") String user_id);
+	
+	
+//	@Select("SELECT \r\n"
+//			+ "    u.USER_ID,\r\n"
+//			+ "    u.USER_NAME\r\n"
+//			+ "FROM \r\n"
+//			+ "    TEAM t\r\n"
+//			+ "JOIN \r\n"
+//			+ "    USERS u ON t.USER_ID = u.USER_ID\r\n"
+//			+ "WHERE \r\n"
+//			+ "    t.PROJECT_ID = '%'||#{project_id}||'%' \r\n")
+//	List<ChatSch> getmemList(ChatSch sch);
 //	
 ////채팅 리스트-로그인 유저가 속한 팀채팅
 //	@Select("SELECT \r\n"

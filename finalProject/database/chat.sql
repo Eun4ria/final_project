@@ -63,3 +63,24 @@ ORDER BY
     c.UPTDATE DESC;
 
 
+
+SELECT * FROM chat;
+SELECT * FROM project;
+UPDATE CHAT 
+SET PROJECT_ID='PRO_0001'
+WHERE CHATMEM_ID='M_0003';
+
+COMMIT;
+
+SELECT * FROM CHAT ;
+WHERE project_id ='PRO_0000';
+
+UPDATE CHAT 
+SET owner_id = 'C_0001'
+WHERE chatroom_id ='CHT_0001';
+
+SELECT c.chatroom_id, u.USER_ID, u.USER_NAME 
+FROM CHAT c
+JOIN users u
+WHERE c.PROJECT_ID =u.pro;
+

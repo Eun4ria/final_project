@@ -9,6 +9,7 @@ public class Users {
 	private String company_id;
 	private String role_code;
 	private String department;
+	private String image;
 	/**
 	 * 
 	 */
@@ -25,8 +26,18 @@ public class Users {
 	 * @param role_code
 	 * @param department
 	 */
+	/**
+	 * @param user_id
+	 * @param user_name
+	 * @param email
+	 * @param password
+	 * @param company_id
+	 * @param role_code
+	 * @param department
+	 * @param image
+	 */
 	public Users(String user_id, String user_name, String email, String password, String company_id, String role_code,
-			String department) {
+			String department, String image) {
 		super();
 		this.user_id = user_id;
 		this.user_name = user_name;
@@ -35,6 +46,7 @@ public class Users {
 		this.company_id = company_id;
 		this.role_code = role_code;
 		this.department = department;
+		this.image = image;
 	}
 	public String getUser_id() {
 		return user_id;
@@ -78,7 +90,12 @@ public class Users {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
-	
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
 	
 	
 }

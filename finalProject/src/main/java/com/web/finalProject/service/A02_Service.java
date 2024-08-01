@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.finalProject.mapper.A02_Dao;
-import com.web.finalProject.vo.ChatSch;
+import com.web.finalProject.vo.Chat;
+import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Users;
 
 @Service
@@ -37,9 +38,14 @@ public class A02_Service {
 	}
 	
 	// 채팅 리스트
-	public List<ChatSch> getmemList(ChatSch sch){
-		if(sch.getProject_id()==null) sch.setProject_id("");
-		return dao.getmemList(sch);
+	public List<Chat> getmemList(Chat sch){
+		//if(sch.getProject_id()==null) sch.setProject_id("");
+		return dao.getMemList(sch);
 	}
+	
+	
+    public List<Project> getProjectList(String user_id){
+       return dao.getProjectList(user_id);
+    }
 
 }

@@ -2,7 +2,7 @@ package com.web.finalProject.vo;
 
 import java.util.Date;
 
-public class ChatSch {
+public class Chat {
 	
 	private int cnt;
 	private int level;
@@ -23,7 +23,7 @@ public class ChatSch {
 	/**
 	 * 
 	 */
-	public ChatSch() {
+	public Chat() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -42,7 +42,7 @@ public class ChatSch {
 	 * @param uptDate
 	 * @param project_id
 	 */
-	public ChatSch(int cnt, int level, String user_id, String user_name, String email, String chatroom_id,
+	public Chat(int cnt, int level, String user_id, String user_name, String email, String chatroom_id,
 			String chatroom_name, String owner_id, String chatmem_id, String ban_status, Date ban_Date, Date uptDate,
 			String project_id) {
 		super();
