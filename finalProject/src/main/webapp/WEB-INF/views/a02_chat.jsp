@@ -289,7 +289,7 @@
 							<div class="user_info" style="padding-right:6rem;">
 								<span><c:out value="${sessionScope.user_name}" /></span>
 							</div>
-						
+				
 							<div style="display:block"  >
 							<button type="button" id="memList" style="background-color:transparent;" >팀원</button>
 							<button type="button" id="chatList" style="background-color:transparent;" >채팅</button>
