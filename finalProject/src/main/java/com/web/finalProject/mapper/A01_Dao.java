@@ -33,6 +33,7 @@ public interface A01_Dao {
 			+ "    t.textcolor,\r\n"
 			+ "    t.progress,\r\n"
 			+ "    u.user_id AS \"user\",\r\n"
+			+ "    u.user_name AS name,\r\n"
 			+ "    CASE \r\n"
 			+ "        WHEN parent_id IS NULL THEN 1\r\n"
 			+ "        ELSE 0\r\n"
@@ -44,7 +45,7 @@ public interface A01_Dao {
 			+ "WHERE project_id=#{project_id}")
 	List<GanttTask> getGantt(@Param("project_id") String project_id);
 	
-	@Select("SELECT u.user_name AS name,\r\n"
+	@Select("SELECT u.user_name AS text,\r\n"
 			+ " u.user_id AS id\r\n"
 			+ "FROM users u\r\n"
 			+ "JOIN team t ON u.user_id = t.user_id\r\n"
@@ -55,6 +56,19 @@ public interface A01_Dao {
 			+ "VALUES ('PRO_'||TO_CHAR(project_seq.nextval, 'FM0000'),"
 			+ " #{project_name}, #{etc}, TO_DATE(#{start_date}, 'YYYY-MM-DD'), TO_DATE(#{end_date}, 'YYYY-MM-DD'), sysdate, #{company_id})")
 	int insertProject(Project ins);
+	
+	@Select("SELECT p.*,\r\n"
+			+ "	t.*,\r\n"
+			+ "	b.AMOUNT ,\r\n"
+			+ "	u.image\r\n"
+			+ "FROM\r\n"
+			+ "    project p \r\n"
+			+ "JOIN team t ON p.project_id = t.project_id\r\n"
+			+ "JOIN users u ON p.company_id=u.company_id\r\n"
+			+ "JOIN BUDGET b ON p.project_id=b.project_id\r\n"
+			+ "WHERE\r\n"
+			+ "    t.user_id = #{user_id}")
+	List<Project> getProjectList(@Param("user_id") String user_id);
 	
 	
 	

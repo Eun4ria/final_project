@@ -52,16 +52,6 @@
 	<link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 <%-- 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
-<script type="text/javascript">
-
-	$(document).ready(function(){
-		$("#goLogBtn").click(function(){
-			location.href="login"
-		})
-	}
-	
-</script>
-
 </head>
 
 <body class="bg-gray-200">
@@ -99,10 +89,10 @@
                 </div>
               </div>
               <div class="card-body">
-                회원님의 아이디는 <strong>${result}</strong> 입니다.
+                your ID: <strong>${result}</strong>
                 
                 <div class="text-center">
-                    <button type="button" id="goLogBtn" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3">Go to Login</button>
+                    <button type="button" id="signInBtn" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3">Go to Login</button>
                   </div>  
                   <p class="mt-4 text-sm text-center">
                     Forgot your password?
@@ -117,6 +107,13 @@
       </div>
     </div>
   </main>
+<script type="text/javascript">
+
+		$("#signInBtn").click(function(){
+			location.href="signinFrm"
+		})
+	
+</script>
   <!--   Core JS Files   -->
   <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
   <script src="${path}/material-dashboard-2/assets/js/core/popper.min.js"></script>

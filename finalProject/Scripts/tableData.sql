@@ -206,14 +206,33 @@ CREATE TABLE task (
     --FOREIGN KEY (project_id) REFERENCES project(project_id)
 );
 
+SELECT * FROM team;
+
 CREATE SEQUENCE task_seq START WITH 0001 INCREMENT BY 1;
 
 -- 샘플 데이터
-INSERT INTO task (task_id, task_name, start_date, end_date, priority, parent_id, content, progress, backgroundcolor, textcolor, tstatus, user_id, project_id)
-VALUES ('TSK_'||TO_CHAR(task_seq.nextval, 'FM0000'), '설계', TO_DATE('2024-07-17', 'YYYY-MM-DD'), TO_DATE('2024-07-24', 'YYYY-MM-DD'), '높음', NULL, '설계', 50, '#FFFFFF', '#000000', '진행중', 'P_0001', 'PRO_0001');
+INSERT INTO task (task_id, task_name, start_date, end_date, priority, parent_id, content, progress, backgroundcolor, textcolor, user_id, project_id)
+VALUES ('TSK_'||TO_CHAR(task_seq.nextval, 'FM0000'), '설계', TO_DATE('2024-07-17', 'YYYY-MM-DD'), TO_DATE('2024-07-24', 'YYYY-MM-DD'), '높음', NULL, '설계', 50, '#FFFFFF', '#000000', 'P_0001', 'PRO_0001');
+
+INSERT INTO task (task_id, task_name, start_date, end_date, priority, parent_id, content, progress, backgroundcolor, textcolor, user_id, project_id)
+VALUES ('TSK_'||TO_CHAR(task_seq.nextval, 'FM0000'), '로그인', TO_DATE('2024-07-28', 'YYYY-MM-DD'), TO_DATE('2024-08-30', 'YYYY-MM-DD'), '높음', NULL, '로그인 전체', 10, 'blue', 'black', 'M_0003', 'PRO_0001');
 
 -- 보기
 SELECT * FROM task;
+
+SELECT * FROM chat;
+
+SELECT * FROM CHAT
+WHERE user_id='P_0012';
+
+UPDATE CHAT 
+SET user_id = 'P_0012'
+WHERE owner_id='P_0012';
+
+SELECT * FROM chat;
+
+
+SELECT * FROM USERs;
 
 
 

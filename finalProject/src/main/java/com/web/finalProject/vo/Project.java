@@ -9,6 +9,35 @@ public class Project {
 	private String create_date;
 	private boolean pstatus;
 	private String company_id;
+	private String user_name;
+	private String user_id;
+	private String image;
+	
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	private int amount; 
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
 	public String getProject_name() {
 		return project_name;
 	}

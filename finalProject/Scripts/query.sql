@@ -45,6 +45,7 @@ SELECT
     t.textcolor,
     t.progress,
     u.user_id AS "user",
+    u.user_name AS name,
     CASE 
         WHEN parent_id IS NULL THEN 1
         ELSE 0
@@ -56,7 +57,7 @@ JOIN
 WHERE project_id='PRO_0001';
 
 SELECT 
-    u.user_name AS name,
+    u.user_name AS text,
     u.user_id AS id
 FROM users u
 JOIN team t ON u.user_id = t.user_id
@@ -74,9 +75,63 @@ SELECT * FROM project;
 INSERT INTO project (project_id, project_name, etc, start_date, end_date, create_date, company_id)
 VALUES ('PRO_'||TO_CHAR(project_seq.nextval, 'FM0000'), 'final 프로젝트', '최종 프로젝트입니다.', TO_DATE('2024-07-17', 'YYYY-MM-DD'), TO_DATE('2024-08-26', 'YYYY-MM-DD'), sysdate, 'COM_0001');
 
+SELECT * FROM USERs;
+-- 해당 사용자의 프로젝트 목록
+SELECT p.*,
+	t.*,
+	b.AMOUNT ,
+	u.image
+FROM
+    project p 
+JOIN team t ON p.project_id = t.project_id
+JOIN users u ON p.company_id=u.company_id
+JOIN BUDGET b ON p.project_id=b.project_id
+WHERE
+    t.user_id = 'P_0012';
+   
+SELECT * FROM USERs;
+   
+   SELECT * FROM chat;
+  
+SELECT count(*) FROM chat
+WHERE project_id='PRO_0000';
+SELECT * FROM USERs;
+
+SELECT u.*, p.project_id
+FROM USERS u
+JOIN project p ON u.user_id = u.user_id;
+
+SELECT * FROM project;
+
+SELECT * FROM team;
+INSERT INTO team values('PRO_0002','M_0003');
+INSERT INTO team values('PRO_0002','P_0012');
+
+SELECT * FROM users;
+
+update USERS
+SET image='https://image.rocketpunch.com/company/5466/naver_logo.png?s=400x400&t=inside'
+WHERE user_id='C_0001';
+
+update USERS
+SET image='https://an2-img.amz.wtchn.net/image/v2/GzFiTxs-FufrxcMLcvE0mA.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk1USTRNSGczTWpCeE9EQWlYU3dpY0NJNklpOTJNaTl6ZEc5eVpTOXBiV0ZuWlM4eE5qWTNNakF5TkRNeE1ESTFOREkxTVRZM0luMC5pNW5WNjBKVzB6azJMbmF6VlBfS2RPc1B3cGZYT2Qyanl6TDRCMnlZalBv'
+WHERE user_id='P_0012';
 
 
 
+ALTER TABLE users
+ADD (image varchar2(500));
+
+SELECT * FROM chat;
+
+ALTER TABLE chat
+RENAME COLUMN chatmem_id TO user_id;
+
+SELECT *
+FROM TEAM t
+JOIN project p ON t.project_id = p.project_id
+WHERE user_id='P_0012';
+   
 
 SELECT * FROM project;
 INSERT INTO project (project_id, project_name, etc, start_date, end_date, create_date, pstatus, company_id)

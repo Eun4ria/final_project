@@ -44,6 +44,10 @@ public class A01_Service {
     	return dao.insertProject(ins)>0?"생성 완료":"생성 실패";
     }
     
+    public List<Project> getProjectList(String user_id){
+    	return dao.getProjectList(user_id);
+    }
+    
 	
 	
 	

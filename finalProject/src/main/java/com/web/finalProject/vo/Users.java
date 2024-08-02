@@ -10,6 +10,34 @@ public class Users {
 	private String role_code;
 	private String name;
 	private String id;
+	private String text;
+	private String key;
+	private String label;
+	private String image;
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	public String getKey() {
+		return key;
+	}
+	public void setKey(String key) {
+		this.key = key;
+	}
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
 	public String getId() {
 		return id;
 	}

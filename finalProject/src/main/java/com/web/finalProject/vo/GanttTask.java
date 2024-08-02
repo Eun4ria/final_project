@@ -1,5 +1,8 @@
 package com.web.finalProject.vo;
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class GanttTask {
@@ -7,15 +10,24 @@ public class GanttTask {
     private String project_id;
 	private String id;
 	private String text;
-	private String start_date;
+	@JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+	private Date start_date;
 	private String priority;
 	private int duration;
 	private String user;
+	private String name;
 	private boolean open;
 	private String parent;
 	private String color;
 	private String textcolor;
 	private int progress;
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public int getProgress() {
 		return progress;
 	}
@@ -52,10 +64,10 @@ public class GanttTask {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public String getStart_date() {
+	public Date getStart_date() {
 		return start_date;
 	}
-	public void setStart_date(String start_date) {
+	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
 	}
 	public String getPriority() {

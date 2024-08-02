@@ -68,15 +68,15 @@
 			        if (emailPattern.test(email)) { // 모든 조건에 부합 할 경우
 			            idFind() // 아이디 찾기 전송 함수			            
 			        }else{ // 이메일 패턴 미일치 시
-			        	alert('올바른 이메일 주소를 입력해 주세요.');
+			        	alert('Please enter a valid email address');
 			            emailInput.focus();
 			        }				        
 				}else{ // 이메일 미입력 시	
-					alert("이메일을 입력하세요")	
+					alert("Please enter your email address")	
 					emailInput.focus();
 				}				
 			}else{ // 이름 미입력 시
-				alert("이름을 입력하세요")
+				alert("Please enter your name")
 				nameInput.focus();
 			}	        
 	    });
@@ -90,7 +90,7 @@
 	        data: $("form").serialize(),
 	        success: function(result) {
 	            if(result=="해당 계정 정보 없습니다.") {
-					alert(result)
+					alert("No account information found for the provided details")
 	            } else{					
 	            	$("form").submit()	
 	            }
