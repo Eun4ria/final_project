@@ -187,7 +187,7 @@
 
 <script type="text/javascript">
 	$("#regBtn").click(function() {
-		if (confirm("로그인하시겠습니까?")) {	
+		if (confirm("등록하시겠습니까?")) {	
 			$("form").submit();
 		}
 	});

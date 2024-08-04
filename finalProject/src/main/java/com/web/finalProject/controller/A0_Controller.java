@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.web.finalProject.service.A0_Service;
+import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Gantt;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Users;
@@ -42,7 +43,8 @@ public class A0_Controller {
 		@GetMapping("sign_up_do")
 		public String sign_up_do(Users ins, Model d) {
 			d.addAttribute("msg", service.insertUser(ins));
-			
+
+	           System.out.println("user_id:" + service.insertUser(ins));
 			return "WEB-INF\\views\\a02_sign_up.jsp";
 		}
 	
@@ -247,6 +249,38 @@ public class A0_Controller {
 		d.addAttribute("pro", service.getProjectList(user_id));
 		d.addAttribute("currentUrl", request.getRequestURI());
 		return "WEB-INF\\views\\a00_dash_mem.jsp";
+	}
+	
+// 채팅
+	//채팅 조회
+	// http://localhost:4040/chatmemListstart
+//	@RequestMapping("chatmemListstart")
+//	public String memList(Chat sch, Model d) {
+//		List<Chat> members = service.getmemList(sch);
+//		d.addAttribute("memList",members);
+//		 System.out.println("memlist:" + members);
+//		return "WEB-INF\\views\\a02_chat.jsp";
+//	}
+	// http://localhost:4040/chatmemListstart?user_id=M_0003&project_id=PRO_0001
+	@RequestMapping("chatmemListstart")
+	public String memList(Chat sch, Model d, HttpServletRequest request) {
+	    // 세션에서 project_id를 가져온다.
+	    HttpSession session = request.getSession();
+	    String project_id = (String) session.getAttribute("project_id");
+	    
+	    // Chat 객체에 project_id와 user_id를 설정
+	    sch.setProject_id(project_id);
+	    sch.setUser_id(sch.getUser_id()); // user_id는 요청 파라미터로 전달된 값
+	    
+	    // 회원 리스트를 가져온다.
+	    List<Chat> members = service.getmemList(sch);
+	    
+	    // 모델에 데이터 추가
+	    d.addAttribute("memList", members);
+	    System.out.println("memlist:" + members);
+	    
+	    // JSP 페이지로 이동
+	    return "WEB-INF\\views\\a02_chat.jsp";
 	}
 	
 }

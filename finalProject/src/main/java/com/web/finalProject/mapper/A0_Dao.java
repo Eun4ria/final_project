@@ -14,7 +14,7 @@ import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Users;
 
 @Mapper
-public interface Dao {
+public interface A0_Dao {
 	
 	//회원가입
 		@Insert("INSERT INTO users (user_id, user_name, email, password, deptno, company_id, role_code)\r\n"
@@ -97,11 +97,15 @@ public interface Dao {
 	List<GanttTask> getGantt(@Param("project_id") String project_id);
 	
 	//채팅 리스트-프젝에 속한 모든 팀원
-	@Select("SELECT * FROM Team\r\n"
-			+ "WHERE PROJECT_ID = #{PROJECT_ID}\r\n"
-			+ "AND USER_ID <> #{USER_ID}")
+	@Select("SELECT * FROM CHAT\r\n"
+			+ "WHERE user_id = #{user_id}\r\n"
+			+ "and project_id=#{project_id}")
 	List<Chat> getMemList(Chat sch);
-   
+	
+	@Select("SELECT * FROM Chat\r\n"
+			+ "WHERE user_id = #{user_id} \r\n"
+			+ "AND project_id=#{project_id}")
+	Chat chat(Chat chat);
   
 	
 }

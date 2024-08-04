@@ -53,7 +53,8 @@
 	<link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 <%-- 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
-
+<!-- jquery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -135,7 +136,7 @@
 							</div>
 						</li>
 						<li class="nav-item ">
-							<span class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.project_i}')" id="messagesDropdown">
+							<span class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.project_id}')" id="messagesDropdown">
 									<i class="align-middle" data-feather="message-square"></i>
 							</span>
 							
@@ -431,8 +432,8 @@
 
 <script>
 
-function goChat(user_id){
-location.href="chatmemListstart?user_id="+user_id
+function goChat(project_id){
+location.href="chatmemListstart?project_id="+project_id
 }
 </script>
 

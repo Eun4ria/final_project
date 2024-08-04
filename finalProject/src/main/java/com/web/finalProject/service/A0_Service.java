@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.finalProject.mapper.Dao;
+import com.web.finalProject.mapper.A0_Dao;
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.GanttTask;
 import com.web.finalProject.vo.Project;
@@ -14,7 +14,7 @@ import com.web.finalProject.vo.Users;
 @Service
 public class A0_Service {
 	@Autowired(required=false)
-	private Dao dao;
+	private A0_Dao dao;
 
 	// 회원가입
 	public String insertUser(Users ins) {
@@ -62,8 +62,12 @@ public class A0_Service {
     
 	//채팅 리스트
 	public List<Chat> getmemList(Chat sch){
-		//if(sch.getProject_id()==null) sch.setProject_id("");
+		if(sch.getProject_id()==null) sch.setProject_id("");
+		if(sch.getUser_id()==null) sch.setUser_id("");
 		return dao.getMemList(sch);
+	}
+	public Chat chat(Chat chat) {
+		return dao.chat(chat);
 	}
 		
 		

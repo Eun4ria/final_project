@@ -49,6 +49,14 @@ ALTER TABLE users
 MODIFY image DEFAULT 'https://i.namu.wiki/i/Bge3xnYd4kRe_IKbm2uqxlhQJij2SngwNssjpjaOyOqoRhQlNwLrR2ZiK-JWJ2b99RGcSxDaZ2UCI7fiv4IDDQ.webp';
 
 
+SELECT * FROM CHAT
+WHERE user_id = 'M_0003'
+and project_id='PRO_0001';
+
+SELECT * FROM CHAT;
+
+SELECT * FROM CHAT c WHERE project_id='PRO_0001';
+
 
 
 
