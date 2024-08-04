@@ -405,7 +405,7 @@
 									<input type="submit" id="exitBtn" hidden >
 									<i class="fas fa-ban"></i> Block
 								</form>
-								<form method="post" action="mainpmFrm">
+								<form method="get" action="todomemFrm">
 									
 									<button type="submit" id="exitBtn" style="background-color:transparent; border:none; color:white"><i class="fas fa-sign-out-alt"></i> Exit</button>
 									
