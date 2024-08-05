@@ -3,6 +3,7 @@ package com.web.finalProject.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,6 @@ import com.web.finalProject.mapper.A0_Dao;
 import com.web.finalProject.util.Util;
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.GanttTask;
-import com.web.finalProject.vo.MailVo;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.RegMember;
 import com.web.finalProject.vo.Users;
@@ -31,16 +31,36 @@ public class A0_Service {
 	// 등록하고 메일이 같이 발송되게
 	// email 가지고 오고 사원정보(user_id) 비밀번호(password)
 	// email -유효성 -> 사원정보 가지고 온거를 
-	public String insertUser(Users ins) {
-		String msg=null;
-		msg = dao.insertUser(ins)>0?"등록 성공":"등록 실패";
-		// email을 통한 사원정보가지고 오기
-		// 메일발송
-		
-		
-		
-		return msg;
-	}
+//	public String insertUser(Users ins) {
+//		String msg=null;
+//		msg = dao.insertUser(ins)>0?"등록 성공":"등록 실패";
+//		// email을 통한 사원정보가지고 오기
+//		// 메일발송
+//		
+//		
+//		
+//		return msg;
+//	}
+	  public String insertUser(Users ins) {
+	        String msg = null;
+
+	        int result = dao.insertUser(ins);
+	        if (result > 0) {
+	            msg = "등록 성공";
+	            sendEmail(ins.getEmail(), ins.getUser_id());
+	        } else {
+	            msg = "등록 실패";
+	        }
+
+	        return msg;
+	    }
+	 private void sendEmail(String email, String userId) {
+	        SimpleMailMessage message = new SimpleMailMessage();
+	        message.setTo(email);
+	        message.setSubject("회원 가입이 완료되었습니다.");
+	        message.setText("귀하의 사용자 ID는 " + userId + " 입니다.");
+	        sender.send(message);
+	    }
 // 이메일 유효성 체크
 	public int emailCk(String email) {
 		return dao.emailCk(email); 

@@ -198,7 +198,7 @@
 <!-- vue-->
 
   
-  <main class="main-content  mt-0" id="app">
+  <main class="main-content  mt-0" >
     <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container my-auto">
@@ -216,7 +216,7 @@
                   </div>
                 </div>
               </div>
-              <div class="card-body">
+              <div class="card-body" id="app">
                 <form role="form" class="text-start" action="sign_up">
      <!-- 사용자 이름  -->
                   <div class="input-group input-group-outline my-2">
@@ -241,28 +241,36 @@
                   </div>
                    <!-- 비밀번호 확인 메시지 -->
     				<p id="password-message" class="password-message" style="margin-bottom:0"></p>
-      <!-- 소속-권한  --><br>
+    				<br>
+      <!-- 소속-권한  
 	              <div class="input-group input-group-outline mb-3">
 	               <label for="affiliation" class="col-sm-4 col-form-label">Affiliation</label>
 				      <select class="form-control mr-sm-2" id="affiliation"@change="affiliation">
-				         <option v-for="(aff, role_code) in affiliation" :key="role_code" :value="">{{ aff }}</option>
+				         <option v-for="(aff, role_code) in affiliation" :key="role_code" :value="role_code">{{ aff }}</option>
 				      </select>     
-                  </div>  
-      
+                  </div>  -->
+       <div class="input-group input-group-outline my-3">
+                    <input type="text" class="form-control" name="role_code" placeholder="role_code" value=""  >
+                  </div>
        
 		<!-- 회사아이디 -->             
                 <div class="input-group input-group-outline my-3">
                     <input type="text" class="form-control" name="company_id" placeholder="Company ID" value=""  >
                   </div>
-         <!-- 부서 -->          
+         <!-- 부서        
                   <div class="input-group input-group-outline my-3">
 				      <label for="department" class="col-sm-4 col-form-label">Department</label>
 				      <select id="department" class="form-control mr-sm-2" @change="department">
 				        
-				    	 <option v-for="(dept, deptno) in department" :key="deptno" :value="">{{ dept }}</option>
+				    	 <option v-for="(dept, deptno) in department" :key="deptno" :value="deptno)">{{ dept }}</option>
 				      </select>
 				     
-				    </div>
+				    </div>-->   
+				       <div class="input-group input-group-outline my-3">
+                    <input type="text" class="form-control" name="deptno" placeholder="deptno" value=""  >
+                  </div>
+				    
+				    
 				    
                   
                   <div class="text-center">

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
 import com.web.finalProject.vo.Chat;
@@ -20,9 +21,16 @@ public interface A0_Dao {
 //		@Insert("INSERT INTO users (user_id, user_name, email, password, deptno, company_id, role_code)\r\n"
 //				+ "VALUES (#{role_code}||'_'||TO_CHAR(users_seq_ex.nextval, 'FM0000'), #{user_name}, #{email}, #{password}, #{deptno}, #{company_id}, #{role_code})")
 //		int insertUser(Users ins);
-		@Insert("INSERT INTO users (user_id, user_name, email, password, deptno, company_id, role_code)\r\n"
-				+ "VALUES ('N_'||TO_CHAR(users_seq_ex.nextval, 'FM0000'), '화춘수', 'HWA@gmail.com', 'hwa11!!', '0', 'COM_0000', 'N')")
-		int insertUser(Users ins);
+//		
+//	@Insert("INSERT INTO users (user_id, user_name, email, password, deptno, company_id, role_code) " +
+//            "VALUES ('P_'||TO_CHAR(users_seq_ex.nextval, 'FM0000'), '김은수', 'ensu2015@gmail.com', 'rose112!!', '0', 'COM_0000', 'P') " )
+//    @SelectKey(statement = "SELECT 'P_'||TO_CHAR(users_seq_ex.currval, 'FM0000') FROM dual", keyProperty = "user_id", before = false, resultType = String.class)
+//    int insertUser(Users ins);
+	@Insert("INSERT INTO users (user_id, user_name, email, password, deptno, company_id, role_code) \r\n"
+			+ "VALUES (#{role_code}||'_'||TO_CHAR(users_seq_ex.nextval, 'FM0000'), #{user_name}, #{email}, #{password}, #{deptno}, #{company_id}, #{role_code})")
+    @SelectKey(statement = "SELECT #{role_code}||'_'||TO_CHAR(users_seq_ex.nextval, 'FM0000') FROM dual", keyProperty = "user_id", before = true, resultType = String.class)
+    int insertUser(Users ins);
+	
 	//이메일 유효성 확인
 		@Select("SELECT count(*) FROM USERS \r\n"
 				+ "WHERE email = #{email}")

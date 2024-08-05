@@ -57,6 +57,10 @@ SELECT * FROM CHAT;
 
 SELECT * FROM CHAT c WHERE project_id='PRO_0001';
 
+SELECT * FROM users;
+DELETE FROM USERS u 
+WHERE USER_NAME = '남지연';
+
 
 
 

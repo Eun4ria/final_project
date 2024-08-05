@@ -46,14 +46,12 @@ public class A0_Controller {
 
 	//사용자 등록 시
 	// http://localhost:4040/sign_up
-		@GetMapping("sign_up")
-		public String sign_up_do(Users ins, Model d) {
-			d.addAttribute("msg", service.insertUser(ins));
-
-	         System.out.println("user_id:" +ins);
-			return "WEB-INF\\views\\a02_sign_up.jsp";	
-			
-		}
+	 @GetMapping("sign_up")
+	    public String sign_up(@ModelAttribute Users ins, Model d) {
+	        String resultMessage = service.insertUser(ins);
+	        d.addAttribute("msg", resultMessage);
+	        return "WEB-INF/views/a02_sign_up.jsp"; 
+	    }
 		
 //이메일 유효성 확인	
 		// http://localhost:4040/check_email
@@ -105,18 +103,18 @@ public class A0_Controller {
 //	}
 	
 	
-//	//자동 사원접속정보 발생
-	// http://localhost:4040/regEmpTmp
-		@GetMapping("regEmpTmp")
-		public String regEmpTmpForm() {
-			return "WEB-INF\\views\\a02_regEmpTmpForm.jsp";
-		}
-		@PostMapping("regEmpTmp")
-		public String regEmpTmpMail(RegMember mem, Model d) {
-			//mem.getEmpno(), mem.getEmail()
-			d.addAttribute("msg",service.makeEmpMail(mem));
-			return "WEB-INF\\views\\a02_regEmpTmpForm.jsp";
-		}	
+////	//자동 사원접속정보 발생
+//	// http://localhost:4040/regEmpTmp
+//		@GetMapping("regEmpTmp")
+//		public String regEmpTmpForm() {
+//			return "WEB-INF\\views\\a02_regEmpTmpForm.jsp";
+//		}
+//		@PostMapping("regEmpTmp")
+//		public String regEmpTmpMail(RegMember mem, Model d) {
+//			//mem.getEmpno(), mem.getEmail()
+//			d.addAttribute("msg",service.makeEmpMail(mem));
+//			return "WEB-INF\\views\\a02_regEmpTmpForm.jsp";
+//		}	
 	
 	
 //로그인
