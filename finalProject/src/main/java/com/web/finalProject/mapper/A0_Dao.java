@@ -17,9 +17,17 @@ import com.web.finalProject.vo.Users;
 public interface A0_Dao {
 	
 	//회원가입
+//		@Insert("INSERT INTO users (user_id, user_name, email, password, deptno, company_id, role_code)\r\n"
+//				+ "VALUES (#{role_code}||'_'||TO_CHAR(users_seq_ex.nextval, 'FM0000'), #{user_name}, #{email}, #{password}, #{deptno}, #{company_id}, #{role_code})")
+//		int insertUser(Users ins);
 		@Insert("INSERT INTO users (user_id, user_name, email, password, deptno, company_id, role_code)\r\n"
-				+ "VALUES (#{role_code}||'_'||TO_CHAR(users_seq_ex.nextval, 'FM0000'), #{user_name}, #{email}, #{password}, #{deptno}, #{company_id}, #{role_code}) ")
+				+ "VALUES ('N_'||TO_CHAR(users_seq_ex.nextval, 'FM0000'), '화춘수', 'HWA@gmail.com', 'hwa11!!', '0', 'COM_0000', 'N')")
 		int insertUser(Users ins);
+	//이메일 유효성 확인
+		@Select("SELECT count(*) FROM USERS \r\n"
+				+ "WHERE email = #{email}")
+		int emailCk(String email);
+	
 		
 	//로그인
 	@Select("SELECT * FROM USERS\r\n"

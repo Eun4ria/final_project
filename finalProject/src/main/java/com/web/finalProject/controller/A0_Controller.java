@@ -3,19 +3,25 @@ package com.web.finalProject.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.web.finalProject.service.A0_Service;
+import com.web.finalProject.util.Util;
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Gantt;
+import com.web.finalProject.vo.MailVo;
 import com.web.finalProject.vo.Project;
+import com.web.finalProject.vo.RegMember;
 import com.web.finalProject.vo.Users;
 
 import jakarta.servlet.http.Cookie;
@@ -28,25 +34,90 @@ public class A0_Controller {
 	@Autowired(required=false)
 	private A0_Service service;
 	
-//	private Util util;
+	private Util util;
 	
 // 회원가입
 	//사용자 처음 폼
-	// http://localhost:4040/sign_up
-	@GetMapping("sign_up")
-	public String sign_up() {
+	// http://localhost:4040/signupFrm
+	@GetMapping("signupFrm")
+	public String signupFrm() {
 		return "WEB-INF\\views\\a02_sign_up.jsp";
 	}
 
 	//사용자 등록 시
-	// http://localhost:4040/sign_up_do
-		@GetMapping("sign_up_do")
+	// http://localhost:4040/sign_up
+		@GetMapping("sign_up")
 		public String sign_up_do(Users ins, Model d) {
 			d.addAttribute("msg", service.insertUser(ins));
 
-	           System.out.println("user_id:" + service.insertUser(ins));
-			return "WEB-INF\\views\\a02_sign_up.jsp";
+	         System.out.println("user_id:" +ins);
+			return "WEB-INF\\views\\a02_sign_up.jsp";	
+			
 		}
+		
+//이메일 유효성 확인	
+		// http://localhost:4040/check_email
+		@PostMapping("check_email")
+		 public @ResponseBody EmailCheckResponse checkEmail(@RequestParam("email") String email) {
+	        boolean exists = service.emailCk(email) > 0;
+	        return new EmailCheckResponse(exists);
+	    }
+
+	    public static class EmailCheckResponse {
+	        private boolean exists;
+
+	        public EmailCheckResponse(boolean exists) {
+	            this.exists = exists;
+	        }
+
+	        public boolean isExists() {
+	            return exists;
+	        }
+
+	        public void setExists(boolean exists) {
+	            this.exists = exists;
+	        }
+	    }
+	
+		
+// 메일 발송
+		// @Value("${spring.mail.username}")
+//	@Value("${spring.mail.username}")
+//	private String mailaccount;
+//	
+//	// http://localhost:4040/mail
+//	@GetMapping("mail")
+//	public String mailForm() {
+//		return "WEB-INF\\views\\a02_regmailFrm.jsp";
+//	}
+//	@PostMapping("mail")
+//	public String sendMail(MailVo mail, Model d) {
+//		d.addAttribute("msg",service.sendMail(mail));
+//		return "WEB-INF\\views\\a02_regmailFrm.jsp";
+//	}
+//	
+//	
+//	// controller단에서 사용할 송통적인 모델 데이터를 선언할 때 활용
+//	@ModelAttribute("mailaccount")
+//	
+//	public String getMailAccount() {
+//		return mailaccount;
+//	}
+	
+	
+//	//자동 사원접속정보 발생
+	// http://localhost:4040/regEmpTmp
+		@GetMapping("regEmpTmp")
+		public String regEmpTmpForm() {
+			return "WEB-INF\\views\\a02_regEmpTmpForm.jsp";
+		}
+		@PostMapping("regEmpTmp")
+		public String regEmpTmpMail(RegMember mem, Model d) {
+			//mem.getEmpno(), mem.getEmail()
+			d.addAttribute("msg",service.makeEmpMail(mem));
+			return "WEB-INF\\views\\a02_regEmpTmpForm.jsp";
+		}	
+	
 	
 //로그인
 	// 로그인 처음 폼
@@ -179,6 +250,14 @@ public class A0_Controller {
 	public ResponseEntity<List<Users>> getTeamList(@RequestParam(value = "project_id", defaultValue = "PRO_0001") String project_id) {
 	    return ResponseEntity.ok(service.getTeam(project_id));
 	}
+
+	// 프로필
+	// http://223.26.198.130:4040/pages-profile
+    @GetMapping("profile")
+    public String profile(HttpServletRequest request, Model model) {
+        model.addAttribute("currentUrl", request.getRequestURI());
+        return "WEB-INF\\views\\a01_profile.jsp";
+    }
 	
 // 사이드바	
 	// http://223.26.198.130:4040/sideBar
@@ -188,11 +267,7 @@ public class A0_Controller {
 	}
 
 // 간트 차트
-	// http://223.26.198.130:4040/ganttChart
-	@GetMapping("ganttChart")
-    public String ganttChart() {
-        return "WEB-INF\\views\\a01_ganttChart.jsp";
-    }
+	
 	// 간트 페이지
 	// http://223.26.198.130:4040/gantt
 	@GetMapping("gantt")
@@ -280,7 +355,18 @@ public class A0_Controller {
 	    System.out.println("memlist:" + members);
 	    
 	    // JSP 페이지로 이동
-	    return "WEB-INF\\views\\a02_chat.jsp";
+	    return "WEB-INF\\views\\a02_chat2.jsp";	
 	}
+// 채팅-오른쪽 채팅
+	@Value("${socketServer}")
+	private String socketServer;
+	
+	// http://192.168.0.42:4040/chatting
+	@GetMapping("chatting")
+	public String chatting(Model d) {
+		d.addAttribute("socketServer", socketServer);
+		return "WEB-INF\\views\\a02_chat2.jsp";
+	}
+	// var socketServer = '${socketServer}'.replace(/^"|"$/g,'')
 	
 }

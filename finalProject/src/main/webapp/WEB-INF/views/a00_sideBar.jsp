@@ -72,19 +72,19 @@
                     <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
                 </a>
             </li>
-
-            <li class="sidebar-item ${currentUrl == '/sign-in' ? 'active' : ''}">
+<%-- 
+            <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
                 <a class="sidebar-link" href="sign-in">
                     <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Sign In</span>
                 </a>
             </li>
 
-            <li class="sidebar-item ${currentUrl == '/sign-up' ? 'active' : ''}">
+            <li class="sidebar-item ${currentUrl == '/sign_up' ? 'active' : ''}">
                 <a class="sidebar-link" href="sign-up">
                     <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Sign Up</span>
                 </a>
             </li>
-
+--%>
         </ul>
 
 				<div class="sidebar-cta">

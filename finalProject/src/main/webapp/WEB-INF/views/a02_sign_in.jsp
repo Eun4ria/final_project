@@ -135,7 +135,7 @@ $(document).ready(function() {
 										style="color: #3f2b96;">Find ID</a> 
 								<br> 
 								Don't have an account? 
-								<a href="sign_up" class="text-primary text-gradient font-weight-bold"
+								<a href="signupFrm" class="text-primary text-gradient font-weight-bold"
 										style="color: #3f2b96;">Sign up</a>
 								</div>
 

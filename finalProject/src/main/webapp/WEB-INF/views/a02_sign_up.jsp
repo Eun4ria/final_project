@@ -57,6 +57,23 @@
 <!-- jQuert 선언 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://unpkg.com/vue" type="text/javascript"></script> 
+
+  <style>
+        .password-message  {
+            font-size: 0.7rem; /* 글자 크기 조정 */
+            font-weight: bold; /* 글자 두께 조정 */
+  
+        }
+      
+
+        .password-message.success {
+            color: green; /* 비밀번호가 일치할 때 글자 색상 */
+        }
+
+        .password-message.error {
+            color: red; /* 비밀번호가 일치하지 않을 때 글자 색상 */
+        }
+    </style>
 <script type="text/javascript">
 	$(document).ready(function() {
 		
@@ -64,12 +81,113 @@
 		if (msg !== "") {
 			alert(msg);
 			if (msg === "등록 성공") {
-				location.href = "sign_up";
+				location.href = "signinFrm";
+				//location.href = "regEmpTmp";
 			}
 		}
 		
+		   // 비밀번호 확인 로직
+        const passwordInput = document.querySelector('input[name="password"]');
+        const passwordConfirmInput = document.getElementById('password_confirm');
+        const passwordMessage = document.getElementById('password-message');
+
+        function checkPasswords() {
+            const password = passwordInput.value;
+            const passwordConfirm = passwordConfirmInput.value;
+         // 비밀번호 유효성 검사 조건
+            const minLength = 6;
+            const hasLetter = /[a-zA-Z]/.test(password);
+            const hasDigit = /\d/.test(password);
+            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+            if (password === passwordConfirm && password.length >= minLength && hasLetter && hasDigit && hasSpecialChar) {
+                passwordMessage.textContent = '비밀번호가 일치합니다';
+                passwordMessage.className = 'password-message success'; // 성공 스타일
+            } else if (password.length > 0 || passwordConfirm.length > 0) {
+                if (password.length < minLength) {
+                    passwordMessage.textContent = `비밀번호는 6자 이상이어야 합니다`;
+                    passwordMessage.className = 'password-message error'; // 실패 스타일
+                } else if (!hasLetter || !hasDigit || !hasSpecialChar) {
+                    passwordMessage.textContent = '비밀번호는 문자, 숫자, 특수문자를 각각 하나 이상 포함해야 합니다';
+                    passwordMessage.className = 'password-message error'; // 실패 스타일
+                } else {
+                    passwordMessage.textContent = '비밀번호가 일치하지 않습니다';
+                    passwordMessage.className = 'password-message error'; // 실패 스타일
+                }
+            } else{
+                passwordMessage.textContent = ''; // 비어 있는 경우
+                passwordMessage.className = 'password-message'; // 기본 스타일
+            }
+        }
+
+        passwordInput.addEventListener('input', checkPasswords);
+        passwordConfirmInput.addEventListener('input', checkPasswords);
+
+        // 이메일 유효성 검사 및 중복 확인
+       const emailInput = document.querySelector('input[name="email"]');
+        const emailMessage = document.getElementById('email-message');
+        const validateEmailBtn = document.getElementById('validate-email-btn');
+
+        validateEmailBtn.addEventListener('click', function() {
+            const email = emailInput.value;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 간단한 이메일 정규 표현식
+
+            if (emailPattern.test(email)) {
+                // 이메일 형식이 올바른 경우
+                // 중복 확인을 위해 서버에 요청을 보냄
+                $.ajax({
+                    url: 'check_email', // 서버의 이메일 중복 확인 URL
+                    type: 'POST',
+                    data: { email: email },
+                    success: function(response) {
+                        if (response.exists) {
+                            emailMessage.textContent = '이 이메일 주소는 이미 사용 중입니다';
+                            emailMessage.className = 'email-message error'; // 실패 스타일
+                        } else {
+                            emailMessage.textContent = '사용 가능한 이메일 주소입니다';
+                            emailMessage.className = 'email-message success'; // 성공 스타일
+                        }
+                    },
+                    error: function() {
+                        emailMessage.textContent = '서버 오류로 이메일 확인에 실패했습니다';
+                        emailMessage.className = 'email-message error'; // 실패 스타일
+                    }
+                });
+            } else {
+                // 이메일 형식이 잘못된 경우
+                emailMessage.textContent = '유효하지 않은 이메일 주소입니다';
+                emailMessage.className = 'email-message error'; // 실패 스타일
+            }
+        });
+     // 이메일 입력란의 입력 이벤트 핸들러
+        emailInput.addEventListener('input', function() {
+            const email = emailInput.value.trim();
+            if (email === '') {
+                emailMessage.textContent = ''; // 이메일이 비어 있으면 메시지 숨김
+            }
+        });
+
+        // 폼 제출 전 비밀번호 및 이메일 검사
+        $("form").on('submit', function(event) {
+            const password = passwordInput.value;
+            const passwordConfirm = passwordConfirmInput.value;
+            const email = emailInput.value;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (password !== passwordConfirm && password == '') {
+                alert('비밀번호가 일치하지 않습니다.');
+                event.preventDefault(); // 폼 제출 방지
+            }
+
+            if (!emailPattern.test(email)) {
+                alert('유효하지 않은 이메일 주소입니다.');
+                event.preventDefault(); // 폼 제출 방지
+            }
+        });
+		
 		
 	});
+	
 </script>
 
 
@@ -99,47 +217,49 @@
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start" action="sign_up_do">
+                <form role="form" class="text-start" action="sign_up">
      <!-- 사용자 이름  -->
-                  <div class="input-group input-group-outline my-3">
-                    <label for="user_name" class="form-label">Name</label>
-                    <input type="text" class="form-control" name="user_name" value=""  required>
+                  <div class="input-group input-group-outline my-2">
+                    <input type="text" class="form-control" name="user_name" value="" placeholder="Name" required>
                   </div>
       <!-- 이메일 -->     
-                  <div class="input-group input-group-outline my-3">
-                    <label for="email"  class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" value="" required>
-                  </div>
+                  <div class="input-group input-group-outline my-2">
+                    <input type="email" class="form-control" name="email" value="" placeholder="Email" required style="height: 2.5rem; padding: 0.5rem; font-size: 0.875rem;">
+                     <button type="button" class="btn bg-gradient-primary w-25 mb-2" style="background:#B06AB3;height: 2.5rem; font-size:0.6rem;" id="validate-email-btn">Check Email</button>
+                                  
+                   </div>
+                     <!-- 이메일 유효성 검사 메시지 -->
+   					 <p id="email-message" class="email-message" style="margin-bottom: 0; font-size: 0.7rem; font-weight:bold"></p>
+                    
      <!-- 비밀번호  -->
                   <div class="input-group input-group-outline my-3">
-                    <label for="password"  class="form-label">Password</label>
-                    <input type="password" class="form-control" name="password" value=""  required>
+                    <input type="password" class="form-control" name="password" value="" placeholder="Password" required>
                   </div>
      <!-- 비밀번호 확인 -->
                   <div class="input-group input-group-outline my-3">
-                    <label for="password_confirm"  class="form-label">Password Confirm</label>
-                    <input type="password" class="form-control" id="password_confirm" required>
+                    <input type="password" class="form-control" id="password_confirm" placeholder="Password Confirm" required>
                   </div>
-      <!-- 소속-권한  -->
+                   <!-- 비밀번호 확인 메시지 -->
+    				<p id="password-message" class="password-message" style="margin-bottom:0"></p>
+      <!-- 소속-권한  --><br>
 	              <div class="input-group input-group-outline mb-3">
 	               <label for="affiliation" class="col-sm-4 col-form-label">Affiliation</label>
-				      <select class="form-control mr-sm-2" id="affiliation" v-model="selectedAffiliation">
-				         <option v-for="(aff, role_code) in affiliation" :key="role_code" :value="role_code">{{ aff }}</option>
+				      <select class="form-control mr-sm-2" id="affiliation"@change="affiliation">
+				         <option v-for="(aff, role_code) in affiliation" :key="role_code" :value="">{{ aff }}</option>
 				      </select>     
                   </div>  
       
        
 		<!-- 회사아이디 -->             
                 <div class="input-group input-group-outline my-3">
-                    <label class="form-label">Company ID</label>
-                    <input type="text" class="form-control" name="company_id" value=""  >
+                    <input type="text" class="form-control" name="company_id" placeholder="Company ID" value=""  >
                   </div>
          <!-- 부서 -->          
                   <div class="input-group input-group-outline my-3">
 				      <label for="department" class="col-sm-4 col-form-label">Department</label>
 				      <select id="department" class="form-control mr-sm-2" @change="department">
 				        
-				    	 <option v-for="(dept, deptno) in department" :key="deptno" :value="deptno">{{ dept }}</option>
+				    	 <option v-for="(dept, deptno) in department" :key="deptno" :value="">{{ dept }}</option>
 				      </select>
 				     
 				    </div>
@@ -150,11 +270,11 @@
                   </div>
                  
                 </form>
-                
+             
            
                  <p class="mt-4 text-sm text-center">
                     "Do you already have an account?"
-                    <a href="sign_in" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Sign in</a>
+                    <a href="signinFrm" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Sign in</a>
                   </p>
               </div>
             </div>
@@ -173,9 +293,9 @@
   
  <script type="text/javascript">
     var model = {	
-			department:{10:'관리', 20:'인사', 30:'재무',40:'마케팅', 50:'개발', 60:'IT', 70:'품질 보증'},
-    		affiliation:{'C':'회사', 'P':'프로젝트 관리자', 'M':'팀원'},
-			role_code:''
+			department:{0:'N/A',10:'관리', 20:'인사', 30:'재무',40:'마케팅', 50:'개발', 60:'IT', 70:'품질 보증'},
+    		affiliation:{'N':'N/A','C':'회사', 'P':'프로젝트 관리자', 'M':'팀원'},
+			
     }
     var vm = Vue.createApp({
       
@@ -188,10 +308,13 @@
 <script type="text/javascript">
 	$("#regBtn").click(function() {
 		if (confirm("등록하시겠습니까?")) {	
+
 			$("form").submit();
+			
 		}
 	});
 </script>
+ 
 
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>

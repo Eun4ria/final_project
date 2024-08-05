@@ -316,6 +316,82 @@
   */
 	});
 	</script>
+
+<!-- 채팅-메세지 부분 -->
+	<script type="text/javascript">
+	// 1. 소켓서버접속 변수
+	var wsocket=null;
+	$(document).ready(function(){
+		$("#id").keyup(function(){
+			if(event.keyCode == 13){
+				ws_conn()
+			}
+		})
+		$("#enterBtn").click(function(){
+			ws_conn()
+		})
+		function ws_conn(){
+			var socketServer = '${socketServer}'.replace(/^"|"$/g,'')
+			//alert(socketServer)
+			//var socketServer = 'ws:localhost:3030/chat'
+			wsocket = new WebSocket(socketServer)
+			//console.log(wsocket)
+			wsocket.onopen=function(evt){
+				//console.log(evt)
+				wsocket.send($("#id").val()+":접속하셨습니다!")
+			}
+			// 전송한 메시지를 받는 메서드 선언. 서버단에서 ws.sendMessage(message)로 보냈을 때
+			// 받는 처리하는 메서드..
+			wsocket.onmessage = function(evt){
+				revMsg(evt.data)
+			}
+			wsocket.onclose =function(){
+				wsocket.close()
+			}			
+		}
+		
+		// sndBtn msg
+		$("#sndBtn").click(function(){
+			sendMsg()
+		})
+		$("#msg").keyup(function(){
+			if(event.keyCode==13){
+				sendMsg()
+			}
+		})
+	});
+	function sendMsg(){
+		wsocket.send($("#id").val()+":"+$("#msg").val())
+		$("#msg").val("")		
+	}
+	// 최대 크기 함수 위에 전역변수로 선언..
+	var mx = 0
+	function revMsg(msg){
+		// 1. 보내는 메시지 오른쪽, 받는 메시지 왼쪽 정렬 처리..
+		var alignOpt = "left"
+		var msgArr = msg.split(":") // 사용자명:메시지  구분하여 처리
+		var sndId = msgArr[0]// 보내는 사람 메시지 id
+		if($("#id").val() == sndId){
+			// 보내는 사람과 받는 사람의 아이디가 동일 하면 현재 접속한 사람이 보낸 메시지. ==> 정렬 오른쪽
+			alignOpt = "right"
+			msg = msgArr[1]  // 내가 보낸 메시지이기에 id삭제..
+		}
+		// 정렬 처리된 메시지 
+		var msgObj = $("<div></div>").text(msg).attr("align", alignOpt).css("width",$("#chatArea").width()-20)
+		$("#chatMessageArea").append(msgObj)
+		//$("#chatMessageArea").append(msg+"<br>")
+		// 2. 메시지 스크롤 처리..(최하단에 있는 메시지 내용 확인할 수 있게 자동 스크롤 처리..)
+		//   1) 전체 해당 데이터의 높이를 구하기
+		// 	 2) 포함하고 있는 부모 객체(#chatArea)에서 스크롤 기능 메서드로 스크롤되게 처리 scrollTop()
+		var height = parseInt($("#chatMessageArea").height())
+		mx += height + 20
+		$("#chatArea").scrollTop(mx)
+		
+		
+		
+		
+	}
+</script>
 	</head>
 	<!--Coded With Love By Mutiullah Samim
 	
@@ -405,7 +481,7 @@
 									<input type="submit" id="exitBtn" hidden >
 									<i class="fas fa-ban"></i> Block
 								</form>
-								<form method="post" action="mainpmFrm">
+								<form method="get" action="todomemFrm">
 									
 									<button type="submit" id="exitBtn" style="background-color:transparent; border:none; color:white"><i class="fas fa-sign-out-alt"></i> Exit</button>
 									
@@ -416,26 +492,36 @@
 								
 							</div>
 						</div>
-						<div class="card-body msg_card_body">
+						
 							
-					
-						</div>
-						<div class="card-footer">
-							<div class="input-group">
-								
-								<div class="input-group mb-3">	
-		
-						<input id="msg" name="" class="form-control type_msg" placeholder="Type your message..."/>
-								<div class="input-group-text send_btn"  >
-									<i class="fas fa-location-arrow"></i>
-									<input type="button" id="sndBtn" hidden>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+
+	<div class="input-group mb-3">	
+		<div class="input-group-prepend ">
+			<span class="input-group-text  justify-content-center">아이디</span>
 		</div>
+		<input id="id" class="form-control" placeholder="접속할 아이디 입력" value="" />	
+		<input type="button" class="btn btn-primary" value="채팅방입장" id="enterBtn"/>
+		<input type="button" class="btn btn-danger" value="채팅방나가기" id="exitBtn"/>		
+	</div>	
+	<div class="card-body msg_card_body">
+	
+		<div id="chatArea" style="overflow-x:hidden;overflow-y: scroll; "" class="input-group-append">
+			<div id="chatMessageArea"></div>
+		</div>
+		
+	</div>
+	<div class="card-footer">
+	<div class="input-group mb-3">	
+		<div class="input-group-prepend ">
+			<span class="input-group-text  justify-content-center">전송메시지</span>
+		</div>
+		<%--
+		sndBtn msg
+		 --%>
+		<input id="msg" class="form-control" value="" placeholder="전송할 메시지 입력"/>	
+		<input  type="button" class="btn btn-info" value="메시지전송" id="sndBtn"/>
+	</div>		
+		
 </div>
 <script style="text/javascript">
 document.addEventListener('DOMContentLoaded', () => {
