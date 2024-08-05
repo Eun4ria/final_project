@@ -14,19 +14,20 @@ import com.web.finalProject.vo.Users;
 
 @Mapper
 public interface A01_Dao {
+	// 아이디 찾기
 	@Select("SELECT user_id FROM USERS\r\n"
 			+ "WHERE user_name=#{user_name} AND email=#{email}")
 	String find_id(Users user);
-	
+	// 비밀번호 찾기 (사용자 일치 확인)
 	@Select("SELECT count(*) FROM users\r\n"
 			+ "WHERE USER_ID = #{user_id} AND USER_NAME = #{user_name} AND EMAIL = #{email}")
 	int find_pwd(Users user);
-	
+	// 임시비밀번호 업데이트
 	@Update("UPDATE USERS\r\n"
 			+ "SET PASSWORD = #{tempPwd}\r\n"
 			+ "WHERE USER_ID = #{user_id}")
 	int updateTempPwd(@Param("tempPwd") String tempPwd, @Param("user_id") String user_id);
-	
+	// 간트 리스트(조회)
 	@Select("SELECT \r\n"
 			+ "    t.task_id AS id, \r\n"
 			+ "    t.task_name AS text, \r\n"
@@ -48,30 +49,58 @@ public interface A01_Dao {
 			+ "    users u ON t.user_id = u.user_id\r\n"
 			+ "WHERE project_id=#{project_id}")
 	List<GanttTask> getGantt(@Param("project_id") String project_id);
-	
+	// 프로젝트의 팀(간트에서 역할부여할 때)
 	@Select("SELECT u.user_name AS text,\r\n"
 			+ " u.user_id AS id\r\n"
 			+ "FROM users u\r\n"
 			+ "JOIN team t ON u.user_id = t.user_id\r\n"
 			+ "WHERE t.project_id=#{project_id}")
 	List<Users> getTeam(@Param("project_id") String project_id);
-	
+	// 메인에서 프로젝트 생성
 	@Insert("INSERT INTO project (project_id, project_name, etc, start_date, end_date, create_date, company_id)\r\n"
 			+ "VALUES ('PRO_'||TO_CHAR(project_seq.nextval, 'FM0000'),"
 			+ " #{project_name}, #{etc}, TO_DATE(#{start_date}, 'YYYY-MM-DD'), TO_DATE(#{end_date}, 'YYYY-MM-DD'), sysdate, #{company_id})")
 	int insertProject(Project ins);
-	
-	@Select("SELECT p.*,\r\n"
-			+ "	t.*,\r\n"
-			+ "	b.AMOUNT ,\r\n"
-			+ "	u.image\r\n"
+	// 프로젝트 생성 시 팀원 추가하기 위한 user리스트
+	@Select("SELECT\r\n"
+			+ "    u.user_id,\r\n"
+			+ "    u.user_name,\r\n"
+			+ "    d.dname,\r\n"
+			+ "    u.deptno\r\n"
 			+ "FROM\r\n"
-			+ "    project p \r\n"
-			+ "JOIN team t ON p.project_id = t.project_id\r\n"
-			+ "JOIN users u ON p.company_id=u.company_id\r\n"
-			+ "JOIN BUDGET b ON p.project_id=b.project_id\r\n"
+			+ "    users u\r\n"
+			+ "JOIN\r\n"
+			+ "    department d ON u.deptno = d.deptno\r\n"
+			+ "ORDER BY\r\n"
+			+ "    u.user_id")
+	List<Users> getUsers();
+	
+	
+	// 로그인한 유저의 프로젝트 리스트
+	@Select("SELECT\r\n"
+			+ "    p.project_id,\r\n"
+			+ "    c.logo,\r\n"
+			+ "    p.project_name,\r\n"
+			+ "    MAX(b.amount) AS amount,  -- 예산\r\n"
+			+ "    AVG(t.progress) AS progress  -- 평균 진행률\r\n"
+			+ "FROM\r\n"
+			+ "    users u\r\n"
+			+ "JOIN\r\n"
+			+ "    team tm ON u.user_id = tm.user_id\r\n"
+			+ "JOIN\r\n"
+			+ "    project p ON tm.project_id = p.project_id\r\n"
+			+ "JOIN\r\n"
+			+ "    company c ON p.company_id = c.company_id\r\n"
+			+ "LEFT JOIN\r\n"
+			+ "    task t ON p.project_id = t.project_id\r\n"
+			+ "LEFT JOIN\r\n"
+			+ "    budget b ON p.project_id = b.project_id\r\n"
 			+ "WHERE\r\n"
-			+ "    t.user_id = #{user_id}")
+			+ "    u.user_id = #{user_id}\r\n"
+			+ "GROUP BY\r\n"
+			+ "    p.project_id, c.logo, p.project_name\r\n"
+			+ "ORDER BY\r\n"
+			+ "    p.project_name")
 	List<Project> getProjectList(@Param("user_id") String user_id);
 	
 	

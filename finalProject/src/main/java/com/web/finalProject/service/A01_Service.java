@@ -34,18 +34,25 @@ public class A01_Service {
     public List<GanttTask> getGantt(String project_id){
     	return dao.getGantt(project_id);
     }
-    
     public List<Users> getTeam(String project_id){
     	return dao.getTeam(project_id);
     }
     
+    
+    
+    
     public String insertProject(Project ins) {
     	return dao.insertProject(ins)>0?"생성 완료":"생성 실패";
     }
+    public List<Users> getUsers(){
+		return dao.getUsers();
+	}
     
     public List<Project> getProjectList(String user_id){
     	return dao.getProjectList(user_id);
     }
+    
+    
     
     
     public String find_pwd(Users user) {

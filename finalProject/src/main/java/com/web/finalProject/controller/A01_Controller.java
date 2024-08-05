@@ -28,8 +28,7 @@ public class A01_Controller {
 	@Autowired(required=false)
 	private A01_Service service;
 	
-	private Util util;
-	
+	/*	
 	// http://223.26.198.130:4040/main
 	@GetMapping("main")
     public String main(@RequestParam(name="user_id", defaultValue="P_0012") String user_id,
@@ -38,6 +37,8 @@ public class A01_Controller {
         d.addAttribute("currentUrl", request.getRequestURI());
         return "WEB-INF\\views\\a00_main_pm.jsp";
     }
+	*/
+	// http://localhost:4040/mainpmFrm	
 	@GetMapping("mainpmFrm")
 	public String main(HttpServletRequest request, Model d) {
 	    // 세션에서 user_id 값을 가져옵니다.
@@ -127,6 +128,13 @@ public class A01_Controller {
 		d.addAttribute("msg", service.insertProject(ins));
 		return "WEB-INF\\views\\a00_main_pm.jsp";
 	}	
+	// 프로젝트 생성 시 팀원선택 드롭메뉴에 들어갈 전체 유저 리스트
+	// http://localhost:4040/ddd
+	@GetMapping("ddd")
+	public String ddd(Model d) {
+		d.addAttribute("user", service.getUsers());
+	    return "WEB-INF\\views\\a00_main_pm.jsp";
+	}
 	
 	
 	
@@ -158,29 +166,13 @@ public class A01_Controller {
         }
         return "WEB-INF\\views\\a01_find_pwd.jsp";
     }
-    /*
-    @Value("${mailaccount}")
-	private String mailaccount;
-	
-	// controller단에서 사용할 공통적인 모델 데이터를 선언할 때, 활용...
-	@ModelAttribute("mailaccount")
-	public String getMailAccount() {
-		return mailaccount;
-	}
-	
-	// 자동 사원접속정보 발생..
-	// http://localhost:4040/tempPwdFrm
-	@GetMapping("tempPwdFrm")
-	public String tempPwdFrm() {
-		return "WEB-INF\\views\\a01_find_pwd.jsp";
-	}
-	@PostMapping("regEmpTmp.do")
-	public String makeTempPwd(Users user, Model d) {
-		//mem.getEmpno(), mem.getEmail()
-		d.addAttribute("msg", service.makeTempPwd(user));
-		return "WEB-INF\\views\\a02_mvc\\a04_regEmpTmpForm.jsp";
-	}	
-	*/
+    
+    
+    
+    
+    
+    
+    
 	
 }
 class Gantt{
