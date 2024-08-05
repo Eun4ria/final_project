@@ -9,12 +9,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!DOCTYPE html>
-<%--
-
-
- --%>
-<html>
 <head>
 
 	<meta charset="utf-8">
@@ -57,7 +51,51 @@
 	<link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 <%-- 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
+<script type="text/javascript">
 
+	$(document).ready(function(){
+
+		var msg = "${msg}"
+		if(msg!=""){
+			alert(msg)
+			if(msg!="해당 계정 정보 없습니다"){
+				if(confirm("로그인 화면으로 이동하시겠습니까?")){
+					location.href="signinFrm"
+				}
+			}
+		}
+		
+		$("#pwdBtn").click(function() { 
+			var nameInput = document.querySelector('[name=user_name]');
+	        var name = nameInput.value;
+			var idInput = document.querySelector('[name=user_id]');
+	        var id = idInput.value;
+			var emailInput = document.querySelector('[name=email]');
+	        var email = emailInput.value;
+	        var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;	
+	        
+	        if(name === "") {
+	            alert("이름을 입력하세요");
+	            nameInput.focus();
+	        } else if(id === "") {
+	            alert("ID를 입력하세요");
+	            idInput.focus();
+	        } else if(email === "") {
+	            alert("이메일 주소를 입력하세요");
+	            emailInput.focus();
+	        } else if (!emailPattern.test(email)) {
+	            alert('이메일 형식에 맞지 않습니다');
+	            emailInput.focus();
+	        } else {
+	            $("form").submit()
+	        }	        
+	    });
+		
+	});
+    
+	
+	
+</script>
 </head>
 
 <body class="bg-gray-200">
@@ -94,26 +132,26 @@
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start">
+                <form role="form" class="text-start" action="find_pwd" method="post">
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Name</label>
-                    <input type="text" class="form-control">
+                    <input type="text" name="user_name" class="form-control">
                   </div>
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">ID</label>
-                    <input type="text" class="form-control">
+                    <input type="text" name="user_id" class="form-control">
                   </div>
                   <div class="input-group input-group-outline mb-3">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control">
+                    <input type="email" name="email" class="form-control">
                   </div>
                  
                   <div class="text-center">
-                    <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3">Find Password</button>
+                    <button type="button" id="pwdBtn" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3">Find Password</button>
                   </div>
                   <p class="mt-4 text-sm text-center">
                     Are you ready to log in?
-                    <a href="../pages/sign-up.html" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Login</a>
+                    <a href="signinFrm" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Login</a>
                   </p>
                 </form>
               </div>

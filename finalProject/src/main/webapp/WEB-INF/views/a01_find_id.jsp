@@ -66,31 +66,31 @@
 			if(name!=null&&name!=""){ // 이름 입력필드가 empty가 아닐 경우
 				if(email!=null&&email!=""){	// 이메일 입력필드가 empty가 아닐 경우
 			        if (emailPattern.test(email)) { // 모든 조건에 부합 할 경우
-			            idFind() // 아이디 찾기 전송 함수			            
+			        	findId() // 아이디 찾기 전송 함수			            
 			        }else{ // 이메일 패턴 미일치 시
-			        	alert('Please enter a valid email address');
+			        	alert('이메일 형식에 맞지 않습니다');
 			            emailInput.focus();
 			        }				        
 				}else{ // 이메일 미입력 시	
-					alert("Please enter your email address")	
+					alert("이메일 주소를 입력하세요")	
 					emailInput.focus();
 				}				
 			}else{ // 이름 미입력 시
-				alert("Please enter your name")
+				alert("이름을 입력하세요")
 				nameInput.focus();
 			}	        
 	    });
 		
 	});
     
-	function idFind() {
+	function findId() {
 	    $.ajax({
 	        url: "find_id",
 	        type:"POST",
 	        data: $("form").serialize(),
 	        success: function(result) {
-	            if(result=="해당 계정 정보 없습니다.") {
-					alert("No account information found for the provided details")
+	            if(result=="해당 계정 정보 없습니다") {
+					alert(result)
 	            } else{					
 	            	$("form").submit()	
 	            }

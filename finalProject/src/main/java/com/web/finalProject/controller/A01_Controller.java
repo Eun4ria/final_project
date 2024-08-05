@@ -3,18 +3,18 @@ package com.web.finalProject.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.finalProject.service.A01_Service;
 import com.web.finalProject.util.Util;
-import com.web.finalProject.vo.Calendar;
 import com.web.finalProject.vo.GanttTask;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Users;
@@ -96,18 +96,7 @@ public class A01_Controller {
  		return "WEB-INF\\views\\a01_find_id_result.jsp"; 
  	}    
  	
-	// 비밀번호 찾기 폼
-	// http://223.26.198.130:4040/find_pwd
-	@GetMapping("find_pwd")
-    public String find_pwdFrm() {
-        return "WEB-INF\\views\\a01_find_pwd.jsp";
-    }
-	// http://223.26.198.130:4040/find_pwd
-	@PostMapping("temp_pwd")
-	public String temp_pwd(Users user) {		
-		return "";
-	}
-			
+		
 	// 간트 페이지
 	// http://223.26.198.130:4040/gantt
 	@GetMapping("gantt")
@@ -151,21 +140,48 @@ public class A01_Controller {
     public String profile(HttpServletRequest request, Model model) {
         model.addAttribute("currentUrl", request.getRequestURI());
         return "WEB-INF\\views\\a01_profile.jsp";
+    }    
+    
+    // http://223.26.198.130:4040/find_pwd
+    @GetMapping("find_pwd")
+    public String find_pwd() {
+        return "WEB-INF\\views\\a01_find_pwd.jsp";
     }
-    @GetMapping("sign-in")
-    public String signIn(HttpServletRequest request, Model model) {
-        model.addAttribute("currentUrl", request.getRequestURI());
-        return "adminkit/pages-sign-in";
+    @PostMapping("find_pwd")
+    public String findPassword(Users user, @RequestParam("email") String email,
+    		Model d) {
+        String result = service.find_pwd(user);
+        if ("해당 계정 정보 없습니다".equals(result)) { // 계정 정보가 없는 경우
+        	d.addAttribute("msg", result);
+        } else {
+        	 d.addAttribute("msg",service.makeTempPwd(user));
+        }
+        return "WEB-INF\\views\\a01_find_pwd.jsp";
     }
-
-    @GetMapping("sign-up")
-    public String signUp(HttpServletRequest request, Model model) {
-        model.addAttribute("currentUrl", request.getRequestURI());
-        return "adminkit/pages-sign-up";
-    }
-
+    /*
+    @Value("${mailaccount}")
+	private String mailaccount;
 	
-
+	// controller단에서 사용할 공통적인 모델 데이터를 선언할 때, 활용...
+	@ModelAttribute("mailaccount")
+	public String getMailAccount() {
+		return mailaccount;
+	}
+	
+	// 자동 사원접속정보 발생..
+	// http://localhost:4040/tempPwdFrm
+	@GetMapping("tempPwdFrm")
+	public String tempPwdFrm() {
+		return "WEB-INF\\views\\a01_find_pwd.jsp";
+	}
+	@PostMapping("regEmpTmp.do")
+	public String makeTempPwd(Users user, Model d) {
+		//mem.getEmpno(), mem.getEmail()
+		d.addAttribute("msg", service.makeTempPwd(user));
+		return "WEB-INF\\views\\a02_mvc\\a04_regEmpTmpForm.jsp";
+	}	
+	*/
+	
 }
 class Gantt{
 	private List<GanttTask> ganttList;

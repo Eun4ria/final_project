@@ -84,6 +84,7 @@ public class A02_Controller {
 	           session.setAttribute("user_name", user.getUser_name());
 	           session.setAttribute("image", user.getImage());
 	           session.setAttribute("role_code", user.getRole_code());
+	           session.setAttribute("company_id", user.getCompany_id());
 	           // 권한에 따라 리다이렉트
 	           System.out.println("Role code:" + user.getRole_code());
 	           System.out.println("user_id:" + user.getUser_id());

@@ -252,18 +252,6 @@
 			grouping: true
 		});
 
-        var resourcesStore = gantt
-        .createDatastore({
-           name : gantt.config.resource_store,
-           type : "treeDatastore",
-           initItem : function(item) {
-              item.parent = item.parent
-                    || gantt.config.root_id;
-              item[gantt.config.resource_property] = item.parent;
-              item.open = true;
-              return item;
-           }
-        });
         //gantt.init()
 		gantt.init("gantt_here");
 		// 페이지 로딩될 때 간트 조회
@@ -285,25 +273,14 @@
 				url:url,
 				data:$("form").serialize(),
 				dataType:"json",
-				success: function(data) { // data는 이미 배열형태
-                    var rs = [{"id":1,"text":"QA","parent":0},{"id":2,"text":"Development","parent":0},
-                    	{"id":3,"text":"Sales","parent":0},
-                    	{"id":4,"text":"Other","parent":0},{"id":5,"text":"Unassigned","parent":4},
-                    	{"id":6,"text":"John","parent":1},{"id":7,"text":"Mike","parent":2},
-                    	{"id":8,"text":"Anna","parent":2},{"id":9,"text":"Bill","parent":3},
-                    	{"id":10,"text":"홍길동","parent":3},{"id":11,"text":"Floe","parent":3}];
-                    console.log("# 자원 출력 #")
-                    console.log(rs)
-                    resourcesStore.parse(rs);
-                    
-                    console.log("데이터  출력(gantt)");    
-                    data.ganttList[0].owner_id=[7]
-                    console.log(data.ganttList[0]);      
-                    //owner_id=[7]
+				success: function(data) { // data는 이미 배열형태    
+               
+                    console.log("데이터  출력(gantt)");                    
                     var gdata = {data:data.ganttList}
+                    
                     console.log(gdata)
                     gantt.parse(gdata); 
-                    console.log("### 자원 출력 ###");
+                    
                     //console.log(data.resource)
                     
                     //console.log("데이터 출력");
@@ -312,12 +289,16 @@
                     //console.log(data.resource)
                     
                     //resourcesStore.parse(data.resource);
-                    var rsc = {"user": [
-            			{key:  "M_0003", label: "파힘"},
-            			{key:  "P_0012", label: "김은수"}
-            		]}
+                    var resources = data.resource.map(function(item) {
+                        return {
+                            key: item.id,
+                            label: item.text
+                        };
+                    });
+                    console.log("사용자 리스트")
+                    console.log(resources)
 
-                    
+                    gantt.serverList("user", resources);
    
                     /*
                     var gresource ={
@@ -363,17 +344,10 @@
         			]);
                     */
                     
-                    /* var resources = data.resource.map(function(item) {
-                        return {
-                            key: item.id,
-                            label: item.text
-                        };
-                    });
-                    console.log("사용자 리스트")
-                    console.log(resources) */
                     
                     
-                  // gantt.serverList("user", resources);
+                    
+                  
                     
                     
                     

@@ -18,10 +18,14 @@ public interface A01_Dao {
 			+ "WHERE user_name=#{user_name} AND email=#{email}")
 	String find_id(Users user);
 	
-	@Update("UPDATE USERS\r\n"
-			+ "SET PASSWORD = ''\r\n"
+	@Select("SELECT count(*) FROM users\r\n"
 			+ "WHERE USER_ID = #{user_id} AND USER_NAME = #{user_name} AND EMAIL = #{email}")
-	int tempPwd(Users user);
+	int find_pwd(Users user);
+	
+	@Update("UPDATE USERS\r\n"
+			+ "SET PASSWORD = #{tempPwd}\r\n"
+			+ "WHERE USER_ID = #{user_id}")
+	int updateTempPwd(@Param("tempPwd") String tempPwd, @Param("user_id") String user_id);
 	
 	@Select("SELECT \r\n"
 			+ "    t.task_id AS id, \r\n"

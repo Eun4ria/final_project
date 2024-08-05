@@ -618,7 +618,7 @@
       </div>
       <div class="modal-body">
 		<form id="modalFrm" class="form"  method="post" action="insertProject">
-		<input type="hidden" name="company_id" value="COM_0001"/>
+		<input type="hidden" name="company_id" value="${sessionScope.company_id}"/>
 	     <div class="row">
 	      <div class="col">	 
 	      <span>Project Name</span>     	      

@@ -26,11 +26,16 @@ FROM
 
 
 
--- 아이디 찾기
+-- 패스워드 찾기
+  
+SELECT count(*) FROM users
+WHERE USER_ID = 'C_0001' AND USER_NAME = '박민경' AND EMAIL = 'loverymin1213@gmail.com' ;
+
 UPDATE USERS
 SET PASSWORD = 'min1213!'
-WHERE USER_ID = 'P_0001' AND USER_NAME = '박민경' AND EMAIL = 'loverymin1213@gmail.com' ;
+WHERE USER_ID = 'C_0001';
 SELECT * FROM users;
+
 
 
 

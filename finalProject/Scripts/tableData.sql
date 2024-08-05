@@ -8,9 +8,13 @@ CREATE TABLE role (
 INSERT INTO role VALUES ('C', 'Company');
 INSERT INTO role VALUES ('P', 'Project Manger');
 INSERT INTO role VALUES ('M', 'Team Member');
+INSERT INTO role VALUES ('N', 'N/A');
 
 -- 보기
 SELECT * FROM ROLE;
+
+SELECT * FROM company;
+INSERT INTO company values('COM_0000','train','https://cdn.inflearn.com/public/users/thumbnails/434230/1fd48c98-1d89-4664-99b8-65f864ddec4f');
 
 
 
