@@ -77,45 +77,7 @@ public class A0_Controller {
 	        }
 	    }
 	
-		
-// 메일 발송
-		// @Value("${spring.mail.username}")
-//	@Value("${spring.mail.username}")
-//	private String mailaccount;
-//	
-//	// http://localhost:4040/mail
-//	@GetMapping("mail")
-//	public String mailForm() {
-//		return "WEB-INF\\views\\a02_regmailFrm.jsp";
-//	}
-//	@PostMapping("mail")
-//	public String sendMail(MailVo mail, Model d) {
-//		d.addAttribute("msg",service.sendMail(mail));
-//		return "WEB-INF\\views\\a02_regmailFrm.jsp";
-//	}
-//	
-//	
-//	// controller단에서 사용할 송통적인 모델 데이터를 선언할 때 활용
-//	@ModelAttribute("mailaccount")
-//	
-//	public String getMailAccount() {
-//		return mailaccount;
-//	}
-	
-	
-////	//자동 사원접속정보 발생
-//	// http://localhost:4040/regEmpTmp
-//		@GetMapping("regEmpTmp")
-//		public String regEmpTmpForm() {
-//			return "WEB-INF\\views\\a02_regEmpTmpForm.jsp";
-//		}
-//		@PostMapping("regEmpTmp")
-//		public String regEmpTmpMail(RegMember mem, Model d) {
-//			//mem.getEmpno(), mem.getEmail()
-//			d.addAttribute("msg",service.makeEmpMail(mem));
-//			return "WEB-INF\\views\\a02_regEmpTmpForm.jsp";
-//		}	
-	
+
 	
 //로그인
 	// 로그인 처음 폼
