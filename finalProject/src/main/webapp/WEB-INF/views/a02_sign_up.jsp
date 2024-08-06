@@ -77,6 +77,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		
+		
 		var msg = "${msg}";
 		if (msg !== "") {
 			alert(msg);
@@ -184,7 +185,7 @@
                 event.preventDefault(); // 폼 제출 방지
             }
         });
-		
+       
 		
 	});
 	
@@ -248,29 +249,54 @@
 				      <select class="form-control mr-sm-2" id="affiliation"@change="affiliation">
 				         <option v-for="(aff, role_code) in affiliation" :key="role_code" :value="role_code">{{ aff }}</option>
 				      </select>     
-                  </div>  -->
+                  </div>  
        <div class="input-group input-group-outline my-3">
                     <input type="text" class="form-control" name="role_code" placeholder="role_code" value=""  >
-                  </div>
+                  </div>-->
+                  
+                  <div class="input-group input-group-outline my-3">   
+                
+				    
+				<select  class="form-control"  v-model="aff.role_code" name="role_code">
+		        	<option value="N">N/A</option>
+		        	<option value="C">회사</option>
+		        	<option value="P">프로젝트 관리자</option>
+		        	<option value="M">팀원</option>
+		        	<option value="40">마케팅</option>
+		        	
+		        </select>
+		      </div>  
        
 		<!-- 회사아이디 -->             
                 <div class="input-group input-group-outline my-3">
                     <input type="text" class="form-control" name="company_id" placeholder="Company ID" value=""  >
                   </div>
-         <!-- 부서        
-                  <div class="input-group input-group-outline my-3">
+         <!-- 부서     --> 
+         <div class="input-group input-group-outline my-3">   
+                <%--   <div class="input-group input-group-outline my-3">
 				      <label for="department" class="col-sm-4 col-form-label">Department</label>
 				      <select id="department" class="form-control mr-sm-2" @change="department">
 				        
 				    	 <option v-for="(dept, deptno) in department" :key="deptno" :value="deptno)">{{ dept }}</option>
-				      </select>
+				      </select>--%>
 				     
-				    </div>-->   
+				 <%--     </div>  
 				       <div class="input-group input-group-outline my-3">
                     <input type="text" class="form-control" name="deptno" placeholder="deptno" value=""  >
-                  </div>
+                  </div>--%>
 				    
-				    
+				<select  class="form-control"  v-model="dept.deptno" name="deptno">
+		        	<option value="0">N/A</option>
+		        	<option value="10">관리</option>
+		        	<option value="20">인사</option>
+		        	<option value="30">재무</option>
+		        	<option value="40">마케팅</option>
+		        	<option value="50">개발</option>
+		        	<option value="60">IT</option>
+		        	<option value="70">품질 보증</option>
+		        	
+		        </select>
+		      </div>  
 				    
                   
                   <div class="text-center">
@@ -298,7 +324,7 @@
   <script src="${path}/material-dashboard-2/assets/js/core/bootstrap.min.js"></script>
   <script src="${path}/material-dashboard-2/assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="${path}/material-dashboard-2/assets/js/plugins/smooth-scrollbar.min.js"></script>
-  
+<%--   
  <script type="text/javascript">
     var model = {	
 			department:{0:'N/A',10:'관리', 20:'인사', 30:'재무',40:'마케팅', 50:'개발', 60:'IT', 70:'품질 보증'},
@@ -312,7 +338,18 @@
        }
     }).mount("#app");
 </script>
-
+--%>
+<script>
+var vm = Vue.createApp({
+	name:"App",
+	data(){
+		return {dept:{deptno:0},
+				aff:{role_code:"N"}
+				
+		};
+	};
+});
+</script>
 <script type="text/javascript">
 	$("#regBtn").click(function() {
 		if (confirm("등록하시겠습니까?")) {	
