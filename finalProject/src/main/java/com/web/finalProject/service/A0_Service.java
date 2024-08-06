@@ -57,7 +57,7 @@ public class A0_Service {
 	 private void sendEmail(String email, String userId) {
 	        SimpleMailMessage message = new SimpleMailMessage();
 	        message.setTo(email);
-	        message.setSubject("회원 가입이 완료되었습니다.");
+	        message.setSubject("HPM 회원 가입이 완료되었습니다.");
 	        message.setText("귀하의 사용자 ID는 " + userId + " 입니다.");
 	        sender.send(message);
 	    }
