@@ -321,9 +321,9 @@ public class A0_Controller {
 	@Value("${socketServer}")
 	private String socketServer;
 	
-	// http://192.168.0.42:4040/chatting
-	@GetMapping("chatting")
-	public String chatting(Model d) {
+	// http://localhost:4040/chat
+	@GetMapping("chat")
+	public String chat(Model d) {
 		d.addAttribute("socketServer", socketServer);
 		return "WEB-INF\\views\\a02_chat2.jsp";
 	}
