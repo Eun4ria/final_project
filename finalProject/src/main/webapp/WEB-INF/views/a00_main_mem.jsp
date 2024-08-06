@@ -71,7 +71,12 @@
  var user_id = ""
  
 </script>
+<script>
 
+function goChat(user_id){
+location.href="chat?user_id="+user_id
+}
+</script>
 </head>
 
 <body>
@@ -157,6 +162,12 @@
 							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
                 <i class="align-middle" data-feather="settings"></i>
               </a>
+              <li class="nav-item ">
+							<span class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.project_id}')" id="messagesDropdown">
+									<i class="align-middle" data-feather="message-square"></i>
+							</span>
+							
+						</li>
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
                <img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> <span class="text-dark">Welcome, MEM_${user_name}</span>

@@ -3,8 +3,9 @@ package com.web.finalProject.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +20,7 @@ import com.web.finalProject.service.A0_Service;
 import com.web.finalProject.util.Util;
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Gantt;
-import com.web.finalProject.vo.MailVo;
 import com.web.finalProject.vo.Project;
-import com.web.finalProject.vo.RegMember;
 import com.web.finalProject.vo.Users;
 
 import jakarta.servlet.http.Cookie;
@@ -317,16 +316,32 @@ public class A0_Controller {
 	    // JSP 페이지로 이동
 	    return "WEB-INF\\views\\a02_chat2.jsp";	
 	}
-// 채팅-오른쪽 채팅
-	@Value("${socketServer}")
-	private String socketServer;
+// 채팅-오른쪽 채팅	
+//	// http://localhost:4040/chat
+//	@Value("${socketServer}")
+//	private String socketServer;
+//	@GetMapping("chat")
+//	public String chat(Model d) {
+//		d.addAttribute("socketServer", socketServer);
+//		return "WEB-INF\\views\\a02_chat2.jsp";
+//	}
+//	// var socketServer = '${socketServer}'.replace(/^"|"$/g,'')
+//	
+// 채팅-오른쪽 채팅	
+	// http://localhost:4040/message
+	@GetMapping("message")
+	public String chatting() {
+		//return "WEB-INF\\views\\a22_msg.jsp";
+		return "WEB-INF\\views\\a02_chat.jsp";
+	}		
 	
-	// http://localhost:4040/chat
-	@GetMapping("chat")
-	public String chat(Model d) {
-		d.addAttribute("socketServer", socketServer);
-		return "WEB-INF\\views\\a02_chat2.jsp";
-	}
-	// var socketServer = '${socketServer}'.replace(/^"|"$/g,'')
+    @MessageMapping("/hello")
+    @SendTo("/topic/greetings")
+    public String greeting(String message) {
+    	System.out.println("# 메시지 전송 #"+message);
+    	
+    	
+        return message;
+    }
 	
 }

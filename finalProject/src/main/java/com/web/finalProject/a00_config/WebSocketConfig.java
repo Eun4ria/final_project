@@ -10,15 +10,15 @@ import com.web.finalProject.util.ChatHandler;
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer{
-	private final ChatHandler chatHandler;
-		
-		public WebSocketConfig(ChatHandler chatHandler) {
-			this.chatHandler = chatHandler;
-		}
+private final ChatHandler chatHandler;
 	
-		@Override
-		public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-			// TODO Auto-generated method stub
-			registry.addHandler(chatHandler, "/chat").setAllowedOrigins("*");
-		}
+	public WebSocketConfig(ChatHandler chatHandler) {
+		this.chatHandler = chatHandler;
+	}
+
+	@Override
+	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+		// TODO Auto-generated method stub
+		registry.addHandler(chatHandler, "/chat").setAllowedOrigins("*");
+	}
 }

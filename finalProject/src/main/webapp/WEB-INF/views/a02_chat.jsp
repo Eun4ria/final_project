@@ -24,6 +24,8 @@
 	<!-- jquery -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	
+	
+	
 	<style>
 	body,html{
 			height: 100%;
@@ -251,72 +253,49 @@
 	}
 	
 	</style>
-	<script type="text/javascript">
-	var wsocket=null;
-	
-	$(document).ready(function(){
-		$('#action_menu_btn').click(function(){
-			$('.action_menu').toggle();
-		});
-
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#action_menu_btn').click(function(){
+		$('.action_menu').toggle();
 	});
 
-	$(document).ready(function(){
-		/* $("#regBtn").click(function(){
-			location.href="usersInsertFrm.do"
-		}); */
-		// 첫 로딩 시
-	    userSch();
-	    
-	 	// 엔터눌러도 submit처리되지 않게 하기 위함
-/*		$("form").on("keydown",function(event){
-			if(event.key === "Enter"){
-				event.preventDefault();
-				return false;
-			}
-		})
-	*/
-	 	// 검색처리 event enter입력 시 
-		$("[name=user_name]").keyup(function(event){
-			if(event.key === "Enter"){
-				userSch()
-			}
-		})
-	    // 검색버튼 클릭 시
-	    $("#schBtn").click(function() {
-	    	userSch()
-	    });  
-		
-		// 서치 버튼 클릭 시 
-	    function userSch() {
-	        $.ajax({
-	            url: "chatmemlist",
-	            data: $("form").serialize(),
-	            dataType: "json",
-	            success: function(data) {
-	                renderTable(data.sch); // 모델데이터로 지정한 sch의 데이터를 전달
-	            },
-	            error: function(err) {
-	                console.log(err);
-	            }
-	        });
-	    }
-		
-	/*	// 테이블 데이터
-	    function renderTable(data) {
-	        var addHTML = "";
-	        $(data).each(function(idx, sch) {
-	            addHTML += "<tr class='text-center' ondblclick=\"detail('" +sch.user_name+ "')\">";
-	            addHTML += "<td >" + (idx+1)     + "</td>";
-	            addHTML += "<td align='left'>" + sch.user_name+ "</td>";
-	            addHTML += "</tr>";
-	        });
-	        $("tbody").html(addHTML);
-	    }
-  */
-	});
-	</script>
+});
+</script>
+
 	</head>
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+    <script type="text/javascript">
+var socket = new SockJS('/ws');
+var stompClient = Stomp.over(socket);
+
+stompClient.connect({}, function(frame) {
+    console.log('Connected: ' + frame);
+    stompClient.subscribe('/topic/greetings', function(greeting){
+        //console.log(greeting);
+        console.log(greeting.body);
+        console.log(JSON.parse(greeting.body).content);
+        var obj = JSON.parse(greeting.body);
+        var curName = document.getElementById('curName').value;
+        if(curName!=obj.name)
+        	document.querySelector("#show").innerHTML += obj.name+":"+obj.msg+"<br>"
+        //document.querySelector("#show").innerHTML = JSON.parse(greeting.body).content+"<br>"
+
+    });
+});
+/*
+@MessageMapping("/hello")
+@SendTo("/topic/greetings")      
+*/
+
+function sendName() {
+	
+    var name = document.getElementById('curName').value;
+    var msg = document.getElementById('msg').value;
+    document.querySelector("#show").innerHTML += "나:"+msg+"<br>"
+    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg':msg}));
+}
+</script>   
 	<!--Coded With Love By Mutiullah Samim
 	
 	<c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
@@ -370,16 +349,16 @@
 	</script>  
 						
 	</div>
-<!-- 오른쪽 채팅 창 -->
-					<div class="card-footer"></div>
+<!-- 오른쪽 채팅 창
+				-->
 				</div></div>
 				<div class="col-md-8 col-xl-6 chat">
 					<div class="card">
 						<div class="card-header msg_head">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
-									<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-									<span class="online_icon"></span>
+									<img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
+									<input id="curName" value="${user_id }"  disabled/>
 								</div>
 								<div class="user_info">
 									<span><c:out value="${sessionScope.chatroom_name}" /></span>
@@ -405,7 +384,7 @@
 									<input type="submit" id="exitBtn" hidden >
 									<i class="fas fa-ban"></i> Block
 								</form>
-								<form method="post" action="mainpmFrm">
+								<form method="get" action="todomemFrm">
 									
 									<button type="submit" id="exitBtn" style="background-color:transparent; border:none; color:white"><i class="fas fa-sign-out-alt"></i> Exit</button>
 									
@@ -416,27 +395,26 @@
 								
 							</div>
 						</div>
-						<div class="card-body msg_card_body">
-							
-					
-						</div>
-						<div class="card-footer">
-							<div class="input-group">
-								
-								<div class="input-group mb-3">	
-		
-						<input id="msg" name="" class="form-control type_msg" placeholder="Type your message..."/>
-								<div class="input-group-text send_btn"  >
-									<i class="fas fa-location-arrow"></i>
-									<input type="button" id="sndBtn" hidden>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+						
+							<div class="card-body">	
+
+	<div class="input-group mb-3">	
+ 	현재사람:<input id="curName"  style="display:block"/>
+	<br>
+ 	받을사람:<input id="name" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
+ 	<br>
+ 	<div id="show"></div>
+ 	</div>
+ 	<div class="card-footer">
+ 	보낼메시지:<input id="msg" />
+ 	<br>
+ 	<button type="button" onclick="sendName()">전송</button>
+ 	
+ 	</div> 
 </div>
+</div>
+</div>
+<%-- 
 <script style="text/javascript">
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('memList').classList.add('active');
@@ -455,6 +433,6 @@ function showChatRoom() {
     loadChatList();
 }
 
-</script>
+</script>--%>
 	</body>
 </html>

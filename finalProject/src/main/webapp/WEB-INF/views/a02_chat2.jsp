@@ -251,74 +251,13 @@
 	}
 	
 	</style>
-	<script type="text/javascript">
-	var wsocket=null;
-	
-	$(document).ready(function(){
-		$('#action_menu_btn').click(function(){
-			$('.action_menu').toggle();
-		});
-
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#action_menu_btn').click(function(){
+		$('.action_menu').toggle();
 	});
 
-	$(document).ready(function(){
-		/* $("#regBtn").click(function(){
-			location.href="usersInsertFrm.do"
-		}); */
-		// 첫 로딩 시
-	    userSch();
-	    
-	 	// 엔터눌러도 submit처리되지 않게 하기 위함
-/*		$("form").on("keydown",function(event){
-			if(event.key === "Enter"){
-				event.preventDefault();
-				return false;
-			}
-		})
-	*/
-	 	// 검색처리 event enter입력 시 
-		$("[name=user_name]").keyup(function(event){
-			if(event.key === "Enter"){
-				userSch()
-			}
-		})
-	    // 검색버튼 클릭 시
-	    $("#schBtn").click(function() {
-	    	userSch()
-	    });  
-		
-		// 서치 버튼 클릭 시 
-	    function userSch() {
-	        $.ajax({
-	            url: "chatmemlist",
-	            data: $("form").serialize(),
-	            dataType: "json",
-	            success: function(data) {
-	                renderTable(data.sch); // 모델데이터로 지정한 sch의 데이터를 전달
-	            },
-	            error: function(err) {
-	                console.log(err);
-	            }
-	        });
-	    }
-		
-	/*	// 테이블 데이터
-	    function renderTable(data) {
-	        var addHTML = "";
-	        $(data).each(function(idx, sch) {
-	            addHTML += "<tr class='text-center' ondblclick=\"detail('" +sch.user_name+ "')\">";
-	            addHTML += "<td >" + (idx+1)     + "</td>";
-	            addHTML += "<td align='left'>" + sch.user_name+ "</td>";
-	            addHTML += "</tr>";
-	        });
-	        $("tbody").html(addHTML);
-	    }
-  */
-	});
-	</script>
-
-<!-- 채팅-메세지 부분 -->
-	<script type="text/javascript">
+});
 	// 1. 소켓서버접속 변수
 	var wsocket=null;
 	$(document).ready(function(){
@@ -499,7 +438,7 @@
 		<div class="input-group-prepend ">
 			<span class="input-group-text  justify-content-center">아이디</span>
 		</div>
-		<input id="id" class="form-control" placeholder="접속할 아이디 입력" value="" />	
+		<input id="id" class="form-control" placeholder="접속할 아이디 입력" value="${user_id }" />	
 		<input type="button" class="btn btn-primary" value="채팅방입장" id="enterBtn"/>
 		<input type="button" class="btn btn-danger" value="채팅방나가기" id="exitBtn"/>		
 	</div>	
@@ -522,6 +461,10 @@
 		<input  type="button" class="btn btn-info" value="메시지전송" id="sndBtn"/>
 	</div>		
 		
+</div>
+</div>
+</div>
+</div>
 </div>
 <script style="text/javascript">
 document.addEventListener('DOMContentLoaded', () => {
