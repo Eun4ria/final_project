@@ -212,7 +212,7 @@ public class A0_Controller {
 	}
 
 	// 프로필
-	// http://223.26.198.130:4040/pages-profile
+	// http://223.26.198.130:4040/profile
     @GetMapping("profile")
     public String profile(HttpServletRequest request, Model model) {
         model.addAttribute("currentUrl", request.getRequestURI());
