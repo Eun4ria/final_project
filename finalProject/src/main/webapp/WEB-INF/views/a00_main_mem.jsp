@@ -74,7 +74,7 @@
 <script>
 
 function goChat(user_id){
-location.href="chat?user_id="+user_id
+location.href="message?user_id="+user_id
 }
 </script>
 </head>

@@ -331,8 +331,8 @@ public class A0_Controller {
 	// http://localhost:4040/message
 	@GetMapping("message")
 	public String chatting() {
-		//return "WEB-INF\\views\\a22_msg.jsp";
 		return "WEB-INF\\views\\a02_chat.jsp";
+		//return "WEB-INF\\views\\a02_chat.jsp";
 	}		
 	
     @MessageMapping("/hello")

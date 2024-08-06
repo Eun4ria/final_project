@@ -263,39 +263,7 @@ $(document).ready(function(){
 </script>
 
 	</head>
-	<script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
-    <script type="text/javascript">
-var socket = new SockJS('/ws');
-var stompClient = Stomp.over(socket);
 
-stompClient.connect({}, function(frame) {
-    console.log('Connected: ' + frame);
-    stompClient.subscribe('/topic/greetings', function(greeting){
-        //console.log(greeting);
-        console.log(greeting.body);
-        console.log(JSON.parse(greeting.body).content);
-        var obj = JSON.parse(greeting.body);
-        var curName = document.getElementById('curName').value;
-        if(curName!=obj.name)
-        	document.querySelector("#show").innerHTML += obj.name+":"+obj.msg+"<br>"
-        //document.querySelector("#show").innerHTML = JSON.parse(greeting.body).content+"<br>"
-
-    });
-});
-/*
-@MessageMapping("/hello")
-@SendTo("/topic/greetings")      
-*/
-
-function sendName() {
-	
-    var name = document.getElementById('curName').value;
-    var msg = document.getElementById('msg').value;
-    document.querySelector("#show").innerHTML += "나:"+msg+"<br>"
-    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg':msg}));
-}
-</script>   
 	<!--Coded With Love By Mutiullah Samim
 	
 	<c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
@@ -357,8 +325,10 @@ function sendName() {
 						<div class="card-header msg_head">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
-									<img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
+									<img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
+									<%-- 
 									<input id="curName" value="${user_id }"  disabled/>
+									 --%>
 								</div>
 								<div class="user_info">
 									<span><c:out value="${sessionScope.chatroom_name}" /></span>
@@ -395,7 +365,10 @@ function sendName() {
 								
 							</div>
 						</div>
-						
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+   
+					
 							<div class="card-body">	
 
 	<div class="input-group mb-3">	
@@ -414,6 +387,41 @@ function sendName() {
 </div>
 </div>
 </div>
+
+    <script type="text/javascript">
+var socket = new SockJS('/ws');
+var stompClient = Stomp.over(socket);
+
+stompClient.connect({}, function(frame) {
+    console.log('Connected: ' + frame);
+    stompClient.subscribe('/topic/greetings', function(greeting){
+        //console.log(greeting);
+        console.log(greeting.body);
+        console.log(JSON.parse(greeting.body).content);
+        var obj = JSON.parse(greeting.body);
+        var curName = document.getElementById('curName').value;
+        console.log("## 받은 메시지 ##")
+        console.log(obj.msg)
+        console.log("## 받은 이름 ##")
+        console.log(obj.name)
+        
+        
+        if(curName!=obj.name)
+        	document.querySelector("#show").innerHTML += obj.name+":"+obj.msg+"<br>"
+        //document.querySelector("#show").innerHTML = JSON.parse(greeting.body).content+"<br>"
+
+    });
+});
+
+
+function sendName() {
+	
+    var name = document.getElementById('curName').value;
+    var msg = document.getElementById('msg').value;
+    document.querySelector("#show").innerHTML += "나:"+msg+"<br>"
+    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg':msg}));
+}
+</script>   	
 <%-- 
 <script style="text/javascript">
 document.addEventListener('DOMContentLoaded', () => {
