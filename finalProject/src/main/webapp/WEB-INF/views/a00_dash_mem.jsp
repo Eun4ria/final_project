@@ -151,7 +151,7 @@ location.href="message"
 							
 						</li>
 						
-						</li>
+						
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
                 <i class="align-middle" data-feather="settings"></i>

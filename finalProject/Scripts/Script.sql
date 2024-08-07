@@ -2,6 +2,8 @@ SELECT * FROM users;
 
 SELECT * FROM PROJECT;
 
+SELECT * FROM chat;
+
 SELECT * FROM task;
 
 SELECT p.PROJECT_ID, p.PROJECT_NAME, p.ETC, p.START_DATE, p.END_DATE, p.CREATE_DATE, p.PSTATUS, p.COMPANY_ID
@@ -48,7 +50,6 @@ WHERE image is NULL;
 ALTER TABLE users
 MODIFY image DEFAULT 'https://i.namu.wiki/i/Bge3xnYd4kRe_IKbm2uqxlhQJij2SngwNssjpjaOyOqoRhQlNwLrR2ZiK-JWJ2b99RGcSxDaZ2UCI7fiv4IDDQ.webp';
 
-
 SELECT * FROM CHAT
 WHERE user_id = 'M_0003'
 and project_id='PRO_0001';
@@ -57,9 +58,19 @@ SELECT * FROM CHAT;
 
 SELECT * FROM CHAT c WHERE project_id='PRO_0001';
 
+SELECT * FROM CHAT;
 SELECT * FROM users;
-DELETE FROM USERS u 
-WHERE USER_NAME = '남지연';
+SELECT * FROM PROJECT;
+SELECT * FROM team;
+
+INSERT INTO chat (
+    CHATROOM_ID, CHATROOM_NAME, OWNER_ID, USER_ID, BAN_STATUS, BAN_DATE, UPTDATE, PROJECT_ID
+) VALUES (
+    'CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '설계', 'N_0047', 'N_0020', 'N', NULL, NULL, 'PRO_0001'
+);
+
+INSERT INTO TEAM t (project_id, user_id)
+VALUES ('PRO_0003')
 
 
 
