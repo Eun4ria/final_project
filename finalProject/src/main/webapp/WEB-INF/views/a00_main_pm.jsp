@@ -65,10 +65,9 @@
  }
  
  function projectPage(project_id){
-	// location.href="대쉬보드?project_id="+project_id
+	location.href="gantt?project_id="+project_id
  }
  
- var user_id = ""
  
 </script>
 
@@ -234,7 +233,7 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                           <img src="${pro.image}" class="avatar avatar-sm me-3" alt="xd">
+                           <img src="${pro.logo}" class="avatar avatar-sm me-3" alt="xd">
                           
                           </div>
                           <div class="d-flex flex-column justify-content-center">
@@ -244,17 +243,17 @@
                       </td>
                       <td>
                         <div class="avatar-group mt-2">
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                            <img src="${path}/material-dashboard-2/assets/img/team-1.jpg" alt="team1">
+                         <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
+                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="user1">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                            <img src="${path}/material-dashboard-2/assets/img/team-2.jpg" alt="team2">
+                            <img src="${path}/material-dashboard-2/assets/img/team-3.jpg" alt="user2">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alexander Smith">
-                            <img src="${path}/material-dashboard-2/assets/img/team-3.jpg" alt="team3">
+                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="user3">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="team4">
+                            <img src="${path}/material-dashboard-2/assets/img/team-1.jpg" alt="user4">
                           </a>
                         </div>
                       </td>
@@ -265,11 +264,11 @@
                         <div class="progress-wrapper w-75 mx-auto">
                           <div class="progress-info">
                             <div class="progress-percentage">
-                              <span class="text-xs font-weight-bold">60%</span>
+                              <span class="text-xs font-weight-bold">${pro.progress}%</span>
                             </div>
                           </div>
                           <div class="progress">
-                            <div class="progress-bar bg-gradient-info w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                          <div class="progress-bar bg-gradient-info" style="width: ${pro.progress}%;" role="progressbar" aria-valuenow="${pro.progress}" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </div>
                       </td>
@@ -607,7 +606,7 @@
 				</div>
 			</main>
 
-			<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -618,7 +617,7 @@
       </div>
       <div class="modal-body">
 		<form id="modalFrm" class="form"  method="post" action="insertProject">
-		<input type="hidden" name="company_id" value="${sessionScope.company_id}"/>
+		<input type="hidden" name="company_id" value="COM_0001"/>
 	     <div class="row">
 	      <div class="col">	 
 	      <span>Project Name</span>     	      
@@ -643,6 +642,16 @@
 	        <input type="date" class="form-control" placeholder="직책명 입력" name="end_date">
 	      </div>
 	     </div>	  
+	     <div class="row">
+	      <div class="col">
+	      <span>Member</span>
+	        <select>
+			    <c:forEach var="user" items="${user}">
+			        <option value="${user.user_id}">${user.user_name}</option>
+			    </c:forEach>
+			</select>
+	      </div>
+	     </div>	
 	     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" id="regBtn" class="btn btn-success">regist</button>        
