@@ -256,6 +256,19 @@
 		
 		// 페이지 로딩될 때 간트 조회
 		ajaxFun("ganttList")
+        
+		/* gantt.attachEvent("onLightbox", function (task_id){
+		    //any custom logic here
+		});
+		
+		// 
+		var taskId = gantt.createTask({
+		    id:10,
+		    text:"Task #5",
+		    start_date:"02-09-2013",
+		    duration:28
+		}, "project_2", 2); */
+		
 		//listFun()
 		
 		/* console.log("데이터 출력");
@@ -271,7 +284,7 @@
 			$.ajax({
 				type:"post",
 				url:url,
-				data:$("form").serialize(),
+				data:{project_id:"${param.project_id}"},
 				dataType:"json",
 				success: function(data) { // data는 이미 배열형태    
                			
@@ -300,7 +313,7 @@
 
                     gantt.serverList("user", resources);
                     
-                 	// Gantt 차트 강제 업데이트 (첫 로딩 시 부터 해당 owner나오게)
+                 	// Gantt 차트 강제 업데이트
                     gantt.render();
                  	
                  	gantt.config.lightbox.sections = [

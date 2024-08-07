@@ -27,7 +27,6 @@ public class A01_Service {
 		String id = dao.find_id(user);		
 		return id==null?"해당 계정 정보 없습니다":id;
 	}
-
 	
 	
     
@@ -37,7 +36,9 @@ public class A01_Service {
     public List<Users> getTeam(String project_id){
     	return dao.getTeam(project_id);
     }
-    
+    public String insertGantt(GanttTask ins) {
+    	return dao.insertGantt(ins)>0?"생성 완료":"생성 실패";
+    }
     
     
     

@@ -105,14 +105,23 @@ public class A01_Controller {
 		return "WEB-INF\\views\\a01_ganttChart.jsp";
 	}
 	// 간트 조회
-	// http://223.26.198.130:4040/ganttList
+	// http://223.26.198.130:4040/ganttList?project_id=PRO_0001
 	@RequestMapping("ganttList")
-	public ResponseEntity<?> getGantt(@RequestParam(value = "project_id", defaultValue = "PRO_0001") String project_id, Model d) {
+	public ResponseEntity<?> getGantt(@RequestParam("project_id") String project_id, Model d) {
 		System.out.println("project_id:"+project_id);
 		return ResponseEntity.ok(new Gantt(
 					service.getGantt(project_id),
 					service.getTeam(project_id)));
 	}
+	// 간트 등록
+	@PostMapping("insertGantt")
+	public ResponseEntity<?> insertGantt(GanttTask ins, Model d) {
+		System.out.println("생성된 project_id:"+ins.getProject_id());
+		return ResponseEntity.ok(new msgList(
+					service.insertGantt(ins),
+					service.getGantt(ins.getProject_id())));
+	}
+	
 	
 	// 팀원 리스트
 	// http://223.26.198.130:4040/teamList
@@ -198,6 +207,32 @@ class Gantt{
 	}
 	public void setResource(List<Users> resource) {
 		this.resource = resource;
+	}
+	
+}
+class msgList{
+	private String msg;
+	private List<GanttTask> ganttList;
+	public msgList() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public msgList(String msg, List<GanttTask> ganttList) {
+		super();
+		this.msg = msg;
+		this.ganttList = ganttList;
+	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+	public List<GanttTask> getGanttList() {
+		return ganttList;
+	}
+	public void setGanttList(List<GanttTask> ganttList) {
+		this.ganttList = ganttList;
 	}
 	
 }

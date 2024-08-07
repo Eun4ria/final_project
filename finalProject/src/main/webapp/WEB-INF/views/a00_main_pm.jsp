@@ -66,6 +66,7 @@
  
  function projectPage(project_id){
 	location.href="gantt?project_id="+project_id
+	
  }
  
  

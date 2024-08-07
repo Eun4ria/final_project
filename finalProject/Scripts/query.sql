@@ -61,6 +61,10 @@ JOIN
     users u ON t.user_id = u.user_id
 WHERE project_id='PRO_0001';
 
+SELECT * FROM task;
+
+INSERT INTO task VALUES('TSK_'||TO_CHAR(task_seq.nextval, 'FM0000','요구사항 정의서','')
+
 SELECT 
     u.user_name AS text,
     u.user_id AS id
@@ -165,8 +169,21 @@ JOIN
 users u ON t.user_id = u.user_id
 WHERE project_id='PRO_0001';
 
+
+SELECT u.user_name AS text,
+u.user_id AS id
+FROM users u
+JOIN team t ON u.user_id = t.user_id
+WHERE t.project_id='PRO_0001';
+
 SELECT * FROM team;
+			
+SELECT * FROM TASK;
+
+INSERT INTO task (task_id, task_name, start_date, end_date, priority, progress, backgroundcolor, textcolor, user_id, project_id)
+VALUES ('TSK_'||TO_CHAR(task_seq.nextval, 'FM0000'), '회원가입', TO_DATE('2024-07-28', 'YYYY-MM-DD'), TO_DATE('2024-07-28', 'YYYY-MM-DD')+5, '상', 10, 'green', 'white', 'M_0022', 'PRO_0001');
    
+
 
 SELECT * FROM project;
 INSERT INTO project (project_id, project_name, etc, start_date, end_date, create_date, pstatus, company_id)

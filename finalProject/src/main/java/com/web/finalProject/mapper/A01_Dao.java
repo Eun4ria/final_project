@@ -56,6 +56,15 @@ public interface A01_Dao {
 			+ "JOIN team t ON u.user_id = t.user_id\r\n"
 			+ "WHERE t.project_id=#{project_id}")
 	List<Users> getTeam(@Param("project_id") String project_id);
+	
+	// 간트에서 task 등록
+	@Insert("INSERT INTO task (task_id, task_name, start_date, end_date, priority, progress, backgroundcolor, textcolor, user_id, project_id)\r\n"
+			+ "VALUES ('TSK_'||TO_CHAR(task_seq.nextval, 'FM0000'), #{text}, #{start_date, jdbcType=DATE}, #{start_date, jdbcType=DATE}+#{duration}, #{priority}, #{progress}, #{color}, #{textcolor}, #{text}, #{id});")
+	int insertGantt(GanttTask ins);
+	
+	
+	
+	
 	// 메인에서 프로젝트 생성
 	@Insert("INSERT INTO project (project_id, project_name, etc, start_date, end_date, create_date, company_id)\r\n"
 			+ "VALUES ('PRO_'||TO_CHAR(project_seq.nextval, 'FM0000'),"

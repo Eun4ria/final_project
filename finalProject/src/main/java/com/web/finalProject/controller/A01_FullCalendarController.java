@@ -36,7 +36,7 @@ public class A01_FullCalendarController {
 		//MsgList ml = new MsgList( service.insertCalendar(ins), service.getCalendarList());
 		// {"msg":"등록성공","calList":[{},{}....]}
 		return ResponseEntity.ok(
-				new MsgList( service.insertCalendar(ins), 
+				new MsgList2( service.insertCalendar(ins), 
 						     service.getCalendarList()));
 		// new MsgList( "등록성공", List<Calendar>)  메시지와 캘린더리스트
 	}
@@ -44,25 +44,25 @@ public class A01_FullCalendarController {
 	public ResponseEntity<?> updateCalendar(Calendar upt){
 
 		return ResponseEntity.ok(
-				new MsgList( service.updateCalendar(upt), 
+				new MsgList2( service.updateCalendar(upt), 
 						     service.getCalendarList()));
 	}	
 	@PostMapping("deleteCalendar")
 	public ResponseEntity<?> deleteCalendar(@RequestParam("id") int id){
 		return ResponseEntity.ok(
-				new MsgList( service.deleteCalendar(id), 
+				new MsgList2( service.deleteCalendar(id), 
 						     service.getCalendarList()));
 	}	
 	
 }
-class MsgList{
+class MsgList2{
 	private String msg;
 	private List<Calendar> calList;
-	public MsgList() {
+	public MsgList2() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public MsgList(String msg, List<Calendar> calList) {
+	public MsgList2(String msg, List<Calendar> calList) {
 		super();
 		this.msg = msg;
 		this.calList = calList;
