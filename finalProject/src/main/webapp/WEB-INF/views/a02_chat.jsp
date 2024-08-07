@@ -251,7 +251,35 @@
 		margin-bottom: 15px !important;
 	}
 	}
-	
+
+/* 스크롤바 스타일링 */
+/* 스크롤바 막대 */
+.scrollbar { 
+  height: 200px;
+  overflow-y: auto; /*  */
+  overflow-x: hidden;
+  padding-right:0;
+}
+
+/* 스크롤바의 폭 너비 */
+.scrollbar::-webkit-scrollbar {
+    width: 10px;  
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(98, 106, 136); /* 스크롤바 색상 */
+    border-radius: 10px; /* 스크롤바 둥근 테두리 */
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    background: transparent;  /*스크롤바 뒷 배경 색상*/
+}
+.even{
+	background-color:hsla(240,15%,30%,0.3);
+}
+.odd{
+	background-color:hsla(240,15%,30%,0.2);
+}
 	</style>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -274,7 +302,8 @@ $(document).ready(function(){
 </c:if>
 
 -->
-<body>
+<body> 
+
 		<div class="container-fluid h-100">
 			<div class="row justify-content-center h-100">
 				<div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
@@ -287,9 +316,7 @@ $(document).ready(function(){
 						</div>
 						</form>
 					</div>
-<!-- 채팅 왼쪽 리스트 -->
-					<div class="card-body contacts_body">
-						<div class="d-flex bd-highlight">
+					<div class="d-flex bd-highlight">
 							<div class="user_info" style="padding-right:7rem;">
 								<span style="font-size:0.9rem;"><c:out value="${sessionScope.user_name}" /></span>
 							</div>
@@ -298,44 +325,38 @@ $(document).ready(function(){
 							  <button type="button" id="memList" class="active" onclick="showMem()">팀원</button>
                               <button type="button" id="chatList" onclick="showChatRoom()">채팅</button></div>
 						</div>
-						
-						<table>
-						 <col width="30%">
-   						 <col width="70%">
-						 <tbody>
-					    	<c:forEach var="mem" items="${memList}">
-					 <%--   
-					    	<tr style="" ondblclick="goDetail('${mem.user_id}')">
-					    	<td>사진</td>
-					    	<td style="">${mem.user_id}</td>
-					    	</tr>
-					 --%>    	
+<!-- 채팅 왼쪽 리스트 -->
+<div class="card-body contacts_body scrollbar">
+					    	<c:forEach var="mem" items="${memList}" varStatus="status">	
 					    	
-					    	<li ondblclick="goDetail('${mem.user_id}')">
-							<div class="d-flex bd-highlight">
-								<div class="img_cont">
-									<img src="${mem.image }" class="rounded-circle user_img">	
+					    	
+							<div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${mem.user_id}')" style="padding-top:0.5rem;height:4rem">
+								<div class="img_cont" style="padding-left:1rem">
+									<img src="${mem.image }" class="rounded-circle user_img" style="width:3rem; height:3rem; ">	
 								</div>
 								<div class="user_info">
 									<span>${mem.user_name}</span>
-									<p>${mem.user_id}</p>
+									<p >${mem.user_id}</p>
 								</div>
 							</div>
-						</li>
+						
+						
 					    	</c:forEach>
-					     </tbody>
-						</table>  
+					    	
+					    
+					
 						
 	<script type="text/javascript">
 		function goDetail(user_id){
-			location.href="mainpmFrm"
+			location.href="message?chat_id=CHT_0021"
 		}
 	</script>  
 						
-	</div>
+	
+	</div>	</div></div>
 <!-- 오른쪽 채팅 창
 				-->
-				</div></div>
+			
 				<div class="col-md-8 col-xl-6 chat">
 					<div class="card">
 						<div class="card-header msg_head">
@@ -437,7 +458,8 @@ $(document).ready(function(){
 	</div>	
 	</c:otherwise>
  </c:choose>	
-
+</div>
+</div>
 </div>
 </div>
 

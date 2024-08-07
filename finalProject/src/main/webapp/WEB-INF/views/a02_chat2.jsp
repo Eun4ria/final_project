@@ -365,6 +365,7 @@ $(document).ready(function(){
                               <button type="button" id="chatList" onclick="showChatRoom()">채팅</button></div>
 						</div>
 						
+						
 						<table>
 						 <col width="30%">
    						 <col width="70%">

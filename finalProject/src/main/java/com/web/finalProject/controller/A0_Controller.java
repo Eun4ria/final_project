@@ -18,7 +18,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.web.finalProject.service.A0_Service;
 import com.web.finalProject.util.Util;
-import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Gantt;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Users;
@@ -262,7 +261,7 @@ public class A0_Controller {
         return "WEB-INF\\views\\a00_dash_com.jsp";
     }
 	@GetMapping("todopmFrm")
-	public String todopm(HttpServletRequest request, @RequestParam("project_id") String  project_id, Model d) {
+	public String todopm(HttpServletRequest request,  Model d) {
 	    // 세션에서 user_id 값을 가져옵니다.
 	    HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
         String user_id = (String) session.getAttribute("user_id");
@@ -281,7 +280,8 @@ public class A0_Controller {
 		HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
 		String user_id = (String) session.getAttribute("user_id");
 		
-		
+		// 세션에 project_id 저장
+	    session.setAttribute("project_id", project_id);
 		
 		
 		// user_id를 이용하여 프로젝트 목록을 가져옵니다.
@@ -338,7 +338,7 @@ public class A0_Controller {
 	// http://localhost:4040/message
 	@GetMapping("message")
 	public String chatting() {
-		return "WEB-INF\\views\\a02_chat2.jsp";
+		return "WEB-INF\\views\\a02_chat.jsp";
 		//return "WEB-INF\\views\\a02_chat.jsp";
 	}		
 	
