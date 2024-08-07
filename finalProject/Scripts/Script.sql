@@ -66,12 +66,56 @@ SELECT * FROM team;
 INSERT INTO chat (
     CHATROOM_ID, CHATROOM_NAME, OWNER_ID, USER_ID, BAN_STATUS, BAN_DATE, UPTDATE, PROJECT_ID
 ) VALUES (
-    'CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '설계', 'N_0047', 'N_0020', 'N', NULL, NULL, 'PRO_0001'
+    'CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '잡담방', 'N_0047', 'N_0020', 'N', NULL, NULL, 'PRO_0001'
 );
 
 INSERT INTO TEAM t (project_id, user_id)
 VALUES ('PRO_0003')
 
+-- final 프로젝트 팀 구성
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0001', 'P_0001');  -- 박민경
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0001', 'M_0021');  -- 홍길동
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0001', 'N_0047');  -- 김은수
+SELECT * FROM TEAM;
 
+-- PMS 프로젝트 팀 구성
+-- PRO_0001: final 프로젝트에 추가 팀 구성
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0003', 'P_0001');  -- 박민경
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0003', 'M_0022');  -- 이수현
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0003', 'P_0023');  -- 유재석
+
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0001', 'M_0022');  -- 이수현
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0001', 'P_0023');  -- 유재석
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0001', 'M_0024');  -- 강호동
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0001', 'M_0025');  -- 신동엽
+
+DELETE FROM TEAM t WHERE USER_ID='N_0047';
+
+-- 티켓예매사이트(H_link) 팀 구성
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0023', 'M_0024');  -- 강호동
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0023', 'M_0025');  -- 신동엽
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0023', 'N_0047');  -- 김은수
+
+-- 디자인 팀 구성
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0024', 'P_0001');  -- 박민경
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0024', 'M_0021');  -- 홍길동
+INSERT INTO team (PROJECT_ID, USER_ID) VALUES ('PRO_0024', 'M_0022');  -- 이수현
+
+
+SELECT * FROM chat; 
+SELECT * FROM project;
+SELECT * FROM users;
+SELECT * FROM TEAM t; 
+
+SELECT CHATROOM_ID, CHATROOM_NAME, user_id FROM CHAT
+WHERE OWNER_ID ='N_0047'
+and project_id= 'PRO_0001';
+
+--채팅 각 프로젝트에 대한 팀원 리스트(로그인 사용자 제외)
+SELECT u.USER_ID, u.USER_NAME
+FROM users u
+JOIN team t ON u.USER_ID = t.USER_ID
+WHERE t.PROJECT_ID = 'PRO_0001'
+AND u.USER_ID != 'N_0047';
 
 

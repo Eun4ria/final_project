@@ -1,6 +1,9 @@
 package com.web.finalProject.vo;
 
 public class Users {
+	
+	private String project_id;
+	
 	private String user_id;
 	private String user_name;
 	private String email;
@@ -107,5 +110,12 @@ public class Users {
 	public void setRole_code(String role_code) {
 		this.role_code = role_code;
 	}
+	public String getProject_id() {
+		return project_id;
+	}
+	public void setProject_id(String project_id) {
+		this.project_id = project_id;
+	}
+	
 	
 }

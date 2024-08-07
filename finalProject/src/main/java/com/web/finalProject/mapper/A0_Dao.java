@@ -113,10 +113,12 @@ public interface A0_Dao {
 	List<GanttTask> getGantt(@Param("project_id") String project_id);
 	
 	//채팅 리스트-프젝에 속한 모든 팀원
-	@Select("SELECT * FROM CHAT\r\n"
-			+ "WHERE user_id = #{user_id}\r\n"
-			+ "and project_id=#{project_id}")
-	List<Chat> getMemList(Chat sch);
+	@Select("SELECT *\r\n"
+			+ "FROM users u\r\n"
+			+ "JOIN team t ON u.USER_ID = t.USER_ID\r\n"
+			+ "WHERE t.PROJECT_ID = #{project_id} \r\n"
+			+ "AND u.USER_ID != #{user_id}")
+	List<Users> getMemList(Users sch);
 	
 	@Select("SELECT * FROM Chat\r\n"
 			+ "WHERE user_id = #{user_id} \r\n"

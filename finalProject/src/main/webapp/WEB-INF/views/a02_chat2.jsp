@@ -332,7 +332,7 @@ $(document).ready(function(){
 	}
 </script>
 	</head>
-	<!--Coded With Love By Mutiullah Samim
+	<!--
 	
 	<c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
     <script>

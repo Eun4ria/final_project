@@ -59,7 +59,7 @@
 <script>
 
 function goChat(project_id){
-location.href="message"
+location.href="chatmemListstart?project_id="+project_id
 }
 </script>
 </head>

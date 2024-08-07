@@ -143,7 +143,7 @@ public class A0_Service {
     }
     
 	//채팅 리스트
-	public List<Chat> getmemList(Chat sch){
+	public List<Users> getmemList(Users sch){
 		if(sch.getProject_id()==null) sch.setProject_id("");
 		if(sch.getUser_id()==null) sch.setUser_id("");
 		return dao.getMemList(sch);

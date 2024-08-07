@@ -96,6 +96,7 @@ public class A0_Controller {
 	           session.setAttribute("user_name", user.getUser_name());
 	           session.setAttribute("image", user.getImage());
 	           session.setAttribute("role_code", user.getRole_code());
+	           
 	           // 권한에 따라 리다이렉트
 	           System.out.println("Role code:" + user.getRole_code());
 	           System.out.println("user_id:" + user.getUser_id());
@@ -274,10 +275,13 @@ public class A0_Controller {
         return "WEB-INF\\views\\a00_dash_pm.jsp";
 	} 
 	@GetMapping("todomemFrm")
-	public String todomemFrm(HttpServletRequest request, Model d) {
+	public String todomemFrm(HttpServletRequest request, @RequestParam("project_id") String  project_id, Model d) {
 		// 세션에서 user_id 값을 가져옵니다.
 		HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
 		String user_id = (String) session.getAttribute("user_id");
+		session.setAttribute("project_id", project_id);
+		
+		
 		
 		// user_id를 이용하여 프로젝트 목록을 가져옵니다.
 		d.addAttribute("pro", service.getProjectList(user_id));
@@ -286,7 +290,7 @@ public class A0_Controller {
 	}
 	
 // 채팅
-	//채팅 조회
+	//왼쪽 채팅 조회
 	// http://localhost:4040/chatmemListstart
 //	@RequestMapping("chatmemListstart")
 //	public String memList(Chat sch, Model d) {
@@ -295,26 +299,28 @@ public class A0_Controller {
 //		 System.out.println("memlist:" + members);
 //		return "WEB-INF\\views\\a02_chat.jsp";
 //	}
-	// http://localhost:4040/chatmemListstart?user_id=M_0003&project_id=PRO_0001
+	// http://localhost:4040/chatmemListstart
 	@RequestMapping("chatmemListstart")
-	public String memList(Chat sch, Model d, HttpServletRequest request) {
+	public String memList(Users sch, Model d, HttpServletRequest request) {
 	    // 세션에서 project_id를 가져온다.
+		
 	    HttpSession session = request.getSession();
 	    String project_id = (String) session.getAttribute("project_id");
-	    
+	    String user_id = (String) session.getAttribute("user_id");
+	    System.out.println("PROJECT_ID:" + project_id);
 	    // Chat 객체에 project_id와 user_id를 설정
 	    sch.setProject_id(project_id);
-	    sch.setUser_id(sch.getUser_id()); // user_id는 요청 파라미터로 전달된 값
+	    sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
 	    
 	    // 회원 리스트를 가져온다.
-	    List<Chat> members = service.getmemList(sch);
+	    List<Users> members = service.getmemList(sch);
 	    
 	    // 모델에 데이터 추가
 	    d.addAttribute("memList", members);
 	    System.out.println("memlist:" + members);
 	    
 	    // JSP 페이지로 이동
-	    return "WEB-INF\\views\\a02_chat2.jsp";	
+	    return "WEB-INF\\views\\a02_chat.jsp";	
 	}
 // 채팅-오른쪽 채팅	
 //	// http://localhost:4040/chat
@@ -331,7 +337,7 @@ public class A0_Controller {
 	// http://localhost:4040/message
 	@GetMapping("message")
 	public String chatting() {
-		return "WEB-INF\\views\\a02_chat.jsp";
+		return "WEB-INF\\views\\a02_chat2.jsp";
 		//return "WEB-INF\\views\\a02_chat.jsp";
 	}		
 	

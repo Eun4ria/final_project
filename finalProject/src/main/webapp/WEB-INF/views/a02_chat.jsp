@@ -271,7 +271,9 @@ $(document).ready(function(){
         alert("로그인이 필요한 서비스입니다");
         location.href = 'signinFrm';
     </script>
-</c:if>-->
+</c:if>
+
+-->
 <body>
 		<div class="container-fluid h-100">
 			<div class="row justify-content-center h-100">
@@ -302,10 +304,24 @@ $(document).ready(function(){
    						 <col width="70%">
 						 <tbody>
 					    	<c:forEach var="mem" items="${memList}">
+					 <%--   
 					    	<tr style="" ondblclick="goDetail('${mem.user_id}')">
 					    	<td>사진</td>
 					    	<td style="">${mem.user_id}</td>
 					    	</tr>
+					 --%>    	
+					    	
+					    	<li ondblclick="goDetail('${mem.user_id}')">
+							<div class="d-flex bd-highlight">
+								<div class="img_cont">
+									<img src="${mem.image }" class="rounded-circle user_img">	
+								</div>
+								<div class="user_info">
+									<span>${mem.user_name}</span>
+									<p>${mem.user_id}</p>
+								</div>
+							</div>
+						</li>
 					    	</c:forEach>
 					     </tbody>
 						</table>  
@@ -368,23 +384,59 @@ $(document).ready(function(){
 	<script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
    
-					
-							<div class="card-body">	
+<c:choose>	
+<c:when test="${sessionScope.chatroom_id !== null || sessionScope.chatroom_id !== ''}">	
+			
+<div class="card-body">
 
+	
+  
+	
 	<div class="input-group mb-3">	
- 	현재사람:<input id="curName"  style="display:block"/>
-	<br>
- 	받을사람:<input id="name" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
- 	<br>
- 	<div id="show"></div>
+ 	현재사람:<input id="curName" value="${user_id }" />
+	
+ 	받을사람:<input id="name"  /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
  	</div>
+ 	<div  id="show"></div>
+ <%-- 
  	<div class="card-footer">
  	보낼메시지:<input id="msg" />
  	<br>
  	<button type="button" onclick="sendName()">전송</button>
  	
- 	</div> 
-</div>
+ 	</div>
+ --%>	
+ </div>	
+ <%-- 
+ 	<div class="card-footer">
+	<div class="input-group mb-3">	
+		<input id="msg" class="form-control" placeholder="전송할 메시지 입력"/>	
+		<input type="button" onclick="sendName()" class="btn btn-info" value="메시지전송" id="sndBtn"/>
+	</div>		
+	</div>
+--%>
+	<div class="card-footer">
+			<div class="input-group">
+				
+				<div class="input-group mb-3">	
+	
+		<input id="msg" class="form-control type_msg" placeholder="Type your message..."/>
+				<div class="input-group-text send_btn"  >
+					<i class="fas fa-location-arrow" onclick="sendName()"></i>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	</c:when>	
+	<c:otherwise>
+	<div class="card-body">
+	
+	</div>
+	<div class="card-footer"></div>	
+	</c:otherwise>
+ </c:choose>	
+
 </div>
 </div>
 
