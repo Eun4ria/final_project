@@ -276,7 +276,7 @@ public class A0_Controller {
 	} 
 	@GetMapping("todomemFrm")
 	public String todomemFrm(HttpServletRequest request, @RequestParam("project_id") String  project_id, Model d) {
-		// 세션에서 user_id 값을 가져옵니다.
+		// 세션에서 user_id 값을 가져오기
 		HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
 		String user_id = (String) session.getAttribute("user_id");
 		
@@ -284,7 +284,7 @@ public class A0_Controller {
 	    session.setAttribute("project_id", project_id);
 		
 		
-		// user_id를 이용하여 프로젝트 목록을 가져옵니다.
+		// user_id를 이용하여 프로젝트 목록을 가져오기
 		d.addAttribute("pro", service.getProjectList(user_id));
 		d.addAttribute("currentUrl", request.getRequestURI());
 		return "WEB-INF\\views\\a00_dash_mem.jsp";

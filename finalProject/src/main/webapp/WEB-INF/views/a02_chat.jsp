@@ -393,7 +393,9 @@ $(document).ready(function(){
 								</form>
 								<form method="get" action="todomemFrm">
 									
-									<button type="submit" id="exitBtn" style="background-color:transparent; border:none; color:white"><i class="fas fa-sign-out-alt"></i> Exit</button>
+									<button type="submit" id="exitBtn" style="background-color:transparent; border:none; color:white">
+									<i class="fas fa-sign-out-alt">
+									</i> Exit</button>
 									
 								</form>
 							
