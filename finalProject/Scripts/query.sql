@@ -136,6 +136,36 @@ SELECT *
 FROM TEAM t
 JOIN project p ON t.project_id = p.project_id
 WHERE user_id='P_0012';
+
+SELECT u.user_name AS text,
+u.user_id AS id
+FROM users u
+JOIN team t ON u.user_id = t.user_id
+WHERE t.project_id='PRO_0001';
+
+SELECT
+t.task_id AS id,
+t.task_name AS text,
+t.start_date,
+t.END_DATE ,
+(t.end_date - t.start_date) AS duration,
+t.priority,
+t.backgroundcolor AS color,
+t.textcolor,
+t.progress,
+u.user_id AS "user",
+u.user_name AS name,
+CASE
+WHEN parent_id IS NULL THEN 1
+ ELSE 0
+END AS open, -- TRUE FALSE 값으로 받기 위해 parent_id가 null일 경우 1, null이 아닐 경우 0\r\n"
+NVL(parent_id, '0') AS parent
+FROM task t
+JOIN
+users u ON t.user_id = u.user_id
+WHERE project_id='PRO_0001';
+
+SELECT * FROM team;
    
 
 SELECT * FROM project;

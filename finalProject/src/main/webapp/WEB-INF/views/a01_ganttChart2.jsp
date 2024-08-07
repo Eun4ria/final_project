@@ -101,9 +101,9 @@ html, body {
       --%>
       
 
-      $("[name=project_num]").val(${ (empty param.project_num)?'1':param.project_num});
+     // $("[name=project_id]").val(${ (empty param.project_id)?'1':param.project_id});
 
-                  var project_num = $("[name=project_num]").val();
+                  //var project_id = $("[name=project_id]").val();
                   gantt.config.columns = [
                         {
                            name : "text",
@@ -147,9 +147,7 @@ html, body {
                                        if (!owner)
                                           return;
                                        result += "<div class='owner-label' title='" + owner.text + "'>"
-                                             + owner.text
-                                                   .substr(0,
-                                                         1)
+                                             + owner.text.substr(0, 1)
                                              + "</div>";
 
                                     });
@@ -316,8 +314,8 @@ html, body {
                   });
                   $.ajax({
                      type : "post",
-                     data : "project_num=" + project_num,
-                     url : "${path}/ganttList.do",
+                     data : "project_id=" + project_id,
+                     url : "${path}/ganttList",
                      async : true,
                      dataType : "json",
                      success : function(data) {

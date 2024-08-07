@@ -253,7 +253,7 @@
 		});
 
         //gantt.init()
-		gantt.init("gantt_here");
+		
 		// 페이지 로딩될 때 간트 조회
 		ajaxFun("ganttList")
 		//listFun()
@@ -274,7 +274,7 @@
 				data:$("form").serialize(),
 				dataType:"json",
 				success: function(data) { // data는 이미 배열형태    
-               
+               			
                     console.log("데이터  출력(gantt)");                    
                     var gdata = {data:data.ganttList}
                     
@@ -296,10 +296,23 @@
                         };
                     });
                     console.log("사용자 리스트")
-                    console.log(resources)
+                    console.log(resources)                
 
                     gantt.serverList("user", resources);
-   
+                    
+                 	// Gantt 차트 강제 업데이트 (첫 로딩 시 부터 해당 owner나오게)
+                    gantt.render();
+                 	
+                 	gantt.config.lightbox.sections = [
+            			{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
+            			{name: "priority", height: 22, map_to: "priority", type: "select", options: gantt.serverList("priority")},
+            			{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},
+            			{name: "progress", height: 22, map_to: "progress", type: "select", options: gantt.serverList("progress")},
+            			{name: "background", height: 22, map_to: "background", type: "select", options: gantt.serverList("background")},
+            			{name: "textcolor", height: 22, map_to: "textcolor", type: "select", options: gantt.serverList("textcolor")},
+            			{name: "time", type: "duration", map_to: "auto"}
+            		];
+                    
                     /*
                     var gresource ={
                     		resource:[{"id":1,"text":"QA","parent":0},
@@ -619,14 +632,6 @@
 			}
 		});
 		
-	
-		function byId(list, id) {
-			for (var i = 0; i < list.length; i++) {
-				if (list[i].key == id)
-					return list[i].label || "";
-			}
-			return "";
-		}
 		// 간트 메인 화면 상단 컬럼
 		gantt.config.columns = [
 			{ name: "text", label: "Task name", tree: true, width: '*' },
@@ -635,10 +640,11 @@
 			}},
 			{ name: "owner", width: 80, align: "center", template: function (item) {
 				return byId(gantt.serverList('user'), item.user)
-			}},
+		    }},
 			{ name: "progress", width: 80, align: "center", label: "Progress", width: '*' },
 			{ name: "add", width: 40}
-		];		
+		];
+		
 		// 일정상세 화면에서의 label
 		gantt.config.lightbox.sections = [
 			{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
@@ -648,7 +654,13 @@
 			{name: "background", height: 22, map_to: "background", type: "select", options: gantt.serverList("background")},
 			{name: "textcolor", height: 22, map_to: "textcolor", type: "select", options: gantt.serverList("textcolor")},
 			{name: "time", type: "duration", map_to: "auto"}
-		];	
+		]; 	
+		
+		function byId(list, key) {
+		    var item = list.find(x => x.key === key);
+		    return item ? item.label : "";
+		}
+		
 		
 		gantt.templates.grid_row_class =
 			gantt.templates.task_row_class = function (start, end, task) {
