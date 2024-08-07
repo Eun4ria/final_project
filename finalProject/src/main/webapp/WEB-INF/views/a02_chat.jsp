@@ -385,13 +385,20 @@ $(document).ready(function(){
     <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
    
 <c:choose>	
-<c:when test="${sessionScope.chatroom_id !== null || sessionScope.chatroom_id !== ''}">	
-			
-<div class="card-body">
+<c:when test="${sessionScope.chatroom_id == null || sessionScope.chatroom_id == ''}">	
+		<div class="card-body">
 
+ 	</div>	
+ 
+	<div class="card-footer">
+			
+	</div>	
+
+	</c:when>	
+	<c:otherwise>
 	
-  
-	
+	<div class="card-body">
+
 	<div class="input-group mb-3">	
  	현재사람:<input id="curName" value="${user_id }" />
 	
@@ -427,13 +434,7 @@ $(document).ready(function(){
 				</div>
 			</div>
 		</div>
-	</div>
-	</c:when>	
-	<c:otherwise>
-	<div class="card-body">
-	
-	</div>
-	<div class="card-footer"></div>	
+	</div>	
 	</c:otherwise>
  </c:choose>	
 

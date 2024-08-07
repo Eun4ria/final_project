@@ -162,6 +162,7 @@ location.href="message?user_id="+user_id
 							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
                 <i class="align-middle" data-feather="settings"></i>
               </a>
+              </li>
               <li class="nav-item ">
 							<span class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.project_id}')" id="messagesDropdown">
 									<i class="align-middle" data-feather="message-square"></i>
@@ -169,9 +170,10 @@ location.href="message?user_id="+user_id
 							
 						</li>
 
-							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+							<li class="nav-item ">
                <img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> <span class="text-dark">Welcome, MEM_${user_name}</span>
-              </a>
+              </li>
+              <li class="nav-item ">
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
 								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>

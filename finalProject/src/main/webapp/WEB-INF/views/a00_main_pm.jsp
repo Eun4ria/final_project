@@ -65,7 +65,7 @@
  }
  
  function projectPage(project_id){
-	 location.href="gantt?project_id="+project_id
+	 location.href="todopmFrm?project_id="+project_id
  }
  
  var user_id = ""

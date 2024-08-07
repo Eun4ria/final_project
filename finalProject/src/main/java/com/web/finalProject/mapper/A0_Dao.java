@@ -116,9 +116,17 @@ public interface A0_Dao {
 	@Select("SELECT *\r\n"
 			+ "FROM users u\r\n"
 			+ "JOIN team t ON u.USER_ID = t.USER_ID\r\n"
-			+ "WHERE t.PROJECT_ID = #{project_id} \r\n"
-			+ "AND u.USER_ID != #{user_id}")
+			+ "WHERE t.project_id = #{project_id} \r\n"
+			+ "AND u.user_id != #{user_id}")
 	List<Users> getMemList(Users sch);
+/*	
+	@Insert("INSERT INTO chat (\r\n"
+			+ "    CHATROOM_ID, CHATROOM_NAME, OWNER_ID, USER_ID, BAN_STATUS, BAN_DATE, UPTDATE, PROJECT_ID\r\n"
+			+ ") VALUES (\r\n"
+			+ "    'CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '잡담방', 'N_0047', 'N_0020', 'N', NULL, NULL, 'PRO_0001'\r\n"
+			+ ")")
+*/	
+	
 	
 	@Select("SELECT * FROM Chat\r\n"
 			+ "WHERE user_id = #{user_id} \r\n"

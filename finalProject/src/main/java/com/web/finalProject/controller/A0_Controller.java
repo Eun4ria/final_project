@@ -96,6 +96,7 @@ public class A0_Controller {
 	           session.setAttribute("user_name", user.getUser_name());
 	           session.setAttribute("image", user.getImage());
 	           session.setAttribute("role_code", user.getRole_code());
+	           session.setAttribute("project_id", user.getProject_id());
 	           
 	           // 권한에 따라 리다이렉트
 	           System.out.println("Role code:" + user.getRole_code());
@@ -261,7 +262,7 @@ public class A0_Controller {
         return "WEB-INF\\views\\a00_dash_com.jsp";
     }
 	@GetMapping("todopmFrm")
-	public String todopm(HttpServletRequest request, Model d) {
+	public String todopm(HttpServletRequest request, @RequestParam("project_id") String  project_id, Model d) {
 	    // 세션에서 user_id 값을 가져옵니다.
 	    HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
         String user_id = (String) session.getAttribute("user_id");
@@ -279,7 +280,7 @@ public class A0_Controller {
 		// 세션에서 user_id 값을 가져옵니다.
 		HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
 		String user_id = (String) session.getAttribute("user_id");
-		session.setAttribute("project_id", project_id);
+		
 		
 		
 		
