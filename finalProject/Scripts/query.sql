@@ -190,4 +190,11 @@ INSERT INTO project (project_id, project_name, etc, start_date, end_date, create
 VALUES ('PRO_'||TO_CHAR(project_seq.nextval, 'FM0000'), #{project_name}, #{project_name}, TO_DATE(#{start_date}, 'YYYY-MM-DD'), TO_DATE(#{end_date}, 'YYYY-MM-DD'), sysdate, 'COM_0001');
 SELECT * FROM task;
 INSERT INTO task (task_id, task_name, start_date, end_date, priority, parent_id, content, progress, backgroundcolor, textcolor, tstatus, user_id, project_id)
-VALUES ('TSK_'||TO_CHAR(task_seq.nextval, 'FM0000'), '설계', TO_DATE('2024-07-17', 'YYYY-MM-DD'), TO_DATE('2024-07-24', 'YYYY-MM-DD'), '높음', NULL, '설계', 50, '#FFFFFF', '#000000', '진행중', 'P_0001', 'PRO_0001');
+VALUES ('TSK_'||TO_CHAR(task_seq.nextval, 'FM0000'), '설계', TO_DATE('2024-07-17', 'YYYY-MM-DD'), TO_DATE('2024-07-24', 'YYYY-MM-DD'), '상', NULL, '설계', 50, '#FFFFFF', '#000000', '진행중', 'P_0001', 'PRO_0001');
+
+INSERT INTO project values('PRO_'||TO_CHAR(project_seq.nextval, 'FM0000'), '마블컬렉션 프로젝트','2차 프로젝트', TO_DATE('2024-05-01', 'YYYY-MM-DD'),TO_DATE('2024-05-22', 'YYYY-MM-DD'),TO_DATE('2024-04-30', 'YYYY-MM-DD'),0,'COM_0000');
+
+SELECT * FROM project;
+
+INSERT INTO task (task_id, task_name, start_date, end_date, priority, parent_id, content, progress, backgroundcolor, textcolor, tstatus, user_id, project_id)
+VALUES ('TSK_'||TO_CHAR(task_seq.nextval, 'FM0000'), '화면설계', TO_DATE('2024-07-01', 'YYYY-MM-DD'), TO_DATE('2024-07-15', 'YYYY-MM-DD'), '중', NULL, '설계', 100, '#FFFFFF', '#000000', '완료', 'N_0047', 'PRO_0000');

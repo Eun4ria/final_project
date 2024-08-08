@@ -46,12 +46,10 @@
 	
 <style>
 	html, body {
-		height: 80%;
 		padding: 0px;
-		margin: 0px;
+		margin-bottom: 0px;
 		overflow: hidden;
 	}
-
 	.summary-row,
 	.summary-row.odd {
 		background-color: #EEEEEE;
@@ -243,7 +241,7 @@
 	<input type='button' id='user' onclick="showGroups('user')" value="Group by owner">
 	<input type='button' id='stage' onclick="showGroups('stage')" value="Group by stage">
 	</div>
-	<div id="gantt_here" style='width:100%; height:calc(100vh - 90px);'></div>
+	 <div id="gantt_here" style="width: 100%; height: calc(100vh - 14vh);"></div>
 	</div>
 	</div>
 	<script type="text/javascript">
@@ -604,9 +602,17 @@
 		]);
 		
 		gantt.serverList("progress", [
-			{key: 0, label: "진행전"},
-			{key: 50, label: "진행중"},
-			{key: 100, label: "진행완료"}
+			{key: 0, label: 0},
+			{key: 10, label: 10},
+			{key: 20, label: 20},
+			{key: 30, label: 30},
+			{key: 40, label: 40},
+			{key: 50, label: 50},
+			{key: 60, label: 60},
+			{key: 70, label: 70},
+			{key: 80, label: 80},
+			{key: 90, label: 90},
+			{key: 100, label: 100}
 		]); 
 		// 배경색 리스트
 		gantt.serverList("background", [

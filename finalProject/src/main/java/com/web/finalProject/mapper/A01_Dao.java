@@ -27,6 +27,7 @@ public interface A01_Dao {
 			+ "SET PASSWORD = #{tempPwd}\r\n"
 			+ "WHERE USER_ID = #{user_id}")
 	int updateTempPwd(@Param("tempPwd") String tempPwd, @Param("user_id") String user_id);
+	
 	// 간트 리스트(조회)
 	@Select("SELECT \r\n"
 			+ "    t.task_id AS id, \r\n"
