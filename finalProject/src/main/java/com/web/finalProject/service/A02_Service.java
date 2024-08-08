@@ -77,9 +77,7 @@ public class A02_Service {
 		return dao.emailCk(email); 
 	}
 	
-	
-	
-	
+
 	
 // 메일 발송
 	public String makeEmpMail(RegMember email) {
@@ -119,14 +117,22 @@ public class A02_Service {
     	return dao.getProjectList(user_id);
     }
 		
-		
-//채팅 리스트
-	public List<Users> getmemList(Users sch){
-		if(sch.getProject_id()==null) sch.setProject_id("");
-		if(sch.getUser_id()==null) sch.setUser_id("");
-		return dao.getMemList(sch);
-	}
-	public Chat chat(Chat chat) {
-		return dao.chat(chat);
-	}
+
+//채팅
+	//채팅 리스트
+		public List<Users> getmemList(Users sch){
+			if(sch.getProject_id()==null) sch.setProject_id("");
+			if(sch.getUser_id()==null) sch.setUser_id("");
+			return dao.getMemList(sch);
+		}
+		public Chat chat(Chat chat) {
+			return dao.chat(chat);
+		}
+	//채팅 등록
+		public String insertchatroom(Chat ins) {
+			String msg = null;
+			msg = dao.insertchatroom(ins)>0? ins.getChatroom_id() : null;
+			return msg;
+		}
+	
 }

@@ -289,17 +289,7 @@ $(document).ready(function(){
 
 });
 </script>
-<script>
- var insertmsg="${insertmsg}"
- if(insertmsg != "") {
-     alert(insertmsg); // 알림 메시지 표시
 
-     if (insertmsg=="채팅방 생성완료") {
-        $(".close").click();
-        window.location.href = 'message';
-     }
- }
- </script>
 	</head>
 
 	<!--Coded With Love By Mutiullah Samim
@@ -340,8 +330,7 @@ $(document).ready(function(){
 					    	<c:forEach var="mem" items="${memList}" varStatus="status">	
 					    	
 					    	
-							<div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${mem.user_id}')" 
-							style="padding-top:0.5rem;height:4rem" data-toggle="modal" data-target="#ModalCenter">
+							<div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${mem.user_id}')" style="padding-top:0.5rem;height:4rem">
 								<div class="img_cont" style="padding-left:1rem">
 									<img src="${mem.image }" class="rounded-circle user_img" style="width:3rem; height:3rem; ">	
 								</div>
@@ -359,7 +348,7 @@ $(document).ready(function(){
 						
 	<script type="text/javascript">
 		function goDetail(user_id){
-			location.href="insertChatRoom"
+			location.href="message?chat_id=CHT_0021"
 		}
 	</script>  
 						
@@ -434,9 +423,9 @@ $(document).ready(function(){
 	<div class="card-body">
 
 	<div class="input-group mb-3">	
- 	현재사람:<input id="curName" value="${sessionScope.owner_id }" />
+ 	현재사람:<input id="curName" value="${user_id }" />
 	
- 	받을사람:<input id="name" value="${sessionScope.user_id }" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
+ 	받을사람:<input id="name"  /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
  	</div>
  	<div  id="show"></div>
  <%-- 
@@ -473,10 +462,6 @@ $(document).ready(function(){
  </c:choose>	
 </div>
 </div>
-
- 
-
-
 </div>
 </div>
 

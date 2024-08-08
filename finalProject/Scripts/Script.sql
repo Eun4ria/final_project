@@ -1,5 +1,8 @@
 SELECT * FROM users;
 
+DELETE users
+WHERE user_name='김은수';
+
 SELECT * FROM PROJECT;
 
 SELECT * FROM chat;
@@ -151,3 +154,33 @@ VALUES
 ('PRO_0011', 'M_0024'),
 ('PRO_0012', 'M_0025'), -- KartRider Drift
 ('PRO_0012', 'M_0026');
+
+SELECT * FROM CHAT c;
+SELECT * FROM users;
+
+DELETE CHAT
+WHERE CHATROOM_name = 'M_0003';
+
+
+INSERT INTO chat (
+    chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id
+)
+SELECT
+    'CHT_' || TO_CHAR(chat_seq.nextval, 'FM0000'),
+    'M_0003',
+    'N_0047',
+    'M_0003',
+    'N',
+    NULL,
+    NULL,
+    'PRO_0001'
+FROM dual
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM chat
+    WHERE owner_id = 'N_0047'
+      AND user_id = 'M_0003'
+);
+
+
+ 

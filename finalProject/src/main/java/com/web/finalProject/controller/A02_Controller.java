@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.web.finalProject.service.A02_Service;
+import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Users;
 
 import jakarta.servlet.http.Cookie;
@@ -139,7 +140,9 @@ public class A02_Controller {
       
         return "WEB-INF\\views\\a00_dash_mem.jsp";
 	}
-	// 채팅
+	
+	
+// 채팅
 	// 왼쪽 채팅 조회
 	// http://localhost:4040/chatmemListstart
 //				@RequestMapping("chatmemListstart")
@@ -172,6 +175,20 @@ public class A02_Controller {
 		    // JSP 페이지로 이동
 		    return "WEB-INF\\views\\a02_chat.jsp";	
 		}
+	//채팅 생성
+	@GetMapping("insertChatRoom")
+	public String insertchatroom(Chat ins, HttpSession session) {
+		
+		// 채팅룸을 생성하고 생성된 채팅룸 ID를 가져옴
+	    String chatroom_id = service.insertchatroom(ins);
+	    
+	    // 세션에 chatroom_id를 저장
+	    if (chatroom_id != null) {
+            session.setAttribute("chatroom_id", chatroom_id);
+        }
+	    System.out.println("넘겨오는 데이터:"+chatroom_id);
+		return "redirect:message";
+	}
 
 	// 채팅-오른쪽 채팅
 //				// http://localhost:4040/chat
@@ -187,7 +204,10 @@ public class A02_Controller {
 	// 채팅-오른쪽 채팅
 	// http://localhost:4040/message
 	@GetMapping("message")
-		public String chatting() {
+		public String chatting(HttpSession session, Model d) {
+		 	String chatroomId = (String) session.getAttribute("chatroom_id");
+		    d.addAttribute("chatroom_id", chatroomId);
+		    System.out.println("넘겨오는 데이터:"+chatroomId);
 			return "WEB-INF\\views\\a02_chat.jsp";
 			//return "WEB-INF\\views\\a02_chat.jsp";
 		}
