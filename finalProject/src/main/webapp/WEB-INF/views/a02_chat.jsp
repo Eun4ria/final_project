@@ -24,6 +24,8 @@
 	<!-- jquery -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	
+	
+	
 	<style>
 	body,html{
 			height: 100%;
@@ -249,74 +251,47 @@
 		margin-bottom: 15px !important;
 	}
 	}
-	
+
+/* 스크롤바 스타일링 */
+/* 스크롤바 막대 */
+.scrollbar { 
+  height: 200px;
+  overflow-y: auto; /*  */
+  overflow-x: hidden;
+  padding-right:0;
+}
+
+/* 스크롤바의 폭 너비 */
+.scrollbar::-webkit-scrollbar {
+    width: 10px;  
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(98, 106, 136); /* 스크롤바 색상 */
+    border-radius: 10px; /* 스크롤바 둥근 테두리 */
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    background: transparent;  /*스크롤바 뒷 배경 색상*/
+}
+.even{
+	background-color:hsla(240,15%,30%,0.3);
+}
+.odd{
+	background-color:hsla(240,15%,30%,0.2);
+}
 	</style>
-	<script type="text/javascript">
-	var wsocket=null;
-	
-	$(document).ready(function(){
-		$('#action_menu_btn').click(function(){
-			$('.action_menu').toggle();
-		});
-
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#action_menu_btn').click(function(){
+		$('.action_menu').toggle();
 	});
 
-	$(document).ready(function(){
-		/* $("#regBtn").click(function(){
-			location.href="usersInsertFrm.do"
-		}); */
-		// 첫 로딩 시
-	    userSch();
-	    
-	 	// 엔터눌러도 submit처리되지 않게 하기 위함
-/*		$("form").on("keydown",function(event){
-			if(event.key === "Enter"){
-				event.preventDefault();
-				return false;
-			}
-		})
-	*/
-	 	// 검색처리 event enter입력 시 
-		$("[name=user_name]").keyup(function(event){
-			if(event.key === "Enter"){
-				userSch()
-			}
-		})
-	    // 검색버튼 클릭 시
-	    $("#schBtn").click(function() {
-	    	userSch()
-	    });  
-		
-		// 서치 버튼 클릭 시 
-	    function userSch() {
-	        $.ajax({
-	            url: "chatmemlist",
-	            data: $("form").serialize(),
-	            dataType: "json",
-	            success: function(data) {
-	                renderTable(data.sch); // 모델데이터로 지정한 sch의 데이터를 전달
-	            },
-	            error: function(err) {
-	                console.log(err);
-	            }
-	        });
-	    }
-		
-	/*	// 테이블 데이터
-	    function renderTable(data) {
-	        var addHTML = "";
-	        $(data).each(function(idx, sch) {
-	            addHTML += "<tr class='text-center' ondblclick=\"detail('" +sch.user_name+ "')\">";
-	            addHTML += "<td >" + (idx+1)     + "</td>";
-	            addHTML += "<td align='left'>" + sch.user_name+ "</td>";
-	            addHTML += "</tr>";
-	        });
-	        $("tbody").html(addHTML);
-	    }
-  */
-	});
-	</script>
+});
+</script>
+
 	</head>
+
 	<!--Coded With Love By Mutiullah Samim
 	
 	<c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
@@ -324,8 +299,11 @@
         alert("로그인이 필요한 서비스입니다");
         location.href = 'signinFrm';
     </script>
-</c:if>-->
-<body>
+</c:if>
+
+-->
+<body> 
+
 		<div class="container-fluid h-100">
 			<div class="row justify-content-center h-100">
 				<div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
@@ -338,9 +316,7 @@
 						</div>
 						</form>
 					</div>
-<!-- 채팅 왼쪽 리스트 -->
-					<div class="card-body contacts_body">
-						<div class="d-flex bd-highlight">
+					<div class="d-flex bd-highlight">
 							<div class="user_info" style="padding-right:7rem;">
 								<span style="font-size:0.9rem;"><c:out value="${sessionScope.user_name}" /></span>
 							</div>
@@ -349,37 +325,47 @@
 							  <button type="button" id="memList" class="active" onclick="showMem()">팀원</button>
                               <button type="button" id="chatList" onclick="showChatRoom()">채팅</button></div>
 						</div>
+<!-- 채팅 왼쪽 리스트 -->
+<div class="card-body contacts_body scrollbar">
+					    	<c:forEach var="mem" items="${memList}" varStatus="status">	
+					    	
+					    	
+							<div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${mem.user_id}')" style="padding-top:0.5rem;height:4rem">
+								<div class="img_cont" style="padding-left:1rem">
+									<img src="${mem.image }" class="rounded-circle user_img" style="width:3rem; height:3rem; ">	
+								</div>
+								<div class="user_info">
+									<span>${mem.user_name}</span>
+									<p >${mem.user_id}</p>
+								</div>
+							</div>
 						
-						<table>
-						 <col width="30%">
-   						 <col width="70%">
-						 <tbody>
-					    	<c:forEach var="mem" items="${memList}">
-					    	<tr style="" ondblclick="goDetail('${mem.user_id}')">
-					    	<td>사진</td>
-					    	<td style="">${mem.user_id}</td>
-					    	</tr>
+						
 					    	</c:forEach>
-					     </tbody>
-						</table>  
+					    	
+					    
+					
 						
 	<script type="text/javascript">
 		function goDetail(user_id){
-			location.href="mainpmFrm"
+			location.href="message?chat_id=CHT_0021"
 		}
 	</script>  
 						
-	</div>
-<!-- 오른쪽 채팅 창 -->
-					<div class="card-footer"></div>
-				</div></div>
+	
+	</div>	</div></div>
+<!-- 오른쪽 채팅 창
+				-->
+			
 				<div class="col-md-8 col-xl-6 chat">
 					<div class="card">
 						<div class="card-header msg_head">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
-									<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-									<span class="online_icon"></span>
+									<img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
+									<%-- 
+									<input id="curName" value="${user_id }"  disabled/>
+									 --%>
 								</div>
 								<div class="user_info">
 									<span><c:out value="${sessionScope.chatroom_name}" /></span>
@@ -405,9 +391,11 @@
 									<input type="submit" id="exitBtn" hidden >
 									<i class="fas fa-ban"></i> Block
 								</form>
-								<form method="post" action="mainpmFrm">
+								<form method="get" action="todomemFrm">
 									
-									<button type="submit" id="exitBtn" style="background-color:transparent; border:none; color:white"><i class="fas fa-sign-out-alt"></i> Exit</button>
+									<button type="submit" id="exitBtn" style="background-color:transparent; border:none; color:white">
+									<i class="fas fa-sign-out-alt">
+									</i> Exit</button>
 									
 								</form>
 							
@@ -416,27 +404,102 @@
 								
 							</div>
 						</div>
-						<div class="card-body msg_card_body">
-							
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+   
+<c:choose>	
+<c:when test="${sessionScope.chatroom_id == null || sessionScope.chatroom_id == ''}">	
+		<div class="card-body">
+
+ 	</div>	
+ 
+	<div class="card-footer">
+			
+	</div>	
+
+	</c:when>	
+	<c:otherwise>
+	
+	<div class="card-body">
+
+	<div class="input-group mb-3">	
+ 	현재사람:<input id="curName" value="${user_id }" />
+	
+ 	받을사람:<input id="name"  /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
+ 	</div>
+ 	<div  id="show"></div>
+ <%-- 
+ 	<div class="card-footer">
+ 	보낼메시지:<input id="msg" />
+ 	<br>
+ 	<button type="button" onclick="sendName()">전송</button>
+ 	
+ 	</div>
+ --%>	
+ </div>	
+ <%-- 
+ 	<div class="card-footer">
+	<div class="input-group mb-3">	
+		<input id="msg" class="form-control" placeholder="전송할 메시지 입력"/>	
+		<input type="button" onclick="sendName()" class="btn btn-info" value="메시지전송" id="sndBtn"/>
+	</div>		
+	</div>
+--%>
+	<div class="card-footer">
+			<div class="input-group">
+				
+				<div class="input-group mb-3">	
+	
+		<input id="msg" class="form-control type_msg" placeholder="Type your message..."/>
+				<div class="input-group-text send_btn"  >
+					<i class="fas fa-location-arrow" onclick="sendName()"></i>
 					
-						</div>
-						<div class="card-footer">
-							<div class="input-group">
-								
-								<div class="input-group mb-3">	
-		
-						<input id="msg" name="" class="form-control type_msg" placeholder="Type your message..."/>
-								<div class="input-group-text send_btn"  >
-									<i class="fas fa-location-arrow"></i>
-									<input type="button" id="sndBtn" hidden>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
+	</div>	
+	</c:otherwise>
+ </c:choose>	
 </div>
+</div>
+</div>
+</div>
+
+    <script type="text/javascript">
+var socket = new SockJS('/ws');
+var stompClient = Stomp.over(socket);
+
+stompClient.connect({}, function(frame) {
+    console.log('Connected: ' + frame);
+    stompClient.subscribe('/topic/greetings', function(greeting){
+        //console.log(greeting);
+        console.log(greeting.body);
+        console.log(JSON.parse(greeting.body).content);
+        var obj = JSON.parse(greeting.body);
+        var curName = document.getElementById('curName').value;
+        console.log("## 받은 메시지 ##")
+        console.log(obj.msg)
+        console.log("## 받은 이름 ##")
+        console.log(obj.name)
+        
+        
+        if(curName!=obj.name)
+        	document.querySelector("#show").innerHTML += obj.name+":"+obj.msg+"<br>"
+        //document.querySelector("#show").innerHTML = JSON.parse(greeting.body).content+"<br>"
+
+    });
+});
+
+
+function sendName() {
+	
+    var name = document.getElementById('curName').value;
+    var msg = document.getElementById('msg').value;
+    document.querySelector("#show").innerHTML += "나:"+msg+"<br>"
+    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg':msg}));
+}
+</script>   	
+<%-- 
 <script style="text/javascript">
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('memList').classList.add('active');
@@ -455,6 +518,6 @@ function showChatRoom() {
     loadChatList();
 }
 
-</script>
+</script>--%>
 	</body>
 </html>

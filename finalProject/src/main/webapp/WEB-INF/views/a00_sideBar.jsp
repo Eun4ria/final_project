@@ -27,7 +27,9 @@
 	<title>HPM-Project Manager System</title>
 
 	<link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
-<%-- 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<%--	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	
+ 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
 <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
 </head>
@@ -72,16 +74,26 @@
                     <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
                 </a>
             </li>
-
-            <li class="sidebar-item ${currentUrl == '/sign-in' ? 'active' : ''}">
+ 
+            <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
+                <a class="sidebar-link" href="fullcalendar">
+                    <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Calendar</span>
+                </a>
+            </li>
+            <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
                 <a class="sidebar-link" href="sign-in">
-                    <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Sign In</span>
+                    <i class="align-middle" data-feather="list"></i> <span class="align-middle">ToDoList</span>
+                </a>
+            </li>
+            <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
+                <a class="sidebar-link" href="sign-in">
+                    <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle">Chart</span>
                 </a>
             </li>
 
-            <li class="sidebar-item ${currentUrl == '/sign-up' ? 'active' : ''}">
+            <li class="sidebar-item ${currentUrl == '/sign_up' ? 'active' : ''}">
                 <a class="sidebar-link" href="sign-up">
-                    <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Sign Up</span>
+                    <i class="align-middle" data-feather="command"></i> <span class="align-middle">Board</span>
                 </a>
             </li>
 

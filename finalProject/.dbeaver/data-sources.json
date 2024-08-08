@@ -1,7 +1,7 @@
 {
 	"folders": {},
 	"connections": {
-		"oracle_thin-190cfb0d156-588d4f798d04e51a": {
+		"oracle_thin-1911cdec92f-29bae29714ca3b37": {
 			"provider": "oracle",
 			"driver": "oracle_thin",
 			"name": "223.26.198.130",
@@ -28,7 +28,7 @@
 			"name": "Development",
 			"color": "255,255,255",
 			"description": "Regular development database",
-			"auto-commit": true,
+			"auto-commit": false,
 			"confirm-execute": false,
 			"confirm-data-change": false,
 			"smart-commit": false,

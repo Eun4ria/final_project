@@ -97,7 +97,8 @@ $(document).ready(function() {
 		<div class="page-header align-items-start min-vh-100"
 			style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
 			<span class="mask bg-gradient-dark opacity-6"></span>
-			<div class="container my-auto">
+			  
+      <div class="container my-auto">
 				<div class="row">
 					<div class="col-lg-4 col-md-8 col-12 mx-auto">
 						<div class="card z-index-0 fadeIn3 fadeInBottom">
@@ -135,7 +136,7 @@ $(document).ready(function() {
 										style="color: #3f2b96;">Find ID</a> 
 								<br> 
 								Don't have an account? 
-								<a href="sign_up" class="text-primary text-gradient font-weight-bold"
+								<a href="signupFrm" class="text-primary text-gradient font-weight-bold"
 										style="color: #3f2b96;">Sign up</a>
 								</div>
 
