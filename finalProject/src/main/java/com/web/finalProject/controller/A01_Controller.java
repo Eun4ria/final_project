@@ -49,32 +49,11 @@ public class A01_Controller {
             d.addAttribute("pro", service.getProjectList(user_id));
             d.addAttribute("currentUrl", request.getRequestURI());
             return "WEB-INF\\views\\a00_main_pm.jsp";
-	}
-	
-	// http://223.26.198.130:4040/sideBar
-	@RequestMapping("sideBar")
-	public String sideBar() {
-		return "WEB-INF\\views\\a00_sideBar.jsp";
-	}
-	// http://223.26.198.130:4040/chart
-	@GetMapping("chart")
-    public String chart() {
-        return "WEB-INF\\views\\a02_chart.jsp";
-    }
-	// http://223.26.198.130:4040/ganttChart
-	@GetMapping("ganttChart")
-    public String ganttChart() {
-        return "WEB-INF\\views\\a01_ganttChart.jsp";
-    }
+	}	
 	// http://223.26.198.130:4040/fullcalendar
 	@GetMapping("fullcalendar")
     public String fullcalendar() {
         return "WEB-INF\\views\\a01_fullcalendar.jsp";
-    }
-	// http://223.26.198.130:4040/board
-	@GetMapping("board")
-    public String board() {
-        return "WEB-INF\\views\\a02_board.jsp";
     }
 	
 	
@@ -113,6 +92,7 @@ public class A01_Controller {
 					service.getGantt(project_id),
 					service.getTeam(project_id)));
 	}
+	/*
 	// 간트 등록
 	@PostMapping("insertGantt")
 	public ResponseEntity<?> insertGantt(GanttTask ins, Model d) {
@@ -120,6 +100,12 @@ public class A01_Controller {
 		return ResponseEntity.ok(new msgList(
 					service.insertGantt(ins),
 					service.getGantt(ins.getProject_id())));
+	}
+	*/
+	@PostMapping("insertGantt")
+	public ResponseEntity<?> insertGantt(GanttTask ins, Model d) {
+		System.out.println("생성된 project_id:"+ins.getProject_id());
+		return ResponseEntity.ok(service.insertGantt(ins));
 	}
 	
 	

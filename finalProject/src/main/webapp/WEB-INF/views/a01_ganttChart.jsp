@@ -437,6 +437,15 @@
 			})
 			
 		}
+        
+        
+        gantt.attachEvent("onAfterTaskAdd", function(id, task) {
+            // `ajaxFun` 호출로 데이터 전송
+            ajaxFun("insertGantt");
+        });
+        
+        
+        
        /*
        function listFun(){
         $.ajax({
@@ -673,7 +682,21 @@
 			{name: "background", height: 22, map_to: "background", type: "select", options: gantt.serverList("background")},
 			{name: "textcolor", height: 22, map_to: "textcolor", type: "select", options: gantt.serverList("textcolor")},
 			{name: "time", type: "duration", map_to: "auto"}
-		]; 	
+		]; 
+		/*
+		gantt.config.scale_height = 50; // 스케일의 높이 설정
+
+		gantt.config.date_scale = "%Y"; // 연도 표시 형식 설정
+		
+		// 월과 날짜는 하위 스케일로 설정
+		gantt.config.scale_unit = "month"; // 스케일 단위 설정
+		gantt.config.step = 1; // 월 단위 설정
+		
+		gantt.config.subscales = [
+		    {unit: "month", step: 1, date: "%F"},
+		    {unit: "day", step: 1, date: "%d"}
+		];	
+		*/
 		
 		function byId(list, key) {
 		    var item = list.find(x => x.key === key);

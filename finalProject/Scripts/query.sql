@@ -167,7 +167,7 @@ NVL(parent_id, '0') AS parent
 FROM task t
 JOIN
 users u ON t.user_id = u.user_id
-WHERE project_id='PRO_0001';
+WHERE project_id='PRO_0042';
 
 
 SELECT u.user_name AS text,
