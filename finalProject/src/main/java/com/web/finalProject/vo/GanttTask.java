@@ -3,14 +3,12 @@ package com.web.finalProject.vo;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class GanttTask {
-	@JsonIgnore // json데이터 예외
     private String project_id;
 	private String id;
 	private String text;
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date start_date;
 	private String priority;
 	private int duration;

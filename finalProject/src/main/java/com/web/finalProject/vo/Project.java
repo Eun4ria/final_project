@@ -12,7 +12,21 @@ public class Project {
 	private String user_name;
 	private String user_id;
 	private String image;
+	private String logo;
+	private int progress;
 	
+	public int getProgress() {
+		return progress;
+	}
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
+	public String getLogo() {
+		return logo;
+	}
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
 	public String getImage() {
 		return image;
 	}

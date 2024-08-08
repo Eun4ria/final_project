@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.web.finalProject.service.A02_Service;
 import com.web.finalProject.vo.Users;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -26,6 +29,52 @@ public class A02_Controller {
 	@Autowired(required=false)
 	private A02_Service service;
 	
+	//로그인
+   // 로그인 처음 폼
+   // http://localhost:4040/signinFrm
+   @GetMapping("signinFrm")
+   public String sign_in() {
+      return "WEB-INF\\views\\a02_sign_in.jsp";
+   }
+   // http://localhost:4040/signin
+   @PostMapping("signin")
+      public String login(Users login, Model d, HttpServletRequest request) {
+          int loginCk = service.loginCk(login);
+          if (loginCk > 0) {
+              Users user = service.login(login);
+              HttpSession session = request.getSession(true); // 세션 생성
+              session.setAttribute("user_id", user.getUser_id());
+              session.setAttribute("user_name", user.getUser_name());
+              session.setAttribute("image", user.getImage());
+              session.setAttribute("role_code", user.getRole_code());
+              session.setAttribute("project_id", user.getProject_id());
+              
+              // 권한에 따라 리다이렉트
+              System.out.println("Role code:" + user.getRole_code());
+              System.out.println("user_id:" + user.getUser_id());
+              
+              return "redirect:main"; // 사용자 메인 페이지
+          } else {
+              d.addAttribute("errorMessage", "일치하는 회원이 없습니다");             
+          }
+
+          return "WEB-INF\\views\\a02_sign_in.jsp"; // 로그인 페이지
+
+      }
+	//로그아웃
+   @PostMapping("/logout")
+   public RedirectView logout(HttpServletRequest request, HttpServletResponse response) {
+       // 세션 무효화 및 쿠키 삭제
+       request.getSession().invalidate();
+       Cookie cookie = new Cookie("JSESSIONID", null);
+       cookie.setMaxAge(0);
+       cookie.setPath("/");
+       response.addCookie(cookie);
+
+       // 로그인 페이지로 리다이렉트
+       return new RedirectView("/signinFrm");
+   }
+
 	// 회원가입
 	// 사용자 처음 폼
 	// http://localhost:4040/signupFrm
@@ -68,46 +117,28 @@ public class A02_Controller {
 	}
 
 	// 메인 -> 대시보드(to do)
-	// http://223.26.198.130:4040/todoFrm
-	@GetMapping("todoFrm")
-		    public String todo(@RequestParam(name="user_id", defaultValue="P_0012") String user_id,
-		    		HttpServletRequest request, Model d) {
-				d.addAttribute("pro", service.getProjectList(user_id));
-		        d.addAttribute("currentUrl", request.getRequestURI());
-		        return "WEB-INF\\views\\a00_dash_com.jsp";
-		    }
-
-	@GetMapping("todopmFrm")
-		public String todopm(HttpServletRequest request,  Model d) {
-		    // 세션에서 user_id 값을 가져옵니다.
-		    HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
-	        String user_id = (String) session.getAttribute("user_id");
-//				        String project_id = (String) session.getAttribute("project_id");
-
-	        // user_id를 이용하여 프로젝트 목록을 가져옵니다.
-	        d.addAttribute("pro", service.getProjectList(user_id));
-//				        d.addAttribute("proj", service.getProjectList(project_id));
-	        d.addAttribute("currentUrl", request.getRequestURI());
-	      
-	        return "WEB-INF\\views\\a00_dash_pm.jsp";
-		}
-
-	@GetMapping("todomemFrm")
-		public String todomemFrm(HttpServletRequest request, @RequestParam("project_id") String  project_id, Model d) {
-			// 세션에서 user_id 값을 가져오기
-			HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
-			String user_id = (String) session.getAttribute("user_id");
-			
-			// 세션에 project_id 저장
-		    session.setAttribute("project_id", project_id);
-			
-			
-			// user_id를 이용하여 프로젝트 목록을 가져오기
-			d.addAttribute("pro", service.getProjectList(user_id));
-			d.addAttribute("currentUrl", request.getRequestURI());
-			return "WEB-INF\\views\\a00_dash_mem.jsp";
-		}
-
+	// http://localhost:4040/dashpmFrm
+	// 이것이 기준입니다. 프로젝트 리스트에서 해당 프로젝트 클릭 시 세션 세팅
+	@GetMapping("dashpmFrm")
+	public String dashpmFrm(@RequestParam("project_id") String project_id,
+			HttpServletRequest request,  Model d) {
+		
+	    HttpSession session = request.getSession(); 
+	    // 세션에 프로젝트 아이디 생성
+        session.setAttribute("project_id", project_id);
+      
+        return "WEB-INF\\views\\a00_dash_pm.jsp";
+	}
+	@GetMapping("dashmemFrm")
+	public String dashmemFrm(@RequestParam("project_id") String project_id,
+			HttpServletRequest request,  Model d) {
+		
+	    HttpSession session = request.getSession(); 
+	    // 세션에 프로젝트 아이디 생성
+        session.setAttribute("project_id", project_id);
+      
+        return "WEB-INF\\views\\a00_dash_mem.jsp";
+	}
 	// 채팅
 	// 왼쪽 채팅 조회
 	// http://localhost:4040/chatmemListstart

@@ -66,31 +66,31 @@
 			if(name!=null&&name!=""){ // 이름 입력필드가 empty가 아닐 경우
 				if(email!=null&&email!=""){	// 이메일 입력필드가 empty가 아닐 경우
 			        if (emailPattern.test(email)) { // 모든 조건에 부합 할 경우
-			            idFind() // 아이디 찾기 전송 함수			            
+			        	findId() // 아이디 찾기 전송 함수			            
 			        }else{ // 이메일 패턴 미일치 시
-			        	alert('Please enter a valid email address');
+			        	alert('이메일 형식에 맞지 않습니다');
 			            emailInput.focus();
 			        }				        
 				}else{ // 이메일 미입력 시	
-					alert("Please enter your email address")	
+					alert("이메일 주소를 입력하세요")	
 					emailInput.focus();
 				}				
 			}else{ // 이름 미입력 시
-				alert("Please enter your name")
+				alert("이름을 입력하세요")
 				nameInput.focus();
 			}	        
 	    });
 		
 	});
     
-	function idFind() {
+	function findId() {
 	    $.ajax({
 	        url: "find_id",
 	        type:"POST",
 	        data: $("form").serialize(),
 	        success: function(result) {
-	            if(result=="해당 계정 정보 없습니다.") {
-					alert("No account information found for the provided details")
+	            if(result=="해당 계정 정보 없습니다") {
+					alert(result)
 	            } else{					
 	            	$("form").submit()	
 	            }
@@ -108,11 +108,26 @@
 
 <body class="bg-gray-200">
 
- 
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      <div class="col-12">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg blur border-radius-xl top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+          <div class="container-fluid ps-2 pe-0">
+            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="../pages/dashboard.html">
+              HPM main
+            </a>
+            
+            
+          </div>
+        </nav>
+        <!-- End Navbar -->
+      </div>
+    </div>
+  </div>
   <main class="main-content  mt-0">
     <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
       <span class="mask bg-gradient-dark opacity-6"></span>
-      
       <div class="container my-auto">
         <div class="row">
           <div class="col-lg-4 col-md-8 col-12 mx-auto">

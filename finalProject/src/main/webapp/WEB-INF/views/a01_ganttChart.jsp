@@ -46,12 +46,10 @@
 	
 <style>
 	html, body {
-		height: 80%;
 		padding: 0px;
-		margin: 0px;
+		margin-bottom: 0px;
 		overflow: hidden;
 	}
-
 	.summary-row,
 	.summary-row.odd {
 		background-color: #EEEEEE;
@@ -147,18 +145,81 @@
 								</div>
 							</div>
 						</li>
-						
 						<li class="nav-item dropdown">
-							<li class="nav-item ">
-							<span class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.user_id}')" id="messagesDropdown">
+							<a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown" data-bs-toggle="dropdown">
+								<div class="position-relative">
 									<i class="align-middle" data-feather="message-square"></i>
-							</span>
-							
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="messagesDropdown">
+								<div class="dropdown-menu-header">
+									<div class="position-relative">
+										4 New Messages
+									</div>
+								</div>
+								<div class="list-group">
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle" alt="Vanessa Tucker">
+											</div>
+											<div class="col-10 ps-2">
+												<div class="text-dark">Vanessa Tucker</div>
+												<div class="text-muted small mt-1">Nam pretium turpis et arcu. Duis arcu tortor.</div>
+												<div class="text-muted small mt-1">15m ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle" alt="William Harris">
+											</div>
+											<div class="col-10 ps-2">
+												<div class="text-dark">William Harris</div>
+												<div class="text-muted small mt-1">Curabitur ligula sapien euismod vitae.</div>
+												<div class="text-muted small mt-1">2h ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle" alt="Christina Mason">
+											</div>
+											<div class="col-10 ps-2">
+												<div class="text-dark">Christina Mason</div>
+												<div class="text-muted small mt-1">Pellentesque auctor neque nec urna.</div>
+												<div class="text-muted small mt-1">4h ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle" alt="Sharon Lessman">
+											</div>
+											<div class="col-10 ps-2">
+												<div class="text-dark">Sharon Lessman</div>
+												<div class="text-muted small mt-1">Aenean tellus metus, bibendum sed, posuere ac, mattis non.</div>
+												<div class="text-muted small mt-1">5h ago</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="dropdown-menu-footer">
+									<a href="#" class="text-muted">Show all messages</a>
+								</div>
+							</div>
 						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                <i class="align-middle" data-feather="settings"></i>
+              </a>
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> <span class="text-dark">Welcome, PM_${user_name}</span>
-                  </a>
+                <img src="${path}/adminkit-3.1.0/static/img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">Charles Hall</span>
+              </a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
 								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
@@ -166,9 +227,7 @@
 								<a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
 								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
 								<div class="dropdown-divider"></div>
-								<form method="post" action="/logout">
-								<input type="submit" class="dropdown-item" value="Log out" >
-								</form>
+								<a class="dropdown-item" href="#">Log out</a>
 							</div>
 						</li>
 					</ul>
@@ -182,38 +241,32 @@
 	<input type='button' id='user' onclick="showGroups('user')" value="Group by owner">
 	<input type='button' id='stage' onclick="showGroups('stage')" value="Group by stage">
 	</div>
-	<div id="gantt_here" style='width:100%; height:calc(100vh - 90px);'></div>
+	 <div id="gantt_here" style="width: 100%; height: calc(100vh - 14vh);"></div>
 	</div>
 	</div>
-	
-<script>
-
-function goChat(user_id){
-location.href="chatmemListstart?user_id="+user_id
-}
-</script>
 	<script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function() {
 		gantt.plugins({
 			grouping: true
 		});
 
-        var resourcesStore = gantt
-        .createDatastore({
-           name : gantt.config.resource_store,
-           type : "treeDatastore",
-           initItem : function(item) {
-              item.parent = item.parent
-                    || gantt.config.root_id;
-              item[gantt.config.resource_property] = item.parent;
-              item.open = true;
-              return item;
-           }
-        });
         //gantt.init()
-		gantt.init("gantt_here");
+		
 		// 페이지 로딩될 때 간트 조회
 		ajaxFun("ganttList")
+        
+		/* gantt.attachEvent("onLightbox", function (task_id){
+		    //any custom logic here
+		});
+		
+		// 
+		var taskId = gantt.createTask({
+		    id:10,
+		    text:"Task #5",
+		    start_date:"02-09-2013",
+		    duration:28
+		}, "project_2", 2); */
+		
 		//listFun()
 		
 		/* console.log("데이터 출력");
@@ -229,27 +282,16 @@ location.href="chatmemListstart?user_id="+user_id
 			$.ajax({
 				type:"post",
 				url:url,
-				data:$("form").serialize(),
+				data:{project_id:"${param.project_id}"},
 				dataType:"json",
-				success: function(data) { // data는 이미 배열형태
-                    var rs = [{"id":1,"text":"QA","parent":0},{"id":2,"text":"Development","parent":0},
-                    	{"id":3,"text":"Sales","parent":0},
-                    	{"id":4,"text":"Other","parent":0},{"id":5,"text":"Unassigned","parent":4},
-                    	{"id":6,"text":"John","parent":1},{"id":7,"text":"Mike","parent":2},
-                    	{"id":8,"text":"Anna","parent":2},{"id":9,"text":"Bill","parent":3},
-                    	{"id":10,"text":"홍길동","parent":3},{"id":11,"text":"Floe","parent":3}];
-                    console.log("# 자원 출력 #")
-                    console.log(rs)
-                    resourcesStore.parse(rs);
-                    
-                    console.log("데이터  출력(gantt)");    
-                    data.ganttList[0].owner_id=[7]
-                    console.log(data.ganttList[0]);      
-                    //owner_id=[7]
+				success: function(data) { // data는 이미 배열형태    
+               			
+                    console.log("데이터  출력(gantt)");                    
                     var gdata = {data:data.ganttList}
+                    
                     console.log(gdata)
                     gantt.parse(gdata); 
-                    console.log("### 자원 출력 ###");
+                    
                     //console.log(data.resource)
                     
                     //console.log("데이터 출력");
@@ -258,13 +300,30 @@ location.href="chatmemListstart?user_id="+user_id
                     //console.log(data.resource)
                     
                     //resourcesStore.parse(data.resource);
-                    var rsc = {"user": [
-            			{key:  "M_0003", label: "파힘"},
-            			{key:  "P_0012", label: "김은수"}
-            		]}
+                    var resources = data.resource.map(function(item) {
+                        return {
+                            key: item.id,
+                            label: item.text
+                        };
+                    });
+                    console.log("사용자 리스트")
+                    console.log(resources)                
 
+                    gantt.serverList("user", resources);
                     
-   
+                 	// Gantt 차트 강제 업데이트
+                    gantt.render();
+                 	
+                 	gantt.config.lightbox.sections = [
+            			{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
+            			{name: "priority", height: 22, map_to: "priority", type: "select", options: gantt.serverList("priority")},
+            			{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},
+            			{name: "progress", height: 22, map_to: "progress", type: "select", options: gantt.serverList("progress")},
+            			{name: "background", height: 22, map_to: "background", type: "select", options: gantt.serverList("background")},
+            			{name: "textcolor", height: 22, map_to: "textcolor", type: "select", options: gantt.serverList("textcolor")},
+            			{name: "time", type: "duration", map_to: "auto"}
+            		];
+                    
                     /*
                     var gresource ={
                     		resource:[{"id":1,"text":"QA","parent":0},
@@ -309,17 +368,10 @@ location.href="chatmemListstart?user_id="+user_id
         			]);
                     */
                     
-                    /* var resources = data.resource.map(function(item) {
-                        return {
-                            key: item.id,
-                            label: item.text
-                        };
-                    });
-                    console.log("사용자 리스트")
-                    console.log(resources) */
                     
                     
-                  // gantt.serverList("user", resources);
+                    
+                  
                     
                     
                     
@@ -385,6 +437,15 @@ location.href="chatmemListstart?user_id="+user_id
 			})
 			
 		}
+        
+        
+        gantt.attachEvent("onAfterTaskAdd", function(id, task) {
+            // `ajaxFun` 호출로 데이터 전송
+            ajaxFun("insertGantt");
+        });
+        
+        
+        
        /*
        function listFun(){
         $.ajax({
@@ -550,9 +611,17 @@ location.href="chatmemListstart?user_id="+user_id
 		]);
 		
 		gantt.serverList("progress", [
-			{key: 0, label: "진행전"},
-			{key: 50, label: "진행중"},
-			{key: 100, label: "진행완료"}
+			{key: 0, label: 0},
+			{key: 10, label: 10},
+			{key: 20, label: 20},
+			{key: 30, label: 30},
+			{key: 40, label: 40},
+			{key: 50, label: 50},
+			{key: 60, label: 60},
+			{key: 70, label: 70},
+			{key: 80, label: 80},
+			{key: 90, label: 90},
+			{key: 100, label: 100}
 		]); 
 		// 배경색 리스트
 		gantt.serverList("background", [
@@ -591,14 +660,6 @@ location.href="chatmemListstart?user_id="+user_id
 			}
 		});
 		
-	
-		function byId(list, id) {
-			for (var i = 0; i < list.length; i++) {
-				if (list[i].key == id)
-					return list[i].label || "";
-			}
-			return "";
-		}
 		// 간트 메인 화면 상단 컬럼
 		gantt.config.columns = [
 			{ name: "text", label: "Task name", tree: true, width: '*' },
@@ -607,10 +668,11 @@ location.href="chatmemListstart?user_id="+user_id
 			}},
 			{ name: "owner", width: 80, align: "center", template: function (item) {
 				return byId(gantt.serverList('user'), item.user)
-			}},
+		    }},
 			{ name: "progress", width: 80, align: "center", label: "Progress", width: '*' },
 			{ name: "add", width: 40}
-		];		
+		];
+		
 		// 일정상세 화면에서의 label
 		gantt.config.lightbox.sections = [
 			{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
@@ -620,7 +682,27 @@ location.href="chatmemListstart?user_id="+user_id
 			{name: "background", height: 22, map_to: "background", type: "select", options: gantt.serverList("background")},
 			{name: "textcolor", height: 22, map_to: "textcolor", type: "select", options: gantt.serverList("textcolor")},
 			{name: "time", type: "duration", map_to: "auto"}
+		]; 
+		/*
+		gantt.config.scale_height = 50; // 스케일의 높이 설정
+
+		gantt.config.date_scale = "%Y"; // 연도 표시 형식 설정
+		
+		// 월과 날짜는 하위 스케일로 설정
+		gantt.config.scale_unit = "month"; // 스케일 단위 설정
+		gantt.config.step = 1; // 월 단위 설정
+		
+		gantt.config.subscales = [
+		    {unit: "month", step: 1, date: "%F"},
+		    {unit: "day", step: 1, date: "%d"}
 		];	
+		*/
+		
+		function byId(list, key) {
+		    var item = list.find(x => x.key === key);
+		    return item ? item.label : "";
+		}
+		
 		
 		gantt.templates.grid_row_class =
 			gantt.templates.task_row_class = function (start, end, task) {

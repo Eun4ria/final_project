@@ -9,12 +9,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!DOCTYPE html>
-<%--
-
-
- --%>
-<html>
 <head>
 
 	<meta charset="utf-8">
@@ -57,16 +51,74 @@
 	<link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 <%-- 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
+<script type="text/javascript">
 
+	$(document).ready(function(){
+
+		var msg = "${msg}"
+		if(msg!=""){
+			alert(msg)
+			if(msg!="해당 계정 정보 없습니다"){
+				if(confirm("로그인 화면으로 이동하시겠습니까?")){
+					location.href="signinFrm"
+				}
+			}
+		}
+		
+		$("#pwdBtn").click(function() { 
+			var nameInput = document.querySelector('[name=user_name]');
+	        var name = nameInput.value;
+			var idInput = document.querySelector('[name=user_id]');
+	        var id = idInput.value;
+			var emailInput = document.querySelector('[name=email]');
+	        var email = emailInput.value;
+	        var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;	
+	        
+	        if(name === "") {
+	            alert("이름을 입력하세요");
+	            nameInput.focus();
+	        } else if(id === "") {
+	            alert("ID를 입력하세요");
+	            idInput.focus();
+	        } else if(email === "") {
+	            alert("이메일 주소를 입력하세요");
+	            emailInput.focus();
+	        } else if (!emailPattern.test(email)) {
+	            alert('이메일 형식에 맞지 않습니다');
+	            emailInput.focus();
+	        } else {
+	            $("form").submit()
+	        }	        
+	    });
+		
+	});
+    
+	
+	
+</script>
 </head>
 
 <body class="bg-gray-200">
-
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      <div class="col-12">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg blur border-radius-xl top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+          <div class="container-fluid ps-2 pe-0">
+            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="../pages/dashboard.html">
+              HPM main
+            </a>
+            
+            
+          </div>
+        </nav>
+        <!-- End Navbar -->
+      </div>
+    </div>
+  </div>
   <main class="main-content  mt-0">
-   
     <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
       <span class="mask bg-gradient-dark opacity-6"></span>
-      
       <div class="container my-auto">
         <div class="row">
           <div class="col-lg-4 col-md-8 col-12 mx-auto">
@@ -80,22 +132,22 @@
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start">
+                <form role="form" class="text-start" action="find_pwd" method="post">
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Name</label>
-                    <input type="text" class="form-control">
+                    <input type="text" name="user_name" class="form-control">
                   </div>
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">ID</label>
-                    <input type="text" class="form-control">
+                    <input type="text" name="user_id" class="form-control">
                   </div>
                   <div class="input-group input-group-outline mb-3">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control">
+                    <input type="email" name="email" class="form-control">
                   </div>
                  
                   <div class="text-center">
-                    <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3">Find Password</button>
+                    <button type="button" id="pwdBtn" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3">Find Password</button>
                   </div>
                   <p class="mt-4 text-sm text-center">
                     Are you ready to log in?
