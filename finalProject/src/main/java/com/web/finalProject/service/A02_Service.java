@@ -26,6 +26,17 @@ public class A02_Service {
 	private A02_Dao dao;
 	@Autowired(required=false)
 	private JavaMailSender sender;
+	
+	// 로그인
+   public int loginCk(Users user) {
+      return dao.loginCk(user); 
+   } 
+   public String loginCkMsg(Users user) {
+      return dao.loginCk(user)>0?"로그인 성공":"로그인 정보가 일치하지 않습니다"; 
+   }
+   public Users login(Users user) {
+      return dao.login(user);
+   }
 
 	// 회원가입
 	// 등록하고 메일이 같이 발송되게

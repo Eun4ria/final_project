@@ -55,7 +55,7 @@
 
 <body>
 	<div class="wrapper">
-	<jsp:include page="a00_sideBar.jsp"/> 
+	<jsp:include page="a00_main_side.jsp"/> 
 	<%-- <nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
 				<a class="sidebar-brand" href="index.html">

@@ -44,7 +44,10 @@
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-	
+		$("#pmGantt").hide()
+		if("${sessionScope.role_code}"=="P"){
+			$("#pmGantt").show()
+		}
 	});
 </script>
 </head>
@@ -63,36 +66,37 @@
                 사용자
             </li>
 
-            <li class="sidebar-item ${currentUrl == '/main' ? 'active' : ''}">
-                <a class="sidebar-link" href="main">
+            <li class="sidebar-item ${currentUrl == '/dashpmFrm' ? 'active' : ''}">
+                <a class="sidebar-link" onclick="goPage('dashpmFrm')">
                     <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
                 </a>
             </li>
-
+			<%--
             <li class="sidebar-item ${currentUrl == '/profile' ? 'active' : ''}">
                 <a class="sidebar-link" href="profile">
                     <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
                 </a>
             </li>
- 
-            <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
-                <a class="sidebar-link" href="fullcalendar">
+ 			 --%>
+	    		<li id="pmGantt" class="sidebar-item ${currentUrl == '/gantt' ? 'active' : ''}">
+                <a class="sidebar-link" onclick="goPage('gantt')">
+                    <i class="align-middle" data-feather="list"></i> <span class="align-middle">Gantt</span>
+                </a>
+            	</li>			
+            <li class="sidebar-item ${currentUrl == '/fullcalendar' ? 'active' : ''}">
+                <a class="sidebar-link" onclick="goPage('fullcalendar')">
                     <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Calendar</span>
                 </a>
             </li>
-            <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
-                <a class="sidebar-link" href="sign-in">
-                    <i class="align-middle" data-feather="list"></i> <span class="align-middle">ToDoList</span>
-                </a>
-            </li>
-            <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
-                <a class="sidebar-link" href="sign-in">
+            
+            <li class="sidebar-item ${currentUrl == '/chart' ? 'active' : ''}">
+                <a class="sidebar-link" onclick="goPage('chart')">
                     <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle">Chart</span>
                 </a>
             </li>
 
-            <li class="sidebar-item ${currentUrl == '/sign_up' ? 'active' : ''}">
-                <a class="sidebar-link" href="sign-up">
+            <li class="sidebar-item ${currentUrl == '/board' ? 'active' : ''}">
+                <a class="sidebar-link" onclick="goPage('board')">
                     <i class="align-middle" data-feather="command"></i> <span class="align-middle">Board</span>
                 </a>
             </li>
@@ -101,12 +105,12 @@
 
 				<div class="sidebar-cta">
 					<div class="sidebar-cta-content">
-						<strong class="d-inline-block mb-2">Upgrade to Pro</strong>
+						<strong class="d-inline-block mb-2">About Us</strong>
 						<div class="mb-3 text-sm">
-							Are you looking for more components? Check out our premium version.
+							Want to learn more about us? Click the button below to find out!
 						</div>
 						<div class="d-grid">
-							<a href="upgrade-to-pro.html" class="btn btn-primary">Upgrade to Pro</a>
+							<a href="upgrade-to-pro.html" class="btn btn-primary">GIT Link</a>
 						</div>
 					</div>
 				</div>
@@ -114,5 +118,11 @@
 		</nav> 
 
 		<script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
+		<script>
+		var project_id="${sessionScope.project_id}"
+		function goPage(url){
+			location.href=url+"?project_id="+project_id
+		}
+		</script>
 </body>
 </html>
