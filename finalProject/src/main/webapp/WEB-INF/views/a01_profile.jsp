@@ -13,26 +13,44 @@
  --%>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
-<link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
-	<meta name="author" content="AdminKit">
-	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+   <meta name="author" content="AdminKit">
+   <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+<!-- jQuery 추가 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<%-- material link --%>
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <link rel="apple-touch-icon" sizes="85x85" href="${path}/material-dashboard-2/assets/img/HPM-icon.png">
+     <link rel="icon" sizes="85x85" type="image/png" href="${path}/material-dashboard-2/assets/img/HPM-icon.png">
+    <!--     Fonts and icons     
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  -->
+  <!-- Nucleo Icons -->
+  <link href="${path}/material-dashboard-2/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="${path}/material-dashboard-2/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons   -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link rel="shortcut icon" href="${path}/adminkit-3.1.0/static/img/icons/icon-48x48.png" />
+  <!-- Material Icons 
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+ -->
+  <!-- CSS Files -->
+  
+  <link id="pagestyle" href="${path}/material-dashboard-2/assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+   
+<%--다시 adminkit --%>
 
-	<link rel="canonical" href="https://demo-basic.adminkit.io/pages-profile.html" />
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link rel="shortcut icon" href="${path}/adminkit-3.1.0/img/icons/icon-48x48.png" />
+   <link rel="canonical" href="https://demo-basic.adminkit.io/" />
+   
+   <title>HPM-Project Manager System</title>
 
-	<title>Profile | AdminKit Demo</title>
+   <link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 
-	<link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -290,7 +308,7 @@
               </a>
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                <img src="${path}/adminkit-3.1.0/static/img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">Charles Hall</span>
+                 <img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> <span class="text-dark">Welcome, ${user_name}</span>
               </a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
@@ -322,8 +340,8 @@
 									<h5 class="card-title mb-0">Profile Details</h5>
 								</div>
 								<div class="card-body text-center">
-									<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-4.jpg" alt="Christina Mason" class="img-fluid rounded-circle mb-2" width="128" height="128" />
-									<h5 class="card-title mb-0">Christina Mason</h5>
+									<img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> <br>
+									<p class="text-dark">${user_name}</p>
 									<div class="text-muted mb-2">Lead Developer</div>
 
 									<div>
