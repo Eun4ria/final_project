@@ -226,24 +226,7 @@
 
            
             }else if(empcnt === 1){
-            	 if (name === '') {
-                     alert('이름을 입력해 주세요.');
-                     event.preventDefault(); // 폼 제출 방지
-                 }
-                 if (password === '') {
-                     alert('비밀번호를 입력해 주세요.');
-                     event.preventDefault(); // 폼 제출 방지
-                 }
-                 if (email === '') {
-                     alert('이메일을 입력해 주세요.');
-                     event.preventDefault(); // 폼 제출 방지
-                 }
-                 if (CompanyId === '') {
-                     alert('회사아이디를 입력해 주세요.');
-                     event.preventDefault(); // 폼 제출 방지
-                 }
-            
-            }else {
+            	
 				alert('모든 정보를 입력해주세요');
 				isValid = false;
 				if (!isValid) {

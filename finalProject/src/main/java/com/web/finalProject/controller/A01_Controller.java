@@ -160,6 +160,7 @@ public class A01_Controller {
 	    return "WEB-INF\\views\\a00_main.jsp";
 	}  
     
+//비밀번호 찾기
     // http://localhost:4040/find_pwd
     @GetMapping("find_pwd")
     public String find_pwd() {
