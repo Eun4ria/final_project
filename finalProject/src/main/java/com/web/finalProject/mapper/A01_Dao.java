@@ -2,12 +2,14 @@ package com.web.finalProject.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.web.finalProject.vo.Calendar;
 import com.web.finalProject.vo.GanttTask;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Users;
@@ -60,9 +62,28 @@ public interface A01_Dao {
 	List<Users> getTeam(@Param("project_id") String project_id);
 	
 	// 간트에서 task 등록
-	@Insert("INSERT INTO task (task_id, task_name, start_date, end_date, priority, progress, backgroundcolor, textcolor, user_id, project_id)\r\n"
-			+ "VALUES ('TSK_' || TO_CHAR(task_seq.nextval, 'FM0000'),#{text},#{start_date},(#{start_date} + INTERVAL '1' DAY * #{duration}),#{priority},#{progress},#{color},#{textcolor},#{user},#{project_id})")
+	@Insert("INSERT INTO task (task_id, task_name, start_date, end_date, parent_id, priority, progress, backgroundcolor, textcolor, user_id, project_id)\r\n"
+			+ "VALUES ('TSK_' || TO_CHAR(task_seq.nextval, 'FM0000'),#{text},#{start_date},(#{start_date} + INTERVAL '1' DAY * #{duration}),#{parent},#{priority},#{progress},#{color},#{textcolor},#{user},#{project_id})")
 	int insertGantt(GanttTask ins);
+	
+	// 간트에서 task 수정
+	@Update("UPDATE task " +
+	        "SET task_name = #{text}, " +
+	        "    start_date = #{start_date}, " +
+	        "    end_date = (#{start_date} + INTERVAL '1' DAY * #{duration}), " +
+	        "    parent_id = #{parent}, " +
+	        "    priority = #{priority}, " +
+	        "    progress = #{progress}, " +
+	        "    backgroundcolor = #{color}, " +
+	        "    textcolor = #{textcolor}, " +
+	        "    user_id = #{user}, " +
+	        "    project_id = #{project_id} " +
+	        "WHERE task_id = #{id}")
+	int updateGantt(GanttTask upt);
+	
+	// 간트에서 task 삭제
+	@Delete("DELETE FROM task WHERE task_id=#{id} or parent_id=#{id}")
+	int deleteGantt(@Param("id") String task_id);
 	
 	
 	
@@ -114,6 +135,18 @@ public interface A01_Dao {
 			+ "    p.project_name")
 	List<Project> getProjectList(@Param("user_id") String user_id);
 	
+	
+	
+	// 캘린더
+	@Select("SELECT\r\n"
+			+ "task_id AS id,\r\n"
+			+ "task_name AS title,\r\n"
+			+ "start_date AS \"start\",\r\n"
+			+ "end_date AS \"end\",\r\n"
+			+ "backgroundcolor AS backgroundColor,\r\n"
+			+ "textcolor AS textColor\r\n"
+			+ "FROM task")
+	List<Calendar> getCalendarList();
 	
 	
 	
