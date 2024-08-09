@@ -281,27 +281,11 @@
 	background-color:hsla(240,15%,30%,0.2);
 }
 	</style>
-<script type="text/javascript">
-$(document).ready(function(){
-	$('#action_menu_btn').click(function(){
-		$('.action_menu').toggle();
-	});
 
-});
-</script>
 
 	</head>
 
-	<!--Coded With Love By Mutiullah Samim
 	
-	<c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
-    <script>
-        alert("로그인이 필요한 서비스입니다");
-        location.href = 'signinFrm';
-    </script>
-</c:if>
-
--->
 <body> 
 
 		<div class="container-fluid h-100">
@@ -325,12 +309,14 @@ $(document).ready(function(){
 							  <button type="button" id="memList" class="active" onclick="showMem()">팀원</button>
                               <button type="button" id="chatList" onclick="showChatRoom()">채팅</button></div>
 						</div>
+						<%-- 채팅 생성 모달 --%>
+			<button class="btn" data-toggle="modal" data-target="#ModalCenter" type="button">채팅방 만들기</button>
 <!-- 채팅 왼쪽 리스트 -->
 <div class="card-body contacts_body scrollbar">
 					    	<c:forEach var="mem" items="${memList}" varStatus="status">	
 					    	
 					    	
-							<div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${mem.user_id}')" style="padding-top:0.5rem;height:4rem">
+							<div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="openModal'${mem.user_id}')" style="padding-top:0.5rem;height:4rem">
 								<div class="img_cont" style="padding-left:1rem">
 									<img src="${mem.image }" class="rounded-circle user_img" style="width:3rem; height:3rem; ">	
 								</div>
@@ -343,15 +329,49 @@ $(document).ready(function(){
 						
 					    	</c:forEach>
 					    	
-					    
-					
-						
-	<script type="text/javascript">
-		function goDetail(user_id){
-			location.href="message?chat_id=CHT_0021"
-		}
-	</script>  
-						
+
+			
+			
+<%-- 모달 폼 --%>
+   <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true" style="background-color:#e0d0f0">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLongTitle">Create ChatRoom</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color:#e0d0f0">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form id="modalFrm" class="form"  method="post" action="insertChatRoom">
+      <input type="hidden" name="owner_id" value="${sessionScope.user_id }"/>
+      <input type="hidden" name="project_id" value="${sessionScope.project_id }"/>
+        <div class="row">
+         <div class="col">    
+         <span>Invited Member</span>              
+           <input type="text" class="form-control" name="user_id" value="${mem.user_id }">
+         </div>
+        </div>
+        <div class="row">
+         <div class="col">
+         <span>ChatRoom Name</span>
+           <input type="date" class="form-control" placeholder="채팅방 이름" name="chatroom_name" >
+         </div>
+        </div>
+         
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" id="regBtn" class="btn btn-success">regist</button>        
+      </div>   
+       </form> 
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<%-- 모달 끝 --%>
+	
 	
 	</div>	</div></div>
 <!-- 오른쪽 채팅 창
@@ -423,9 +443,9 @@ $(document).ready(function(){
 	<div class="card-body">
 
 	<div class="input-group mb-3">	
- 	현재사람:<input id="curName" value="${user_id }" />
+ 	현재사람:<input id="curName" value="${owner_id }" />
 	
- 	받을사람:<input id="name"  /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
+ 	받을사람:<input id="name" value="${user_id }" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
  	</div>
  	<div  id="show"></div>
  <%-- 
@@ -464,42 +484,81 @@ $(document).ready(function(){
 </div>
 </div>
 </div>
+<%-- 모달 스크립트--%>					
+<script type="text/javascript">
+	function openModal(user_id) {
+		// 사용자 ID를 프로젝트 생성 폼에 저장하거나 필요한 처리를 추가할 수 있습니다.
+		document.getElementById('ModalCenter').modal('show');
+	}
 
-    <script type="text/javascript">
-var socket = new SockJS('/ws');
-var stompClient = Stomp.over(socket);
+	function handleProjectSubmit(event) {
+		event.preventDefault(); // 기본 폼 제출 동작 방지
 
-stompClient.connect({}, function(frame) {
-    console.log('Connected: ' + frame);
-    stompClient.subscribe('/topic/greetings', function(greeting){
-        //console.log(greeting);
-        console.log(greeting.body);
-        console.log(JSON.parse(greeting.body).content);
-        var obj = JSON.parse(greeting.body);
-        var curName = document.getElementById('curName').value;
-        console.log("## 받은 메시지 ##")
-        console.log(obj.msg)
-        console.log("## 받은 이름 ##")
-        console.log(obj.name)
-        
-        
-        if(curName!=obj.name)
-        	document.querySelector("#show").innerHTML += obj.name+":"+obj.msg+"<br>"
-        //document.querySelector("#show").innerHTML = JSON.parse(greeting.body).content+"<br>"
+		// 폼 데이터 전송
+		var form = document.getElementById('modalFrm');
+		var formData = new FormData(form);
 
-    });
-});
-
-
-function sendName() {
+		fetch('insertChatRoom', {
+			method: 'GET',
+			body: formData
+		})
+		.then(response => {
+			if (response.ok) {
+				// 프로젝트 생성 성공 후 채팅방으로 이동
+				window.location.href = "message?chatroom_id="=chatroom_id;
+			} else {
+				// 에러 처리
+				alert('채팅방 생성에 실패했습니다.');
+			}
+		})
+		.catch(error => {
+			console.error('Error:', error);
+			alert('채팅방 생성 중 오류가 발생했습니다.');
+		});
+	}
 	
-    var name = document.getElementById('curName').value;
-    var msg = document.getElementById('msg').value;
-    document.querySelector("#show").innerHTML += "나:"+msg+"<br>"
-    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg':msg}));
-}
-</script>   	
-<%-- 
+	var socket = new SockJS('/ws');
+	var stompClient = Stomp.over(socket);
+
+	stompClient.connect({}, function(frame) {
+	    console.log('Connected: ' + frame);
+	    stompClient.subscribe('/topic/greetings', function(greeting){
+	        //console.log(greeting);
+	        console.log(greeting.body);
+	        console.log(JSON.parse(greeting.body).content);
+	        var obj = JSON.parse(greeting.body);
+	        var curName = document.getElementById('curName').value;
+	        console.log("## 받은 메시지 ##")
+	        console.log(obj.msg)
+	        console.log("## 받은 이름 ##")
+	        console.log(obj.name)
+	        
+	        
+	        if(curName!=obj.name)
+	        	document.querySelector("#show").innerHTML += obj.name+":"+obj.msg+"<br>"
+	        //document.querySelector("#show").innerHTML = JSON.parse(greeting.body).content+"<br>"
+
+	    });
+	});
+	function sendName() {
+		
+	    var name = document.getElementById('curName').value;
+	    var msg = document.getElementById('msg').value;
+	    document.querySelector("#show").innerHTML += "나:"+msg+"<br>"
+	    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg':msg}));
+	}
+</script>
+					
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#action_menu_btn').click(function(){
+		$('.action_menu').toggle();
+	});
+
+});
+</script>
+    	
+
 <script style="text/javascript">
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('memList').classList.add('active');
@@ -518,6 +577,6 @@ function showChatRoom() {
     loadChatList();
 }
 
-</script>--%>
+</script>
 	</body>
 </html>

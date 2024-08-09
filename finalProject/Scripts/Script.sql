@@ -1,10 +1,10 @@
 SELECT * FROM users;
 
 DELETE users
-WHERE user_id='N_0057';
+WHERE user_id='N_0047';
 
 SELECT * FROM PROJECT;
-
+SELECT * FROM COMPANY c;
 SELECT * FROM chat;
 
 SELECT * FROM task;

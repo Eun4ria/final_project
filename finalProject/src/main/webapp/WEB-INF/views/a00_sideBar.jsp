@@ -45,8 +45,10 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#pmGantt").hide()
+		$("#Output").hide()
 		if("${sessionScope.role_code}"=="P"){
 			$("#pmGantt").show()
+			$("#Output").show()
 		}
 	});
 </script>
@@ -71,16 +73,16 @@
                     <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
                 </a>
             </li>
-			<%--
+			
             <li class="sidebar-item ${currentUrl == '/profile' ? 'active' : ''}">
                 <a class="sidebar-link" href="profile">
-                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+                    <i class="align-middle" data-feather="list"></i> <span class="align-middle">To Do List</span>
                 </a>
             </li>
- 			 --%>
+ 			 
 	    		<li id="pmGantt" class="sidebar-item ${currentUrl == '/gantt' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('gantt')">
-                    <i class="align-middle" data-feather="list"></i> <span class="align-middle">Gantt</span>
+                    <i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Gantt</span>
                 </a>
             	</li>			
             <li class="sidebar-item ${currentUrl == '/fullcalendar' ? 'active' : ''}">
@@ -95,9 +97,9 @@
                 </a>
             </li>
 
-            <li class="sidebar-item ${currentUrl == '/board' ? 'active' : ''}">
-                <a class="sidebar-link" onclick="goPage('board')">
-                    <i class="align-middle" data-feather="command"></i> <span class="align-middle">Board</span>
+            <li id="Output" class="sidebar-item ${currentUrl == '/Deliverables' ? 'active' : ''}">
+                <a class="sidebar-link" onclick="goPage('Deliverables')">
+                    <i class="align-middle" data-feather="command"></i> <span class="align-middle">Deliverables M</span>
                 </a>
             </li>
 
@@ -110,7 +112,7 @@
 							Want to learn more about us? Click the button below to find out!
 						</div>
 						<div class="d-grid">
-							<a href="upgrade-to-pro.html" class="btn btn-primary">GIT Link</a>
+							<a href="board" class="btn btn-primary">Board</a>
 						</div>
 					</div>
 				</div>

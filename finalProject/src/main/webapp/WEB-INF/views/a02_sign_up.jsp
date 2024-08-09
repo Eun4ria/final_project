@@ -80,7 +80,7 @@
 		
 		var msg = "${msg}";
 		if (msg !== "") {
-			alert(msg);
+			alert(msg + "\n아이디가 이메일로 발송되었습니다.");
 			if (msg === "등록 성공") {
 				location.href = "signinFrm";
 				//location.href = "regEmpTmp";

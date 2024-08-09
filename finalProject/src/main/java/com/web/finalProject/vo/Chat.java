@@ -17,8 +17,8 @@ public class Chat {
     private String owner_id;
     private String chatmem_id;
     private String ban_status;
-    private Date ban_Date;
-    private Date uptDate;
+    private Date ban_date;
+    private Date uptdate;
     private String project_id;
 	/**
 	 * 
@@ -43,7 +43,7 @@ public class Chat {
 	 * @param project_id
 	 */
 	public Chat(int cnt, int level, String user_id, String user_name, String email, String chatroom_id,
-			String chatroom_name, String owner_id, String chatmem_id, String ban_status, Date ban_Date, Date uptDate,
+			String chatroom_name, String owner_id, String chatmem_id, String ban_status, Date ban_date, Date uptdate,
 			String project_id) {
 		super();
 		this.cnt = cnt;
@@ -56,8 +56,8 @@ public class Chat {
 		this.owner_id = owner_id;
 		this.chatmem_id = chatmem_id;
 		this.ban_status = ban_status;
-		this.ban_Date = ban_Date;
-		this.uptDate = uptDate;
+		this.ban_date = ban_date;
+		this.uptdate = uptdate;
 		this.project_id = project_id;
 	}
 	public int getCnt() {
@@ -120,17 +120,17 @@ public class Chat {
 	public void setBan_status(String ban_status) {
 		this.ban_status = ban_status;
 	}
-	public Date getBan_Date() {
-		return ban_Date;
+	public Date getBan_date() {
+		return ban_date;
 	}
-	public void setBan_Date(Date ban_Date) {
-		this.ban_Date = ban_Date;
+	public void setBan_date(Date ban_date) {
+		this.ban_date = ban_date;
 	}
-	public Date getUptDate() {
-		return uptDate;
+	public Date getUptdate() {
+		return uptdate;
 	}
-	public void setUptDate(Date uptDate) {
-		this.uptDate = uptDate;
+	public void setUptdate(Date uptdate) {
+		this.uptdate = uptdate;
 	}
 	public String getProject_id() {
 		return project_id;
@@ -138,6 +138,7 @@ public class Chat {
 	public void setProject_id(String project_id) {
 		this.project_id = project_id;
 	}
+	
 	
 	
     

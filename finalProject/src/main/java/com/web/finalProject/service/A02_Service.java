@@ -31,9 +31,6 @@ public class A02_Service {
    public int loginCk(Users user) {
       return dao.loginCk(user); 
    } 
-   public String loginCkMsg(Users user) {
-      return dao.loginCk(user)>0?"로그인 성공":"로그인 정보가 일치하지 않습니다"; 
-   }
    public Users login(Users user) {
       return dao.login(user);
    }
@@ -125,14 +122,21 @@ public class A02_Service {
 			if(sch.getUser_id()==null) sch.setUser_id("");
 			return dao.getMemList(sch);
 		}
-		public Chat chat(Chat chat) {
-			return dao.chat(chat);
-		}
+//		public Chat chat(Chat chat) {
+//			return dao.chat(chat);
+//		}
+	// 채팅방 유무 확인 
+		 public int chatroomCk(Chat ch) {
+		      return dao.chatroomCk(ch); 
+		   } 
+		 // 채팅방 아이디 가져오기
+		 public String getchatRoomId(Chat get) {
+			 return dao.getchatRoomId(get); 
+		 } 
 	//채팅 등록
 		public String insertchatroom(Chat ins) {
-			String msg = null;
-			msg = dao.insertchatroom(ins)>0?"채팅방 생성": "생성 실패";
-			return msg;
+			
+			return dao.insertchatroom(ins)>0?"생성 완료":"생성 실패";
 		}
 	
 }

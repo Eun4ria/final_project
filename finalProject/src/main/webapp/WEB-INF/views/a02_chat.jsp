@@ -357,11 +357,7 @@ $(document).ready(function(){
 					    
 					
 						
-	<script type="text/javascript">
-		function goDetail(user_id){
-			location.href="insertChatRoom"
-		}
-	</script>  
+	
 						
 	
 	</div>	</div></div>
@@ -417,26 +413,16 @@ $(document).ready(function(){
 						</div>
 	<script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
-   
+  
+  
 <c:choose>	
-<c:when test="${sessionScope.chatroom_id == null || sessionScope.chatroom_id == ''}">	
+<c:when test="${chatroomId == null || chatroomId == ''}">	
 		<div class="card-body">
 
- 	</div>	
- 
-	<div class="card-footer">
-			
-	</div>	
-
-	</c:when>	
-	<c:otherwise>
-	
-	<div class="card-body">
-
 	<div class="input-group mb-3">	
- 	현재사람:<input id="curName" value="${sessionScope.user_id }" />
+ 	현재사람:<input id="curName" value="${sessionScope.user_id}" />
 	
- 	받을사람:<input id="name" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
+ 	받을사람:<input id="name" value="${user_id}" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
  	</div>
  	<div  id="show"></div>
  <%-- 
@@ -469,6 +455,18 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>	
+
+	</c:when>	
+	<c:otherwise>
+	<div class="card-body">
+
+ 	</div>	
+ 
+	<div class="card-footer">
+			
+	</div>	
+	
+	
 	</c:otherwise>
  </c:choose>	
 </div>
@@ -479,6 +477,39 @@ $(document).ready(function(){
 
 </div>
 </div>
+<script type="text/javascript">
+		function goDetail(user_id){
+			var sessionUserId = '${sessionScope.user_id}'; // 로그인한 사용자 데이터
+			var sessionProId = '${sessionScope.project_id}'; // 로그인한 사용자 데이터
+			$.ajax({
+		        url: 'checkChatRoom', 
+		        method: 'POST', 
+		        dataType:'json', // 전송할 데이터 형식
+		        data: {
+		            user_id: user_id, // 서버로 전송할 데이터
+		            owner_id: sessionUserId, // 서버로 전송할 데이터
+		            project_id: sessionProId // 서버로 전송할 데이터
+		        },
+		        success: function(data) {
+
+		        	console.log(data.msg)
+		            // 서버에서 응답을 성공적으로 받았을 때 처리
+		            if (data.msg=="생성 완료") {
+		               
+		                location.href = 'message?chatroom_id=' + data.chatroomId +'&user_id='+user_id;
+		            } else {
+		                alert('채팅방 정보를 가져오는 데 실패했습니다.');
+		            }
+		        },
+		        error: function(err) {
+		            // 요청이 실패했을 때 처리
+		            console.log('AJAX 요청 실패');
+		            console.log(err);
+		            alert('채팅방 정보를 가져오는 중 오류가 발생했습니다.');
+		        }
+		    });
+		}
+	</script>  
 
     <script type="text/javascript">
 var socket = new SockJS('/ws');
