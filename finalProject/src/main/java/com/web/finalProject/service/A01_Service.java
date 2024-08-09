@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.web.finalProject.mapper.A01_Dao;
 import com.web.finalProject.util.Util;
+import com.web.finalProject.vo.Calendar;
 import com.web.finalProject.vo.GanttTask;
-import com.web.finalProject.vo.MailVo;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Users;
 
@@ -38,6 +38,12 @@ public class A01_Service {
     }
     public String insertGantt(GanttTask ins) {
     	return dao.insertGantt(ins)>0?"생성 완료":"생성 실패";
+    }
+    public String updateGantt(GanttTask upt) {
+    	return dao.updateGantt(upt)>0?"수정 완료":"수정 실패";
+    }
+    public String deleteGantt(String task_id) {
+    	return dao.deleteGantt(task_id)>0?"삭제 완료":"삭제 실패";
     }
     
     
@@ -76,7 +82,7 @@ public class A01_Service {
 		try {
 			String tempPwd = Util.mkTPwd();
 			System.out.println("생성된 임시 비밀번호"+tempPwd);			
-			mmsg.setSubject(user.getUser_name()+"님의 임시 비밀번호 발송 메일입니다");
+			mmsg.setSubject(user.getUser_name()+"님의 임시 비밀번호입니다.");
 			mmsg.setRecipient(RecipientType.TO, new InternetAddress(user.getEmail()));
 			String content = user.getUser_name()+"님의 임시 비밀번호는 "+tempPwd+" 입니다.\r\n"
 					+ "빠른 시일 내 비밀번호를 변경해주세요 \r\n"
@@ -101,6 +107,11 @@ public class A01_Service {
 		return msg;
 	}
     
+	
+	// 캘린더
+	public List<Calendar> getCalendarList(){
+		return dao.getCalendarList();
+	}
 	
 	
 	

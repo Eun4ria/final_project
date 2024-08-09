@@ -3,18 +3,16 @@ package com.web.finalProject.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.finalProject.service.A01_Service;
-import com.web.finalProject.util.Util;
+import com.web.finalProject.vo.Calendar;
 import com.web.finalProject.vo.GanttTask;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Users;
@@ -63,13 +61,7 @@ public class A01_Controller {
 		d.addAttribute("currentUrl", request.getRequestURI());
         return "WEB-INF\\views\\a02_chart.jsp";
     }
-    
-	// http://localhost:4040/fullcalendar
-	@GetMapping("fullcalendar")
-    public String fullcalendar(HttpServletRequest request, Model d) {
-		d.addAttribute("currentUrl", request.getRequestURI());
-        return "WEB-INF\\views\\a01_fullcalendar.jsp";
-    }
+   
 	// http://localhost:4040/board
 	@GetMapping("board")
     public String board(HttpServletRequest request, Model d) {
@@ -119,22 +111,28 @@ public class A01_Controller {
 		return ResponseEntity.ok(new Gantt(
 					service.getGantt(project_id),
 					service.getTeam(project_id)));
-	}
-	/*
-	// 간트 등록
+	}	
 	@PostMapping("insertGantt")
-	public ResponseEntity<?> insertGantt(GanttTask ins, Model d) {
-		System.out.println("생성된 project_id:"+ins.getProject_id());
-		return ResponseEntity.ok(new msgList(
-					service.insertGantt(ins),
-					service.getGantt(ins.getProject_id())));
+	public ResponseEntity<?> insertGantt(GanttTask ins) {
+		System.out.println("생성된 task명:"+ins.getText());
+		System.out.println("getParent:"+ins.getParent());
+		return ResponseEntity.ok(new TaskList(
+				service.insertGantt(ins),
+				service.getGantt(ins.getProject_id())));
 	}
-	*/
-	@PostMapping("insertGantt")
-	public String insertGantt(GanttTask ins, Model d) {
-		System.out.println("생성할 task의 project_id:"+ins.getProject_id());
-		d.addAttribute("msg", service.insertGantt(ins));
-		return "WEB-INF\\views\\a01_ganttChart.jsp";
+	@PostMapping("updateGantt")
+	public ResponseEntity<?> updateGantt(GanttTask upt) {
+		System.out.println("수정할 task명:"+upt.getText());
+		return ResponseEntity.ok(new TaskList(
+				service.updateGantt(upt),
+				service.getGantt(upt.getProject_id())));
+	}
+	@PostMapping("deleteGantt")
+	public ResponseEntity<?> deleteGantt(@RequestParam("id") String task_id) {
+		System.out.println("삭제할 task id:"+task_id);
+		return ResponseEntity.ok(new TaskList(
+				service.deleteGantt(task_id),
+				service.getGantt(task_id)));
 	}
 	
 	
@@ -160,7 +158,7 @@ public class A01_Controller {
 	    return "WEB-INF\\views\\a00_main.jsp";
 	}  
     
-//비밀번호 찾기
+	//비밀번호 찾기
     // http://localhost:4040/find_pwd
     @GetMapping("find_pwd")
     public String find_pwd() {
@@ -177,6 +175,23 @@ public class A01_Controller {
         }
         return "WEB-INF\\views\\a01_find_pwd.jsp";
     }
+    
+    
+    // 캘린더
+    // http://localhost:4040/fullcalendar
+ 	@GetMapping("fullcalendar")
+	public String fullcalendar(HttpServletRequest request, Model d) {
+		d.addAttribute("currentUrl", request.getRequestURI());
+	    return "WEB-INF\\views\\a01_fullcalendar.jsp";
+	}
+
+ 	// http://localhost:3030/calList 
+ 	@GetMapping("calList")
+ 	public ResponseEntity<List<Calendar>> getCalList(){
+ 	
+ 		return ResponseEntity.ok(service.getCalendarList());
+ 	}
+
     
     
     
@@ -212,14 +227,14 @@ class Gantt{
 	}
 	
 }
-class msgList{
+class TaskList{
 	private String msg;
 	private List<GanttTask> ganttList;
-	public msgList() {
+	public TaskList() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public msgList(String msg, List<GanttTask> ganttList) {
+	public TaskList(String msg, List<GanttTask> ganttList) {
 		super();
 		this.msg = msg;
 		this.ganttList = ganttList;
@@ -235,6 +250,33 @@ class msgList{
 	}
 	public void setGanttList(List<GanttTask> ganttList) {
 		this.ganttList = ganttList;
+	}
+	
+}
+
+class CalList{
+	private String msg;
+	private List<Calendar> calList;
+	public CalList() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public CalList(String msg, List<Calendar> calList) {
+		super();
+		this.msg = msg;
+		this.calList = calList;
+	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+	public List<Calendar> getCalList() {
+		return calList;
+	}
+	public void setCalList(List<Calendar> calList) {
+		this.calList = calList;
 	}
 	
 }

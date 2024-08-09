@@ -203,3 +203,52 @@ SELECT * FROM task;
 INSERT INTO task (task_id, task_name, start_date, end_date, priority, progress, backgroundcolor, textcolor, user_id, project_id)
 VALUES ('TSK_' || TO_CHAR(task_seq.nextval, 'FM0000'),'테스트용 테스크2',TO_DATE('2024-07-01', 'YYYY-MM-DD'),TO_DATE('2024-07-01', 'YYYY-MM-DD') + 5,'상',50,'red','white','P_0001','PRO_0000');
 
+DELETE FROM task WHERE task_id='TSK_0037';
+
+UPDATE task
+SET
+    task_name = '테스트용 테스크2',
+    start_date = TO_DATE('2024-07-01', 'YYYY-MM-DD'),
+    end_date = TO_DATE('2024-07-01', 'YYYY-MM-DD') + 5,
+    parent_id=null,
+    priority = '상',
+    progress = 50,
+    backgroundcolor = 'red',
+    textcolor = 'white',
+    user_id = 'P_0001',
+    project_id = 'PRO_0000'
+WHERE
+    task_id = #{id};
+   SELECT * FROM task;
+
+SELECT * FROM task;
+
+
+-- 캘린더
+SELECT
+task_id AS id,
+task_name AS title,
+start_date AS "start",
+end_date AS "end",
+backgroundcolor AS backgroundColor,
+textcolor AS textColor
+FROM task;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

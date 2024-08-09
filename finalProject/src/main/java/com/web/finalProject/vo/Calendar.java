@@ -3,34 +3,34 @@ package com.web.finalProject.vo;
 public class Calendar {
 	private String id;
 	private String title;
-	private String writer;
+	private String user;
 	private String start;
 	private String end;
 	private String content;
 	private String backgroundColor;
 	private String textColor;
-	private boolean allDay;
 	private String urlLink;
 	
 	public Calendar() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 
-	public Calendar(String id, String title, String writer, String start, String end, String content,
-			String backgroundColor, String textColor, boolean allDay, String urlLink) {
+	public Calendar(String id, String title, String user, String start, String end, String content,
+			String backgroundColor, String textColor, String urlLink) {
 		super();
 		this.id = id;
 		this.title = title;
-		this.writer = writer;
+		this.user = user;
 		this.start = start;
 		this.end = end;
 		this.content = content;
 		this.backgroundColor = backgroundColor;
 		this.textColor = textColor;
-		this.allDay = allDay;
 		this.urlLink = urlLink;
 	}
+
 
 	public String getId() {
 		return id;
@@ -48,12 +48,12 @@ public class Calendar {
 		this.title = title;
 	}
 
-	public String getWriter() {
-		return writer;
+	public String getUser() {
+		return user;
 	}
 
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 	public String getStart() {
@@ -94,14 +94,6 @@ public class Calendar {
 
 	public void setTextColor(String textColor) {
 		this.textColor = textColor;
-	}
-
-	public boolean isAllDay() {
-		return allDay;
-	}
-
-	public void setAllDay(boolean allDay) {
-		this.allDay = allDay;
 	}
 
 	public String getUrlLink() {
