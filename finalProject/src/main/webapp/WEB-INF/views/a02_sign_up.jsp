@@ -230,7 +230,6 @@
                      alert('이름을 입력해 주세요.');
                      event.preventDefault(); // 폼 제출 방지
                  }
-                 
                  if (password === '') {
                      alert('비밀번호를 입력해 주세요.');
                      event.preventDefault(); // 폼 제출 방지
@@ -239,7 +238,6 @@
                      alert('이메일을 입력해 주세요.');
                      event.preventDefault(); // 폼 제출 방지
                  }
-                 
                  if (CompanyId === '') {
                      alert('회사아이디를 입력해 주세요.');
                      event.preventDefault(); // 폼 제출 방지
