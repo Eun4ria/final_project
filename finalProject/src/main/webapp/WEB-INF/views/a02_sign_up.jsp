@@ -146,7 +146,7 @@
                     data: { email: email },
                     success: function(response) {
                         if (response.exists) {
-                            emailMessage.textContent = '이 이메일 주소는 이미 사용 중입니다';
+                            emailMessage.textContent = '이미 사용중인 이메일입니다';
                             emailMessage.className = 'email-message error'; // 실패 스타일
                         } else {
                             emailMessage.textContent = '사용 가능한 이메일 주소입니다';
@@ -188,6 +188,7 @@
             let empcnt = 0;
          
             if (name === '') {
+			
             	empcnt++;
             }
             
@@ -201,10 +202,49 @@
             if (CompanyId === '') {
             	empcnt++;
             }
-            if (passwordConfirm === '사용 가능한 이메일 주소입니다') {
-            	empcnt++;
-            }
+   //모든 정보가 입력되어있는 경우 유효성 체크        
+            if(empcnt === 0){
+            	if (emailMessage.textContent === '이미 사용중인 이메일입니다'){
+            		  alert('다른 이메일을 사용해주세요.');
+                      event.preventDefault(); // 폼 제출 방지
+            	}else if(emailMessage.textContent !== '사용 가능한 이메일 주소입니다'){
+            		 alert('이메일을 확인해주세요.');
+                     event.preventDefault(); // 폼 제출 방지
+				}else if(passwordMessage.textContent !== '비밀번호가 일치합니다'){
+            		alert('비밀번호를 확인해주세요.');
+                    event.preventDefault(); // 폼 제출 방지
+            	}
+				
+            }else if(empcnt === 1){// 하나의 정보만 비워있는 경우  
+            	if (name === '') {
+                    alert('이름을 입력해 주세요.');
+                    event.preventDefault(); // 폼 제출 방지
+                }
+                               
+                if (email === '') {
+                    alert('이메일을 입력해 주세요.');
+                    event.preventDefault(); // 폼 제출 방지
+                }
+                 
+                if (password === '') {
+                    alert('비밀번호를 입력해 주세요.');
+                    event.preventDefault(); // 폼 제출 방지
+                }
+                
+                if (CompanyId === '') {
+                    alert('회사아이디를 입력해 주세요.');
+                    event.preventDefault(); // 폼 제출 방지
+                }
             
+            }else { // 2개 이상
+				alert('정보를 확인해주세요');
+				isValid = false;
+				if (!isValid) {
+		            event.preventDefault(); // 폼 제출 방지
+		        }
+            }
+  
+  <%--        
             if(empcnt === 0){
 
             	 if (emailMessage.textContent !== '사용 가능한 이메일 주소입니다') {
@@ -252,7 +292,7 @@
 		        }
             }
             
-           
+          --%> 
             
             
         });
