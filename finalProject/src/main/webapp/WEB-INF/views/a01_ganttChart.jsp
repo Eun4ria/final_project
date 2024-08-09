@@ -244,6 +244,14 @@
 	 <div id="gantt_here" style="width: 100%; height: calc(100vh - 14vh);"></div>
 	</div>
 	</div>
+	<script>
+		var msg = "${msg}"
+		
+		if(msg!=""){
+			alert(msg)
+		}
+		
+	</script>
 	<script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function() {
 		gantt.plugins({
@@ -285,9 +293,11 @@
 				data:{project_id:"${param.project_id}"},
 				dataType:"json",
 				success: function(data) { // data는 이미 배열형태    
+
+					console.log(data)
                			
                     console.log("데이터  출력(gantt)");                    
-                    var gdata = {data:data.ganttList}
+                    var gdata = {data:data.ganttList}                  
                     
                     console.log(gdata)
                     gantt.parse(gdata); 
@@ -415,11 +425,11 @@
 		 	  			data: data.map(function(task) {
 		 	                return {
 		 	                    id: task.id,
-		 	                    text: task.text,
+		 	                    text: task.text, // 작업명
 		 	                    start_date: formatDate(task.start_date), // 날짜 형식 변환
 		 	                    duration: task.duration || 1, // duration 기본값 설정
-		 	                    priority: task.priority,
-		 	                    user: task.user,
+		 	                    priority: task.priority, // 중요도
+		 	                    user: task.user, // 사용자 아이디
 		 	                    open: task.open,
 		 	                    parent: task.parent,
 		 	                    progress: task.progress || 0,
@@ -440,6 +450,7 @@
         
         
         gantt.attachEvent("onAfterTaskAdd", function(id, task) {
+        	console.log("Task added:", id, task);
             // `ajaxFun` 호출로 데이터 전송
             ajaxFun("insertGantt");
         });

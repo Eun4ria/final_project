@@ -40,6 +40,7 @@ public interface A01_Dao {
 			+ "    t.progress,\r\n"
 			+ "    u.user_id AS \"user\",\r\n"
 			+ "    u.user_name AS name,\r\n"
+			+ "    t.project_id,\r\n"			
 			+ "    CASE \r\n"
 			+ "        WHEN parent_id IS NULL THEN 1\r\n"
 			+ "        ELSE 0\r\n"
@@ -60,7 +61,7 @@ public interface A01_Dao {
 	
 	// 간트에서 task 등록
 	@Insert("INSERT INTO task (task_id, task_name, start_date, end_date, priority, progress, backgroundcolor, textcolor, user_id, project_id)\r\n"
-			+ "VALUES ('TSK_'||TO_CHAR(task_seq.nextval, 'FM0000'), #{text}, #{start_date, jdbcType=DATE}, #{start_date, jdbcType=DATE}+#{duration}, #{priority}, #{progress}, #{color}, #{textcolor}, #{text}, #{id});")
+			+ "VALUES ('TSK_' || TO_CHAR(task_seq.nextval, 'FM0000'),#{text},#{start_date},(#{start_date} + INTERVAL '1' DAY * #{duration}),#{priority},#{progress},#{color},#{textcolor},#{user},#{project_id})")
 	int insertGantt(GanttTask ins);
 	
 	
