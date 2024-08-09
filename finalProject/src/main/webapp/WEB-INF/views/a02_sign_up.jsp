@@ -106,7 +106,7 @@
                 passwordMessage.className = 'password-message success'; // 성공 스타일
             } else if (password.length > 0 || passwordConfirm.length > 0) {
                 if (password.length < minLength) {
-                    passwordMessage.textContent = `비밀번호는 6자 이상이어야 합니다`;
+                    passwordMessage.textContent = '비밀번호는 6자 이상이어야 합니다';
                     passwordMessage.className = 'password-message error'; // 실패 스타일
                 } else if (!hasLetter || !hasDigit || !hasSpecialChar) {
                     passwordMessage.textContent = '비밀번호는 문자, 숫자, 특수문자를 각각 하나 이상 포함해야 합니다';
@@ -124,8 +124,12 @@
         passwordInput.addEventListener('input', checkPasswords);
         passwordConfirmInput.addEventListener('input', checkPasswords);
 
+
+       	const nameInput = document.querySelector('input[name="user_name"]');
+       	const companyInput = document.querySelector('input[name="company_id"]');
+        
         // 이메일 유효성 검사 및 중복 확인
-       const emailInput = document.querySelector('input[name="email"]');
+       	const emailInput = document.querySelector('input[name="email"]');
         const emailMessage = document.getElementById('email-message');
         const validateEmailBtn = document.getElementById('validate-email-btn');
 
@@ -170,20 +174,82 @@
 
         // 폼 제출 전 비밀번호 및 이메일 검사
         $("form").on('submit', function(event) {
-            const password = passwordInput.value;
+
+        	const name = nameInput.value; //사용자 이름
+        	const email = emailInput.value; //이메일
+        	const password = passwordInput.value; //비밀번호
+        	const CompanyId = companyInput.value; // 회사 아이디
+        	
+           
             const passwordConfirm = passwordConfirmInput.value;
-            const email = emailInput.value;
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            if (password !== passwordConfirm && password == '') {
-                alert('비밀번호가 일치하지 않습니다.');
-                event.preventDefault(); // 폼 제출 방지
+            let isValid = true;
+            let empcnt = 0;
+         
+            if (name === '') {
+            	empcnt++;
             }
+            
+            if (password === '') {
+            	empcnt++;
+            }
+            if (email === '') {
+            	empcnt++;
+            }
+            
+            if (CompanyId === '') {
+            	empcnt++;
+            }
+            
+            if(empcnt === 0){
 
-            if (!emailPattern.test(email)) {
-                alert('유효하지 않은 이메일 주소입니다.');
-                event.preventDefault(); // 폼 제출 방지
+            	 if (emailMessage.textContent !== '사용 가능한 이메일 주소입니다') {
+                     alert('중복되지 않는 이메일을 사용주세요.');
+                     event.preventDefault(); // 폼 제출 방지
+                 }      
+                 if (passwordMessage.textContent !== '비밀번호가 일치합니다') {
+                     alert('비밀번호를 확인해주세요.');
+                     event.preventDefault(); // 폼 제출 방지
+                 }
+
+                 if (!emailPattern.test(email)) {
+                     alert('유효하지 않은 이메일 주소입니다.');
+                     event.preventDefault(); // 폼 제출 방지
+                 }
+            
+           
+            }else if(empcnt === 1){
+            	 if (name === '') {
+                     alert('이름을 입력해 주세요.');
+                     event.preventDefault(); // 폼 제출 방지
+                 }
+                 
+                 if (password === '') {
+                     alert('비밀번호를 입력해 주세요.');
+                     event.preventDefault(); // 폼 제출 방지
+                 }
+                 if (email === '') {
+                     alert('이메일을 입력해 주세요.');
+                     event.preventDefault(); // 폼 제출 방지
+                 }
+                 
+                 if (CompanyId === '') {
+                     alert('회사아이디를 입력해 주세요.');
+                     event.preventDefault(); // 폼 제출 방지
+                 }
+            
+            }else {
+				alert('모든 정보를 입력해주세요');
+				isValid = false;
+				if (!isValid) {
+		            event.preventDefault(); // 폼 제출 방지
+		        }
             }
+            
+           
+            
+            
         });
        
 		

@@ -66,26 +66,9 @@ int insertUser(Users ins);
 			+ "AND u.user_id != #{user_id}")
 	List<Users> getMemList(Users sch);
 	
-	@Insert("INSERT INTO chat (\r\n"
-			+ "    chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id\r\n"
-			+ ")\r\n"
-			+ "SELECT\r\n"
-			+ "    'CHT_' || TO_CHAR(chat_seq.nextval, 'FM0000'),\r\n"
-			+ "    'M_0003',\r\n"
-			+ "    'N_0047',\r\n"
-			+ "    'M_0003',\r\n"
-			+ "    'N',\r\n"
-			+ "    NULL,\r\n"
-			+ "    NULL,\r\n"
-			+ "    'PRO_0001'\r\n"
-			+ "FROM dual\r\n"
-			+ "WHERE NOT EXISTS (\r\n"
-			+ "    SELECT 1\r\n"
-			+ "    FROM chat\r\n"
-			+ "    WHERE owner_id = #{owner_id}\r\n"
-			+ "      AND user_id = #{user_id}\r\n"
-			+ ")")
-	@Options(useGeneratedKeys = true, keyProperty = "chatroom_id", keyColumn = "chatroom_id")
+	@Insert("INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id) " +
+            "VALUES ('CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), #{chatroom_name}, #{owner_id}, #{user_id}, 'N', NULL, NULL, #{project_id})")
+    @Options(useGeneratedKeys = true, keyProperty = "chatroom_id", keyColumn = "chatroom_id")
 	int insertchatroom(Chat ins);
 	
 	
