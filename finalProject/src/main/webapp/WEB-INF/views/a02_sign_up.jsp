@@ -205,19 +205,25 @@
             if(empcnt === 0){
 
             	 if (emailMessage.textContent !== '사용 가능한 이메일 주소입니다') {
-                     alert('중복되지 않는 이메일을 사용주세요.');
+                     alert('이메일을 확인주세요.');
                      event.preventDefault(); // 폼 제출 방지
+                     if (passwordMessage.textContent !== '비밀번호가 일치합니다') {
+                         alert('비밀번호를 확인해주세요.');
+                         event.preventDefault(); // 폼 제출 방지
+                     }
                  }      
-                 if (passwordMessage.textContent !== '비밀번호가 일치합니다') {
+            	   
+            	 if (passwordMessage.textContent !== '비밀번호가 일치합니다') {
                      alert('비밀번호를 확인해주세요.');
                      event.preventDefault(); // 폼 제출 방지
+                     if (emailMessage.textContent !== '사용 가능한 이메일 주소입니다') {
+                         alert('중복되지 않는 이메일을 사용주세요.');
+                         event.preventDefault(); // 폼 제출 방지
+                        
+                     } 
                  }
+                 
 
-                 if (!emailPattern.test(email)) {
-                     alert('유효하지 않은 이메일 주소입니다.');
-                     event.preventDefault(); // 폼 제출 방지
-                 }
-            
            
             }else if(empcnt === 1){
             	 if (name === '') {

@@ -434,9 +434,9 @@ $(document).ready(function(){
 	<div class="card-body">
 
 	<div class="input-group mb-3">	
- 	현재사람:<input id="curName" value="${sessionScope.owner_id }" />
+ 	현재사람:<input id="curName" value="${sessionScope.user_id }" />
 	
- 	받을사람:<input id="name" value="${sessionScope.user_id }" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
+ 	받을사람:<input id="name" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
  	</div>
  	<div  id="show"></div>
  <%-- 

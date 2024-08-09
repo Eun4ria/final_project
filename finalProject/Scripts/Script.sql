@@ -182,5 +182,8 @@ WHERE NOT EXISTS (
       AND user_id = 'M_0003'
 );
 
+SELECT * FROM CHAT;
 
- 
+DELETE chat
+WHERE chatroom_name='M_0003';
+
