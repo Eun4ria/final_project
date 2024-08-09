@@ -131,9 +131,10 @@ public class A01_Controller {
 	}
 	*/
 	@PostMapping("insertGantt")
-	public ResponseEntity<?> insertGantt(GanttTask ins, Model d) {
-		System.out.println("생성된 project_id:"+ins.getProject_id());
-		return ResponseEntity.ok(service.insertGantt(ins));
+	public String insertGantt(GanttTask ins, Model d) {
+		System.out.println("생성할 task의 project_id:"+ins.getProject_id());
+		d.addAttribute("msg", service.insertGantt(ins));
+		return "WEB-INF\\views\\a01_ganttChart.jsp";
 	}
 	
 	
