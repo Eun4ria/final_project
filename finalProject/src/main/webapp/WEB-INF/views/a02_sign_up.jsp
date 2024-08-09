@@ -225,20 +225,21 @@
                         
                      } 
                  }
-            }else if((empcnt === 1 && emailMessage.textConten === '사용 가능한 이메일 주소입니다'&& passwordMessage.textContent === '비밀번호가 일치합니다')){
-            	 if (name === '') {
-                     alert('이름을 입력해 주세요.');
-                     event.preventDefault(); // 폼 제출 방지
-                 }
-                 if (password === '') {
-                     alert('비밀번호를 입력해 주세요.');
-                     event.preventDefault(); // 폼 제출 방지
-                 }
-                 if (email === '') {
+            }else if(empcnt === 1){
+				if( emailMessage.textConten === '사용 가능한 이메일 주소입니다'&& passwordMessage.textContent === '비밀번호가 일치합니다'){
+					if (name === '') {
+	                     alert('이름을 입력해 주세요.');
+	                     event.preventDefault(); // 폼 제출 방지
+	                 }
+	                 
+	                 if (CompanyId === '') {
+	                     alert('회사아이디를 입력해 주세요.');
+	                     event.preventDefault(); // 폼 제출 방지
+	                 }
+	              }else if (email === '') {
                      alert('이메일을 입력해 주세요.');
                      event.preventDefault(); // 폼 제출 방지
-                 }
-                 if (CompanyId === '') {
+                 }else {
                      alert('회사아이디를 입력해 주세요.');
                      event.preventDefault(); // 폼 제출 방지
                  }
