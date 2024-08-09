@@ -227,7 +227,7 @@
            
             }else if(empcnt === 1){
             	
-				alert('모든 정보를 입력해주세요');
+				alert('모든 정보를 입력해주세요.');
 				isValid = false;
 				if (!isValid) {
 		            event.preventDefault(); // 폼 제출 방지
