@@ -73,7 +73,36 @@ $(document).ready(function() {
        }); 
    // 버튼 클릭 시 동작 처리
    $("#inBtn").click(function() {
-       $("form").submit();
+	 	const idInput = document.querySelector('input[name="user_id"]');
+	 	const passwordInput = document.querySelector('input[name="password"]');
+	 	
+	 	const userId = idInput.value; //사용자 이름
+	 	const password = passwordInput.value; //사용자 이름
+	 	 let empcnt = 0;
+	 	
+	 	 if (userId === '') {
+         	empcnt++;
+         }
+         if (password === '') {
+         	empcnt++;
+         }
+	 	
+         if(empcnt===1){
+        	 if (userId === '') {
+                 alert('아이디를 입력해 주세요.');
+                 event.preventDefault(); // 폼 제출 방지
+             }else{
+                 alert('비밀번호를 입력해 주세요.');
+                 event.preventDefault(); // 폼 제출 방지
+             }
+         }else if(empcnt == 2){
+        	 alert('정보를 입력하세요');
+             event.preventDefault(); // 폼 제출 방지
+         }else{
+        	 $("form").submit();
+		}
+	 	
+      
    });
    var errorMessage = "${errorMessage}";
    if (errorMessage) {
