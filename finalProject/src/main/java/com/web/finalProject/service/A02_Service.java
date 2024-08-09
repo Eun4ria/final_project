@@ -131,7 +131,7 @@ public class A02_Service {
 	//채팅 등록
 		public String insertchatroom(Chat ins) {
 			String msg = null;
-			msg = dao.insertchatroom(ins)>0? ins.getChatroom_id() : null;
+			msg = dao.insertchatroom(ins)>0?"채팅방 생성": "생성 실패";
 			return msg;
 		}
 	

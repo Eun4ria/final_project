@@ -1,7 +1,7 @@
 SELECT * FROM users;
 
 DELETE users
-WHERE user_name='김은수';
+WHERE user_id='N_0057';
 
 SELECT * FROM PROJECT;
 
