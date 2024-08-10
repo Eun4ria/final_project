@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
+import org.springframework.scheduling.config.Task;
 
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Project;
@@ -57,6 +58,13 @@ int insertUser(Users ins);
 			+ "    t.user_id = #{user_id}")
 	List<Project> getProjectList(@Param("user_id") String user_id);	
 	
+// todo 리스트
+//	@Select("SELECT * FROM task\r\n"
+//			+ "WHERE user_id = #{user_id}\r\n"
+//			+ "AND project_id = #{project_id}")
+//	List<Task> getTaskList(Task sch);
+	
+	
 //채팅 리스트-프젝에 속한 모든 팀원
 	@Select("SELECT *\r\n"
 			+ "FROM users u\r\n"
@@ -66,7 +74,7 @@ int insertUser(Users ins);
 	List<Users> getMemList(Users sch);
 	
 	@Insert("INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id) " +
-            "VALUES ('CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), #{user_id}, #{owner_id}, #{user_id}, 'N', NULL, sysdate, #{project_id})")
+            "VALUES ('CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '채팅'||TO_CHAR(chatroom_name_seq.nextval), #{owner_id}, #{user_id}, 'N', NULL, sysdate, #{project_id})")
 //    @Options(useGeneratedKeys = true, keyProperty = "chatroom_id", keyColumn = "chatroom_id")
 	int insertchatroom(Chat ins);
 	

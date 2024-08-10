@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 
 import com.web.finalProject.mapper.A02_Dao;
@@ -113,7 +114,12 @@ public class A02_Service {
 	public List<Project> getProjectList(String user_id){
     	return dao.getProjectList(user_id);
     }
-		
+
+// task 리스트
+//	public List<Task> getTaskList(Task sch){
+//		
+//		return dao.getTaskList(sch);
+//	}
 
 //채팅
 	//채팅 리스트

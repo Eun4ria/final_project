@@ -182,8 +182,23 @@ WHERE NOT EXISTS (
       AND user_id = 'M_0003'
 );
 
-SELECT * FROM CHAT;
+SELECT * FROM chat;
 
 DELETE chat
 WHERE chatroom_name='M_0003';
 
+SELECT * FROM task
+WHERE user_id ='N_0047'
+AND project_id = 'PRO_0003';
+
+UPDATE task 
+SET project_id='PRO_0003'
+WHERE user_id = 'N_0047';
+
+DELETE FROM CHAT c WHERE owner_id = 'N_0047' AND user_id <> 'P_0001';
+
+CREATE SEQUENCE chatroom_name_seq
+    START WITH 1
+    INCREMENT BY 1;
+    NOCACHE
+    NOCYCLE;

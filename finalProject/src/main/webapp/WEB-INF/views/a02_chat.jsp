@@ -294,7 +294,20 @@
      }
  }
  </script>
+ 
  --%>
+ <script type="text/javascript">
+	$(document).ready(function(){
+		$("#chatbox").hide()
+		if("${chatroom_id !== null || chatroom_id !== ''}"){
+			$("#chatbox").show()
+		}
+		
+		$("#exitBtn").click(function(){
+		 location.href = "removeChatroomSession"
+		})
+	});
+</script>
 	</head>
 
 	<!--Coded With Love By Mutiullah Samim
@@ -396,13 +409,13 @@
 									<input type="submit" id="exitBtn" hidden >
 									<i class="fas fa-ban"></i> Block
 								</form>
-								<form method="get" action="todomemFrm">
+								
 									
-									<button type="submit" id="exitBtn" style="background-color:transparent; border:none; color:white">
+									<button type="button" id="exitBtn" style="background-color:transparent; border:none; color:white">
 									<i class="fas fa-sign-out-alt">
 									</i> Exit</button>
 									
-								</form>
+								
 							
 								</div>	
 								
@@ -413,14 +426,15 @@
     <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
   
   
-<c:choose>	
+<%-- <c:choose>	
 <c:when test="${chatroom_id == null || chatroom_id == ''}">	
 	<div class="card-body">
  	</div>	
 	<div class="card-footer">	
 	</div>
 	</c:when>	
-	<c:otherwise>
+	<c:otherwise>--%>
+<div id="chatbox">
 	<div class="card-body">
 	<div class="input-group mb-3">	
  	보내<input id="curName" value="${sessionScope.user_name}"/>
@@ -446,9 +460,9 @@
 			</div>
 		</div>
 	</div>			
-	
-	</c:otherwise>
- </c:choose>	
+</div>	
+<%-- 	</c:otherwise>
+ </c:choose>	--%>
 </div>
 </div>
 

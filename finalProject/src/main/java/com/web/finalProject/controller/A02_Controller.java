@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -144,6 +145,34 @@ public class A02_Controller {
         return "WEB-INF\\views\\a00_dash_mem.jsp";
 	}
 	
+//// todo list
+//	// http://localhost:4040/todoFrm
+//	@GetMapping("todoFrm")
+//	public String getTaskList(Task sch, Model d, HttpServletRequest request) {
+//		HttpSession session = request.getSession(); 
+//		String project_id = (String) session.getAttribute("project_id");
+//		String user_id = (String) session.getAttribute("user_id");
+//		 
+//		    System.out.println("PROJECT_ID:" + project_id);
+//		    // Chat 객체에 project_id와 user_id를 설정
+//		    sch.setProject_id(project_id);
+//		    sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
+//		    
+//		    // 회원 리스트를 가져온다.
+//		    List<Task> members = service.getmemList(sch);
+//		    
+//		    // 모델에 데이터 추가
+//		    d.addAttribute("memList", members);
+//		    System.out.println("memlist:" + members);
+//		    
+//		    // JSP 페이지로 이동
+//		   // return "WEB-INF\\views\\a02_chat2.jsp";	
+//		    return "WEB-INF\\views\\a02_chat_last.jsp"
+//		
+//		
+//		return "WEB-INF\\views\\a00_todo.jsp";
+//	}
+//	
 	// 대시보드 -> todoList
 	@GetMapping("todopmFrm")
 	public String todopmFrm(@RequestParam("project_id") String project_id,
@@ -165,6 +194,8 @@ public class A02_Controller {
 		
 		return "WEB-INF\\views\\a02_todo_mem.jsp";
 	}
+	
+	
 	
 	@GetMapping("Deliverables")
 	public String Deliverables(@RequestParam("project_id") String project_id,
@@ -309,8 +340,27 @@ public class A02_Controller {
 	// http://localhost:4040/message
 	@GetMapping("message")
 		public String chatting(@RequestParam("chatroom_id") String chatroom_Id,
-								@RequestParam("chatroom_name") String chatroom_Name, Model d) {
-		    d.addAttribute("chatroom_id", chatroom_Id);
+								@RequestParam("chatroom_name") String chatroom_Name, Model d, Users sch,HttpServletRequest request) {
+		 
+	    HttpSession session = request.getSession();
+	    String project_id = (String) session.getAttribute("project_id");
+	    String user_id = (String) session.getAttribute("user_id");
+	    System.out.println("PROJECT_ID:" + project_id);
+	    
+	    session.setAttribute("project_id", project_id);
+	    
+	    // Chat 객체에 project_id와 user_id를 설정
+	    sch.setProject_id(project_id);
+	    sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
+	    
+	    // 회원 리스트를 가져온다.
+	    List<Users> members = service.getmemList(sch);
+	    
+	    // 모델에 데이터 추가
+	    d.addAttribute("memList", members);
+	    System.out.println("memlist:" + members);
+		
+	    d.addAttribute("chatroom_id", chatroom_Id);
 		    d.addAttribute("chatroom_name", chatroom_Name);
 		    d.addAttribute("socketServer", socketServer);
 		    System.out.println("넘겨받은 채팅창 아이디:"+chatroom_Id);
@@ -331,6 +381,20 @@ public class A02_Controller {
 	    	
 	        return message;
 	    }
+	
+	// 채팅 나가기
+	@GetMapping("/removeChatroomSession")
+    public String removeChatroomSession( HttpSession session) {
+//	   HttpSession session = request.getSession();
+//	    String project_id = (String) session.getAttribute("project_id");
+//	    String user_id = (String) session.getAttribute("user_id");
+//	    session.setAttribute("project_id", project_id);
+//	    session.setAttribute("user_id", user_id);
+	    
+	   // request.removeAttribute("chatroom_id");
+		session.removeAttribute("chatroom_id");
+        return "redirect:/chatmemListstart"; // 세션 삭제 후 이동할 페이지
+    }
 
 
 }

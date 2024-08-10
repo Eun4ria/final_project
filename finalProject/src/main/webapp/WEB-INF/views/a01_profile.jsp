@@ -60,7 +60,7 @@
 
 <body>
 	<div class="wrapper">
-	<jsp:include page="a00_main_side.jsp"/> 
+	<jsp:include page="a00_sideBar.jsp"/> 
 	
 		<div class="main">
 			<nav class="navbar navbar-expand navbar-light navbar-bg">

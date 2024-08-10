@@ -46,10 +46,17 @@
 	$(document).ready(function(){
 		$("#pmGantt").hide()
 		$("#Output").hide()
+		$("#todo").show()
 		if("${sessionScope.role_code}"=="P"){
 			$("#pmGantt").show()
 			$("#Output").show()
 		}
+		
+		 // 현재 URL을 JavaScript 변수로 설정
+        var currentUrl = window.location.pathname;
+        if(currentUrl.includes('todoFrm')){
+            $("#todo").hide();
+        }
 	});
 </script>
 </head>
@@ -76,6 +83,11 @@
 			
             <li class="sidebar-item ${currentUrl == '/profile' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('profile')" >
+                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">profile</span>
+                </a>
+            </li>
+            <li id="todo" class="sidebar-item ${currentUrl == '/todoFrm' ? 'active' : ''}">
+                <a class="sidebar-link" onclick="goPage('todoFrm')" >
                     <i class="align-middle" data-feather="list"></i> <span class="align-middle">To Do List</span>
                 </a>
             </li>
@@ -123,6 +135,7 @@
 		<script>
 		//var project_id="${sessionScope.project_id}"
 		function goPage(url){
+			
 			location.href=url//+"?project_id="+project_id
 		}
 		</script>

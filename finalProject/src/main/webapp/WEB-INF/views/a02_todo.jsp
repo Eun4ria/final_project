@@ -63,23 +63,13 @@
         window.location.href = 'main';
      }
  }
- // 세션에 저장되어 있는 롤 코드
- var role_code="${sessionScope.role_code}"
- function projectPage(project_id){ // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
-   if(role_code!="" && role_code!=null){
-      if(role_code=="P"){
-         location.href="dashpmFrm?project_id="+project_id
-      }else{
-         location.href="dashmemFrm?project_id="+project_id
-      }
-   }else{
-      alert("비정상적인 접근! 관리자에게 문의해주세요")
-   }    
- }
-
-
-function goChat(user_id){
-location.href="message?user_id="+user_id
+ 
+ function taskPage(task_id){ // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
+	  alert("토글 가즈아")
+	 }
+ 
+function goChat(project_id){
+	location.href="chatmemListstart?project_id="+project_id
 }
 </script>
 </head>
@@ -87,7 +77,7 @@ location.href="message?user_id="+user_id
 <body>
 
    <div class="wrapper">
-<jsp:include page="a00_main_side.jsp"/>   
+<jsp:include page="a00_sideBar.jsp"/>   
    
       <div class="main">
          <nav class="navbar navbar-expand navbar-light navbar-bg">
@@ -162,7 +152,12 @@ location.href="message?user_id="+user_id
                         </div>
                      </div>
                   </li>
-                                
+               <li class="nav-item dropdown">
+					<a class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.project_id}')" id="messagesDropdown">
+							<i class="align-middle" data-feather="message-square"></i>
+					</a>
+					
+				</li>                  
      
 <li class="nav-item dropdown">   
                      <a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
@@ -176,85 +171,27 @@ location.href="message?user_id="+user_id
 				    </c:otherwise>
 				</c:choose>
               </a>
-                     <!-- <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
-                        <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
-                        <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
-                        <div class="dropdown-divider"></div>
-                        <form method="post" action="/logout">
-                        <input type="submit" class="dropdown-item" value="Log out" >
-                        </form>
-                     </div> -->
+                    
                   </li>
                </ul>
             </div>
          </nav>
 
          <main class="content">
-          <div class="row">
-           <div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
-							<div class="card flex-fill">
-								<div class="card-header">
-
-									<h5 class="card-title mb-0">진행중인 프로젝트</h5>
-								</div>
-								<div class="card-body d-flex">
-									<div class="align-self-center w-100">
-										ㅎㅎ
-									</div>
-								</div>
-							</div>
-						</div>
-			<div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
-							<div class="card flex-fill">
-								<div class="card-header">
-
-									<h5 class="card-title mb-0">완료된 프로젝트</h5>
-								</div>
-								<div class="card-body d-flex">
-									<div class="align-self-center w-100">
-										호호
-									</div>
-								</div>
-							</div>
-						</div>
-			<div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
-							<div class="card flex-fill">
-								<div class="card-header">
-
-									<h5 class="card-title mb-0">진행예정 프로젝트</h5>
-								</div>
-								<div class="card-body d-flex">
-									<div class="align-self-center w-100">
-										후후
-									</div>
-								</div>
-							</div>
-						</div>
-          </div>
             <div class="container-fluid p-0">
 
-               <h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
-               
-         <!-- 프로젝트 생성 버튼 -->
-         <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
-	         <button class="btn btn-success" data-toggle="modal" data-target="#ModalCenter"
-           type="button">프로젝트 생성</button>
-	    </c:if>
-           
-               
+               <h1 class="h3 mb-3"><strong>To Do</strong> List</h1>
+     
             <div class="row mb-4">
         <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
           <div class="card">
             <div class="card-header pb-0">
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Projects</h6>
+                  <h6>Projects ${project_id}</h6>
                   <p class="text-sm mb-0">
                     <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    <span class="font-weight-bold ms-1">30 done</span> this month
+                    프로젝트 이름이나 기간 넣기?
                   </p>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
@@ -276,30 +213,36 @@ location.href="message?user_id="+user_id
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Companies</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Members</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Budget</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Completion</th>
+                    <th></th>
+                      <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Members</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">End Date</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Priority</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Completion</th>
                     </tr>
                   </thead>
                   <tbody>
-                  <c:forEach var="pro" items="${pro}">
-                    <tr onclick="projectPage('${pro.project_id}')">
+                  <c:forEach var="task" items="${tasklist}">
+                    <tr onclick="taskPage('${task.task_id}')">
+                    <td>
+	                    <div>
+                            <input type="checkbox" id="task1" >
+           			
+                          </div>
+                    </td>
                       <td>
                         <div class="d-flex px-2 py-1">
-                          <div>
-                           <img src="${pro.logo}" class="avatar avatar-sm me-3" alt="xd">
-                          
-                          </div>
+                         
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">${pro.project_name}</h6>
+                            <h6 class="mb-0 text-sm">${task.task_name}</h6>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <div class="avatar-group mt-2">
+                        <div class="align-middle avatar-group mt-1">
                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="user1">
+                            <span style="color:black">${task.user_id}</span>
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
                             <img src="${path}/material-dashboard-2/assets/img/team-3.jpg" alt="user2">
@@ -312,18 +255,41 @@ location.href="message?user_id="+user_id
                           </a>
                         </div>
                       </td>
+                      <td >
+                      <div class="align-middle text-center" style="border:none">
+                         
+                          <div class="align-middle text-center ">
+                            <h6 class="ml-5 text-center">${task.endDateFormatted }</h6>
+                          </div>
+                        </div>
+                        
+                      </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold" >${pro.amount}</span>
+                        <select  class="form-control text-center"  v-model="sta.tstatus" name="tstatus">
+				        	<option value="N">${task.tstatus}</option>
+				        	<option value="진행중" >진행중</option>
+				        	<option value="완료">완료</option>
+				        	<option value="중단">중단</option>
+				        	<option value="막힘">막힘</option>
+			       		</select>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <select  class="form-control text-center"  v-model="pri.priority" name="priority">
+				        	<option value="N">${task.priority}</option>
+				        	<option value="상">상</option>
+				        	<option value="중">중</option>
+				        	<option value="하">하</option>
+			       		</select>
                       </td>
                       <td class="align-middle">
                         <div class="progress-wrapper w-75 mx-auto">
                           <div class="progress-info">
                             <div class="progress-percentage">
-                              <span class="text-xs font-weight-bold">${pro.progress}%</span>
+                              <span class="text-xs font-weight-bold">${task.progress}%</span>
                             </div>
                           </div>
                           <div class="progress">
-                          <div class="progress-bar bg-gradient-info" style="width: ${pro.progress}%;" role="progressbar" aria-valuenow="${pro.progress}" aria-valuemin="0" aria-valuemax="100"></div>
+                          <div class="progress-bar bg-gradient-info" style="width: ${task.progress}%;" role="progressbar" aria-valuenow="${pro.progress}" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </div>
                       </td>
@@ -354,57 +320,24 @@ location.href="message?user_id="+user_id
             </div>
          </main>
 
-         <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalLongTitle">Create Project</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <form id="modalFrm" class="form"  method="post" action="insertProject">
-      <input type="hidden" name="company_id" value="COM_0001"/>
-        <div class="row">
-         <div class="col">    
-         <span>Project Name</span>              
-           <input type="text" class="form-control" name="project_name">
-         </div>
-        </div>
-        <div class="row">
-         <div class="col">
-         <span>Extra Comment</span>
-            <textarea name="etc" rows="3" cols="10" class="form-control"></textarea>
-         </div>
-        </div>
-        <div class="row">
-         <div class="col">
-         <span>Start Date</span>
-           <input type="date" class="form-control" placeholder="직책명 입력" name="start_date">
-         </div>
-        </div>
-        <div class="row">
-         <div class="col">
-         <span>End Date</span>
-           <input type="date" class="form-control" placeholder="직책명 입력" name="end_date">
-         </div>
-        </div>     
-        <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" id="regBtn" class="btn btn-success">regist</button>        
-      </div>   
-       </form> 
-      </div>
-      
-    </div>
-  </div>
-</div>
+         
       </div>
    </div>
 
    <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
-
+   
+<script>
+var vm = Vue.createApp({
+	name:"App",
+	data(){
+		return {sta:{tstatus:"N"},
+				pri:{priority:'N'}	
+		}
+				
+		};
+	};
+});
+</script>
 
    
 

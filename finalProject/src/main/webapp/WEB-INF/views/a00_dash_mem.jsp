@@ -190,13 +190,14 @@ function goChat(user_id){
 		
 					
 				<div class="row mb-4">
-      
+     <div style="background-color: #dbd4ec;"  class="card flex-fill w-90">    
+     <br>
          <div class="row">
-           <div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
+           <div class="col-6 col-xxl-3 d-flex order-1 order-xxl-1  flex-fill w-30">
 							<div class="card flex-fill">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">진행중인 프로젝트</h5>
+									<h5 class="card-title mb-0">진행중인 업무</h5>
 								</div>
 								<div class="card-body d-flex">
 									<div class="align-self-center w-100">
@@ -205,11 +206,11 @@ function goChat(user_id){
 								</div>
 							</div>
 						</div>
-			<div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
+			<div class="col-6  col-xxl-3 d-flex order-1 order-xxl-1 flex-fill w-30">
 							<div class="card flex-fill">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">완료된 프로젝트</h5>
+									<h5 class="card-title mb-0">완료된 업무</h5>
 								</div>
 								<div class="card-body d-flex">
 									<div class="align-self-center w-100">
@@ -218,11 +219,11 @@ function goChat(user_id){
 								</div>
 							</div>
 						</div>
-			<div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
+			<div class="col-6 col-xxl-3 d-flex order-1 order-xxl-1 flex-fill w-30">
 							<div class="card flex-fill">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">진행예정 프로젝트</h5>
+									<h5 class="card-title mb-0">중단 업무</h5>
 								</div>
 								<div class="card-body d-flex">
 									<div class="align-self-center w-100">
@@ -232,9 +233,12 @@ function goChat(user_id){
 							</div>
 						</div>
           </div>
-  <div class="row">      
-        <div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-1">
-							<div class="card flex-fill">
+          </div>
+          
+  <div class="row" style="margin-top:1rem">     
+  
+        <div class="col-12 d-flex col-xxl-3 order-2 order-xxl-1 w-45" style="padding:0">
+							<div class="card flex-fill  w-45">
 								<div class="card-header">
 
 									<h5 class="card-title mb-0">Calendar</h5>
@@ -248,42 +252,43 @@ function goChat(user_id){
 								</div>
 							</div>
 						</div>
-							<div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
-						
+				<div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3  w-55">
+			
 
-							<div class="card flex-fill w-100">
-								<div class="card-header">
+				<div class="card flex-fill w-100">
+					<div class="card-header">
 
-									<h5 class="card-title mb-0">Browser Usage</h5>
-								</div>
-								<div class="card-body d-flex">
-									<div class="align-self-center w-100">
-										<div class="py-3">
-											<div class="chart chart-xs">
-												<canvas id="chartjs-dashboard-pie"></canvas>
-											</div>
-										</div>
-
-										<table class="table mb-0">
-											<tbody>
-												<tr>
-													<td>Chrome</td>
-													<td class="text-end">4306</td>
-												</tr>
-												<tr>
-													<td>Firefox</td>
-													<td class="text-end">3801</td>
-												</tr>
-												<tr>
-													<td>IE</td>
-													<td class="text-end">1689</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
+						<h5 class="card-title mb-0">Browser Usage</h5>
+					</div>
+					<div class="card-body d-flex">
+						<div class="align-self-height col-6 col-xxl-3 d-flex order-1 order-xxl-1  flex-fill w-40">
+							<div class="py-3">
+								<div class="chart chart-xs">
+									<canvas id="chartjs-dashboard-pie"></canvas>
 								</div>
 							</div>
+							<div class=" col-6 col-xxl-3 d-flex order-1 order-xxl-1  flex-fill w-60">
+							<table class="table mb-0">
+								<tbody>
+									<tr>
+										<td>Chrome</td>
+										<td class="text-end">4306</td>
+									</tr>
+									<tr>
+										<td>Firefox</td>
+										<td class="text-end">3801</td>
+									</tr>
+									<tr>
+										<td>IE</td>
+										<td class="text-end">1689</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
+						</div>
+					</div>
+				</div>
+			</div>
 					</div>
 </div>
 					<div class="row">
