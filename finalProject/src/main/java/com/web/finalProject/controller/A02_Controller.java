@@ -232,6 +232,8 @@ public class A02_Controller {
 //        return ResponseEntity.ok(response);
 //	}
 	
+	
+	// http://localhost:4040/checkChatRoom?project_id=PRO_0003&user_id=M_0022&owner_id=N_0047
 	@PostMapping("checkChatRoom")
 	public ResponseEntity<?> getchatRoomId(Chat get)  {
 		System.out.println(get.getProject_id());
@@ -242,18 +244,20 @@ public class A02_Controller {
 		
 		if( chatroomCk > 0) {
 			System.out.println("채팅방 정보 있음");
-			String chatroomId = service.getchatRoomId(get); // 채팅방 ID를 반환
+			Chat chatroomId = service.getchatRoomId(get); // 채팅방 ID를 반환
+			System.out.println(chatroomId.getChatroom_id());
 			return ResponseEntity.ok(chatroomId);
 			
 		} else {
 			System.out.println("채팅방 정보 없음");
 			String msg = service.insertchatroom(get);
-			String chatroomId = service.getchatRoomId(get);
+			Chat chatroomId = service.getchatRoomId(get);
 			System.out.println(chatroomId);
 			return ResponseEntity.ok(new msgList2(
 					msg,chatroomId
 			));
         }
+		
 
 	}
 	
@@ -309,12 +313,12 @@ public class A02_Controller {
 }
 class msgList2{
 	   private String msg;
-	   private String chatroomId;
+	   private Chat chatroomId;
 	   public msgList2() {
 	      super();
 	      // TODO Auto-generated constructor stub
 	   }
-	   public msgList2(String msg, String chatroomId) {
+	   public msgList2(String msg, Chat chatroomId) {
 	      super();
 	      this.msg = msg;
 	      this.chatroomId = chatroomId;
@@ -325,10 +329,10 @@ class msgList2{
 	   public void setMsg(String msg) {
 	      this.msg = msg;
 	   }
-	   public String getChatroomId() {
+	   public Chat getChatroomId() {
 	      return chatroomId;
 	   }
-	   public void setChatroomId(String chatroomId) {
+	   public void setChatroomId(Chat chatroomId) {
 	      this.chatroomId = chatroomId;
 	   }
 	   

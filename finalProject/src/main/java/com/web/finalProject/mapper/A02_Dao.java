@@ -74,7 +74,7 @@ int insertUser(Users ins);
 	@Select("select chatroom_id from chat \r\n"
 			+ "where owner_id=#{owner_id} \r\n"
 			+ "and user_id=#{user_id}")
-	String getchatRoomId(Chat get);
+	Chat getchatRoomId(Chat get);
 	
 	//채팅방 유무 확인
 	@Select("SELECT COUNT(*) FROM chat c \r\n"

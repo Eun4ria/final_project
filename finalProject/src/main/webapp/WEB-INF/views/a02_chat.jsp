@@ -416,13 +416,26 @@ $(document).ready(function(){
   
   
 <c:choose>	
-<c:when test="${chatroomId == null || chatroomId == ''}">	
+<c:when test="${chatroom_id == null || chatroom_id == ''}">	
 		<div class="card-body">
+
+ 	</div>	
+ 
+	<div class="card-footer">
+			
+	</div>
+	
+
+	</c:when>	
+	<c:otherwise>
+	
+	
+	<div class="card-body">
 
 	<div class="input-group mb-3">	
  	현재사람:<input id="curName" value="${sessionScope.user_id}" />
 	
- 	받을사람:<input id="name" value="${user_id}" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
+ 	받을사람:<input id="name" value="${param.user_id}" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
  	</div>
  	<div  id="show"></div>
  <%-- 
@@ -454,17 +467,7 @@ $(document).ready(function(){
 				</div>
 			</div>
 		</div>
-	</div>	
-
-	</c:when>	
-	<c:otherwise>
-	<div class="card-body">
-
- 	</div>	
- 
-	<div class="card-footer">
-			
-	</div>	
+	</div>		
 	
 	
 	</c:otherwise>
@@ -494,10 +497,11 @@ $(document).ready(function(){
 
 		        	console.log(data.msg)
 		            // 서버에서 응답을 성공적으로 받았을 때 처리
-		            if (data.msg=="생성 완료") {
+		            if (data.chatroom_id !=="" && data.chatroom_id !== null) {
 		               
-		                location.href = 'message?chatroom_id=' + data.chatroomId +'&user_id='+user_id;
-		            } else {
+		                location.href = 'message?chatroom_id=' + data.chatroom_id +'&user_id='+user_id;
+		            } 
+		   	        else {
 		                alert('채팅방 정보를 가져오는 데 실패했습니다.');
 		            }
 		        },
