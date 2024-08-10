@@ -281,14 +281,8 @@
 	background-color:hsla(240,15%,30%,0.2);
 }
 	</style>
-<script type="text/javascript">
-$(document).ready(function(){
-	$('#action_menu_btn').click(function(){
-		$('.action_menu').toggle();
-	});
 
-});
-</script>
+<%--
 <script>
  var insertmsg="${insertmsg}"
  if(insertmsg != "") {
@@ -300,6 +294,7 @@ $(document).ready(function(){
      }
  }
  </script>
+ --%>
 	</head>
 
 	<!--Coded With Love By Mutiullah Samim
@@ -337,11 +332,12 @@ $(document).ready(function(){
 						</div>
 <!-- 채팅 왼쪽 리스트 -->
 <div class="card-body contacts_body scrollbar">
+
 					    	<c:forEach var="mem" items="${memList}" varStatus="status">	
 					    	
 					    	
-							<div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${mem.user_id}')" 
-							style="padding-top:0.5rem;height:4rem" data-toggle="modal" data-target="#ModalCenter">
+							<div class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${mem.user_id}')" 
+							style="padding-top:0.5rem;height:4rem">
 								<div class="img_cont" style="padding-left:1rem">
 									<img src="${mem.image }" class="rounded-circle user_img" style="width:3rem; height:3rem; ">	
 								</div>
@@ -351,14 +347,8 @@ $(document).ready(function(){
 								</div>
 							</div>
 						
-						
 					    	</c:forEach>
-					    	
-					    
 					
-						
-	
-						
 	
 	</div>	</div></div>
 <!-- 오른쪽 채팅 창
@@ -370,13 +360,21 @@ $(document).ready(function(){
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
 									<img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
-									<%-- 
-									<input id="curName" value="${user_id }"  disabled/>
-									 --%>
+									
 								</div>
+								<c:choose>
+								<c:when test="${chatroom_id == null || chatroom_id == ''}">
 								<div class="user_info">
-									<span><c:out value="${sessionScope.chatroom_name}" /></span>
+								되나
 								</div>
+								</c:when>
+								<c:otherwise>
+								<div class="user_info">
+									${chatroom_name}
+								</div>
+								</c:otherwise>
+								
+								</c:choose>
 								
 							</div>
 							<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
@@ -417,65 +415,42 @@ $(document).ready(function(){
   
 <c:choose>	
 <c:when test="${chatroom_id == null || chatroom_id == ''}">	
-		<div class="card-body">
-
+	<div class="card-body">
  	</div>	
- 
-	<div class="card-footer">
-			
+	<div class="card-footer">	
 	</div>
-	
-
 	</c:when>	
 	<c:otherwise>
-	
-	
 	<div class="card-body">
-
 	<div class="input-group mb-3">	
- 	현재사람:<input id="curName" value="${sessionScope.user_id}" />
+ 	보내<input id="curName" value="${sessionScope.user_name}"/>
 	
- 	받을사람:<input id="name" value="${param.user_id}" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
+ 	받아<input id="name" value="${param.user_id}" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
  	</div>
+ 	  <div id="chatArea" style="overflow-x:hidden;overflow-y: scroll; " class="input-group-append scrollbar">
  	<div  id="show"></div>
- <%-- 
- 	<div class="card-footer">
- 	보낼메시지:<input id="msg" />
- 	<br>
- 	<button type="button" onclick="sendName()">전송</button>
- 	
  	</div>
- --%>	
+	
  </div>	
- <%-- 
- 	<div class="card-footer">
-	<div class="input-group mb-3">	
-		<input id="msg" class="form-control" placeholder="전송할 메시지 입력"/>	
-		<input type="button" onclick="sendName()" class="btn btn-info" value="메시지전송" id="sndBtn"/>
-	</div>		
-	</div>
---%>
+ 
 	<div class="card-footer">
 			<div class="input-group">
 				
 				<div class="input-group mb-3">	
 	
 		<input id="msg" class="form-control type_msg" placeholder="Type your message..."/>
-				<div class="input-group-text send_btn"  >
-					<i class="fas fa-location-arrow" onclick="sendName()"></i>
+				<div class="input-group-text send_btn"   >
+					<i class="fas fa-location-arrow" id="sndBtn"></i>
 					
 				</div>
 			</div>
 		</div>
-	</div>		
-	
+	</div>			
 	
 	</c:otherwise>
  </c:choose>	
 </div>
 </div>
-
- 
 
 
 </div>
@@ -499,7 +474,10 @@ $(document).ready(function(){
 		            // 서버에서 응답을 성공적으로 받았을 때 처리
 		            if (data.chatroom_id !=="" && data.chatroom_id !== null) {
 		               
-		                location.href = 'message?chatroom_id=' + data.chatroom_id +'&user_id='+user_id;
+		                location.href = 'message?chatroom_id=' + data.chatroom_Id +'&user_id='+user_id+'&chatroom_name='+data.chatroom_Name;
+		             // AJAX 성공 후 WebSocket 연결
+	                    ws_conn();
+		             console.log("실행")
 		            } 
 		   	        else {
 		                alert('채팅방 정보를 가져오는 데 실패했습니다.');
@@ -511,45 +489,81 @@ $(document).ready(function(){
 		            console.log(err);
 		            alert('채팅방 정보를 가져오는 중 오류가 발생했습니다.');
 		        }
+		        
 		    });
 		}
-	</script>  
+	</script> 
+	<script type="text/javascript">
+var wsocket=null;
+$(document).ready(function(){
+	$('#action_menu_btn').click(function(){
+		$('.action_menu').toggle();
+	});
+	 function ws_conn(){
+		 if (wsocket !== null && wsocket.readyState === WebSocket.OPEN) {
+		        return;
+		    }
+	       var socketServer = '${socketServer}'.replace(/^"|"$/g,'')
+	       //alert(socketServer)
+	       wsocket = new WebSocket(socketServer)
+	       //console.log(wsocket)
+	       wsocket.onopen=function(evt){
+	          //console.log(evt)
+	          wsocket.send($("#curName").val()+":접속")
+	          wsocket.send($("#name").val()+":초대")
+	       }
+	       // 전송한 메시지를 받는 메서드 선언. 서버단에서 ws.sendMessage(message)로 보냈을 때
+	       // 받는 처리하는 메서드..
+	       wsocket.onmessage = function(evt){
+	          revMsg(evt.data)
+	       }
+	       wsocket.onclose =function(){
+	          wsocket.close()
+	       }         
+	    }
+	 // sndBtn msg
+	    $("#sndBtn").click(function(){
+	       sendMsg()
+	    })
+	    $("#msg").keyup(function(){
+	       if(event.keyCode==13){
+	          sendMsg()
+	       }
+	    })
+	    
+	 });
+	function sendMsg(){
+	    wsocket.send($("#curName").val()+":"+$("#msg").val())
+	    $("#msg").val("")      
+	 }
+	 // 최대 크기 함수 위에 전역변수로 선언..
+	 var mx = 0
+	 function revMsg(msg){
+	    // 1. 보내는 메시지 오른쪽, 받는 메시지 왼쪽 정렬 처리..
+	    var alignOpt = "left"
+	    var msgArr = msg.split(":") // 사용자명:메시지  구분하여 처리
+	    var sndId = msgArr[0]// 보내는 사람 메시지 id
+	    if($("#curName").val() == sndId){
+	       // 보내는 사람과 받는 사람의 아이디가 동일 하면 현재 접속한 사람이 보낸 메시지. ==> 정렬 오른쪽
+	       alignOpt = "right"
+	       msg = msgArr[1]  // 내가 보낸 메시지이기에 id삭제..
+	    }
+	    // 정렬 처리된 메시지 
+	    var msgObj = $("<div></div>").text(msg).attr("align", alignOpt).css("width",$("#show").width()-20)
+	    $("#show").append(msgObj)
+	    //$("#chatMessageArea").append(msg+"<br>")
+	    // 2. 메시지 스크롤 처리..(최하단에 있는 메시지 내용 확인할 수 있게 자동 스크롤 처리..)
+	    //   1) 전체 해당 데이터의 높이를 구하기
+	    //     2) 포함하고 있는 부모 객체(#chatArea)에서 스크롤 기능 메서드로 스크롤되게 처리 scrollTop()
+	    var height = parseInt($("#show").height())
+	    mx += height + 20
+	    $("#chatArea").scrollTop(mx)
 
-    <script type="text/javascript">
-var socket = new SockJS('/ws');
-var stompClient = Stomp.over(socket);
+	 }
 
-stompClient.connect({}, function(frame) {
-    console.log('Connected: ' + frame);
-    stompClient.subscribe('/topic/greetings', function(greeting){
-        //console.log(greeting);
-        console.log(greeting.body);
-        console.log(JSON.parse(greeting.body).content);
-        var obj = JSON.parse(greeting.body);
-        var curName = document.getElementById('curName').value;
-        console.log("## 받은 메시지 ##")
-        console.log(obj.msg)
-        console.log("## 받은 이름 ##")
-        console.log(obj.name)
-        
-        
-        if(curName!=obj.name)
-        	document.querySelector("#show").innerHTML += obj.name+":"+obj.msg+"<br>"
-        //document.querySelector("#show").innerHTML = JSON.parse(greeting.body).content+"<br>"
-
-    });
-});
-
-
-function sendName() {
+</script> 
 	
-    var name = document.getElementById('curName').value;
-    var msg = document.getElementById('msg').value;
-    document.querySelector("#show").innerHTML += "나:"+msg+"<br>"
-    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg':msg}));
-}
-</script>   	
-<%-- 
+ 
 <script style="text/javascript">
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('memList').classList.add('active');
@@ -568,6 +582,6 @@ function showChatRoom() {
     loadChatList();
 }
 
-</script>--%>
+</script>
 	</body>
 </html>

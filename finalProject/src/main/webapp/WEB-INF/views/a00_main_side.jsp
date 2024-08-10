@@ -63,18 +63,18 @@
                 사용자
             </li>
             <li class="sidebar-item ${currentUrl == '/profile' ? 'active' : ''}">
-                <a class="sidebar-link" onclick="goPage(profile)">
+                <a class="sidebar-link" onclick="goPage('profile')">
                     <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
                 </a>
             </li>			
             <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
-                <a class="sidebar-link" onclick="goPage(fullcalendar)">
+                <a class="sidebar-link" onclick="goPage('fullcalendar')">
                     <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Calendar</span>
                 </a>
             </li>
             
             <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
-                <a class="sidebar-link" onclick="goPage(board)">
+                <a class="sidebar-link" onclick="goPage('board')">
                     <i class="align-middle" data-feather="command"></i> <span class="align-middle">Board</span>
                 </a>
             </li>

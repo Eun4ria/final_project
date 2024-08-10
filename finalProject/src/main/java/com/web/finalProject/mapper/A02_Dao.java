@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
@@ -35,7 +34,7 @@ public interface A02_Dao {
 //@SelectKey(statement = "SELECT 'P_'||TO_CHAR(users_seq_ex.currval, 'FM0000') FROM dual", keyProperty = "user_id", before = false, resultType = String.class)
 //int insertUser(Users ins);
 @Insert("INSERT INTO users (user_id, user_name, email, password, deptno, company_id, role_code) \r\n"
-		+ "VALUES (#{user_id}, #{user_name}, #{email}, #{password}, #{deptno}, #{company_id}, #{role_code})")
+		+ "VALUES (#{user_id},  #{user_name}, #{email}, #{password}, #{deptno}, #{company_id}, #{role_code})")
 @SelectKey(statement = "SELECT #{role_code}||'_'||TO_CHAR(users_seq_ex.nextval, 'FM0000') FROM dual", keyProperty = "user_id", before = true, resultType = String.class)
 int insertUser(Users ins);
 
@@ -71,7 +70,7 @@ int insertUser(Users ins);
 //    @Options(useGeneratedKeys = true, keyProperty = "chatroom_id", keyColumn = "chatroom_id")
 	int insertchatroom(Chat ins);
 	
-	@Select("select chatroom_id from chat \r\n"
+	@Select("select chatroom_id, chatroom_name from chat \r\n"
 			+ "where owner_id=#{owner_id} \r\n"
 			+ "and user_id=#{user_id}")
 	Chat getchatRoomId(Chat get);
@@ -82,7 +81,7 @@ int insertUser(Users ins);
 			+ "AND user_id = #{user_id}")
 	   int chatroomCk(Chat ch);
 	
-	
+
 	
 //	@Select("SELECT * FROM Chat\r\n"
 //			+ "WHERE user_id = #{user_id} \r\n"

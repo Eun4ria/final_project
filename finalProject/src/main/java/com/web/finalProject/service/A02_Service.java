@@ -129,7 +129,7 @@ public class A02_Service {
 		 public int chatroomCk(Chat ch) {
 		      return dao.chatroomCk(ch); 
 		   } 
-		 // 채팅방 아이디 가져오기
+		 // 채팅방 아이디, 이름 가져오기
 		 public Chat getchatRoomId(Chat get) {
 			 return dao.getchatRoomId(get); 
 		 } 

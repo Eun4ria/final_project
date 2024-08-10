@@ -75,7 +75,7 @@
             </li>
 			
             <li class="sidebar-item ${currentUrl == '/profile' ? 'active' : ''}">
-                <a class="sidebar-link" href="profile">
+                <a class="sidebar-link" onclick="goPage('profile')" >
                     <i class="align-middle" data-feather="list"></i> <span class="align-middle">To Do List</span>
                 </a>
             </li>
@@ -85,7 +85,7 @@
                     <i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Gantt</span>
                 </a>
             	</li>			
-            <li class="sidebar-item ${currentUrl == '/fullcalendar' ? 'active' : ''}">
+           <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('fullcalendar')">
                     <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Calendar</span>
                 </a>

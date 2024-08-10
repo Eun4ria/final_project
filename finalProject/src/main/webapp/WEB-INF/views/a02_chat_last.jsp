@@ -376,7 +376,7 @@ $(document).ready(function(){
 								<c:choose>
 								<c:when test="${chatroom_id == null || chatroom_id == ''}">
 								<div class="user_info">
-								되나
+								${user_id }
 								</div>
 								</c:when>
 								<c:otherwise>
@@ -438,7 +438,11 @@ $(document).ready(function(){
 	
  	받아<input id="name" value="${param.user_id}" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
  	</div>
- 	<div  id="show"></div>
+ 	
+ 	<div id="chatArea" style="overflow-x:hidden;overflow-y: scroll;" class="input-group-append scrollbar">
+    <div id="show"></div>
+	</div>
+
 	
  </div>	
  
@@ -527,12 +531,15 @@ stompClient.connect({}, function(frame) {
 
 function sendName() {
 	
-    var name = document.getElementById('curName').value;
+	 var name = document.getElementById('curName').value;
     var msg = document.getElementById('msg').value;
     document.querySelector("#show").innerHTML += "나:"+msg+"<br>"
     stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg':msg}));
+    // 메시지 입력란 초기화
+    document.getElementById('msg').value = '';
+    
+    
 }
-
 
 </script>   	
  

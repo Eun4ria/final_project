@@ -3,8 +3,8 @@ package com.web.finalProject.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -209,7 +209,8 @@ public class A02_Controller {
 		    System.out.println("memlist:" + members);
 		    
 		    // JSP 페이지로 이동
-		    return "WEB-INF\\views\\a02_chat.jsp";	
+		   // return "WEB-INF\\views\\a02_chat2.jsp";	
+		    return "WEB-INF\\views\\a02_chat_last.jsp";	
 		}
 //	//기존 채팅방 확인
 //	@PostMapping("checkChatRoom")
@@ -233,7 +234,7 @@ public class A02_Controller {
 //	}
 	
 	
-	// http://localhost:4040/checkChatRoom?project_id=PRO_0003&user_id=M_0022&owner_id=N_0047
+	// http://localhost:4040/checkChatRoom?project_id=PRO_0003&user_name=M_0022&owner_id=N_0047
 	@PostMapping("checkChatRoom")
 	public ResponseEntity<?> getchatRoomId(Chat get)  {
 		System.out.println(get.getProject_id());
@@ -245,16 +246,29 @@ public class A02_Controller {
 		if( chatroomCk > 0) {
 			System.out.println("채팅방 정보 있음");
 			Chat chatroomId = service.getchatRoomId(get); // 채팅방 ID를 반환
-			System.out.println(chatroomId.getChatroom_id());
-			return ResponseEntity.ok(chatroomId);
+			String chatroom_Id = chatroomId.getChatroom_id();
+			String chatroom_Name = chatroomId.getChatroom_name();
+			
+			System.out.println("접속할 채팅방 아이디:"+chatroomId.getChatroom_id());
+			System.out.println("접속할 채팅방 이름:"+chatroomId.getChatroom_name());
+			System.out.println("접속할 채팅방 아이디:"+chatroom_Id);
+			System.out.println("접속할 채팅방 이름:"+chatroom_Name);
+			System.out.println("접속할 채팅방"+chatroomId);
+			return ResponseEntity.ok(new msgList3(
+					chatroom_Id,chatroom_Name));
 			
 		} else {
 			System.out.println("채팅방 정보 없음");
 			String msg = service.insertchatroom(get);
 			Chat chatroomId = service.getchatRoomId(get);
+			String chatroom_Id = chatroomId.getChatroom_id();
+			String chatroom_Name = chatroomId.getChatroom_name();
+			
 			System.out.println(chatroomId);
+			System.out.println("접속할 채팅방 아이디:"+chatroom_Id);
+			System.out.println("접속할 채팅방 이름:"+chatroom_Name);
 			return ResponseEntity.ok(new msgList2(
-					msg,chatroomId
+					msg,chatroom_Id,chatroom_Name
 			));
         }
 		
@@ -290,12 +304,21 @@ public class A02_Controller {
 //				// var socketServer = '${socketServer}'.replace(/^"|"$/g,'')
 	//
 	// 채팅-오른쪽 채팅
+	@Value("${socketServer}")
+	private String socketServer;
 	// http://localhost:4040/message
 	@GetMapping("message")
-		public String chatting(@RequestParam("chatroom_id") String chatroomId, Model d) {
-		    d.addAttribute("chatroom_id", chatroomId);
-		    System.out.println("넘겨받은 채팅창 아이디:"+chatroomId);
-			return "WEB-INF\\views\\a02_chat.jsp";
+		public String chatting(@RequestParam("chatroom_id") String chatroom_Id,
+								@RequestParam("chatroom_name") String chatroom_Name, Model d) {
+		    d.addAttribute("chatroom_id", chatroom_Id);
+		    d.addAttribute("chatroom_name", chatroom_Name);
+		    d.addAttribute("socketServer", socketServer);
+		    System.out.println("넘겨받은 채팅창 아이디:"+chatroom_Id);
+		    System.out.println("넘겨받은 채팅창 이름:"+chatroom_Name);
+		    System.out.println("소켓 확인:"+socketServer);
+		//	return "WEB-INF\\views\\a02_chat2.jsp";
+			return "WEB-INF\\views\\a02_chat_last.jsp";
+			
 		
 	  
 		}
@@ -313,15 +336,17 @@ public class A02_Controller {
 }
 class msgList2{
 	   private String msg;
-	   private Chat chatroomId;
+	   private String chatroom_Id;
+	   private String chatroom_Name;
 	   public msgList2() {
 	      super();
 	      // TODO Auto-generated constructor stub
 	   }
-	   public msgList2(String msg, Chat chatroomId) {
+	   public msgList2(String msg, String chatroom_Id, String chatroom_Name) {
 	      super();
 	      this.msg = msg;
-	      this.chatroomId = chatroomId;
+	      this.chatroom_Id = chatroom_Id;
+	      this.chatroom_Name = chatroom_Name;
 	   }
 	   public String getMsg() {
 	      return msg;
@@ -329,11 +354,43 @@ class msgList2{
 	   public void setMsg(String msg) {
 	      this.msg = msg;
 	   }
-	   public Chat getChatroomId() {
-	      return chatroomId;
+	   public String getChatroom_Id() {
+	      return chatroom_Id;
 	   }
-	   public void setChatroomId(Chat chatroomId) {
-	      this.chatroomId = chatroomId;
+	   public void setChatroom_Id(String chatroom_Id) {
+	      this.chatroom_Id = chatroom_Id;
+	   }
+	   public String getChatroom_Name() {
+		   return chatroom_Name;
+	   }
+	   public void setChatroom_Name(String chatroom_Name) {
+		   this.chatroom_Name = chatroom_Name;
+	   }
+	   
+	}
+class msgList3{
+	   private String chatroom_Id;
+	   private String chatroom_Name;
+	   public msgList3() {
+	      super();
+	      // TODO Auto-generated constructor stub
+	   }
+	   public msgList3(String chatroom_Id, String chatroom_Name) {
+	      super();
+	      this.chatroom_Id = chatroom_Id;
+	      this.chatroom_Name = chatroom_Name;
+	   }
+	   public String getChatroom_Id() {
+	      return chatroom_Id;
+	   }
+	   public void setChatroom_Id(String chatroom_Id) {
+	      this.chatroom_Id = chatroom_Id;
+	   }
+	   public String getChatroom_Name() {
+	      return chatroom_Name;
+	   }
+	   public void setChatroom_Name(String chatroom_Name) {
+	      this.chatroom_Name = chatroom_Name;
 	   }
 	   
 	}
