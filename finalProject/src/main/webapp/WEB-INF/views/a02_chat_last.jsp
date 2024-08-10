@@ -522,6 +522,7 @@ stompClient.connect({}, function(frame) {
         console.log(obj.name)
         
         
+        
         if(curName!=obj.name)
         	document.querySelector("#show").innerHTML += obj.name+":"+obj.msg+"<br>"
         //document.querySelector("#show").innerHTML = JSON.parse(greeting.body).content+"<br>"
