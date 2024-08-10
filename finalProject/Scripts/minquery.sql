@@ -237,8 +237,25 @@ FROM task;
 
 
 
+SELECT * FROM users;
 
+UPDATE users 
+SET
+user_name='민갬이'
+user_email='민갬이'
+user_company_id='민갬이'
+user_image='민갬이'
+WHERE user_id='P_0001';
 
+SELECT
+task_id AS id,
+task_name AS title,
+start_date AS "start",
+end_date AS "end",
+backgroundcolor AS backgroundColor,
+textcolor AS textColor
+FROM task
+where project_id='PRO_0003';
 
 
 

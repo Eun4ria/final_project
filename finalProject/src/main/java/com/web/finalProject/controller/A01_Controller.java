@@ -68,12 +68,7 @@ public class A01_Controller {
 		d.addAttribute("currentUrl", request.getRequestURI());
         return "WEB-INF\\views\\a02_board.jsp";
     }
-	// http://localhost:4040/pages-profile
-    @GetMapping("profile")
-    public String profile(HttpServletRequest request, Model d) {
-        d.addAttribute("currentUrl", request.getRequestURI());
-        return "WEB-INF\\views\\a01_profile.jsp";
-    }  
+	  
 	
 	
 	// 로그인 아이디 찾기 폼 
@@ -106,7 +101,11 @@ public class A01_Controller {
 	// 간트 조회
 	// http://localhost:4040/ganttList?project_id=PRO_0001
 	@RequestMapping("ganttList")
-	public ResponseEntity<?> getGantt(@RequestParam("project_id") String project_id, Model d) {
+	public ResponseEntity<?> getGantt(HttpServletRequest request, Model d) {
+		
+		HttpSession session = request.getSession(false); 
+        String project_id = (String) session.getAttribute("project_id");  
+        
 		System.out.println("project_id:"+project_id);
 		return ResponseEntity.ok(new Gantt(
 					service.getGantt(project_id),
@@ -180,20 +179,36 @@ public class A01_Controller {
     // 캘린더
     // http://localhost:4040/fullcalendar
  	@GetMapping("fullcalendar")
-	public String fullcalendar(HttpServletRequest request, Model d) {
+	public String fullcalendar(HttpServletRequest request, Model d) {	        
 		d.addAttribute("currentUrl", request.getRequestURI());
 	    return "WEB-INF\\views\\a01_fullcalendar.jsp";
 	}
 
  	// http://localhost:3030/calList 
- 	@GetMapping("calList")
- 	public ResponseEntity<List<Calendar>> getCalList(){
- 	
- 		return ResponseEntity.ok(service.getCalendarList());
+ 	@PostMapping("calList")
+ 	public ResponseEntity<List<Calendar>> getCalList(HttpServletRequest request){
+ 		HttpSession session = request.getSession(false); 
+        String project_id = (String) session.getAttribute("project_id");  
+ 		return ResponseEntity.ok(service.getCalendarList(project_id));
  	}
 
     
-    
+ 	// http://localhost:4040/profile
+    @GetMapping("profile")
+    public String profile(HttpServletRequest request, Model d) {    
+	    HttpSession session = request.getSession(false); 
+        String user_id = (String) session.getAttribute("user_id");        
+        System.out.println("프로필 user_id:"+user_id);        
+        d.addAttribute("currentUrl", request.getRequestURI());
+        d.addAttribute("profile", service.getProfile(user_id));
+        return "WEB-INF\\views\\a01_profile.jsp";
+    }
+    @PostMapping("updateProfile")
+    public String updateProfil(Users upt, Model d) {
+    	d.addAttribute("msg", service.updateProfile(upt));
+    	d.addAttribute("profile", service.getProfile(upt.getUser_id()));
+    	return "WEB-INF\\views\\a01_profile.jsp";
+    }
     
     
     

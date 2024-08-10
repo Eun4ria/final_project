@@ -234,8 +234,7 @@ function goChat(user_id){
 				// 전체 data
 				console.log("#로딩 시 전체 데이터 출력(gantt,resource)#")
 				console.log(data)
-              		
-				
+              						
                 // gantt data           
                 var gdata = {data:data.ganttList}   
 				console.log("#gantt 데이터 출력#");  

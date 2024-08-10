@@ -109,8 +109,18 @@ public class A01_Service {
     
 	
 	// 캘린더
-	public List<Calendar> getCalendarList(){
-		return dao.getCalendarList();
+	public List<Calendar> getCalendarList(String project_id){
+		return dao.getCalendarList(project_id);
+	}
+	
+	
+	
+	// 프로필
+	public Users getProfile(String id) {
+		return dao.getProfile(id);
+	}
+	public String updateProfile(Users upt) {
+		return dao.updateProfile(upt)>0?"수정 성공!":"수정 실패";
 	}
 	
 	
