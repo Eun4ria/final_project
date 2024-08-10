@@ -121,9 +121,9 @@
 
 		<script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
 		<script>
-		var project_id="${sessionScope.project_id}"
+		//var project_id="${sessionScope.project_id}"
 		function goPage(url){
-			location.href=url+"?project_id="+project_id
+			location.href=url//+"?project_id="+project_id
 		}
 		</script>
 </body>

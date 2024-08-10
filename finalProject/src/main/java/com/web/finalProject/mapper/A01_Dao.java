@@ -145,8 +145,25 @@ public interface A01_Dao {
 			+ "end_date AS \"end\",\r\n"
 			+ "backgroundcolor AS backgroundColor,\r\n"
 			+ "textcolor AS textColor\r\n"
-			+ "FROM task")
-	List<Calendar> getCalendarList();
+			+ "FROM task\r\n"
+			+ "where project_id=#{project_id}")
+	List<Calendar> getCalendarList(@Param("project_id")String project_id);
+	
+	
+	// 프로필
+	@Select("SELECT\r\n"
+			+ "* FROM users\r\n"
+			+ "WHERE USER_ID=#{user_id}")
+	Users getProfile(@Param("user_id")String id);
+	
+	@Select("UPDATE users \r\n"
+			+ "SET\r\n"
+			+ "user_name=#{user_name}\r\n"
+			+ "user_email=#{email}\r\n"
+			+ "user_company_id=#{company_id}\r\n"
+			+ "user_image=#{image}\r\n"
+			+ "WHERE user_id=#{user_id}")
+	int updateProfile(Users upt);
 	
 	
 	
