@@ -43,7 +43,6 @@ public class A01_Controller {
 	    HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
         String user_id = (String) session.getAttribute("user_id");
 
-            // user_id를 이용하여 프로젝트 목록을 가져옵니다.
             d.addAttribute("pro", service.getProjectList(user_id));
             d.addAttribute("currentUrl", request.getRequestURI());
             return "WEB-INF\\views\\a00_main.jsp";
@@ -135,12 +134,6 @@ public class A01_Controller {
 	}
 	
 	
-	// 팀원 리스트
-	// http://localhost:4040/teamList
-	@RequestMapping("teamList")
-	public ResponseEntity<List<Users>> getTeamList(@RequestParam(value = "project_id", defaultValue = "PRO_0001") String project_id) {
-	    return ResponseEntity.ok(service.getTeam(project_id));
-	}
 	
 	
 	// 프로젝트 생성
@@ -150,9 +143,9 @@ public class A01_Controller {
 		return "WEB-INF\\views\\a00_main.jsp";
 	}	
 	// 프로젝트 생성 시 팀원선택 드롭메뉴에 들어갈 전체 유저 리스트
-	// http://localhost:4040/ddd
-	@GetMapping("ddd")
-	public String ddd(Model d) {
+	// http://localhost:4040/getUsers
+	@GetMapping("getUsers")
+	public String getUsers(Model d) {
 		d.addAttribute("user", service.getUsers());
 	    return "WEB-INF\\views\\a00_main.jsp";
 	}  
@@ -192,7 +185,7 @@ public class A01_Controller {
  		return ResponseEntity.ok(service.getCalendarList(project_id));
  	}
 
-    
+
  	// http://localhost:4040/profile
     @GetMapping("profile")
     public String profile(HttpServletRequest request, Model d) {    

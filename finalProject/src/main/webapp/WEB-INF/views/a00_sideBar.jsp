@@ -97,7 +97,7 @@
                     <i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Gantt</span>
                 </a>
             	</li>			
-           <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
+           <li class="sidebar-item ${currentUrl == '/fullcalendar' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('fullcalendar')">
                     <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Calendar</span>
                 </a>

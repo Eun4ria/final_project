@@ -323,16 +323,16 @@ function goChat(user_id){
     			url:url,
     			data:{
 					id:task.id,
-    				start_date: task.start_date.toISOString(), // ISO 형식으로 변환
+    				start_date: task.start_date.toISOString(),
     		        text: task.text,
     		        duration: task.duration,
     		        parent:task.parent,
     		        priority: task.priority,
-    		        progress: task.progress,
+    		        progress: task.progress || 0,
     		        color: task.background,
     		        textcolor: task.textcolor,
     		        user: task.user,
-    		        project_id: "${param.project_id}"
+    		        project_id: "${sessionScope.project_id}"
     		    },
     			dataType:"json",
     			success: function(result) {
