@@ -234,7 +234,104 @@ function goChat(user_id){
 						</div>
           </div>
           </div>
-          
+           <div class="row" style="margin-top:1rem"> 
+          <div class="col-sm-11 col-lg-6 col-md-6 col-xl-6 w-100"  >
+                        <div class="col-12 bg-white rounded p-5" style="background:white">
+                            <div class="d-flex align-items-center justify-content-between mb-4" style="background:white">
+                                <h6 class="mb-0">To Do List - ${project_id} </h6>
+                                <a href="todoFrm">Show All</a>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <input class="form-control bg-transparent" type="text" placeholder="Enter task">
+                                <button type="button" class="btn btn-primary ms-2">Add</button>
+                            </div>
+   <%-- to do 내용 --%> 
+   
+   <div class="container-fluid p-0">
+
+               
+            <div class="row mb-4">
+        <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
+          <div class="card">
+            <div class="card-header pb-0">
+             
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                    <th></th>
+                      <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Completion</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <c:forEach var="task" items="${tasklist}">
+                    <tr>
+                    <td>
+	                    <div>
+                            <input type="checkbox" id="task1" >
+           			
+                          </div>
+                    </td>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                         
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">${task.task_name}</h6>
+                          </div>
+                        </div>
+                      </td>
+                      
+                      <td class="align-middle">
+                        <div class="progress-wrapper w-75 mx-auto">
+                          <div class="progress-info">
+                            <div class="progress-percentage">
+                              <span class="text-xs font-weight-bold">${task.progress}%</span>
+                            </div>
+                          </div>
+                          <div class="progress">
+                          <div class="progress-bar bg-gradient-info" style="width: ${task.progress}%;" role="progressbar" aria-valuenow="${pro.progress}" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    </c:forEach>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+                     
+               </div>
+
+               <div class="row">
+               
+                  
+                  
+                  
+                  
+                  <div class="col-sm-11 col-lg-6 col-md-6 col-xl-6" >
+                        
+                    </div>
+               </div>
+               
+
+            </div>
+                           
+   <%-- to do 내용 끝--%>                         
+                           
+
+
+
+
+
+                        </div>
+                    </div>
+         </div> 
   <div class="row" style="margin-top:1rem">     
   
         <div class="col-12 d-flex col-xxl-3 order-2 order-xxl-1 w-45" style="padding:0">
@@ -310,63 +407,7 @@ function goChat(user_id){
 						</div>
 						
 						
-						<div class="col-sm-11 col-lg-6 col-md-6 col-xl-6" >
-                        <div class="col-12 bg-white rounded p-5" style="background:white">
-                            <div class="d-flex align-items-center justify-content-between mb-4" style="background:white">
-                                <h6 class="mb-0">To Do List</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <input class="form-control bg-transparent" type="text" placeholder="Enter task">
-                                <button type="button" class="btn btn-primary ms-2">Add</button>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox" checked>
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span><del>Short task goes here...</del></span>
-                                        <button class="btn btn-sm text-primary"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center pt-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+						
 					</div>
 					
 

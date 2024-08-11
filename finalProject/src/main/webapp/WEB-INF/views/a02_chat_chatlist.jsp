@@ -583,36 +583,17 @@ document.addEventListener('DOMContentLoaded', () => {
 function showMem() {
     document.getElementById('memList').classList.add('active');
     document.getElementById('chatList').classList.remove('active');
-    var sessionUserId = '${sessionScope.user_id}'; // 로그인한 사용자 데이터
-	var sessionProId = '${sessionScope.project_id}'; // 로그인한 사용자 데이터
-	var user_id = '${chat.user_id}'
-    
     $.ajax({
-        url: 'checkChatRoom', 
-        method: 'POST', 
-        dataType:'json', // 전송할 데이터 형식
-        data: {
-            user_id: user_id, // 서버로 전송할 데이터
-            owner_id: sessionUserId, // 서버로 전송할 데이터
-            project_id: sessionProId // 서버로 전송할 데이터
-        },
+        url: '/chatmemListstart',
+        method: 'GET',
         success: function(data) {
-
-        	console.log(data.msg)
-            // 서버에서 응답을 성공적으로 받았을 때 처리
-            if (data.chatroom_id !=="" && data.chatroom_id !== null) {
-               
-                location.href = 'message?chatroom_id=' + data.chatroom_Id +'&user_id='+user_id+'&chatroom_name='+data.chatroom_Name;
-            } 
-   	        else {
-                alert('채팅방 정보를 가져오는 데 실패했습니다.');
-            }
+            // 서버에서 받은 데이터로 페이지 업데이트
+          
+            $('#mem_list').show();
+            $('#chat_list').hide();
         },
         error: function(err) {
-            // 요청이 실패했을 때 처리
-            console.log('AJAX 요청 실패');
-            console.log(err);
-            alert('채팅방 정보를 가져오는 중 오류가 발생했습니다.');
+            console.error('There has been a problem with your AJAX request:', error);
         }
     });
   

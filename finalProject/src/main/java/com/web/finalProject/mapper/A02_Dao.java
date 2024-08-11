@@ -11,6 +11,7 @@ import org.springframework.scheduling.config.Task;
 
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Project;
+import com.web.finalProject.vo.Tasks;
 import com.web.finalProject.vo.Users;
 
 @Mapper
@@ -102,7 +103,10 @@ int insertUser(Users ins);
 //			+ "AND project_id=#{project_id}")
 //	Chat chat(Chat chat);
 	
-	
+	@Select("SELECT * FROM task\r\n"
+			+ "WHERE user_id = #{user_id}\r\n"
+			+ "AND project_id = #{project_id}")
+	List<Tasks> getTaskList(Tasks sch);
 	
 	
 	

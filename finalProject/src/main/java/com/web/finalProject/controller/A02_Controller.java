@@ -1,6 +1,8 @@
 package com.web.finalProject.controller;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.web.finalProject.service.A02_Service;
 import com.web.finalProject.vo.Chat;
+import com.web.finalProject.vo.Tasks;
 import com.web.finalProject.vo.Users;
 
 import jakarta.servlet.http.Cookie;
@@ -135,12 +138,15 @@ public class A02_Controller {
         return "WEB-INF\\views\\a00_dash_pm.jsp";
 	}
 	@GetMapping("dashmemFrm")
-	public String dashmemFrm(@RequestParam("project_id") String project_id,
+	public String dashmemFrm(@RequestParam("project_id") String project_id, 
 			HttpServletRequest request,  Model d) {
 		
 	    HttpSession session = request.getSession(); 
 	    // 세션에 프로젝트 아이디 생성
         session.setAttribute("project_id", project_id);
+        
+        // 업무 리스트를 가져온다.
+	    
       
         return "WEB-INF\\views\\a00_dash_mem.jsp";
 	}
@@ -376,53 +382,42 @@ public class A02_Controller {
 		}
 	 
 	@MessageMapping("/hello")
-	    @SendTo("/topic/greetings")
-	    public String greeting(String message) {
-	    	System.out.println("# 메시지 전송 #"+message);
-	    	
-	    	
-	        return message;
-	    }
+    @SendTo("/topic/greetings")
+    public String greeting(String message) {
+    	System.out.println("# 메시지 전송 #"+message);
+    	
+    	
+        return message;
+    }
+
+	//채팅버튼
+//	// http://localhost:4040/chatListstart
+//		@GetMapping("chatListstart")
+//			public String chatListstart(Users sch, Model d, HttpServletRequest request , Chat chsch) {
+//			    // 세션에서 project_id를 가져온다.
+//				
+//			    HttpSession session = request.getSession();
+//			    String project_id = (String) session.getAttribute("project_id");
+//			    String user_id = (String) session.getAttribute("user_id");
+//			    System.out.println("PROJECT_ID:" + project_id);
+//			    // Chat 객체에 project_id와 user_id를 설정
+//			    sch.setProject_id(project_id);
+//			    sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
+//			    
+//			    // 회원 리스트를 가져온다.
+//			    List<Users> members = service.getmemList(sch);
+//			    List<Chat> chatlist = service.getchatList(chsch);
+//			    
+//			    // 모델에 데이터 추가
+//			    d.addAttribute("memList", members);
+//			    d.addAttribute("chatList", chatlist);
+//			    System.out.println("memlist:" + members);
+//			    
+//			    // JSP 페이지로 이동
+//			   // return "WEB-INF\\views\\a02_chat2.jsp";	
+//			    return "WEB-INF\\views\\a02_chat_chatlist.jsp";	
+//			}
 	
-	
-	// 채팅-오른쪽 채팅(a02_chat_chatlist)
-	@Value("${socketServer}")
-	private String socketServer1;
-	// http://localhost:4040/chatlist
-	@GetMapping("chatlist")
-	public String chatlist(@RequestParam("chatroom_id") String chatroom_Id,
-			@RequestParam("chatroom_name") String chatroom_Name, Model d, Users sch,HttpServletRequest request) {
-		
-		HttpSession session = request.getSession();
-		String project_id = (String) session.getAttribute("project_id");
-		String user_id = (String) session.getAttribute("user_id");
-		System.out.println("PROJECT_ID:" + project_id);
-		
-		session.setAttribute("project_id", project_id);
-		
-		// Chat 객체에 project_id와 user_id를 설정
-		sch.setProject_id(project_id);
-		sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
-		
-		// 회원 리스트를 가져온다.
-		List<Users> members = service.getmemList(sch);
-		
-		// 모델에 데이터 추가
-		d.addAttribute("memList", members);
-		System.out.println("memlist:" + members);
-		
-		d.addAttribute("chatroom_id", chatroom_Id);
-		d.addAttribute("chatroom_name", chatroom_Name);
-		d.addAttribute("socketServer", socketServer);
-		System.out.println("넘겨받은 채팅창 아이디:"+chatroom_Id);
-		System.out.println("넘겨받은 채팅창 이름:"+chatroom_Name);
-		System.out.println("소켓 확인:"+socketServer);
-		//	return "WEB-INF\\views\\a02_chat2.jsp";
-		return "WEB-INF\\views\\a02_chat_chatlist.jsp";
-		
-		
-		
-	}
 	
 	
 	// 채팅 나가기
@@ -438,8 +433,47 @@ public class A02_Controller {
 		session.removeAttribute("chatroom_id");
         return "redirect:/chatmemListstart"; // 세션 삭제 후 이동할 페이지
     }
+
 	
-	
+	// todo list
+		// http://localhost:4040/todoFrm
+			@GetMapping("todoFrm")
+			public String getTasksList(Tasks sch, Model d, HttpServletRequest request) {
+				HttpSession session = request.getSession(); 
+				String project_id = (String) session.getAttribute("project_id");
+				String user_id = (String) session.getAttribute("user_id");
+				
+				session.setAttribute("project_id", project_id);
+				session.setAttribute("user_id", user_id);
+				
+				System.out.println(project_id);
+				System.out.println(user_id);
+				
+				// Chat 객체에 project_id와 user_id를 설정
+				sch.setProject_id(project_id);
+				sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
+				    
+			    // 업무 리스트를 가져온다.
+			    List<Tasks> tasks = service.getTaskList(sch);
+			    
+			    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			    // 날짜를 문자열로 변환
+			    for (Tasks task : tasks) {
+			    	 if (task.getEnd_date() != null) {
+			             String endDateFormatted = dateFormat.format(task.getEnd_date());
+			             task.setEndDateFormatted(endDateFormatted);
+			            // System.out.println(endDateFormatted);
+			         }
+		          
+			    }
+				    
+			    // 모델에 데이터 추가
+			    d.addAttribute("tasklist", tasks);
+			    System.out.println("tasklist:" + tasks);
+
+				
+				return "WEB-INF\\views\\a02_todo.jsp";
+			}
 
 
 }

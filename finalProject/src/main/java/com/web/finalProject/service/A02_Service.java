@@ -14,6 +14,7 @@ import com.web.finalProject.util.Util;
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.RegMember;
+import com.web.finalProject.vo.Tasks;
 import com.web.finalProject.vo.Users;
 
 import jakarta.mail.Message.RecipientType;
@@ -149,4 +150,11 @@ public class A02_Service {
 			return dao.getchatList(chsch);
 		}
 	
+		
+// 업무(to do)
+			public List<Tasks> getTaskList(Tasks sch){
+				
+				return dao.getTaskList(sch);
+			}	
+
 }
