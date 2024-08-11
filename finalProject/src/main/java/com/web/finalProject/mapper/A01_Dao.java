@@ -156,12 +156,12 @@ public interface A01_Dao {
 			+ "WHERE USER_ID=#{user_id}")
 	Users getProfile(@Param("user_id")String id);
 	
-	@Select("UPDATE users \r\n"
+	@Update("UPDATE users \r\n"
 			+ "SET\r\n"
-			+ "user_name=#{user_name}\r\n"
-			+ "user_email=#{email}\r\n"
-			+ "user_company_id=#{company_id}\r\n"
-			+ "user_image=#{image}\r\n"
+			+ "user_name=#{user_name},\r\n"
+			+ "email=#{email},\r\n"
+			+ "company_id=#{company_id},\r\n"
+			+ "image=#{image}\r\n"
 			+ "WHERE user_id=#{user_id}")
 	int updateProfile(Users upt);
 	

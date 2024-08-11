@@ -258,7 +258,17 @@ FROM task
 where project_id='PRO_0003';
 
 
-
+SELECT
+ u.user_id,
+ u.user_name,
+	  d.dname,
+		 u.deptno
+	FROM
+		   users u
+		JOIN
+		   department d ON u.deptno = d.deptno
+		ORDER BY
+		    u.user_id;
 
 
 

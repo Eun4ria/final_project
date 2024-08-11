@@ -120,7 +120,7 @@ public class A01_Service {
 		return dao.getProfile(id);
 	}
 	public String updateProfile(Users upt) {
-		return dao.updateProfile(upt)>0?"수정 성공!":"수정 실패";
+		return dao.updateProfile(upt)>0?"수정 성공":"수정 실패";
 	}
 	
 	

@@ -389,7 +389,17 @@ location.href="message?user_id="+user_id
          <span>End Date</span>
            <input type="date" class="form-control" placeholder="직책명 입력" name="end_date">
          </div>
-        </div>     
+        </div>   
+        <div class="row">
+         <div class="col">
+         <span>Member</span>
+           <select name="user_id">
+           <c:forEach var="user" items="${ user}">
+           	<option value="${user.user_id}">${user_name}</option>
+           	</c:forEach>
+           </select>
+         </div>
+        </div> 
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" id="regBtn" class="btn btn-success">regist</button>        

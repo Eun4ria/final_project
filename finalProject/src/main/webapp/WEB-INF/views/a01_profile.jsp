@@ -216,6 +216,7 @@
 									  <label for="company_id">Company ID</label>
 									  <input type="text" class="form-control" id="company_id" name="company_id" value="${profile.company_id}">
 									</div>
+									<input type="hidden" class="form-control" name="image" value="${profile.image}">
 									
 									<hr class="my-3" />
 									<div class="d-grid">
