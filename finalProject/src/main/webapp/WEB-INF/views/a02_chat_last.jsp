@@ -425,11 +425,8 @@ $(document).ready(function(){
                      <div class="d-flex bd-highlight">
                         <div class="img_cont">
                            <%--<img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> --%>
-                           <img src="${path}/material-dashboard-2/assets/img/HPM-icon.png" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
-                           <%-- 
-                           <input id="curName" value="${user_id }"  disabled/>
-                            --%>
-                            
+                           <img src="${path}/material-dashboard-2/assets/img/HPM-icon.png" class="avatar img-fluid rounded me-1" alt="Profile Picture"  style="width:4rem; height:4rem; "/>
+                           <div style="font-size:0.6rem;padding-left:0.5rem;"> ${project_id } </div>
                         </div>
                         <c:choose>
                         <c:when test="${chatroom_id == null || chatroom_id == ''}">
@@ -465,7 +462,7 @@ $(document).ready(function(){
                            <input type="submit" id="exitBtn" hidden >
                            <i class="fas fa-ban"></i> Block
                         </form>
-                        <form method="get" action="todomemFrm">
+                        <form method="get" action="main">
                            
                            <button type="submit" id="exitBtn" style="background-color:transparent; border:none; color:white">
                            <i class="fas fa-sign-out-alt">
@@ -492,7 +489,7 @@ $(document).ready(function(){
    </c:when>   
    <c:otherwise>
    <div class="input-group">   
-    보내 <input id="curName" value="${sessionScope.user_name}" />
+   <input id="curName" value="${sessionScope.user_name}" />
    
     <input id="name" value="${param.user_id}" hidden/> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
     </div>
@@ -597,7 +594,7 @@ function sendName() {
    // alert(name);
    // alert(sendname);
     var alignmentClass = name === sendname ? 'right' : 'left';
-    alert(alignmentClass);
+   // alert(alignmentClass);
     
  // 메시지를 표시할 div를 생성
     var messageDiv = document.createElement('div');

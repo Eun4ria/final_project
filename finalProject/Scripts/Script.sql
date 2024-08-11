@@ -1,4 +1,5 @@
 SELECT * FROM users;
+SELECT * FROM chat;
 
 DELETE users
 WHERE user_id='N_0047';

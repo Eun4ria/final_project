@@ -153,7 +153,7 @@ function goChat(project_id){
                      </div>
                   </li>
                <li class="nav-item dropdown">
-					<a class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.project_id}')" id="messagesDropdown">
+					<a class="nav-icon dropdown-toggle" ondblclick="goChat('${sessionScope.project_id}')" id="messagesDropdown">
 							<i class="align-middle" data-feather="message-square"></i>
 					</a>
 					
@@ -224,7 +224,7 @@ function goChat(project_id){
                   </thead>
                   <tbody>
                   <c:forEach var="task" items="${tasklist}">
-                    <tr onclick="taskPage('${task.task_id}')">
+                    <tr ondblclick="taskPage('${task.task_id}')">
                     <td>
 	                    <div>
                             <input type="checkbox" id="task1" >

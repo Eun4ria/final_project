@@ -114,6 +114,14 @@
                     <i class="align-middle" data-feather="command"></i> <span class="align-middle">Deliverables M</span>
                 </a>
             </li>
+             <li class="sidebar-item ${currentUrl == '/logout' ? 'active' : ''}">
+	            <form id="logoutFrm" method="post" action="/logout">
+				</form>			
+	                <a class="sidebar-link" id="logoutBtn">
+	                    <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Log Out</span>
+	                </a>
+	             
+            </li>
 
         </ul>
 
