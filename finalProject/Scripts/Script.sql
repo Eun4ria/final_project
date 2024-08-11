@@ -202,3 +202,11 @@ CREATE SEQUENCE chatroom_name_seq
     INCREMENT BY 1;
     NOCACHE
     NOCYCLE;
+   
+SELECT * FROM chat;
+
+SELECT * FROM CHAT 
+WHERE project_id = 'PRO_0003'
+AND (user_id = 'N_0047' OR owner_id='N_0047');
+
+   

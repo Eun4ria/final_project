@@ -280,30 +280,6 @@
 .odd{
 	background-color:hsla(240,15%,30%,0.2);
 }
-/* 왼쪽 정렬 스타일 */
-.left {
-    text-align: left;
-    margin: 5px;
-    padding: 10px;
-    background-color: #f1f1f1;
-    border-radius: 10px;
-    display: inline-block;
-    max-width: 60%;
-}
-
-/* 오른쪽 정렬 스타일 */
-.right {
-    text-align: right;
-    margin: 5px;
-    padding: 10px;
-    background-color: #dcf8c6;
-    border-radius: 10px;
-    display: inline-block;
-    max-width: 60%;
-    float: right;
-    clear: both;
-}
-
 	</style>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -324,7 +300,7 @@ $(document).ready(function(){
 
      if (insertmsg=="채팅방 생성완료") {
         $(".close").click();
-        window.location.href = 'message';
+        window.location.href = 'chatlist';
      }
  }
  
@@ -369,6 +345,7 @@ $(document).ready(function(){
 <!-- 채팅 왼쪽 리스트 -->
 <div class="card-body contacts_body scrollbar">
 	<div id="mem_list">
+
 					    	<c:forEach var="mem" items="${memList}" varStatus="status">	
 					    						    	
 							<div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${mem.user_id}')" 
@@ -388,7 +365,7 @@ $(document).ready(function(){
 					    	<c:forEach var="chat" items="${chatList}" varStatus="status">	
 					    	
 					    						    	
-							<div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${chat.chatroom_id}')" 
+							<div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${chat.user_id}')" 
 							style="padding-top:0.5rem;height:4rem" >
 								<div class="img_cont" style="padding-left:1rem">
 								<img src="${path}/material-dashboard-2/assets/img/HPM-icon.png" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
@@ -471,7 +448,6 @@ $(document).ready(function(){
 						</div>
 	<script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
-    <script src="/path/to/stomp-client.js"></script>
   
   
 <c:choose>	
@@ -537,7 +513,7 @@ $(document).ready(function(){
 		            // 서버에서 응답을 성공적으로 받았을 때 처리
 		            if (data.chatroom_id !=="" && data.chatroom_id !== null) {
 		               
-		                location.href = 'message?chatroom_id=' + data.chatroom_Id +'&user_id='+user_id+'&chatroom_name='+data.chatroom_Name;
+		                location.href = 'chatlist?chatroom_id=' + data.chatroom_Id +'&user_id='+user_id+'&chatroom_name='+data.chatroom_Name;
 		            } 
 		   	        else {
 		                alert('채팅방 정보를 가져오는 데 실패했습니다.');
@@ -582,22 +558,9 @@ stompClient.connect({}, function(frame) {
 
 function sendName() {
 	
-	var name = document.getElementById('curName').value;
+	 var name = document.getElementById('curName').value;
     var msg = document.getElementById('msg').value;
-    var sendname = '${sessionScope.user_name}';
-    alert(name);
-    alert(sendname);
-    var alignmentClass = name === sendname ? 'right' : 'left';
-    alert(alignmentClass);
-    
- // 메시지를 표시할 div를 생성
-    var messageDiv = document.createElement('div');
-    messageDiv.classList.add(alignmentClass);
-    messageDiv.innerHTML = (name === sendname ? "나" : name) + ": " + msg;
-
- // 메시지를 표시할 div를 추가
-    document.querySelector("#show").appendChild(messageDiv);
-    //document.querySelector("#show").innerHTML += "나:"+msg+"<br>"
+    document.querySelector("#show").innerHTML += "나:"+msg+"<br>"
     stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg':msg}));
     // 메시지 입력란 초기화
     document.getElementById('msg').value = '';
@@ -611,27 +574,50 @@ function sendName() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('memList').classList.add('active');
-    $("#mem_list").show();
-    $("#chat_list").hide();
-
+	document.getElementById('chatList').classList.remove('active');
+    $("#mem_list").hide();
+    $("#chat_list").show();
+    
 });
 
 function showMem() {
     document.getElementById('memList').classList.add('active');
     document.getElementById('chatList').classList.remove('active');
-    //loadTeamList();
-    $("#mem_list").show();
-    $("#chat_list").hide();
+    var sessionUserId = '${sessionScope.user_id}'; // 로그인한 사용자 데이터
+	var sessionProId = '${sessionScope.project_id}'; // 로그인한 사용자 데이터
+	var user_id = '${chat.user_id}'
+    
+    $.ajax({
+        url: 'checkChatRoom', 
+        method: 'POST', 
+        dataType:'json', // 전송할 데이터 형식
+        data: {
+            user_id: user_id, // 서버로 전송할 데이터
+            owner_id: sessionUserId, // 서버로 전송할 데이터
+            project_id: sessionProId // 서버로 전송할 데이터
+        },
+        success: function(data) {
+
+        	console.log(data.msg)
+            // 서버에서 응답을 성공적으로 받았을 때 처리
+            if (data.chatroom_id !=="" && data.chatroom_id !== null) {
+               
+                location.href = 'message?chatroom_id=' + data.chatroom_Id +'&user_id='+user_id+'&chatroom_name='+data.chatroom_Name;
+            } 
+   	        else {
+                alert('채팅방 정보를 가져오는 데 실패했습니다.');
+            }
+        },
+        error: function(err) {
+            // 요청이 실패했을 때 처리
+            console.log('AJAX 요청 실패');
+            console.log(err);
+            alert('채팅방 정보를 가져오는 중 오류가 발생했습니다.');
+        }
+    });
+  
 }
 
-function showChatRoom() {
-    document.getElementById('memList').classList.remove('active');
-    document.getElementById('chatList').classList.add('active');
-  //  loadChatList();
-    $("#mem_list").hide();
-    $("#chat_list").show();
-}
 
 </script>
 	</body>

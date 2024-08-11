@@ -221,7 +221,7 @@ public class A02_Controller {
 //				}
 	// http://localhost:4040/chatmemListstart
 	@RequestMapping("chatmemListstart")
-		public String memList(Users sch, Model d, HttpServletRequest request) {
+		public String memList(Users sch, Model d, HttpServletRequest request , Chat chsch) {
 		    // 세션에서 project_id를 가져온다.
 			
 		    HttpSession session = request.getSession();
@@ -234,9 +234,11 @@ public class A02_Controller {
 		    
 		    // 회원 리스트를 가져온다.
 		    List<Users> members = service.getmemList(sch);
+		    List<Chat> chatlist = service.getchatList(chsch);
 		    
 		    // 모델에 데이터 추가
 		    d.addAttribute("memList", members);
+		    d.addAttribute("chatList", chatlist);
 		    System.out.println("memlist:" + members);
 		    
 		    // JSP 페이지로 이동
@@ -382,6 +384,47 @@ public class A02_Controller {
 	        return message;
 	    }
 	
+	
+	// 채팅-오른쪽 채팅(a02_chat_chatlist)
+	@Value("${socketServer}")
+	private String socketServer1;
+	// http://localhost:4040/chatlist
+	@GetMapping("chatlist")
+	public String chatlist(@RequestParam("chatroom_id") String chatroom_Id,
+			@RequestParam("chatroom_name") String chatroom_Name, Model d, Users sch,HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		String project_id = (String) session.getAttribute("project_id");
+		String user_id = (String) session.getAttribute("user_id");
+		System.out.println("PROJECT_ID:" + project_id);
+		
+		session.setAttribute("project_id", project_id);
+		
+		// Chat 객체에 project_id와 user_id를 설정
+		sch.setProject_id(project_id);
+		sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
+		
+		// 회원 리스트를 가져온다.
+		List<Users> members = service.getmemList(sch);
+		
+		// 모델에 데이터 추가
+		d.addAttribute("memList", members);
+		System.out.println("memlist:" + members);
+		
+		d.addAttribute("chatroom_id", chatroom_Id);
+		d.addAttribute("chatroom_name", chatroom_Name);
+		d.addAttribute("socketServer", socketServer);
+		System.out.println("넘겨받은 채팅창 아이디:"+chatroom_Id);
+		System.out.println("넘겨받은 채팅창 이름:"+chatroom_Name);
+		System.out.println("소켓 확인:"+socketServer);
+		//	return "WEB-INF\\views\\a02_chat2.jsp";
+		return "WEB-INF\\views\\a02_chat_chatlist.jsp";
+		
+		
+		
+	}
+	
+	
 	// 채팅 나가기
 	@GetMapping("/removeChatroomSession")
     public String removeChatroomSession( HttpSession session) {
@@ -395,6 +438,8 @@ public class A02_Controller {
 		session.removeAttribute("chatroom_id");
         return "redirect:/chatmemListstart"; // 세션 삭제 후 이동할 페이지
     }
+	
+	
 
 
 }

@@ -122,7 +122,7 @@ public class A02_Service {
 //	}
 
 //채팅
-	//채팅 리스트
+	//채팅-멤버 리스트
 		public List<Users> getmemList(Users sch){
 			if(sch.getProject_id()==null) sch.setProject_id("");
 			if(sch.getUser_id()==null) sch.setUser_id("");
@@ -143,6 +143,10 @@ public class A02_Service {
 		public String insertchatroom(Chat ins) {
 			
 			return dao.insertchatroom(ins)>0?"생성 완료":"생성 실패";
+		}
+	//채팅 리스트
+		public List<Chat> getchatList(Chat chsch){
+			return dao.getchatList(chsch);
 		}
 	
 }

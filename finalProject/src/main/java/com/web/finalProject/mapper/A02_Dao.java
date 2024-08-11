@@ -89,10 +89,24 @@ int insertUser(Users ins);
 			+ "AND user_id = #{user_id}")
 	   int chatroomCk(Chat ch);
 	
+	//채팅 리스트
+	@Select("SELECT * FROM CHAT \r\n"
+			+ "WHERE project_id = 'PRO_0003'\r\n"
+			+ "AND (user_id = 'N_0047' OR owner_id='N_0047')")
+	List<Chat> getchatList(Chat chsch);
+	
 
 	
 //	@Select("SELECT * FROM Chat\r\n"
 //			+ "WHERE user_id = #{user_id} \r\n"
 //			+ "AND project_id=#{project_id}")
 //	Chat chat(Chat chat);
+	
+	
+	
+	
+	
+	
+	
+	
 }
