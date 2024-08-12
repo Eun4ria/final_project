@@ -28,18 +28,22 @@
     <!--     Fonts and icons     
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   -->
-  <!-- Nucleo Icons -->
+  <!-- Nucleo Icons 
   <link href="${path}/material-dashboard-2/assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="${path}/material-dashboard-2/assets/css/nucleo-svg.css" rel="stylesheet" />
+  -->
   <!-- Font Awesome Icons   -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 
   <!-- Material Icons 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
  -->
-  <!-- CSS Files -->
+  <!-- CSS Files 
   
-  <link id="pagestyle" href="${path}/material-dashboard-2/assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+  <link id="pagestyle" href="${path}/material-dashboard-2/assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />-->
+  
+  <!-- MAIN CSS -->
+    <link rel="stylesheet" href="${path}/jobboard-master/css/style.css">    
    
 <%--다시 adminkit --%>
 
@@ -53,32 +57,33 @@
    <link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 <%--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
- <style>
-        #toggleopen {
-            display: none;
-            position: absolute;
-            width: 300px;
-            height: 100%;
-            top: 0;
-            right: -300px;
-            background-color: #f1f1f1;
-            box-shadow: -2px 0 5px rgba(0,0,0,0.3);
-            transition: right 1s;
-        }
-        #toggleopen.show {
-            right: 0;
-        }
-        #closeBtn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            font-size: 20px;
-            font-weight: bold;
-        }
-    </style>
 
+<%-- taskcss --%>
+<link rel="stylesheet" href="${path}/jobboard-master/css/custom-bs.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/fonts/line-icons/style.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/animate.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/quill.snow.css">
+    
+    <%-- 기존 --%>
+  <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
  <script>
+ var msg="${msg}"
+ if(msg != "") {
+     alert(msg); // 알림 메시지 표시
+
+     if (msg=="생성 완료") {
+        $(".close").click();
+        window.location.href = 'main';
+     }
+ }
+ 
+ function taskPage(task_id){ // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
+	  alert("토글 가즈아")
+	 }
  
 function goChat(project_id){
 	location.href="chatmemListstart?project_id="+project_id
@@ -188,137 +193,9 @@ function goChat(project_id){
                </ul>
             </div>
          </nav>
-<%-- 본문내용 - not toggle --%>
-         <main class="content" id="toggleclose">
-            <div class="container-fluid p-0">
 
-               <h1 class="h3 mb-3"><strong>To Do</strong> List</h1>
-     
-            <div class="row mb-4">
-        <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
-          <div class="card">
-            <div class="card-header pb-0">
-              <div class="row">
-                <div class="col-lg-6 col-7">
-                  <h6>Projects ${project_id}</h6>
-                  <p class="text-sm mb-0">
-                    <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    프로젝트 이름이나 기간 넣기?
-                  </p>
-                </div>
-                <div class="col-lg-6 col-5 my-auto text-end">
-                  <div class="dropdown float-lg-end pe-4">
-                    <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-v text-secondary"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card-body px-0 pb-2">
-              <div class="table-responsive">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                    <th></th>
-                      <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task</th>
-                     
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">End Date</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Priority</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Completion</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  <c:forEach var="task" items="${tasklist}">
-                    <tr ondblclick="taskPage('${task.task_id}')">
-                    <td>
-	                    <div>
-                            <input type="checkbox" id="task1" >
-           			
-                          </div>
-                    </td>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                         
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">${task.task_name}</h6>
-                          </div>
-                        </div>
-                      </td>
-                      
-                      <td >
-                      <div class="align-middle text-center" style="border:none">
-                         
-                          <div class="align-middle text-center ">
-                            <h6 class="ml-5 text-center">${task.endDateFormatted }</h6>
-                          </div>
-                        </div>
-                        
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <select  class="form-control text-center"  v-model="sta.tstatus" name="tstatus">
-				        	<option value="N">${task.tstatus}</option>
-				        	<option value="진행중">진행중</option>
-				        	<option value="완료">완료</option>
-				        	<option value="중단">중단</option>
-				        	<option value="막힘">막힘</option>
-			       		</select>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <select  class="form-control text-center"  v-model="pri.priority" name="priority">
-				        	<option value="N">${task.priority}</option>
-				        	<option value="상">상</option>
-				        	<option value="중">중</option>
-				        	<option value="하">하</option>
-			       		</select>
-                      </td>
-                      <td class="align-middle">
-                        <div class="progress-wrapper  mx-auto">
-                          <div class="progress-info">
-                            <div class="progress-percentage">
-                              <span class="text-xs font-weight-bold">${task.progress}%</span>
-                            </div>
-                          </div>
-                          <div class="progress mx-auto">
-                          <div class="progress-bar bg-gradient-info" style="width: ${task.progress}%;" role="progressbar" aria-valuenow="${pro.progress}" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    </c:forEach>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-                     
-               </div>
-
-               <div class="row">
-               
-                  
-                  
-                  
-                  
-                  <div class="col-sm-11 col-lg-6 col-md-6 col-xl-6" >
-                        
-                    </div>
-               </div>
-               
-
-            </div>
-         </main>
-<%-- 본문내용 - not toggle --%>
-<%-- 본문내용 - toggle --%>
-        <main class="content" id="toggleopen">
+<%-- 본문내용 --%>
+         <main class="content">
             <div class="container-fluid p-0">
 
           
@@ -326,9 +203,7 @@ function goChat(project_id){
 
         <div class="row mb-5">
           <div class="col-lg-12" style="background:white; padding:0">
-          <a class="sidebar-toggle js-sidebar-toggle" >
-          <i class="hamburger align-self-center"></i>
-        </a>
+          
             <form class="p-4 p-md-5 border rounded" method="post">
               <h3 class="text-black mb-5 border-bottom pb-2">Job Details</h3>
               
@@ -451,47 +326,16 @@ function goChat(project_id){
       </div>
     </div>
     </main>
+    </div>
     
-  <%-- 본문내용 toggle 끝--%>
-         
-      </div>
-   </div>
 
-   <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("#toggleopen").hide();
-
-        window.taskPage = function(task_id) { // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
-            alert("토글 가즈아");
-
-            // 토글 열기/닫기
-            $("#toggleopen").toggleClass("show");
-
-        }
-
-        $("#closeBtn").click(function(){
-            $("#toggleopen").removeClass("show");
-        });
-    });
-</script>
-  
-<script>
-var vm = Vue.createApp({
-	name:"App",
-	data(){
-		return {sta:{tstatus:"N"},
-				pri:{priority:'N'}	
-		}
-				
-		};
-	};
-});
-</script>
-
+    
+    
    
- <!-- SCRIPTS -->
+  
+  </div>
+
+    <!-- SCRIPTS -->
     <script src="${path}/jobboard-master/js/jquery.min.js"></script>
     <script src="${path}/jobboard-master/js/bootstrap.bundle.min.js"></script>
     <script src="${path}/jobboard-master/js/isotope.pkgd.min.js"></script>
@@ -509,6 +353,7 @@ var vm = Vue.createApp({
     
     <script src="${path}/jobboard-master/js/custom.js"></script>
    
-</body>
-
+   
+     
+  </body>
 </html>

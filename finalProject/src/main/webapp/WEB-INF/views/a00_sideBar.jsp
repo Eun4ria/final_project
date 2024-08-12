@@ -114,7 +114,8 @@
                     <i class="align-middle" data-feather="command"></i> <span class="align-middle">Deliverables M</span>
                 </a>
             </li>
-             <li class="sidebar-item ${currentUrl == '/logout' ? 'active' : ''}">
+            
+              <li class="sidebar-item ${currentUrl == '/sign_up' ? 'active' : ''}">
 	            <form id="logoutFrm" method="post" action="/logout">
 				</form>			
 	                <a class="sidebar-link" id="logoutBtn">
@@ -140,6 +141,12 @@
 		</nav> 
 
 		<script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
+		 <script>
+        $("#logoutBtn").click(function(){
+			$("#logoutFrm").submit()
+		})
+        
+        </script>
 		<script>
 		//var project_id="${sessionScope.project_id}"
 		function goPage(url){
