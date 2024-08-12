@@ -82,7 +82,7 @@ public class A01_Service {
 		try {
 			String tempPwd = Util.mkTPwd();
 			System.out.println("생성된 임시 비밀번호"+tempPwd);			
-			mmsg.setSubject(user.getUser_name()+"님의 임시 비밀번호입니다.");
+			mmsg.setSubject("<HPM> "+user.getUser_name()+"님의 임시 비밀번호입니다.");
 			mmsg.setRecipient(RecipientType.TO, new InternetAddress(user.getEmail()));
 			String content = user.getUser_name()+"님의 임시 비밀번호는 "+tempPwd+" 입니다.\r\n"
 					+ "빠른 시일 내 비밀번호를 변경해주세요 \r\n"

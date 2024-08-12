@@ -10,7 +10,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
 public class MessageConfig implements WebMvcConfigurer{
-	@Bean
+	@Bean(name = "messageSource")
 	public ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
         source.setBasename("classpath:/message/msg");

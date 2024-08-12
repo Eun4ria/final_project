@@ -177,7 +177,7 @@
 					
 					<div class="row">
 						<div class="col-md-4 col-xl-5">
-							<form class="card mb-3" method="post" action="updateProfile">
+							<form class="card mb-3" method="post" action="updateProfile" enctype="multipart/form-data"> 
 								<div class="card-header">
 									<h5 class="card-title mb-0">Profile Details</h5>
 								</div>
@@ -187,7 +187,7 @@
 							
 								<div class="form-group">
 					                <label class="btn btn-outline-primary">
-					                  Update Image File<input type="file" name="image">
+					                  Update Image File<input type="file"  name="image" multiple="multiple" class="form-control" value="" />
 					                </label>
 					            </div>					              
 									<%-- <p class="text-dark">${user_name}</p>

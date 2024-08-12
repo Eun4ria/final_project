@@ -79,7 +79,7 @@
                 </a>
             </li>
 
-            <li class="sidebar-item ${currentUrl == '/sign_up' ? 'active' : ''}">
+            <li class="sidebar-item ${currentUrl == '/logout' ? 'active' : ''}">
 	            <form id="logoutFrm" method="post" action="/logout">
 				</form>			
 	                <a class="sidebar-link" id="logoutBtn">

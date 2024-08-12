@@ -21,4 +21,5 @@ private final ChatHandler chatHandler;
 		// TODO Auto-generated method stub
 		registry.addHandler(chatHandler, "/chat").setAllowedOrigins("*");
 	}
+    
 }
