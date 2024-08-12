@@ -475,7 +475,30 @@ public class A02_Controller {
 				return "WEB-INF\\views\\a02_todo.jsp";
 			}
 
-			   
+			
+//board
+	// http://localhost:4040/board
+	@GetMapping("board")
+    public String board(HttpServletRequest request, Model d) {
+		d.addAttribute("currentUrl", request.getRequestURI());
+        return "WEB-INF\\views\\a00_index.jsp";
+    }
+	
+	
+//board
+	// http://localhost:4040/taskdo
+	@RequestMapping("taskdo")
+	public String taskdo(HttpServletRequest request, Model d) {
+		
+		return "WEB-INF\\views\\a02_task2.jsp";
+	}
+	// http://localhost:4040/taskdo1
+	@RequestMapping("taskdo1")
+	public String taskdo1(HttpServletRequest request, Model d) {
+		
+		return "WEB-INF\\views\\a02_taskdo.jsp";
+	}
+			  		   
 			
 			
 

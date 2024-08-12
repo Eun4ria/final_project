@@ -42,7 +42,10 @@ public class A01_Controller {
 	    // 세션에서 user_id 값을 가져옵니다.
 	    HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
         String user_id = (String) session.getAttribute("user_id");
+        String image = (String) session.getAttribute("image");
 
+        System.out.println(image);
+     
             d.addAttribute("pro", service.getProjectList(user_id));
             d.addAttribute("currentUrl", request.getRequestURI());
             return "WEB-INF\\views\\a00_main.jsp";
@@ -61,13 +64,7 @@ public class A01_Controller {
         return "WEB-INF\\views\\a02_chart.jsp";
     }
    
-	// http://localhost:4040/board
-	@GetMapping("board")
-    public String board(HttpServletRequest request, Model d) {
-		d.addAttribute("currentUrl", request.getRequestURI());
-        return "WEB-INF\\views\\a02_board.jsp";
-    }
-	  
+	
 	
 	
 	// 로그인 아이디 찾기 폼 
