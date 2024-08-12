@@ -549,6 +549,7 @@ $(document).ready(function(){
                     // 새 채팅 창의 URL 생성
                 var chatUrl = 'message?chatroom_id=' + data.chatroom_id + '&user_id=' + user_id + '&chatroom_name=' + encodeURIComponent(data.chatroom_name);
                 
+                    
                 // 새 창 열기
                 var chatWindow = window.open(chatUrl, 'ChatWindow', 'width=920px,height=720px,left=50,top=50,menubar=no,toolbar=no,location=no,status=no');
 
