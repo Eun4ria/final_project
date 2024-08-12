@@ -140,6 +140,7 @@ public class A02_Service {
 		 public Chat getchatRoomId(Chat get) {
 			 return dao.getchatRoomId(get); 
 		 } 
+		
 	//채팅 등록
 		public String insertchatroom(Chat ins) {
 			

@@ -27,20 +27,30 @@
    
    
    <style>
-   body,html{
+   html{
          height: 100%;
          margin: 0;
-         background: #7F7FD5;
-          background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
-           background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+        
+      }
+      body{
+       height: 100%;
+       width:100%;
+       margin: 0;
+       padding:0;
+     /*  background: #506189;*/
+       background-color: rgba(78,102,151, 0.7);
+       
       }
 
       .chat{
+       height: 100%;
+         width:100%;
          margin-top: auto;
          margin-bottom: auto;
       }
       .card{
-         height: 700px;
+         height: 100%;
+         width:100%;
          border-radius: 15px !important;
          background-color: rgba(0,0,0,0.4) !important;
       }
@@ -341,85 +351,15 @@ $(document).ready(function(){
 
    </head>
 
-   <!--Coded With Love By Mutiullah Samim
-   
-   <c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
-    <script>
-        alert("로그인이 필요한 서비스입니다");
-        location.href = 'signinFrm';
-    </script>
-</c:if>
-
--->
 <body> 
 
-      <div class="container-fluid h-100">
-         <div class="row justify-content-center h-100">
-            <div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
-               <div class="card-header">
-                  <form id="frm01" class="form" method="post">
-                  <div class="input-group">
-                     <input placeholder="Search..." name="user_name" value="${param.user_name}" class="form-control search">
-                      <button id="schBtn" class="input-group-text search_btn" type="submit" ><i class="fas fa-search"></i></button>
-                  
-                  </div>
-                  </form>
-               </div>
-               <div class="d-flex bd-highlight">
-                     <div class="user_info" style="padding-right:7rem;">
-                        <span style="font-size:0.9rem;"><c:out value="${sessionScope.user_name}" /></span>
-                     </div>
-            
-                     <div >
-                       <button type="button" id="memList" class="active" onclick="showMem()">팀원</button>
-                              <button type="button" id="chatList" onclick="showChatRoom()">채팅</button></div>
-                  </div>
-<!-- 채팅 왼쪽 리스트 -->
-<div class="card-body contacts_body scrollbar">
-   <div id="mem_list">
-                      <c:forEach var="mem" items="${memList}" varStatus="status">   
-                                            
-                     <div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${mem.user_id}')" 
-                     style="padding-top:0.5rem;height:4rem" >
-                        <div class="img_cont" style="padding-left:1rem">
-                           <img src="${mem.image }" class="rounded-circle user_img" style="width:3rem; height:3rem; ">   
-                        </div>
-                        <div class="user_info">
-                           <span>${mem.user_name}</span>
-                           <p >${mem.user_id}</p>
-                           
-                        </div>
-                     </div>
-                  
-                      </c:forEach>
-         </div>
-         <div id="chat_list">          
-                      <c:forEach var="chat" items="${chatList}" varStatus="status">   
-                      
-                                            
-                     <div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${sessionScope.user_id}')" 
-                     style="padding-top:0.5rem;height:4rem" >
-                        <div class="img_cont" style="padding-left:1rem">
-                        <img src="${path}/material-dashboard-2/assets/img/HPM-icon.png" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
-                           
-                           <%-- <img src="${chat.image }" class="rounded-circle user_img" style="width:3rem; height:3rem; ">   --%>
-                        </div>
-                        <div class="user_info">
-                           <span>${chat.chatroom_name}</span>
-                            
-                                      <p>with: ${chat.user_id}</p>
-                               
-                        </div>
-                     </div>
-                        
-                      </c:forEach>
-            </div>   
-            
-   </div>   </div></div>
+      
+              
+
 <!-- 오른쪽 채팅 창
             -->
          
-            <div class="col-md-8 col-xl-6 chat">
+           <div class="chat">
                <div class="card">
                   <div class="card-header msg_head">
                      <div class="d-flex bd-highlight">
@@ -523,8 +463,6 @@ $(document).ready(function(){
 </div>
 
 
-</div>
-</div>
 <script type="text/javascript">
       function goDetail(user_id){
          var sessionUserId = '${sessionScope.user_id}'; // 로그인한 사용자 데이터
@@ -540,67 +478,113 @@ $(document).ready(function(){
               },
               success: function(data) {
 
-              //   console.log(data.msg)
+                 console.log(data.msg)
                   // 서버에서 응답을 성공적으로 받았을 때 처리
                   if (data.chatroom_id !=="" && data.chatroom_id !== null) {
-                	  // ajax에서는 
-                	//  console.log('채팅 왜 안되니:'+ project_id);
-                   //   console.log('채팅 왜 안되니2:'+project_Id);
-                    // 새 채팅 창의 URL 생성
-                var chatUrl = 'message?chatroom_id=' + data.chatroom_id + '&user_id=' + user_id + '&chatroom_name=' + encodeURIComponent(data.chatroom_name);
-                
-                // 새 창 열기
-                var chatWindow = window.open(chatUrl, 'ChatWindow', 'width=920px,height=720px,left=50,top=50,menubar=no,toolbar=no,location=no,status=no');
-
-              //     window.open()
-              //        location.href = 'message?chatroom_id=' + data.chatroom_Id +'&user_id='+user_id+'&chatroom_name='+data.chatroom_Name;
-              //    } 
-                if (!chatWindow) {
-                    alert('사이트에서 팝업을 허용해 주세요.');
-                }
-            } else {
-                alert('채팅방 정보를 가져오는 데 실패했습니다.');
-            }
+                     
+                      location.href = 'message?chatroom_id=' + data.chatroom_Id +'&user_id='+user_id+'&chatroom_name='+data.chatroom_Name;
+                  } 
+                    else {
+                      alert('채팅방 정보를 가져오는 데 실패했습니다.');
+                  }
               },
               error: function(err) {
                   // 요청이 실패했을 때 처리
                   console.log('AJAX 요청 실패');
                   console.log(err);
-                 // console.log(data.Project_Id);
-                 // console.log(project_id);
                   alert('채팅방 정보를 가져오는 중 오류가 발생했습니다.');
               }
           });
       }
    </script>  
 
-<script style="text/javascript">
+    <script type="text/javascript">
+// 메세지 보내는 소켓  
+var socket = new SockJS('/ws');
+var stompClient = Stomp.over(socket);
 
+stompClient.connect({}, function(frame) {
+    console.log('Connected: ' + frame);
+    stompClient.subscribe('/topic/greetings', function(greeting){
+        var obj = JSON.parse(greeting.body);
+        var curName = document.getElementById('curName').value;
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('memList').classList.add('active');
-    $("#mem_list").show();
-    $("#chat_list").hide();
+        console.log("## 받은 메시지 ##");
+        console.log(obj.msg);
+        console.log("## 받은 이름 ##");
+        console.log(obj.name);
 
+      //  if(curName != obj.name)
+     //       displayMessage(obj.name, obj.msg, 'left');
+
+        // 받은 메시지를 localStorage에 저장
+       // storeMessage(obj.name, obj.msg);
+    });
 });
 
-function showMem() {
-    document.getElementById('memList').classList.add('active');
-    document.getElementById('chatList').classList.remove('active');
-    $("#mem_list").show();
-    $("#chat_list").hide();
+// 메시지를 localStorage에 저장하는 함수
+function storeMessage(name, msg) {
+    var chatroom_id = document.getElementById('chatroom_id').value;
+    var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
+    messages.push({name: name, msg: msg});
+    localStorage.setItem(chatroom_id, JSON.stringify(messages));
 }
 
-function showChatRoom() {
-    document.getElementById('memList').classList.remove('active');
-    document.getElementById('chatList').classList.add('active');
-  //  loadChatList();
-    $("#mem_list").hide();
-    $("#chat_list").show();
-    
+// 메시지를 화면에 표시하는 함수
+function displayMessage(name, msg, alignment) {
+    var messageDiv = document.createElement('div');
+    messageDiv.classList.add(alignment);
+    //화면에 보이나
+    messageDiv.innerHTML =  msg + "<br>";
+    document.querySelector("#show").appendChild(messageDiv);
+    document.getElementById('msg').value = '';
+
+    // 메시지를 localStorage에 저장
+   // storeMessage(name, msg);
+}
+
+function sendName() {
+    var name = document.getElementById('curName').value;
+    var msg = document.getElementById('msg').value;
+    var sendname = '${sessionScope.user_name}';
+    var alignmentClass = name === sendname ? 'right' : 'left';
+
+    // 메시지를 화면에 표시
+    displayMessage(name, msg, alignmentClass);
+
+    // 메시지를 localStorage에 저장
+    storeMessage(name, msg);
+
+    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg': msg}));
+
+    scrollToBottom();
+    document.getElementById('msg').value = '';
+}
+function scrollToBottom() {
+	 var chatArea = document.getElementById('chatArea');
+	    chatArea.scrollTop = chatArea.scrollHeight;
+}
+// 페이지 로드 시 localStorage에서 메시지 불러오기
+window.onload = function() {
+    var chatroom_id = document.getElementById('chatroom_id').value;
+    var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
+   messages.forEach(function(message) {
+        var alignmentClass = message.name === '${sessionScope.user_name}' ? 'right' : 'left';
+        displayMessage(message.name, message.msg, alignmentClass);
+    });
+   scrollToBottom(); // 페이지 로드 후 스크롤을 아래로 이동
+}
+
+// localStorage 내용 삭제
+function clearLocalStorage() {
+   // localStorage.clear(); // 모든 채팅방에 대해 
+    localStorage.removeItem(chatroom_id)
+    document.querySelector("#show").innerHTML = '';
 }
 
 
 </script>
+
+
    </body>
 </html>

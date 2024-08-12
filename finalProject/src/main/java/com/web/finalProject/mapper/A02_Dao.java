@@ -84,16 +84,31 @@ int insertUser(Users ins);
 			+ "and user_id=#{user_id}")
 	Chat getchatRoomId(Chat get);
 	
+	//개인
+	@Select("select user_name from users u\r\n"
+			+ "join chat c"
+			+ "where chatroom_id=#{chatroom_id} \r\n"
+			+ "and u.user_id=c.user_id")
+	Users getchatMemname(Users getname);
+	
+	//단체
+	@Select("select user_name from users u\r\n"
+			+ "join chat c"
+			+ "where chatroom_name=#{chatroom_name} \r\n"
+			+ "and u.user_id=c.user_id")
+	Chat getchatMemnames(Chat getnames);
+	
 	//채팅방 유무 확인
 	@Select("SELECT COUNT(*) FROM chat c \r\n"
 			+ "WHERE owner_id = #{owner_id}\r\n"
-			+ "AND user_id = #{user_id}")
+			+ "AND user_id = #{user_id}\r\n"
+			+ "AND project_id = #{project_id}")
 	   int chatroomCk(Chat ch);
 	
 	//채팅 리스트
 	@Select("SELECT * FROM CHAT \r\n"
-			+ "WHERE project_id = 'PRO_0003'\r\n"
-			+ "AND (user_id = 'N_0047' OR owner_id='N_0047')")
+			+ "WHERE project_id = #{project_id}\r\n"
+			+ "AND (user_id = #{user_id} OR owner_id=#{user_id})")
 	List<Chat> getchatList(Chat chsch);
 	
 
