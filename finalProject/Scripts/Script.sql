@@ -9,6 +9,13 @@ AND project_id = 'PRO_0001';
 DELETE users
 WHERE user_id='N_0047';
 
+DROP SEQUENCE CHATROOM_NAME_SEQ;
+
+SELECT COUNT(*) FROM chat c 
+WHERE ((owner_id = 'N_0047' AND user_id='P_0001')
+OR (owner_id = 'P_0001' AND user_id='N_0047'))
+AND project_id = 'PRO_0003';
+
 SELECT * FROM PROJECT;
 SELECT * FROM COMPANY c;
 SELECT * FROM chat;
@@ -48,6 +55,16 @@ VALUES
 INSERT INTO task (TASK_ID, TASK_NAME, START_DATE, END_DATE, PRIORITY, PARENT_ID, CONTENT, PROGRESS, BACKGROUNDCOLOR, TEXTCOLOR, TSTATUS, USER_ID, PROJECT_ID)
 VALUES 
 ('TSK_0005', '디자인', TO_DATE('2024-07-17', 'YYYY-MM-DD'), TO_DATE('2024-07-24', 'YYYY-MM-DD'), '중', NULL, '디자인 작업', 30, 'purple', 'white', '진행중', 'M_0026', 'PRO_0001');
+
+-- chat_seq 시퀀스 생성
+CREATE SEQUENCE chat_name_seq
+START WITH 1
+INCREMENT BY 1;
+
+-- chat_seq2 시퀀스 생성
+CREATE SEQUENCE chat_name_seq1
+START WITH 1
+INCREMENT BY 1;
 
 
 SELECT * FROM users WHERE USER_ID = 'P_0012';

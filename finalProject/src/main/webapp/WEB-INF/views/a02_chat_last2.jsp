@@ -489,7 +489,7 @@ $(document).ready(function(){
    </c:when>   
    <c:otherwise>
    <div class="input-group">   
-   <input id="chatroom_id" value="${chatroom_id}" hidden/>
+   <input id="chatroom_name" value="${chatroom_name}" hidden/>
    <input id="curName" value="${sessionScope.user_name}" />
    
     <input id="name" value="${param.user_id}" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
@@ -498,6 +498,7 @@ $(document).ready(function(){
    <div class="card-body input-group-append scrollbar" id="chatArea" >
 
     <div id="show" style="width:100%">
+  
     </div>
 
    
@@ -546,7 +547,9 @@ $(document).ready(function(){
                 	  // ajax에서는 
                 	//  console.log('채팅 왜 안되니:'+ project_id);
                    //   console.log('채팅 왜 안되니2:'+project_Id);
+                  // console.log('chatroom_name:', chatroom_name);
                       location.href = 'message?chatroom_id=' + data.chatroom_Id +'&user_id='+user_id+'&chatroom_name='+data.chatroom_Name;
+                     
                   } 
                     else {
                       alert('채팅방 정보를 가져오는 데 실패했습니다.');
@@ -574,40 +577,43 @@ stompClient.connect({}, function(frame) {
     stompClient.subscribe('/topic/greetings', function(greeting){
         var obj = JSON.parse(greeting.body);
         var curName = document.getElementById('curName').value;
-
+       
         console.log("## 받은 메시지 ##");
         console.log(obj.msg);
         console.log("## 받은 이름 ##");
         console.log(obj.name);
 
-      //  if(curName != obj.name)
-     //       displayMessage(obj.name, obj.msg, 'left');
-
+        if(curName != obj.name){ //어제 지운거
+            displayMessage(obj.name, obj.msg, 'left'); //어제 지운거 :없으면 바로 화면에 안나옴
+       }
         // 받은 메시지를 localStorage에 저장
-       // storeMessage(obj.name, obj.msg);
+     //   storeMessage(obj.name, obj.msg);
     });
 });
 
+
+//메시지를 화면에 표시하는 함수
+function displayMessage(name, msg, alignment) {
+ var messageDiv = document.createElement('div');
+ messageDiv.classList.add(alignment);
+ //화면에 보이는 부분
+ messageDiv.innerHTML =  msg + "<br>";
+ document.querySelector("#show").appendChild(messageDiv);
+ document.getElementById('msg').value = '';
+
+ // 메시지를 localStorage에 저장
+ storeMessage(name, msg); //어제 지운거
+ 
+}
+
 // 메시지를 localStorage에 저장하는 함수
 function storeMessage(name, msg) {
-    var chatroom_id = document.getElementById('chatroom_id').value;
-    var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
+    var chatroom_name = document.getElementById('chatroom_name').value;
+    var messages = JSON.parse(localStorage.getItem(chatroom_name)) || [];
     messages.push({name: name, msg: msg});
-    localStorage.setItem(chatroom_id, JSON.stringify(messages));
+    localStorage.setItem(chatroom_name, JSON.stringify(messages));
 }
 
-// 메시지를 화면에 표시하는 함수
-function displayMessage(name, msg, alignment) {
-    var messageDiv = document.createElement('div');
-    messageDiv.classList.add(alignment);
-    //화면에 보이는 부분
-    messageDiv.innerHTML =  msg + "<br>";
-    document.querySelector("#show").appendChild(messageDiv);
-    document.getElementById('msg').value = '';
-
-    // 메시지를 localStorage에 저장
-   // storeMessage(name, msg);
-}
 
 function sendName() {
     var name = document.getElementById('curName').value;
@@ -615,16 +621,19 @@ function sendName() {
     var sendname = '${sessionScope.user_name}';
     var alignmentClass = name === sendname ? 'right' : 'left';
 
+    
+    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg': msg}));
     // 메시지를 화면에 표시
-    displayMessage(name, msg, alignmentClass);
+  displayMessage(name, msg, alignmentClass);
 
     // 메시지를 localStorage에 저장
     storeMessage(name, msg);
 
-    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg': msg}));
+ 
 
     scrollToBottom();
     document.getElementById('msg').value = '';
+    
 }
 function scrollToBottom() {
     var chatArea = document.getElementById('chatArea');
@@ -632,19 +641,21 @@ function scrollToBottom() {
 }
 // 페이지 로드 시 localStorage에서 메시지 불러오기
 window.onload = function() {
-    var chatroom_id = document.getElementById('chatroom_id').value;
-    var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
+    var chatroom_name = document.getElementById('chatroom_name').value;
+    var messages = JSON.parse(localStorage.getItem(chatroom_name)) || [];
    messages.forEach(function(message) {
         var alignmentClass = message.name === '${sessionScope.user_name}' ? 'right' : 'left';
         displayMessage(message.name, message.msg, alignmentClass);
+       
     });
    scrollToBottom(); // 페이지 로드 후 스크롤을 아래로 이동
 }
 
 // localStorage 내용 삭제
 function clearLocalStorage() {
+	  var chatroom_name = document.getElementById('chatroom_name').value;
    // localStorage.clear(); // 모든 채팅방에 대해 
-    localStorage.removeItem(chatroom_id) //현재 채팅
+    localStorage.removeItem(chatroom_name) //현재 채팅
     document.querySelector("#show").innerHTML = '';
 }
 
