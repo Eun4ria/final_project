@@ -198,6 +198,16 @@ public class A02_Controller {
 		// 세션에 프로젝트 아이디 생성
 		session.setAttribute("project_id", project_id);
 		
+		String user_id = (String) session.getAttribute("user_id");
+		
+		session.setAttribute("user_id", user_id);
+		
+		System.out.println(project_id);
+		System.out.println(user_id);
+		
+	
+		
+		
 		return "WEB-INF\\views\\a02_todo_mem.jsp";
 	}
 	
@@ -237,6 +247,8 @@ public class A02_Controller {
 		    // Chat 객체에 project_id와 user_id를 설정
 		    sch.setProject_id(project_id);
 		    sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
+		    chsch.setProject_id(project_id);
+		    chsch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
 		    
 		    // 회원 리스트를 가져온다.
 		    List<Users> members = service.getmemList(sch);
@@ -248,8 +260,8 @@ public class A02_Controller {
 		    System.out.println("memlist:" + members);
 		    
 		    // JSP 페이지로 이동
-		   // return "WEB-INF\\views\\a02_chat2.jsp";	
-		    return "WEB-INF\\views\\a02_chat_last.jsp";	
+		    return "WEB-INF\\views\\a02_chat_last2.jsp";	
+		   // return "WEB-INF\\views\\a02_chat_last.jsp";	
 		}
 //	//기존 채팅방 확인
 //	@PostMapping("checkChatRoom")
@@ -282,19 +294,28 @@ public class A02_Controller {
 		
 		int chatroomCk = service.chatroomCk(get);
 		
+		
 		if( chatroomCk > 0) {
 			System.out.println("채팅방 정보 있음");
 			Chat chatroomId = service.getchatRoomId(get); // 채팅방 ID를 반환
 			String chatroom_Id = chatroomId.getChatroom_id();
 			String chatroom_Name = chatroomId.getChatroom_name();
+			//HttpSession session = request.getSession();
+			//  String project_id = (String) session.getAttribute("project_id");
+			//  System.out.println("좀 돼라"+project_id);
+			//String Project_Id = chatroomId.getProject_id();
 			
 			System.out.println("접속할 채팅방 아이디:"+chatroomId.getChatroom_id());
 			System.out.println("접속할 채팅방 이름:"+chatroomId.getChatroom_name());
 			System.out.println("접속할 채팅방 아이디:"+chatroom_Id);
 			System.out.println("접속할 채팅방 이름:"+chatroom_Name);
+		//	System.out.println("현재 접속해있는 프로젝트:"+Project_Id);
 			System.out.println("접속할 채팅방"+chatroomId);
+//			return ResponseEntity.ok(new msgList3(
+//					chatroom_Id,chatroom_Name,Project_Id));
 			return ResponseEntity.ok(new msgList3(
-					chatroom_Id,chatroom_Name));
+					chatroom_Id,chatroom_Name
+					));
 			
 		} else {
 			System.out.println("채팅방 정보 없음");
@@ -302,45 +323,26 @@ public class A02_Controller {
 			Chat chatroomId = service.getchatRoomId(get);
 			String chatroom_Id = chatroomId.getChatroom_id();
 			String chatroom_Name = chatroomId.getChatroom_name();
+			//String Project_Id = chatroomId.getProject_id();
+			//HttpSession session = request.getSession();
+			//  String project_id = (String) session.getAttribute("project_id");
+			//  System.out.println("좀 돼라"+project_id);
 			
 			System.out.println(chatroomId);
 			System.out.println("접속할 채팅방 아이디:"+chatroom_Id);
 			System.out.println("접속할 채팅방 이름:"+chatroom_Name);
-			return ResponseEntity.ok(new msgList2(
-					msg,chatroom_Id,chatroom_Name
+			//System.out.println("현재 접속해있는 프로젝트:"+Project_Id);
+//			return ResponseEntity.ok(new msgList2(
+//					msg,chatroom_Id,chatroom_Name,Project_Id
+				return ResponseEntity.ok(new msgList2(
+						msg,chatroom_Id,chatroom_Name
 			));
         }
 		
 
 	}
 	
-	
-	
-//	//채팅 생성
-//	@GetMapping("insertChatRoom")
-//	public String insertchatroom(Chat ins, Model d, HttpSession session) {
-//		
-//		// 채팅룸을 생성하고 생성된 채팅룸 ID를 가져옴
-//	    String chatroom_id = service.insertchatroom(ins);
-//	    
-//	    // 세션에 chatroom_id를 저장
-//	    if (chatroom_id != null) {
-//            session.setAttribute("chatroom_id", chatroom_id);
-//        }
-//	    System.out.println("넘겨오는 데이터:"+chatroom_id);
-//		return "redirect:message";
-//	}
 
-	// 채팅-오른쪽 채팅
-//				// http://localhost:4040/chat
-//				@Value("${socketServer}")
-//				private String socketServer;
-//				@GetMapping("chat")
-//				public String chat(Model d) {
-//					d.addAttribute("socketServer", socketServer);
-//					return "WEB-INF\\views\\a02_chat2.jsp";
-//				}
-//				// var socketServer = '${socketServer}'.replace(/^"|"$/g,'')
 	//
 	// 채팅-오른쪽 채팅
 	@Value("${socketServer}")
@@ -369,16 +371,17 @@ public class A02_Controller {
 	    System.out.println("memlist:" + members);
 		
 	    d.addAttribute("chatroom_id", chatroom_Id);
+	  
 		    d.addAttribute("chatroom_name", chatroom_Name);
 		    d.addAttribute("socketServer", socketServer);
 		    System.out.println("넘겨받은 채팅창 아이디:"+chatroom_Id);
 		    System.out.println("넘겨받은 채팅창 이름:"+chatroom_Name);
 		    System.out.println("소켓 확인:"+socketServer);
-		//	return "WEB-INF\\views\\a02_chat2.jsp";
-			return "WEB-INF\\views\\a02_chat_last.jsp";
-			
-		
-	  
+			return "WEB-INF\\views\\a02_chat_last2.jsp";
+		//	return "WEB-INF\\views\\a02_chat_last.jsp"; //원래
+		// return "WEB-INF\\views\\a02_chat.jsp"; //모달
+		    
+
 		}
 	 
 	@MessageMapping("/hello")
@@ -390,35 +393,7 @@ public class A02_Controller {
         return message;
     }
 
-	//채팅버튼
-//	// http://localhost:4040/chatListstart
-//		@GetMapping("chatListstart")
-//			public String chatListstart(Users sch, Model d, HttpServletRequest request , Chat chsch) {
-//			    // 세션에서 project_id를 가져온다.
-//				
-//			    HttpSession session = request.getSession();
-//			    String project_id = (String) session.getAttribute("project_id");
-//			    String user_id = (String) session.getAttribute("user_id");
-//			    System.out.println("PROJECT_ID:" + project_id);
-//			    // Chat 객체에 project_id와 user_id를 설정
-//			    sch.setProject_id(project_id);
-//			    sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
-//			    
-//			    // 회원 리스트를 가져온다.
-//			    List<Users> members = service.getmemList(sch);
-//			    List<Chat> chatlist = service.getchatList(chsch);
-//			    
-//			    // 모델에 데이터 추가
-//			    d.addAttribute("memList", members);
-//			    d.addAttribute("chatList", chatlist);
-//			    System.out.println("memlist:" + members);
-//			    
-//			    // JSP 페이지로 이동
-//			   // return "WEB-INF\\views\\a02_chat2.jsp";	
-//			    return "WEB-INF\\views\\a02_chat_chatlist.jsp";	
-//			}
-	
-	
+
 	
 	// 채팅 나가기
 	@GetMapping("/removeChatroomSession")
@@ -449,7 +424,7 @@ public class A02_Controller {
 				System.out.println(project_id);
 				System.out.println(user_id);
 				
-				// Chat 객체에 project_id와 user_id를 설정
+				// Task 객체에 project_id와 user_id를 설정
 				sch.setProject_id(project_id);
 				sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
 				    
@@ -507,6 +482,7 @@ class msgList2{
 	   private String msg;
 	   private String chatroom_Id;
 	   private String chatroom_Name;
+	//   private String Project_Id;
 	   public msgList2() {
 	      super();
 	      // TODO Auto-generated constructor stub
@@ -516,6 +492,7 @@ class msgList2{
 	      this.msg = msg;
 	      this.chatroom_Id = chatroom_Id;
 	      this.chatroom_Name = chatroom_Name;
+	   //   this.Project_Id = Project_Id;
 	   }
 	   public String getMsg() {
 	      return msg;
@@ -535,11 +512,18 @@ class msgList2{
 	   public void setChatroom_Name(String chatroom_Name) {
 		   this.chatroom_Name = chatroom_Name;
 	   }
+//	   public String getProject_Id() {
+//		   return Project_Id;
+//	   }
+//	   public void setProject_Id(String Project_Id) {
+//		   this.Project_Id = Project_Id;
+//	   }
 	   
 	}
 class msgList3{
 	   private String chatroom_Id;
 	   private String chatroom_Name;
+	 //  private String Project_Id;
 	   public msgList3() {
 	      super();
 	      // TODO Auto-generated constructor stub
@@ -548,6 +532,7 @@ class msgList3{
 	      super();
 	      this.chatroom_Id = chatroom_Id;
 	      this.chatroom_Name = chatroom_Name;
+	   //   this.Project_Id = Project_Id;
 	   }
 	   public String getChatroom_Id() {
 	      return chatroom_Id;
@@ -561,5 +546,11 @@ class msgList3{
 	   public void setChatroom_Name(String chatroom_Name) {
 	      this.chatroom_Name = chatroom_Name;
 	   }
+//	   public String getProject_Id() {
+//		   return Project_Id;
+//	   }
+//	   public void setProject_Id(String Project_Id) {
+//		   this.Project_Id = Project_Id;
+//	   }
 	   
 	}

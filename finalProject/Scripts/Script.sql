@@ -1,6 +1,11 @@
 SELECT * FROM users;
 SELECT * FROM chat;
 
+SELECT COUNT(*) FROM chat c
+WHERE owner_id = 'N_0047'
+AND user_id = 'M_0022'
+AND project_id = 'PRO_0001';
+
 DELETE users
 WHERE user_id='N_0047';
 

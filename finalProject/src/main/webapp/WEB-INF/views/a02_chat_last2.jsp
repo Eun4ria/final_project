@@ -540,28 +540,17 @@ $(document).ready(function(){
               },
               success: function(data) {
 
-              //   console.log(data.msg)
+                 console.log(data.msg)
                   // 서버에서 응답을 성공적으로 받았을 때 처리
                   if (data.chatroom_id !=="" && data.chatroom_id !== null) {
                 	  // ajax에서는 
                 	//  console.log('채팅 왜 안되니:'+ project_id);
                    //   console.log('채팅 왜 안되니2:'+project_Id);
-                    // 새 채팅 창의 URL 생성
-                var chatUrl = 'message?chatroom_id=' + data.chatroom_id + '&user_id=' + user_id + '&chatroom_name=' + encodeURIComponent(data.chatroom_name);
-                
-                    
-                // 새 창 열기
-                var chatWindow = window.open(chatUrl, 'ChatWindow', 'width=920px,height=720px,left=50,top=50,menubar=no,toolbar=no,location=no,status=no');
-
-              //     window.open()
-              //        location.href = 'message?chatroom_id=' + data.chatroom_Id +'&user_id='+user_id+'&chatroom_name='+data.chatroom_Name;
-              //    } 
-                if (!chatWindow) {
-                    alert('사이트에서 팝업을 허용해 주세요.');
-                }
-            } else {
-                alert('채팅방 정보를 가져오는 데 실패했습니다.');
-            }
+                      location.href = 'message?chatroom_id=' + data.chatroom_Id +'&user_id='+user_id+'&chatroom_name='+data.chatroom_Name;
+                  } 
+                    else {
+                      alert('채팅방 정보를 가져오는 데 실패했습니다.');
+                  }
               },
               error: function(err) {
                   // 요청이 실패했을 때 처리
@@ -575,6 +564,93 @@ $(document).ready(function(){
       }
    </script>  
 
+    <script type="text/javascript">
+// 메세지 보내는 소켓  
+var socket = new SockJS('/ws');
+var stompClient = Stomp.over(socket);
+
+stompClient.connect({}, function(frame) {
+    console.log('Connected: ' + frame);
+    stompClient.subscribe('/topic/greetings', function(greeting){
+        var obj = JSON.parse(greeting.body);
+        var curName = document.getElementById('curName').value;
+
+        console.log("## 받은 메시지 ##");
+        console.log(obj.msg);
+        console.log("## 받은 이름 ##");
+        console.log(obj.name);
+
+      //  if(curName != obj.name)
+     //       displayMessage(obj.name, obj.msg, 'left');
+
+        // 받은 메시지를 localStorage에 저장
+       // storeMessage(obj.name, obj.msg);
+    });
+});
+
+// 메시지를 localStorage에 저장하는 함수
+function storeMessage(name, msg) {
+    var chatroom_id = document.getElementById('chatroom_id').value;
+    var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
+    messages.push({name: name, msg: msg});
+    localStorage.setItem(chatroom_id, JSON.stringify(messages));
+}
+
+// 메시지를 화면에 표시하는 함수
+function displayMessage(name, msg, alignment) {
+    var messageDiv = document.createElement('div');
+    messageDiv.classList.add(alignment);
+    //화면에 보이는 부분
+    messageDiv.innerHTML =  msg + "<br>";
+    document.querySelector("#show").appendChild(messageDiv);
+    document.getElementById('msg').value = '';
+
+    // 메시지를 localStorage에 저장
+   // storeMessage(name, msg);
+}
+
+function sendName() {
+    var name = document.getElementById('curName').value;
+    var msg = document.getElementById('msg').value;
+    var sendname = '${sessionScope.user_name}';
+    var alignmentClass = name === sendname ? 'right' : 'left';
+
+    // 메시지를 화면에 표시
+    displayMessage(name, msg, alignmentClass);
+
+    // 메시지를 localStorage에 저장
+    storeMessage(name, msg);
+
+    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg': msg}));
+
+    scrollToBottom();
+    document.getElementById('msg').value = '';
+}
+function scrollToBottom() {
+    var chatArea = document.getElementById('chatArea');
+       chatArea.scrollTop = chatArea.scrollHeight;
+}
+// 페이지 로드 시 localStorage에서 메시지 불러오기
+window.onload = function() {
+    var chatroom_id = document.getElementById('chatroom_id').value;
+    var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
+   messages.forEach(function(message) {
+        var alignmentClass = message.name === '${sessionScope.user_name}' ? 'right' : 'left';
+        displayMessage(message.name, message.msg, alignmentClass);
+    });
+   scrollToBottom(); // 페이지 로드 후 스크롤을 아래로 이동
+}
+
+// localStorage 내용 삭제
+function clearLocalStorage() {
+   // localStorage.clear(); // 모든 채팅방에 대해 
+    localStorage.removeItem(chatroom_id) //현재 채팅
+    document.querySelector("#show").innerHTML = '';
+}
+
+
+</script>     
+ 
 <script style="text/javascript">
 
 
@@ -588,19 +664,51 @@ document.addEventListener('DOMContentLoaded', () => {
 function showMem() {
     document.getElementById('memList').classList.add('active');
     document.getElementById('chatList').classList.remove('active');
-    $("#mem_list").show();
-    $("#chat_list").hide();
+    //loadTeamList();
+    $.ajax({
+        url: '/chatmemListstart',
+        method: 'GET',
+        success: function(data) {
+            // HTML을 업데이트하여 chat_list만 보이게 함
+            $('body').html(data);
+
+            // mem_list를 숨기고 chat_list를 보이게 함
+            $('#mem_list').show();
+            $('#chat_list').hide();
+        },
+        error: function(err) {
+            console.error('There has been a problem with your AJAX request:', err);
+        }
+    });
 }
 
 function showChatRoom() {
     document.getElementById('memList').classList.remove('active');
     document.getElementById('chatList').classList.add('active');
   //  loadChatList();
-    $("#mem_list").hide();
-    $("#chat_list").show();
-    
+  //  $("#mem_list").hide();
+  //  $("#chat_list").show();
+    $.ajax({
+        url: '/chatmemListstart',
+        method: 'GET',
+        success: function(data) {
+            // HTML을 업데이트하여 chat_list만 보이게 함
+            $('body').html(data);
+
+            // mem_list를 숨기고 chat_list를 보이게 함
+            $('#mem_list').hide();
+            $('#chat_list').show();
+        },
+        error: function(err) {
+            console.error('There has been a problem with your AJAX request:', err);
+        }
+    });
 }
 
+function scrollToBottom() {
+    var chatArea = document.getElementById('chatArea');
+    chatArea.scrollTop = chatArea.scrollHeight;
+}
 
 </script>
    </body>
