@@ -260,8 +260,8 @@ public class A02_Controller {
 		    System.out.println("memlist:" + members);
 		    
 		    // JSP 페이지로 이동
-		   // return "WEB-INF\\views\\a02_chat2.jsp";	
-		    return "WEB-INF\\views\\a02_chat_last.jsp";	
+		    return "WEB-INF\\views\\a02_chat_last2.jsp";	
+		   // return "WEB-INF\\views\\a02_chat_last.jsp";	
 		}
 //	//기존 채팅방 확인
 //	@PostMapping("checkChatRoom")
@@ -377,9 +377,9 @@ public class A02_Controller {
 		    System.out.println("넘겨받은 채팅창 아이디:"+chatroom_Id);
 		    System.out.println("넘겨받은 채팅창 이름:"+chatroom_Name);
 		    System.out.println("소켓 확인:"+socketServer);
-		//	return "WEB-INF\\views\\a02_chat2.jsp";
+			return "WEB-INF\\views\\a02_chat_last2.jsp";
 		//	return "WEB-INF\\views\\a02_chat_last.jsp"; //원래
-		 return "WEB-INF\\views\\a02_chatmodal.jsp"; //모달
+		// return "WEB-INF\\views\\a02_chat.jsp"; //모달
 		    
 
 		}

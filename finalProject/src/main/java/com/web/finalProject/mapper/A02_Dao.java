@@ -108,7 +108,8 @@ int insertUser(Users ins);
 	//채팅 리스트
 	@Select("SELECT * FROM CHAT \r\n"
 			+ "WHERE project_id = #{project_id}\r\n"
-			+ "AND (user_id = #{user_id} OR owner_id=#{user_id})")
+			+ "AND (user_id = #{user_id} OR owner_id=#{user_id})\r\n"
+			+ "AND  user_id != owner_id")
 	List<Chat> getchatList(Chat chsch);
 	
 
