@@ -457,7 +457,9 @@ public class A02_Controller {
 			    System.out.println("tasklist:" + tasks);
 
 				
-				return "WEB-INF\\views\\a02_todo.jsp";
+				// return "WEB-INF\\views\\a02_todo.jsp"; //원래
+			     return "WEB-INF\\views\\a02_taskdo3.jsp"; //지금
+			    
 			}
 
 			
@@ -470,16 +472,16 @@ public class A02_Controller {
         return "WEB-INF\\views\\a00_index.jsp";
     }
 	
-	
+	//필요없는 파일 :task2
 //board
+//	// http://localhost:4040/taskdo
+//	@RequestMapping("task2")
+//	public String taskdo(HttpServletRequest request, Model d) {
+//		
+//		return "WEB-INF\\views\\a02_task2.jsp";
+//	}
 	// http://localhost:4040/taskdo
 	@RequestMapping("taskdo")
-	public String taskdo(HttpServletRequest request, Model d) {
-		
-		return "WEB-INF\\views\\a02_task2.jsp";
-	}
-	// http://localhost:4040/taskdo1
-	@RequestMapping("taskdo1")
 	public String taskdo1(HttpServletRequest request, Model d) {
 		
 		return "WEB-INF\\views\\a02_taskdo.jsp";

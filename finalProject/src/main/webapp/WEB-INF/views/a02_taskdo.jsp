@@ -67,7 +67,8 @@
     <link rel="stylesheet" href="${path}/jobboard-master/css/owl.carousel.min.css">
     <link rel="stylesheet" href="${path}/jobboard-master/css/animate.min.css">
     <link rel="stylesheet" href="${path}/jobboard-master/css/quill.snow.css">
-    
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+   
     <%-- 기존 --%>
   <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
  <script>
@@ -81,139 +82,67 @@
      }
  }
  
- function taskPage(task_id){ // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
-	  alert("토글 가즈아")
-	 }
+ let isExpanded = false;
+
+ function sendResizeMessage(width) {
+     window.parent.postMessage({ type: 'resize', width: width }, '*');
+ }
+
+ function toggleResize() {
+     // 현재 상태에 따라 너비 설정
+     if (isExpanded) {
+         sendResizeMessage('70%');  // 기본 너비
+     } else {
+         sendResizeMessage('100%'); // 확장된 너비
+     }
+     // 상태 토글
+     isExpanded = !isExpanded;
+ }
+
+ document.addEventListener('DOMContentLoaded', function() {
+     var sidebarToggle = document.querySelector('.js-sidebar-toggle');
+     sidebarToggle.addEventListener('click', function() {
+         toggleResize();
+     });
+ });
+
+ window.addEventListener('message', function(event) {
+     if (event.data.type === 'reset') {
+         sendResizeMessage('70%');  // 기본 너비로 설정
+         isExpanded = false;  // 상태 리셋
+     }
+ });
  
-function goChat(project_id){
-	location.href="chatmemListstart?project_id="+project_id
-}
 </script>
+<style>
+
+ body{
+ background-color: rgba(248,249,251, 0.3);
+}
+</style>
 </head>
 
 <body>
 
-   <div class="wrapper">
-<jsp:include page="a00_sideBar.jsp"/>   
+  
    
-      <div class="main">
-         <nav class="navbar navbar-expand navbar-light navbar-bg">
-            <a class="sidebar-toggle js-sidebar-toggle">
-          <i class="hamburger align-self-center"></i>
-        </a>
-
-            <div class="navbar-collapse collapse">
-               <ul class="navbar-nav navbar-align">
-                  <li class="nav-item dropdown">
-                     <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
-                        <div class="position-relative">
-                           <i class="align-middle" data-feather="bell"></i>
-                           <span class="indicator">4</span>
-                        </div>
-                     </a>
-                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
-                        <div class="dropdown-menu-header">
-                           4 New Notifications
-                        </div>
-                        <div class="list-group">
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-danger" data-feather="alert-circle"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Update completed</div>
-                                    <div class="text-muted small mt-1">Restart server 12 to complete the update.</div>
-                                    <div class="text-muted small mt-1">30m ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-warning" data-feather="bell"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Lorem ipsum</div>
-                                    <div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate hendrerit et.</div>
-                                    <div class="text-muted small mt-1">2h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-primary" data-feather="home"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Login from 192.186.1.8</div>
-                                    <div class="text-muted small mt-1">5h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-success" data-feather="user-plus"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">New connection</div>
-                                    <div class="text-muted small mt-1">Christina accepted your request.</div>
-                                    <div class="text-muted small mt-1">14h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                        </div>
-                        <div class="dropdown-menu-footer">
-                           <a href="#" class="text-muted">Show all notifications</a>
-                        </div>
-                     </div>
-                  </li>
-               <li class="nav-item dropdown">
-					<a class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.project_id}')" id="messagesDropdown">
-							<i class="align-middle" data-feather="message-square"></i>
-					</a>
-					
-				</li>                  
-     
-<li class="nav-item dropdown">   
-                     <a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
-				<c:choose>
-				    <c:when test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
-				        <span class="text-dark">Welcome, PM_${user_name}</span>
-				    </c:when>
-				    <c:otherwise>
-				        <span class="text-dark">Welcome, MEM_${user_name}</span>
-				    </c:otherwise>
-				</c:choose>
-              </a>
-                    
-                  </li>
-               </ul>
-            </div>
-         </nav>
 
 <%-- 본문내용 --%>
          <main class="content">
             <div class="container-fluid p-0">
 
           
-      <div class="container">
+      <div class="container border rounded"> 
 
         <div class="row mb-5">
           <div class="col-lg-12" style="background:white; padding:0">
-          
-            <form class="p-4 p-md-5 border rounded" method="post">
+         
+            <form class="p-4 p-md-5 rounded" method="post">
+             <a class="sidebar-toggle js-sidebar-toggle">
+          <i class="hamburger align-self-center"></i>  <i class="bi bi-x"></i>
+        </a>
               <h3 class="text-black mb-5 border-bottom pb-2">Job Details</h3>
-              
-              <div class="form-group">
-                <label for="company-website-tw d-block">Upload Featured Image</label> <br>
-                <label class="btn btn-primary btn-md btn-file">
-                  Browse File<input type="file" hidden>
-                </label>
-              </div>
-
+         
               <div class="form-group">
                 <label for="email">Email</label>
                 <input type="text" class="form-control" id="email" placeholder="you@yourdomain.com">
@@ -306,11 +235,8 @@ function goChat(project_id){
             </form>
             
            
-          </div>
-
          
-        </div>
-        <div class="row align-items-center mb-5">
+ <div class="row align-items-center mb-5">
           
           <div class="col-lg-4 ml-auto">
             <div class="row">
@@ -323,17 +249,13 @@ function goChat(project_id){
             </div>
           </div>
         </div>
+         
+        </div>
+        </div>
       </div>
     </div>
     </main>
-    </div>
-    
-
-    
-    
-   
   
-  </div>
 
     <!-- SCRIPTS -->
     <script src="${path}/jobboard-master/js/jquery.min.js"></script>

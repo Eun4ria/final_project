@@ -28,18 +28,22 @@
     <!--     Fonts and icons     
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   -->
-  <!-- Nucleo Icons -->
+  <!-- Nucleo Icons 
   <link href="${path}/material-dashboard-2/assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="${path}/material-dashboard-2/assets/css/nucleo-svg.css" rel="stylesheet" />
+  -->
   <!-- Font Awesome Icons   -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 
   <!-- Material Icons 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
  -->
-  <!-- CSS Files -->
+  <!-- CSS Files 
   
-  <link id="pagestyle" href="${path}/material-dashboard-2/assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+  <link id="pagestyle" href="${path}/material-dashboard-2/assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />-->
+  
+  <!-- MAIN CSS -->
+    <link rel="stylesheet" href="${path}/jobboard-master/css/style.css">    
    
 <%--다시 adminkit --%>
 
@@ -53,14 +57,72 @@
    <link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 <%--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
-<style>
-        /* Style for the main content div */
-        #mainDiv {
+
+<%-- taskcss --%>
+<link rel="stylesheet" href="${path}/jobboard-master/css/custom-bs.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/fonts/line-icons/style.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/animate.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/quill.snow.css">
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+ 
+    <%-- 기존 --%>
+  <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
+ <script>
+ var msg="${msg}"
+ if(msg != "") {
+     alert(msg); // 알림 메시지 표시
+
+     if (msg=="생성 완료") {
+        $(".close").click();
+        window.location.href = 'main';
+     }
+ }
+ 
+function goChat(project_id){
+	location.href="chatmemListstart?project_id="+project_id
+}
+
+<%--토글 관련 --%>
+function sendResetMessage() {
+    var iframe = document.querySelector('iframe');
+    if (iframe) {
+        iframe.contentWindow.postMessage({ type: 'reset' }, '*');
+    }
+}
+
+function handleDblClick(event) {
+    // 이벤트 발생 시 iframe 리셋 메시지 전송
+    sendResetMessage();
+}
+
+function handleResizeMessage(event) {
+    if (event.data.type === 'resize') {
+        var toggleDiv = document.getElementById('toggleDiv');
+        if (toggleDiv) {
+            toggleDiv.style.width = event.data.width;
+        }
+    }
+}
+
+window.addEventListener('message', handleResizeMessage);
+
+document.addEventListener('DOMContentLoaded', function() {
+    var taskRows = document.querySelectorAll('tr[ondblclick]');
+    taskRows.forEach(function(row) {
+        row.addEventListener('dblclick', handleDblClick);
+    });
+});
+</script>
+  <style>
+       #main {
             position: relative;
-            width: 300px;
-            height: 300px;
+            width: 100%;
+            height: 100%;
             background-color: lightblue;
-            border: 1px solid #ccc;
             padding: 20px;
             box-sizing: border-box;
         }
@@ -68,28 +130,25 @@
         /* Style for the toggled div */
         #toggleDiv {
             position: absolute;
-            top: 0;
-            left: 100%; /* Start off-screen to the right */
-            width: 100%;
-            height: 100%;
+            top: -2rem;
+            right: -100%; /* Start off-screen to the right */
+            width: 70%; /* Adjust width as needed */
+            height: 200%;
             background-color: rgba(0, 0, 0, 0.5);
             color: white;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            transition: left 0.5s; /* Smooth transition */
+            transition: right 0.5s; /* Smooth transition */
         }
-        
-        
-    </style>
 
- <script>
- 
-function goChat(project_id){
-	location.href="chatmemListstart?project_id="+project_id
-}
-</script>
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -97,7 +156,7 @@ function goChat(project_id){
    <div class="wrapper">
 <jsp:include page="a00_sideBar.jsp"/>   
    
-      <div class="main">
+      <div class="main" >
          <nav class="navbar navbar-expand navbar-light navbar-bg">
             <a class="sidebar-toggle js-sidebar-toggle">
           <i class="hamburger align-self-center"></i>
@@ -194,8 +253,9 @@ function goChat(project_id){
                </ul>
             </div>
          </nav>
-<%-- 본문내용 - not toggle --%>
-         <main class="content" id="toggleclose">
+
+<%-- 본문내용 --%>
+         <main class="content" id="mainDiv">
             <div class="container-fluid p-0">
 
                <h1 class="h3 mb-3"><strong>To Do</strong> List</h1>
@@ -217,11 +277,10 @@ function goChat(project_id){
     
               </div>
             </div>
-            
-           <%-- 찐본문 --%>
-            <div class="card-body px-0 pb-2" id="mainDiv" >
-              <div class="table-responsive">
-                <table class="table align-items-center mb-0">
+  <%-- 토글 전 본문 --%>
+           <div class="card-body px-0 pb-0" >
+            <div class="table-responsive">
+            <table class="table align-items-center mb-0" id="taskTable">
                   <thead>
                     <tr>
                     <th></th>
@@ -293,204 +352,76 @@ function goChat(project_id){
                     </c:forEach>
                   </tbody>
                 </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-                     
-               </div>
-
-               <div class="row">
+                <div id="toggleDiv">
+            <iframe id="taskFrame" src="">
                
-                  
-                  
-                  
-                  
-                  <div class="col-sm-11 col-lg-6 col-md-6 col-xl-6" >
-                        
-                    </div>
-               </div>
-               
-
-            </div>
-         </main>
-<%-- 본문내용 - not toggle --%>
-<%-- 본문내용 - toggle --%>
-        <main class="content" id="togglediv">
-            <div class="container-fluid p-0">
-
-          
-      <div class="container">
-
-        <div class="row mb-5">
-          <div class="col-lg-12" style="background:white; padding:0">
-          <a class="sidebar-toggle js-sidebar-toggle" >
-          <i class="hamburger align-self-center"></i>
-        </a>
-            <form class="p-4 p-md-5 border rounded" method="post">
-              <h3 class="text-black mb-5 border-bottom pb-2">Job Details</h3>
-              
-              <div class="form-group">
-                <label for="company-website-tw d-block">Upload Featured Image</label> <br>
-                <label class="btn btn-primary btn-md btn-file">
-                  Browse File<input type="file" hidden>
-                </label>
-              </div>
-
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" class="form-control" id="email" placeholder="you@yourdomain.com">
-              </div>
-              <div class="form-group">
-                <label for="job-title">Job Title</label>
-                <input type="text" class="form-control" id="job-title" placeholder="Product Designer">
-              </div>
-              <div class="form-group">
-                <label for="job-location">Location</label>
-                <input type="text" class="form-control" id="job-location" placeholder="e.g. New York">
-              </div>
-
-              <div class="form-group">
-                <label for="job-region">Job Region</label>
-                <select class="selectpicker border rounded" id="job-region" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Region">
-                      <option>Anywhere</option>
-                      <option>San Francisco</option>
-                      <option>Palo Alto</option>
-                      <option>New York</option>
-                      <option>Manhattan</option>
-                      <option>Ontario</option>
-                      <option>Toronto</option>
-                      <option>Kansas</option>
-                      <option>Mountain View</option>
-                    </select>
-              </div>
-
-              <div class="form-group">
-                <label for="job-type">Job Type</label>
-                <select class="selectpicker border rounded" id="job-type" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Job Type">
-                  <option>Part Time</option>
-                  <option>Full Time</option>
-                </select>
-              </div>
-
-
-              <div class="form-group">
-                <label for="job-description">Job Description</label>
-                <div class="editor" id="editor-1">
-                  <p>Write Job Description!</p>
-                </div>
-              </div>
-
-
-              <h3 class="text-black my-5 border-bottom pb-2">Company Details</h3>
-              <div class="form-group">
-                <label for="company-name">Company Name</label>
-                <input type="text" class="form-control" id="company-name" placeholder="e.g. New York">
-              </div>
-
-              <div class="form-group">
-                <label for="company-tagline">Tagline (Optional)</label>
-                <input type="text" class="form-control" id="company-tagline" placeholder="e.g. New York">
-              </div>
-
-              <div class="form-group">
-                <label for="job-description">Company Description (Optional)</label>
-                <div class="editor" id="editor-2">
-                  <p>Description</p>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label for="company-website">Website (Optional)</label>
-                <input type="text" class="form-control" id="company-website" placeholder="https://">
-              </div>
-
-              <div class="form-group">
-                <label for="company-website-fb">Facebook Username (Optional)</label>
-                <input type="text" class="form-control" id="company-website-fb" placeholder="companyname">
-              </div>
-
-              <div class="form-group">
-                <label for="company-website-tw">Twitter Username (Optional)</label>
-                <input type="text" class="form-control" id="company-website-tw" placeholder="@companyname">
-              </div>
-              <div class="form-group">
-                <label for="company-website-tw">Linkedin Username (Optional)</label>
-                <input type="text" class="form-control" id="company-website-tw" placeholder="companyname">
-              </div>
-
-              <div class="form-group">
-                <label for="company-website-tw d-block">Upload Logo</label> <br>
-                <label class="btn btn-primary btn-md btn-file">
-                  Browse File<input type="file" hidden>
-                </label>
-              </div>
-
-            </form>
-            
-           
-          </div>
-
-         
+            </iframe>
         </div>
-        <div class="row align-items-center mb-5">
-          
-          <div class="col-lg-4 ml-auto">
-            <div class="row">
-              <div class="col-6">
-                <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Preview</a>
-              </div>
-              <div class="col-6">
-                <a href="#" class="btn btn-block btn-primary btn-md">Save Job</a>
-              </div>
-            </div>
-          </div>
+ <%-- 
+        <table id="taskTable">
+            <tr data-task-id="1">
+                <td>Task 1</td>
+            </tr>
+            <tr data-task-id="2">
+                <td>Task 2</td>
+            </tr>
+            <tr data-task-id="3">
+                <td>Task 3</td>
+            </tr>
+        </table>
+        <div id="toggleDiv">
+            Toggled Content
         </div>
-      </div>
+        --%> 
     </div>
+</div>
+</div>
+</div>
+</div>
+
+ <script>
+ function taskPage(taskId) {
+     var iframe = document.getElementById('taskFrame');
+    // iframe.src = `taskdo?task_id=${taskId}`; // URL 연결로 수정
+     iframe.src = `taskdo`; // URL 연결로 수정
+     toggleDiv();
+ }
+
+ function toggleDiv() {
+     var toggleDiv = document.getElementById('toggleDiv');
+     if (toggleDiv.style.right === '0px') {
+         toggleDiv.style.right = '-130%'; // Slide out
+         document.removeEventListener('click', outsideClickListener);
+     } else {
+         toggleDiv.style.right = '0'; // Slide in
+         setTimeout(() => {
+             document.addEventListener('click', outsideClickListener);
+         }, 0); // Ensure the listener is added after the current event loop
+     }
+ }
+
+ function outsideClickListener(event) {
+     var toggleDiv = document.getElementById('toggleDiv');
+     if (!toggleDiv.contains(event.target) ) {
+         toggleDiv.style.right = '-130%'; // Slide out
+         document.removeEventListener('click', outsideClickListener);
+     }
+ }
+    </script>
+           
+           
+           
     </main>
+    </div>
     
-  <%-- 본문내용 toggle 끝--%>
-         
-      </div>
-   </div>
 
-   <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("#toggleopen").hide();
-
-        window.taskPage = function(task_id) { // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
-            alert("토글 가즈아" + task_id );
-
-            // 토글 열기/닫기
-            $("#toggleopen").toggleClass("show");
-
-        }
-
-        $("#closeBtn").click(function(){
-            $("#toggleopen").removeClass("show");
-        });
-    });
-</script>
-  
-<script>
-var vm = Vue.createApp({
-	name:"App",
-	data(){
-		return {sta:{tstatus:"N"},
-				pri:{priority:'N'}	
-		}
-				
-		};
-	};
-});
-</script>
-
+    
+    
    
- <!-- SCRIPTS -->
+  
+  </div>
+
+    <!-- SCRIPTS -->
     <script src="${path}/jobboard-master/js/jquery.min.js"></script>
     <script src="${path}/jobboard-master/js/bootstrap.bundle.min.js"></script>
     <script src="${path}/jobboard-master/js/isotope.pkgd.min.js"></script>
@@ -508,6 +439,7 @@ var vm = Vue.createApp({
     
     <script src="${path}/jobboard-master/js/custom.js"></script>
    
-</body>
-
+   
+     
+  </body>
 </html>
