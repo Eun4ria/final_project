@@ -87,7 +87,7 @@
 
 
 function goChat(user_id){
-location.href="message?user_id="+user_id
+	location.href="message?user_id="+user_id
 }
 </script>
 </head>
@@ -249,7 +249,7 @@ location.href="message?user_id="+user_id
          <!-- 프로젝트 생성 버튼 -->
          <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
 	         <button class="btn btn-success" data-toggle="modal" data-target="#ModalCenter"
-           type="button">프로젝트 생성</button>
+           type="button">CREATE PROJECT</button>
 	    </c:if>
            
                
@@ -321,7 +321,7 @@ location.href="message?user_id="+user_id
                         </div>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold" >${pro.amount}</span>
+                        <span class="amount text-xs font-weight-bold" >${pro.amount}</span>
                       </td>
                       <td class="align-middle">
                         <div class="progress-wrapper w-75 mx-auto">
@@ -343,21 +343,18 @@ location.href="message?user_id="+user_id
             </div>
           </div>
         </div>
-        
-                     
-               </div>
-
-               <div class="row">
-               
-                  
-                  
-                  
-                  
-                  <div class="col-sm-11 col-lg-6 col-md-6 col-xl-6" >
-                        
-                    </div>
-               </div>
-               
+        </div>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const elements = document.querySelectorAll('.amount');
+        elements.forEach(element => {
+            const number = parseFloat(element.innerText);
+            if (!isNaN(number)) {
+                element.innerText = number.toLocaleString();
+            }
+        });
+    });
+</script>
 
             </div>
          </main>
@@ -398,16 +395,7 @@ location.href="message?user_id="+user_id
            <input type="date" class="form-control" placeholder="직책명 입력" name="end_date">
          </div>
         </div>   
-        <div class="row">
-         <div class="col">
-         <span>Member</span>
-           <select name="user_id">
-           <c:forEach var="user" items="${ user}">
-           	<option value="${user.user_id}">${user_name}</option>
-           	</c:forEach>
-           </select>
-         </div>
-        </div> 
+        
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" id="regBtn" class="btn btn-success">regist</button>        

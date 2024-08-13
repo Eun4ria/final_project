@@ -76,7 +76,13 @@
             <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('board')">
                     <i class="align-middle" data-feather="command"></i> <span class="align-middle">Board</span>
-                </a>
+                </a>                
+            </li>
+            
+             <li class="sidebar-item ${currentUrl == '/resource' ? 'active' : ''}">
+                <a class="sidebar-link" onclick="goPage('board')">
+                    <i class="align-middle" data-feather="command"></i> <span class="align-middle">Board</span>
+                </a>                
             </li>
 
             <li class="sidebar-item ${currentUrl == '/logout' ? 'active' : ''}">

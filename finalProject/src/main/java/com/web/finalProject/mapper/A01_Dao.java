@@ -196,6 +196,17 @@ public interface A01_Dao {
 			+ "WHERE user_id=#{user_id}")
 	int updateProfile(Users upt);
 	
+	@Select("	select count(*) \r\n"
+			+ "	from users\r\n"
+			+ "	where user_id=#{user_id}\r\n"
+			+ "and password = #{password}")
+	int checkOldPwd(Users cpw);
+	
+	@Update("UPDATE USERS\r\n"
+			+ "	SET PASSWORD = #{new_password}\r\n"
+			+ "	WHERE user_id = #{user_id}")
+	int changePassword(Users cpw);
+	
 	
 	
 }

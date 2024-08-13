@@ -120,9 +120,8 @@
 				</form>			
 	                <a class="sidebar-link" id="logoutBtn">
 	                    <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Log Out</span>
-	                </a>
-	             
-            </li>
+	                </a>	             
+           	 </li>
 
         </ul>
 

@@ -44,11 +44,7 @@ public class A01_Controller {
 	public String main(HttpServletRequest request, Model d) {
 	    // 세션에서 user_id 값을 가져옵니다.
 	    HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
-        String user_id = (String) session.getAttribute("user_id");
-        String image = (String) session.getAttribute("image");
-
-        System.out.println(image);
-     
+        String user_id = (String) session.getAttribute("user_id");  
             d.addAttribute("pro", service.getProjectList(user_id));
             d.addAttribute("currentUrl", request.getRequestURI());
             return "WEB-INF\\views\\a00_main.jsp";
@@ -186,35 +182,16 @@ public class A01_Controller {
  	}
 
  	
- 	// http://localhost:4040/profile
-    @GetMapping("profile")
-    public String profile(HttpServletRequest request, Model d) {    
-	    HttpSession session = request.getSession(false); 
-        String user_id = (String) session.getAttribute("user_id");        
-        System.out.println("프로필 user_id:"+user_id);        
-        d.addAttribute("currentUrl", request.getRequestURI());
-        // 유저의 프로필 정보
-        d.addAttribute("profile", service.getProfile(user_id));
-        // 활동중인 프로젝트 리스트
-        d.addAttribute("pro", service.getProjectList(user_id));
-        // 완료된 프로젝트 리스트
-        d.addAttribute("cpro", service.getComProjectList(user_id));        
-        return "WEB-INF\\views\\a01_profile.jsp";
-    }
-    @PostMapping("updateProfile")
-    public String updateProfil(Users upt, Model d) {
-    	d.addAttribute("msg", service.updateProfile(upt));
-    	d.addAttribute("profile", service.getProfile(upt.getUser_id()));
-    	return "WEB-INF\\views\\a01_profile.jsp";
-    }
+ 	
     
     private final LocaleResolver localeResolver;
 
-    @Autowired
     public A01_Controller(LocaleResolver localeResolver) {
         this.localeResolver = localeResolver;
     }
-    // http://localhost:4040/changeLang?lang=en
+    /*
+     *다국어 처리
+    // http://localhost:4040/changeLang
     @GetMapping("changeLang")
     public String changeLang(@RequestParam(value = "lang", required = false) String lang, HttpServletRequest request, HttpServletResponse response) {
         if (lang != null) {
@@ -236,8 +213,76 @@ public class A01_Controller {
         }
         return "redirect:profile";
     }
+    */
+    // http://localhost:4040/profile
+    @GetMapping("profile")
+    public String profile(@RequestParam(value = "lang", defaultValue="en", required = false) String lang, HttpServletRequest request, Model d, HttpServletResponse response) {    
+	    HttpSession session = request.getSession(false); 
+        String user_id = (String) session.getAttribute("user_id");        
+        System.out.println("프로필 user_id:"+user_id);        
+        d.addAttribute("currentUrl", request.getRequestURI());
+        // 다국어 처리
+        if (lang != null) {
+            Locale locale;
+            switch (lang) {
+                case "ko":
+                    locale = new Locale("ko");
+                    break;
+                case "en":
+                    locale = new Locale("en");
+                    break;
+                case "fa":
+                    locale = new Locale("fa");
+                    break;
+                default:
+                    locale = Locale.ENGLISH;
+            }
+            localeResolver.setLocale(request, response, locale);
+        }
+        
+        
+        // 유저의 프로필 정보
+        d.addAttribute("profile", service.getProfile(user_id));
+        // 활동중인 프로젝트 리스트
+        d.addAttribute("pro", service.getProjectList(user_id));
+        // 완료된 프로젝트 리스트
+        d.addAttribute("cpro", service.getComProjectList(user_id));        
+        return "WEB-INF\\views\\a01_profile.jsp";
+    }
+    // 프로필 변경
+    @PostMapping("updateProfile")
+    public String updateProfil(Users upt, Model d) {
+    	d.addAttribute("msg", service.updateProfile(upt));
+    	d.addAttribute("profile", service.getProfile(upt.getUser_id()));
+    	return "WEB-INF\\views\\a01_profile.jsp";
+    }
+    // 비밀번호 변경 페이지
+    // http://localhost:4040/changePassword
+    @GetMapping("changePassword")
+    public String changePasswordFrm(Model d) {
+    	d.addAttribute("currentUrl", "/profile");
+    	return "WEB-INF\\views\\a01_changePwd.jsp";
+    }
+    @PostMapping("changePassword")
+    public String changePassword(Users cpw, Model d) {
+    	d.addAttribute("currentUrl", "/profile");
+    	
+    	int checkPwd= service.checkOldPwd(cpw);
+    	if(checkPwd>0) {
+    		d.addAttribute("msg", service.changePassword(cpw));
+    	}else {
+    		d.addAttribute("msg", "회원 정보를 다시 입력해주세요");
+    	}
+    	return "WEB-INF\\views\\a01_changePwd.jsp";
+    }
     
-    
+    // http://localhost:4040/resource
+    // 자원관리-인적자원 관리 페이지
+    @GetMapping("resource")
+    public String resource(HttpServletRequest request, Model d) {
+		d.addAttribute("currentUrl", request.getRequestURI());
+		return "WEB-INF\\views\\a01_resource.jsp";
+    }
     
     
     
