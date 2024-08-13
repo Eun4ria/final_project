@@ -51,18 +51,74 @@
 
    <link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 <script>
+
+function validatePassword(password) {
+    // 비밀번호 길이 확인 및 조건 확인
+    if (password.length < 6 || 
+        !/[a-zA-Z]/.test(password) || 
+        !/[0-9]/.test(password) || 
+        !/[!@#$%^&*(),.?:{}|<>]/.test(password)) {
+        return '비밀번호는 영문, 숫자, 특수문자 조합 6자리 이상 입력하세요.';
+    }
+    return ''; // 모든 조건을 만족할 경우 빈 문자열 반환
+}
+
+$(document).ready(function() {
 	var msg="${msg}"
 	if(msg!=""){
 		alert(msg)
 	}
+	
+    function updateMessages() {
+        var npwd = $('#npwd').val();
+        var cnpwd = $('#cnpwd').val();
+        var pwd = $('#pwd').val();
+
+        var chMsg = $('#chMsg');
+        var conMsg = $('#conMsg');
+        var pwdMsg = $('#pwdMsg');
+
+        // 메시지 초기화
+        chMsg.text('');
+        conMsg.text('');
+        pwdMsg.text('');
+
+        // 새 비밀번호 유효성 검사
+        var npwdMessage = validatePassword(npwd);
+        if (npwdMessage) {
+            chMsg.text(npwdMessage);
+        }
+
+        // 비밀번호 확인
+        if (npwd !== cnpwd) {
+            conMsg.text('비밀번호가 일치하지 않습니다.');                 
+        }
+
+        // 현재 비밀번호 입력 필드 검사
+        if (pwd === '') {
+            pwdMsg.text('현재 비밀번호를 입력하세요.');
+        }
+
+        // 유효성 검사 통과 시 성공 메시지
+        if (!npwdMessage && npwd === cnpwd && pwd !== '') {            	 
+       	 $("#chBtn").click(function(){
+			 	$("form").submit();
+       	 })
+        }
+    }
+
+    // 입력 필드에서 값이 변경될 때마다 메시지 업데이트
+    $('#pwd, #npwd, #cnpwd').on('input', updateMessages);
+});
+	
 </script>
 <style>
-	.project-item:hover{
-		cursor:pointer;
-		background-color:lightgray;
-		border-radius:10px;
-		transition: background-color 0.3s ease;
-	}
+	 .message {
+            color: red;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
 </style>
 </head>
 
@@ -175,119 +231,43 @@
 
 			<main class="content">
 			
-				<div class="container-fluid p-0">
+				<div class="container-fluid p-13">
 					<div class="mb-3">
-						<h1 class="h3 d-inline align-middle"><fmt:message key="profile" /></h1>
-						<%--언어 선택 폼--%>
-						<form class="float-end" method="get" action="profile" class="selectLan">
-							<select name="lang" onchange="this.form.submit()">
-								<option><fmt:message key="chlang" /></option>
-								<option value="en" ${param.lang == 'en' ? 'selected' : ''}>English</option>
-								<option value="ko" ${param.lang == 'ko' ? 'selected' : ''}>한국어</option>
-								<option value="fa" ${param.lang == 'fa' ? 'selected' : ''}>فارسی</option>
-								
-							</select>
-						</form>
+						<h1 class="h3 d-inline align-middle">Change Password</h1>						
 					</div>
 					
 					<div class="row">
-						<div class="col-md-4 col-xl-5">
-						    <form class="card mb-3" method="post" action="updateProfile" enctype="multipart/form-data">
-						        <div class="card-header">
-						            <h5 class="card-title mb-0"><fmt:message key="profile_details" /></h5>
-						        </div>
-						        <div class="card-body text-center">
-						            <img src="${image}" style="width: 40%; height: auto;" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
-						            <br><br>
-						
-						            <div class="form-group">
-						                <label class="btn btn-outline-primary">
-						                    <fmt:message key="update_image_file" />
-						                    <input type="file" name="image" multiple="multiple" class="form-control" value="" />
-						                </label>
-						            </div>
-						
-						        </div>
-						        <hr class="my-0" />
-						
-						        <div class="card-body">
-						            <h5 class="h6 card-title"><fmt:message key="info" /></h5>
-						            <div class="form-group">
-						                <label for="userId"><fmt:message key="id" /></label>
-						                <input type="text" class="form-control" id="userId" name="user_id" value="${profile.user_id}" readonly>
-						            </div>
-						
-						            <div class="form-group">
-						                <label for="name"><fmt:message key="name" /></label>
-						                <input type="text" class="form-control" id="name" name="user_name" value="${profile.user_name}">
-						            </div>
-						
-						            <div class="form-group">
-						                <label for="email"><fmt:message key="email" /></label>
-						                <input type="email" class="form-control" id="email" name="email" value="${profile.email}">
-						            </div>
-						
-						            <div class="form-group">
-						                <label for="company_id"><fmt:message key="company_id" /></label>
-						                <input type="text" class="form-control" id="company_id" name="company_id" value="${profile.company_id}">
-						            </div>
-						            <input type="hidden" class="form-control" name="image" value="${profile.image}">
-						
-						            <hr class="my-3" />
-						            <div class="d-grid">
-						                <input type="submit" class="btn btn-primary" value="<fmt:message key='update_profile' />"/>
-						            </div>
-						            <div class="d-grid">
-						                <a href="changePassword"><fmt:message key="change_password"/></a>
-						            </div>
-						        </div>
-						    </form>
+						<div class="col-md-8 col-xl-8">
+						    <form class="card mb-3" method="post" action="changePassword">
+                            <input type="hidden" name="user_id" value="${sessionScope.user_id}"/>
+                            <div class="card-body" style="margin:30px 0 0 0;">
+                                <div class="form-group" style="margin:10px 80px;">
+                                    <strong>Existing password</strong>
+                                    <input type="password" class="form-control" id="pwd" name="password" style="margin:10px auto;">
+                                    <p id="pwdMsg" class="message"></p> <!-- 비밀번호 입력 필드 아래 메시지 -->
+                                </div>
+
+                                <div class="form-group" style="margin:10px 80px;">
+                                    <strong>New password</strong>
+                                    <input type="password" class="form-control" id="npwd" name="new_password" style="margin:10px auto;">
+                                    <p id="chMsg" class="message"></p> <!-- 새 비밀번호 입력 필드 아래 메시지 -->
+                                </div>
+
+                                <div class="form-group" style="margin:10px 80px;">
+                                    <strong>Confirm new password</strong>
+                                    <input type="password" class="form-control" id="cnpwd" style="margin:10px auto;">
+                                    <p id="conMsg" class="message"></p> <!-- 비밀번호 확인 입력 필드 아래 메시지 -->
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-primary" id="chBtn" type="button" style="margin:30px auto;">Change</button>
+                            </div>
+                            <br>
+                        </form>
 						</div>
 
-						<div class="col-md-8 col-xl-7">
-							<div class="card">
-								<div class="card-header">
-									<h5 class="card-title mb-0"><fmt:message key="active_project"/></h5>
-								</div>
-								<div class="card-body">
-									<c:forEach var="pro" items="${pro}">
-									<div class="d-flex align-items-start project-item" onclick="getPro('${pro.project_id}')" style="padding:10px;">
-										<img src="${pro.logo}" width="30" height="30" class="rounded-circle me-2" alt="${pro.project_name} }">
-										<div class="flex-grow-1">
-											<small class="float-end text-navy">
-												<fmt:formatDate value="${pro.start_date}" pattern="yy.MM.dd" /> ~
-       											<fmt:formatDate value="${pro.end_date}" pattern="yy.MM.dd" />
-       										</small>
-											<strong>${pro.project_name}</strong>						
-
-										</div>
-									</div>
-									</c:forEach>
-								</div>
-
-									<hr>
-									
-									<div class="card-header">
-										<h5 class="card-title mb-0"><fmt:message key="completed_projects"/></h5>
-									</div>
-								<div class="card-body">
-									<c:forEach var="cpro" items="${cpro}">
-									<div class="d-flex align-items-start project-item" onclick="getPro('${cpro.project_id}')" style="padding:10px;">
-										<img src="${cpro.logo}" width="30" height="30" class="rounded-circle me-2" alt="${cpro.project_name} }">
-										<div class="flex-grow-1">
-											<small class="float-end text-navy">
-												<fmt:formatDate value="${cpro.start_date}" pattern="yy.MM.dd" /> ~
-       											<fmt:formatDate value="${cpro.end_date}" pattern="yy.MM.dd" />
-       										</small>
-											<strong>${cpro.project_name}</strong>						
-
-										</div>
-									</div>
-									</c:forEach>
-								</div>
-								
-							</div>
-						</div>
+						
 					</div>
 
 				</div>
@@ -297,8 +277,11 @@
 	</div>
 <script>
 	function getPro(proejct_id){
-		location.href=// 프로젝트 상세페이지
 	}
+	 
+    
+    
+	
 </script>
 	<script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
 

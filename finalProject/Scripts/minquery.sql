@@ -259,16 +259,25 @@ where project_id='PRO_0003';
 
 
 SELECT
- u.user_id,
- u.user_name,
-	  d.dname,
-		 u.deptno
-	FROM
-		   users u
-		JOIN
-		   department d ON u.deptno = d.deptno
-		ORDER BY
-		    u.user_id;
+    u.user_id,
+    u.company_id,
+    d.dname AS department_name,
+    p.project_id,
+    p.project_name,
+    p.etc,
+    p.start_date,
+    p.end_date,
+    CASE
+        WHEN p.project_id IS NOT NULL THEN 1
+        ELSE 0
+    END AS is_active
+FROM
+    users u
+    LEFT JOIN department d ON u.deptno = d.deptno
+    LEFT JOIN team t ON u.user_id = t.user_id
+    LEFT JOIN project p ON t.project_id = p.project_id
+ORDER BY
+    u.user_id, p.project_id;
 
 
 

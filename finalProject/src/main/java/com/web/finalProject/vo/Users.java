@@ -18,6 +18,14 @@ public class Users {
 	private String key;
 	private String label;
 	private String image;
+	private String new_password;
+	
+	public String getNew_password() {
+		return new_password;
+	}
+	public void setNew_password(String new_password) {
+		this.new_password = new_password;
+	}
 	public String getImage() {
 		return image;
 	}

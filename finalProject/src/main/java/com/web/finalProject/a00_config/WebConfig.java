@@ -15,14 +15,14 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public SessionLocaleResolver localeResolver() {
         SessionLocaleResolver resolver = new SessionLocaleResolver();
-        resolver.setDefaultLocale(Locale.ENGLISH); // 湲곕낯 濡쒖���씪 �꽕�젙
+        resolver.setDefaultLocale(Locale.ENGLISH); // 기본언어 설정
         return resolver;
     }
 
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-        interceptor.setParamName("lang"); // URL�쓽 'lang' �뙆�씪誘명꽣瑜� �넻�빐 濡쒖���씪 蹂�寃�
+        interceptor.setParamName("lang"); 
         return interceptor;
     }
 
