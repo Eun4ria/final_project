@@ -56,6 +56,14 @@
 		alert(msg)
 	}
 </script>
+<style>
+	.project-item:hover{
+		cursor:pointer;
+		background-color:lightgray;
+		border-radius:10px;
+		transition: background-color 0.3s ease;
+	}
+</style>
 </head>
 
 <body>
@@ -166,220 +174,129 @@
          </nav>
 
 			<main class="content">
+			
 				<div class="container-fluid p-0">
-
 					<div class="mb-3">
-						<h1 class="h3 d-inline align-middle">Profile</h1>
-						<a class="badge bg-dark text-white ms-2" href="upgrade-to-pro.html">
-      Get more page examples
-  </a>
+						<h1 class="h3 d-inline align-middle"><fmt:message key="profile" /></h1>
+						<%--언어 선택 폼--%>
+						<form class="float-end" method="get" action="changeLang" class="selectLan">
+							<select name="lang" onchange="this.form.submit()">
+								<option><fmt:message key="chlang" /></option>
+								<option value="en" ${param.lang == 'en' ? 'selected' : ''}>English</option>
+								<option value="ko" ${param.lang == 'ko' ? 'selected' : ''}>한국어</option>
+								<option value="fa" ${param.lang == 'fa' ? 'selected' : ''}>فارسی</option>
+								
+							</select>
+						</form>
 					</div>
-					<form method="get" action="profile" class="selectLan">
-						<select name="lang" onchange="this.form.submit()">
-							<option value="ko" ${param.lang == 'ko' ? 'selected' : ''}>한국어</option>
-							<option value="en" ${param.lang == 'en' ? 'selected' : ''}>English</option>
-						</select>
-					</form>
+					
 					<div class="row">
 						<div class="col-md-4 col-xl-5">
-							 <form class="card mb-3" method="post" action="updateProfile" enctype="multipart/form-data"> 
-        <div class="card-header">
-            <h5 class="card-title mb-0"><fmt:message key="profile_details" /></h5>
-        </div>
-        <div class="card-body text-center">
-            <img src="${image}" style="width: 40%; height: auto;" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
-            <br><br>
-        
-            <div class="form-group">
-                <label class="btn btn-outline-primary">
-                  <fmt:message key="update_image_file" /><input type="file" name="image" multiple="multiple" class="form-control" value="" />
-                </label>
-            </div>					              
-        </div>
-        <hr class="my-0" />
-        
-        <div class="card-body">
-            <h5 class="h6 card-title">Info</h5>
-            <div class="form-group">
-              <label for="userId"><fmt:message key="id" /></label>
-              <input type="text" class="form-control" id="userId" name="user_id" value="${profile.user_id}" readonly>
-            </div>
-            
-            <div class="form-group">
-              <label for="name"><fmt:message key="name" /></label>
-              <input type="text" class="form-control" id="name" name="user_name" value="${profile.user_name}">
-            </div>
-            
-            <div class="form-group">
-              <label for="email"><fmt:message key="email" /></label>
-              <input type="email" class="form-control" id="email" name="email" value="${profile.email}">
-            </div>
-            
-            <div class="form-group">
-              <label for="company_id"><fmt:message key="company_id" /></label>
-              <input type="text" class="form-control" id="company_id" name="company_id" value="${profile.company_id}">
-            </div>
-            <input type="hidden" class="form-control" name="image" value="${profile.image}">
-            
-            <hr class="my-3" />
-            <div class="d-grid">
-                <input type="submit" class="btn btn-primary" value="<fmt:message key="update_profile" />"/>
-            </div>
-        </div>
-    </form>
+						    <form class="card mb-3" method="post" action="updateProfile" enctype="multipart/form-data">
+						        <div class="card-header">
+						            <h5 class="card-title mb-0"><fmt:message key="profile_details" /></h5>
+						        </div>
+						        <div class="card-body text-center">
+						            <img src="${image}" style="width: 40%; height: auto;" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
+						            <br><br>
+						
+						            <div class="form-group">
+						                <label class="btn btn-outline-primary">
+						                    <fmt:message key="update_image_file" />
+						                    <input type="file" name="image" multiple="multiple" class="form-control" value="" />
+						                </label>
+						            </div>
+						
+						        </div>
+						        <hr class="my-0" />
+						
+						        <div class="card-body">
+						            <h5 class="h6 card-title"><fmt:message key="info" /></h5>
+						            <div class="form-group">
+						                <label for="userId"><fmt:message key="id" /></label>
+						                <input type="text" class="form-control" id="userId" name="user_id" value="${profile.user_id}" readonly>
+						            </div>
+						
+						            <div class="form-group">
+						                <label for="name"><fmt:message key="name" /></label>
+						                <input type="text" class="form-control" id="name" name="user_name" value="${profile.user_name}">
+						            </div>
+						
+						            <div class="form-group">
+						                <label for="email"><fmt:message key="email" /></label>
+						                <input type="email" class="form-control" id="email" name="email" value="${profile.email}">
+						            </div>
+						
+						            <div class="form-group">
+						                <label for="company_id"><fmt:message key="company_id" /></label>
+						                <input type="text" class="form-control" id="company_id" name="company_id" value="${profile.company_id}">
+						            </div>
+						            <input type="hidden" class="form-control" name="image" value="${profile.image}">
+						
+						            <hr class="my-3" />
+						            <div class="d-grid">
+						                <input type="submit" class="btn btn-primary" value="<fmt:message key='update_profile' />"/>
+						            </div>
+						        </div>
+						    </form>
 						</div>
-
 
 						<div class="col-md-8 col-xl-7">
 							<div class="card">
 								<div class="card-header">
-
-									<h5 class="card-title mb-0">Activities</h5>
+									<h5 class="card-title mb-0"><fmt:message key="active_project"/></h5>
 								</div>
-								<div class="card-body h-100">
-
-									<div class="d-flex align-items-start">
-										<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-5.jpg" width="36" height="36" class="rounded-circle me-2" alt="Vanessa Tucker">
+								<div class="card-body">
+									<c:forEach var="pro" items="${pro}">
+									<div class="d-flex align-items-start project-item" onclick="getPro('${pro.project_id}')" style="padding:10px;">
+										<img src="${pro.logo}" width="30" height="30" class="rounded-circle me-2" alt="${pro.project_name} }">
 										<div class="flex-grow-1">
-											<small class="float-end text-navy">5m ago</small>
-											<strong>Vanessa Tucker</strong> started following <strong>Christina Mason</strong><br />
-											<small class="text-muted">Today 7:51 pm</small><br />
+											<small class="float-end text-navy">
+												<fmt:formatDate value="${pro.start_date}" pattern="yy.MM.dd" /> ~
+       											<fmt:formatDate value="${pro.end_date}" pattern="yy.MM.dd" />
+       										</small>
+											<strong>${pro.project_name}</strong>						
 
 										</div>
 									</div>
-
-									<hr />
-									<div class="d-flex align-items-start">
-										<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar.jpg" width="36" height="36" class="rounded-circle me-2" alt="Charles Hall">
-										<div class="flex-grow-1">
-											<small class="float-end text-navy">30m ago</small>
-											<strong>Charles Hall</strong> posted something on <strong>Christina Mason</strong>'s timeline<br />
-											<small class="text-muted">Today 7:21 pm</small>
-
-											<div class="border text-sm text-muted p-2 mt-1">
-												Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus
-												pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante.
-											</div>
-
-											<a href="#" class="btn btn-sm btn-danger mt-1"><i class="feather-sm" data-feather="heart"></i> Like</a>
-										</div>
-									</div>
-
-									<hr />
-									<div class="d-flex align-items-start">
-										<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-4.jpg" width="36" height="36" class="rounded-circle me-2" alt="Christina Mason">
-										<div class="flex-grow-1">
-											<small class="float-end text-navy">1h ago</small>
-											<strong>Christina Mason</strong> posted a new blog<br />
-
-											<small class="text-muted">Today 6:35 pm</small>
-										</div>
-									</div>
-
-									<hr />
-									<div class="d-flex align-items-start">
-										<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-2.jpg" width="36" height="36" class="rounded-circle me-2" alt="William Harris">
-										<div class="flex-grow-1">
-											<small class="float-end text-navy">3h ago</small>
-											<strong>William Harris</strong> posted two photos on <strong>Christina Mason</strong>'s timeline<br />
-											<small class="text-muted">Today 5:12 pm</small>
-
-											<div class="row g-0 mt-1">
-												<div class="col-6 col-md-4 col-lg-4 col-xl-3">
-													<img src="${path}/adminkit-3.1.0/static/img/photos/unsplash-1.jpg" class="img-fluid pe-2" alt="Unsplash">
-												</div>
-												<div class="col-6 col-md-4 col-lg-4 col-xl-3">
-													<img src="${path}/adminkit-3.1.0/static/img/photos/unsplash-2.jpg" class="img-fluid pe-2" alt="Unsplash">
-												</div>
-											</div>
-
-											<a href="#" class="btn btn-sm btn-danger mt-1"><i class="feather-sm" data-feather="heart"></i> Like</a>
-										</div>
-									</div>
-
-									<hr />
-									<div class="d-flex align-items-start">
-										<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-2.jpg" width="36" height="36" class="rounded-circle me-2" alt="William Harris">
-										<div class="flex-grow-1">
-											<small class="float-end text-navy">1d ago</small>
-											<strong>William Harris</strong> started following <strong>Christina Mason</strong><br />
-											<small class="text-muted">Yesterday 3:12 pm</small>
-
-											<div class="d-flex align-items-start mt-1">
-												<a class="pe-3" href="#">
-                <img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-4.jpg" width="36" height="36" class="rounded-circle me-2" alt="Christina Mason">
-              </a>
-												<div class="flex-grow-1">
-													<div class="border text-sm text-muted p-2 mt-1">
-														Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus.
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<hr />
-									<div class="d-flex align-items-start">
-										<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar-4.jpg" width="36" height="36" class="rounded-circle me-2" alt="Christina Mason">
-										<div class="flex-grow-1">
-											<small class="float-end text-navy">1d ago</small>
-											<strong>Christina Mason</strong> posted a new blog<br />
-											<small class="text-muted">Yesterday 2:43 pm</small>
-										</div>
-									</div>
-
-									<hr />
-									<div class="d-flex align-items-start">
-										<img src="${path}/adminkit-3.1.0/static/img/avatars/avatar.jpg" width="36" height="36" class="rounded-circle me-2" alt="Charles Hall">
-										<div class="flex-grow-1">
-											<small class="float-end text-navy">1d ago</small>
-											<strong>Charles Hall</strong> started following <strong>Christina Mason</strong><br />
-											<small class="text-muted">Yesterdag 1:51 pm</small>
-										</div>
-									</div>
-
-									<hr />
-									<div class="d-grid">
-										<a href="#" class="btn btn-primary">Load more</a>
-									</div>
+									</c:forEach>
 								</div>
+
+									<hr>
+									
+									<div class="card-header">
+										<h5 class="card-title mb-0"><fmt:message key="completed_projects"/></h5>
+									</div>
+								<div class="card-body">
+									<c:forEach var="cpro" items="${cpro}">
+									<div class="d-flex align-items-start project-item" onclick="getPro('${cpro.project_id}')" style="padding:10px;">
+										<img src="${cpro.logo}" width="30" height="30" class="rounded-circle me-2" alt="${cpro.project_name} }">
+										<div class="flex-grow-1">
+											<small class="float-end text-navy">
+												<fmt:formatDate value="${cpro.start_date}" pattern="yy.MM.dd" /> ~
+       											<fmt:formatDate value="${cpro.end_date}" pattern="yy.MM.dd" />
+       										</small>
+											<strong>${cpro.project_name}</strong>						
+
+										</div>
+									</div>
+									</c:forEach>
+								</div>
+								
 							</div>
 						</div>
 					</div>
 
 				</div>
 			</main>
-
-			<footer class="footer">
-				<div class="container-fluid">
-					<div class="row text-muted">
-						<div class="col-6 text-start">
-							<p class="mb-0">
-								<a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> &copy;
-							</p>
-						</div>
-						<div class="col-6 text-end">
-							<ul class="list-inline">
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</footer>
+			
 		</div>
 	</div>
-
+<script>
+	function getPro(proejct_id){
+		location.href=// 프로젝
+	}
+</script>
 	<script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
 
 </body>

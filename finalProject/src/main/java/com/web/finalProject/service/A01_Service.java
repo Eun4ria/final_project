@@ -2,6 +2,7 @@ package com.web.finalProject.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -58,7 +59,9 @@ public class A01_Service {
     public List<Project> getProjectList(String user_id){
     	return dao.getProjectList(user_id);
     }
-    
+    public List<Project> getComProjectList(String user_id){
+    	return dao.getComProjectList(user_id);
+    }
     
     
     

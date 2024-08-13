@@ -53,6 +53,14 @@
    <link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 <%--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
+<style>
+.project-item:hover{
+	cursor:pointer;
+	background-color:lightgray;
+	border-radius:10px;
+	transition: background-color 0.3s ease;
+}
+</style>
  <script>
  var msg="${msg}"
  if(msg != "") {
@@ -284,11 +292,11 @@ location.href="message?user_id="+user_id
                   </thead>
                   <tbody>
                   <c:forEach var="pro" items="${pro}">
-                    <tr onclick="projectPage('${pro.project_id}')">
+                    <tr onclick="projectPage('${pro.project_id}')" class="project-item">
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                           <img src="${pro.logo}" class="avatar avatar-sm me-3" alt="xd">
+                           <img src="${pro.logo}" class="avatar avatar-sm me-3" alt="${pro.project_name}">
                           
                           </div>
                           <div class="d-flex flex-column justify-content-center">

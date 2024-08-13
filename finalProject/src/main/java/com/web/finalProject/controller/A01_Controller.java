@@ -185,7 +185,7 @@ public class A01_Controller {
  		return ResponseEntity.ok(service.getCalendarList(project_id));
  	}
 
- 	/*
+ 	
  	// http://localhost:4040/profile
     @GetMapping("profile")
     public String profile(HttpServletRequest request, Model d) {    
@@ -193,10 +193,14 @@ public class A01_Controller {
         String user_id = (String) session.getAttribute("user_id");        
         System.out.println("프로필 user_id:"+user_id);        
         d.addAttribute("currentUrl", request.getRequestURI());
+        // 유저의 프로필 정보
         d.addAttribute("profile", service.getProfile(user_id));
+        // 활동중인 프로젝트 리스트
+        d.addAttribute("pro", service.getProjectList(user_id));
+        // 완료된 프로젝트 리스트
+        d.addAttribute("cpro", service.getComProjectList(user_id));        
         return "WEB-INF\\views\\a01_profile.jsp";
     }
-    */
     @PostMapping("updateProfile")
     public String updateProfil(Users upt, Model d) {
     	d.addAttribute("msg", service.updateProfile(upt));
@@ -205,14 +209,14 @@ public class A01_Controller {
     }
     
     private final LocaleResolver localeResolver;
-    
 
+    @Autowired
     public A01_Controller(LocaleResolver localeResolver) {
         this.localeResolver = localeResolver;
     }
-    // http://localhost:4040/profile
-    @GetMapping("profile")
-    public String mailFrm(@RequestParam(value = "lang", required = false) String lang, HttpServletRequest request, HttpServletResponse response, Model d) {
+    // http://localhost:4040/changeLang?lang=en
+    @GetMapping("changeLang")
+    public String changeLang(@RequestParam(value = "lang", required = false) String lang, HttpServletRequest request, HttpServletResponse response) {
         if (lang != null) {
             Locale locale;
             switch (lang) {
@@ -222,14 +226,17 @@ public class A01_Controller {
                 case "en":
                     locale = new Locale("en");
                     break;
+                case "fa":
+                    locale = new Locale("fa");
+                    break;
                 default:
-                    locale = Locale.ENGLISH; // 기본값으로 설정할 언어
+                    locale = Locale.ENGLISH;
             }
             localeResolver.setLocale(request, response, locale);
         }
-        
-        return "WEB-INF\\views\\a01_profile.jsp";
+        return "redirect:profile";
     }
+    
     
     
     
