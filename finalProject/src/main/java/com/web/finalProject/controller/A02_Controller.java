@@ -461,6 +461,7 @@ public class A02_Controller {
 			}
 
 			
+			
 //board
 	// http://localhost:4040/board
 	@GetMapping("board")
