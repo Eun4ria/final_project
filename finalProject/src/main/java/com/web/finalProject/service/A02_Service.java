@@ -141,11 +141,17 @@ public class A02_Service {
 			 return dao.getchatRoomId(get); 
 		 } 
 		
-	//채팅 등록
-		public String insertchatroom(Chat ins) {
+		//채팅 등록
+			public String insertchatroom(Chat ins) {
+				
+				return dao.insertchatroom(ins)>0?"생성 완료":"생성 실패";
+			}
+			//채팅 등록
+			public String insertchatroom1(Chat ins1) {
+				
+				return dao.insertchatroom1(ins1)>0?"생성 완료":"생성 실패";
+			}
 			
-			return dao.insertchatroom(ins)>0?"생성 완료":"생성 실패";
-		}
 	//채팅 리스트
 		public List<Chat> getchatList(Chat chsch){
 			return dao.getchatList(chsch);
