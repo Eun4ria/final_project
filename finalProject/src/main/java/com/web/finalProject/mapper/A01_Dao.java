@@ -108,11 +108,13 @@ public interface A01_Dao {
 	List<Users> getUsers();
 	
 	
-	// 로그인한 유저의 프로젝트 리스트
+	// 로그인한 유저의 활동중인 프로젝트 리스트
 	@Select("SELECT\r\n"
 			+ "    p.project_id,\r\n"
 			+ "    c.logo,\r\n"
 			+ "    p.project_name,\r\n"
+			+ "    p.start_date,\r\n"
+			+ "    p.end_date,\r\n"
 			+ "    MAX(b.amount) AS amount,  -- 예산\r\n"
 			+ "    AVG(t.progress) AS progress  -- 평균 진행률\r\n"
 			+ "FROM\r\n"
@@ -129,12 +131,41 @@ public interface A01_Dao {
 			+ "    budget b ON p.project_id = b.project_id\r\n"
 			+ "WHERE\r\n"
 			+ "    u.user_id = #{user_id}\r\n"
+			+ "    AND p.end_date >= SYSDATE \r\n"
 			+ "GROUP BY\r\n"
-			+ "    p.project_id, c.logo, p.project_name\r\n"
+			+ "    p.project_id, c.logo, p.project_name,p.start_date,p.end_date\r\n"
 			+ "ORDER BY\r\n"
 			+ "    p.project_name")
 	List<Project> getProjectList(@Param("user_id") String user_id);
-	
+	// 로그인한 유저의 완료된 프로젝트
+	@Select("SELECT\r\n"
+			+ "    p.project_id,\r\n"
+			+ "    c.logo,\r\n"
+			+ "    p.project_name,\r\n"
+			+ "    p.start_date,\r\n"
+			+ "    p.end_date,\r\n"
+			+ "    MAX(b.amount) AS amount,  -- 예산\r\n"
+			+ "    AVG(t.progress) AS progress  -- 평균 진행률\r\n"
+			+ "FROM\r\n"
+			+ "    users u\r\n"
+			+ "JOIN\r\n"
+			+ "    team tm ON u.user_id = tm.user_id\r\n"
+			+ "JOIN\r\n"
+			+ "    project p ON tm.project_id = p.project_id\r\n"
+			+ "JOIN\r\n"
+			+ "    company c ON p.company_id = c.company_id\r\n"
+			+ "LEFT JOIN\r\n"
+			+ "    task t ON p.project_id = t.project_id\r\n"
+			+ "LEFT JOIN\r\n"
+			+ "    budget b ON p.project_id = b.project_id\r\n"
+			+ "WHERE\r\n"
+			+ "    u.user_id = #{user_id}\r\n"
+			+ "    AND p.end_date < SYSDATE \r\n"
+			+ "GROUP BY\r\n"
+			+ "    p.project_id, c.logo, p.project_name,p.start_date,p.end_date\r\n"
+			+ "ORDER BY\r\n"
+			+ "    p.project_name")
+	List<Project> getComProjectList(@Param("user_id") String user_id);
 	
 	
 	// 캘린더

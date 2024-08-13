@@ -1,11 +1,13 @@
 package com.web.finalProject.vo;
 
+import java.util.Date;
+
 public class Project {
 	private String project_name;
 	private String project_id;
 	private String etc;
-	private String start_date;
-	private String end_date;
+	private Date start_date;
+	private Date end_date;
 	private String create_date;
 	private boolean pstatus;
 	private String company_id;
@@ -14,38 +16,8 @@ public class Project {
 	private String image;
 	private String logo;
 	private int progress;
+	private int amount;
 	
-	public int getProgress() {
-		return progress;
-	}
-	public void setProgress(int progress) {
-		this.progress = progress;
-	}
-	public String getLogo() {
-		return logo;
-	}
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
-	private int amount; 
-	public String getUser_name() {
-		return user_name;
-	}
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
-	}
-	public String getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
-	}
 	public int getAmount() {
 		return amount;
 	}
@@ -70,16 +42,16 @@ public class Project {
 	public void setEtc(String etc) {
 		this.etc = etc;
 	}
-	public String getStart_date() {
+	public Date getStart_date() {
 		return start_date;
 	}
-	public void setStart_date(String start_date) {
+	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
 	}
-	public String getEnd_date() {
+	public Date getEnd_date() {
 		return end_date;
 	}
-	public void setEnd_date(String end_date) {
+	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
 	public String getCreate_date() {
@@ -100,4 +72,35 @@ public class Project {
 	public void setCompany_id(String company_id) {
 		this.company_id = company_id;
 	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	public String getLogo() {
+		return logo;
+	}
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+	public int getProgress() {
+		return progress;
+	}
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
+	
 }

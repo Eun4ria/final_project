@@ -344,24 +344,26 @@ function goChat(user_id){
     		});
         }
         
-        // 일정 등록
-        gantt.attachEvent("onAfterTaskAdd", function(id, task) {
-        	console.log("등록할 데이터(url 호출 전):", id, task);
-            ajaxFun("insertGantt",task);
-        });
-        
-        // 일정 수정
-        gantt.attachEvent("onAfterTaskUpdate", function(id, task) {
-		    console.log("수정할 데이터(url 호출 전):", id, task);
-		    ajaxFun("updateGantt", task);
-		});        
-        
-        // 일정 삭제
-        gantt.attachEvent("onAfterTaskDelete", function(id, task) {
-		    console.log("삭제할 데이터(url 호출 전):", id, task);
-		    ajaxFun("deleteGantt", task);
-		});
-        
+		var sessionRole="${sessionScope.role_code}"
+		if(sessionRole=="P"){
+	        // 일정 등록
+	        gantt.attachEvent("onAfterTaskAdd", function(id, task) {
+	        	console.log("등록할 데이터(url 호출 전):", id, task);
+	            ajaxFun("insertGantt",task);
+	        });
+	        
+	        // 일정 수정
+	        gantt.attachEvent("onAfterTaskUpdate", function(id, task) {
+			    console.log("수정할 데이터(url 호출 전):", id, task);
+			    ajaxFun("updateGantt", task);
+			});        
+	        
+	        // 일정 삭제
+	        gantt.attachEvent("onAfterTaskDelete", function(id, task) {
+			    console.log("삭제할 데이터(url 호출 전):", id, task);
+			    ajaxFun("deleteGantt", task);
+			});
+		}
 		
 		// 날짜 포맷 변환 함수
 		function formatDate(dateStr) {

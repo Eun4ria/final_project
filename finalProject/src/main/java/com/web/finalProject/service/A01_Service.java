@@ -2,6 +2,7 @@ package com.web.finalProject.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -58,7 +59,9 @@ public class A01_Service {
     public List<Project> getProjectList(String user_id){
     	return dao.getProjectList(user_id);
     }
-    
+    public List<Project> getComProjectList(String user_id){
+    	return dao.getComProjectList(user_id);
+    }
     
     
     
@@ -82,7 +85,7 @@ public class A01_Service {
 		try {
 			String tempPwd = Util.mkTPwd();
 			System.out.println("생성된 임시 비밀번호"+tempPwd);			
-			mmsg.setSubject(user.getUser_name()+"님의 임시 비밀번호입니다.");
+			mmsg.setSubject("<HPM> "+user.getUser_name()+"님의 임시 비밀번호입니다.");
 			mmsg.setRecipient(RecipientType.TO, new InternetAddress(user.getEmail()));
 			String content = user.getUser_name()+"님의 임시 비밀번호는 "+tempPwd+" 입니다.\r\n"
 					+ "빠른 시일 내 비밀번호를 변경해주세요 \r\n"

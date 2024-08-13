@@ -95,6 +95,7 @@ int insertUser(Users ins);
 			+ "and user_id=#{user_id}")
 	String getchatRoomName(Chat get);
 	
+	
 //	//개인
 //	@Select("select user_name from users u\r\n"
 //			+ "join chat c"

@@ -1,6 +1,7 @@
 package com.web.finalProject.controller;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.LocaleResolver;
 
 import com.web.finalProject.service.A01_Service;
 import com.web.finalProject.vo.Calendar;
@@ -18,6 +20,7 @@ import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Users;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -182,7 +185,7 @@ public class A01_Controller {
  		return ResponseEntity.ok(service.getCalendarList(project_id));
  	}
 
-
+ 	
  	// http://localhost:4040/profile
     @GetMapping("profile")
     public String profile(HttpServletRequest request, Model d) {    
@@ -190,7 +193,12 @@ public class A01_Controller {
         String user_id = (String) session.getAttribute("user_id");        
         System.out.println("프로필 user_id:"+user_id);        
         d.addAttribute("currentUrl", request.getRequestURI());
+        // 유저의 프로필 정보
         d.addAttribute("profile", service.getProfile(user_id));
+        // 활동중인 프로젝트 리스트
+        d.addAttribute("pro", service.getProjectList(user_id));
+        // 완료된 프로젝트 리스트
+        d.addAttribute("cpro", service.getComProjectList(user_id));        
         return "WEB-INF\\views\\a01_profile.jsp";
     }
     @PostMapping("updateProfile")
@@ -199,6 +207,36 @@ public class A01_Controller {
     	d.addAttribute("profile", service.getProfile(upt.getUser_id()));
     	return "WEB-INF\\views\\a01_profile.jsp";
     }
+    
+    private final LocaleResolver localeResolver;
+
+    @Autowired
+    public A01_Controller(LocaleResolver localeResolver) {
+        this.localeResolver = localeResolver;
+    }
+    // http://localhost:4040/changeLang?lang=en
+    @GetMapping("changeLang")
+    public String changeLang(@RequestParam(value = "lang", required = false) String lang, HttpServletRequest request, HttpServletResponse response) {
+        if (lang != null) {
+            Locale locale;
+            switch (lang) {
+                case "ko":
+                    locale = new Locale("ko");
+                    break;
+                case "en":
+                    locale = new Locale("en");
+                    break;
+                case "fa":
+                    locale = new Locale("fa");
+                    break;
+                default:
+                    locale = Locale.ENGLISH;
+            }
+            localeResolver.setLocale(request, response, locale);
+        }
+        return "redirect:profile";
+    }
+    
     
     
     
