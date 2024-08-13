@@ -54,27 +54,29 @@
 <%--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
  <style>
-        #toggleopen {
-            display: none;
-            position: absolute;
+         #mainDiv {
+            position: relative;
             width: 300px;
-            height: 100%;
-            top: 0;
-            right: -300px;
-            background-color: #f1f1f1;
-            box-shadow: -2px 0 5px rgba(0,0,0,0.3);
-            transition: right 1s;
+            height: 300px;
+            background-color: lightblue;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-sizing: border-box;
         }
-        #toggleopen.show {
-            right: 0;
-        }
-        #closeBtn {
+
+        /* Style for the toggled div */
+        #toggleDiv {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            font-size: 20px;
-            font-weight: bold;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: none; /* Initially hidden */
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
     </style>
 
@@ -206,21 +208,14 @@ function goChat(project_id){
                     프로젝트 이름이나 기간 넣기?
                   </p>
                 </div>
-                <div class="col-lg-6 col-5 my-auto text-end">
-                  <div class="dropdown float-lg-end pe-4">
-                    <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-v text-secondary"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                </div>
+                
+       
+    
               </div>
             </div>
-            <div class="card-body px-0 pb-2">
+            
+           <%-- 찐본문 --%>
+            <div class="card-body px-0 pb-2" id="mainDiv" onclick="toggleDiv">
               <div class="table-responsive">
                 <table class="table align-items-center mb-0">
                   <thead>
@@ -464,7 +459,7 @@ function goChat(project_id){
         $("#toggleopen").hide();
 
         window.taskPage = function(task_id) { // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
-            alert("토글 가즈아");
+            alert("토글 가즈아" + task_id );
 
             // 토글 열기/닫기
             $("#toggleopen").toggleClass("show");
