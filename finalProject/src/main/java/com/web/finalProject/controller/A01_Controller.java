@@ -1,6 +1,7 @@
 package com.web.finalProject.controller;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.LocaleResolver;
 
 import com.web.finalProject.service.A01_Service;
 import com.web.finalProject.vo.Calendar;
@@ -18,6 +20,7 @@ import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Users;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -182,7 +185,7 @@ public class A01_Controller {
  		return ResponseEntity.ok(service.getCalendarList(project_id));
  	}
 
-
+ 	/*
  	// http://localhost:4040/profile
     @GetMapping("profile")
     public String profile(HttpServletRequest request, Model d) {    
@@ -193,11 +196,39 @@ public class A01_Controller {
         d.addAttribute("profile", service.getProfile(user_id));
         return "WEB-INF\\views\\a01_profile.jsp";
     }
+    */
     @PostMapping("updateProfile")
     public String updateProfil(Users upt, Model d) {
     	d.addAttribute("msg", service.updateProfile(upt));
     	d.addAttribute("profile", service.getProfile(upt.getUser_id()));
     	return "WEB-INF\\views\\a01_profile.jsp";
+    }
+    
+    private final LocaleResolver localeResolver;
+    
+
+    public A01_Controller(LocaleResolver localeResolver) {
+        this.localeResolver = localeResolver;
+    }
+    // http://localhost:4040/profile
+    @GetMapping("profile")
+    public String mailFrm(@RequestParam(value = "lang", required = false) String lang, HttpServletRequest request, HttpServletResponse response, Model d) {
+        if (lang != null) {
+            Locale locale;
+            switch (lang) {
+                case "ko":
+                    locale = new Locale("ko");
+                    break;
+                case "en":
+                    locale = new Locale("en");
+                    break;
+                default:
+                    locale = Locale.ENGLISH; // 기본값으로 설정할 언어
+            }
+            localeResolver.setLocale(request, response, locale);
+        }
+        
+        return "WEB-INF\\views\\a01_profile.jsp";
     }
     
     

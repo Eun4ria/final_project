@@ -174,94 +174,59 @@
       Get more page examples
   </a>
 					</div>
-					
+					<form method="get" action="profile" class="selectLan">
+						<select name="lang" onchange="this.form.submit()">
+							<option value="ko" ${param.lang == 'ko' ? 'selected' : ''}>한국어</option>
+							<option value="en" ${param.lang == 'en' ? 'selected' : ''}>English</option>
+						</select>
+					</form>
 					<div class="row">
 						<div class="col-md-4 col-xl-5">
-							<form class="card mb-3" method="post" action="updateProfile" enctype="multipart/form-data"> 
-								<div class="card-header">
-									<h5 class="card-title mb-0">Profile Details</h5>
-								</div>
-								<div class="card-body text-center">
-									<img src="${image}" style="width: 40%; height: auto;" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
-								<br><br>
-							
-								<div class="form-group">
-					                <label class="btn btn-outline-primary">
-					                  Update Image File<input type="file"  name="image" multiple="multiple" class="form-control" value="" />
-					                </label>
-					            </div>					              
-									<%-- <p class="text-dark">${user_name}</p>
-									<div class="text-muted mb-2">SoftWare Developer</div> --%>									
-								</div>
-								<hr class="my-0" />
-								
-								<div class="card-body">
-									<h5 class="h6 card-title">Info</h5>
-									<div class="form-group">
-									  <label for="userId">ID</label>
-									  <input type="text" class="form-control" id="userId" name="user_id" value="${profile.user_id}" readonly>
-									</div>
-									
-									<div class="form-group">
-									  <label for="name">Name</label>
-									  <input type="text" class="form-control" id="name" name="user_name" value="${profile.user_name}">
-									</div>
-									
-									<div class="form-group">
-									  <label for="email">Email</label>
-									  <input type="email" class="form-control" id="email" name="email" value="${profile.email}">
-									</div>
-									
-									<div class="form-group">
-									  <label for="company_id">Company ID</label>
-									  <input type="text" class="form-control" id="company_id" name="company_id" value="${profile.company_id}">
-									</div>
-									<input type="hidden" class="form-control" name="image" value="${profile.image}">
-									
-									<hr class="my-3" />
-									<div class="d-grid">
-										<input type="submit" class="btn btn-primary" value="update profile"/>
-									</div>
-									
-																
-								</div>
-								<%-- 
-								<div class="card-body">
-									<h5 class="h6 card-title">Skills</h5>
-									<a href="#" class="badge bg-primary me-1 my-1">HTML</a>
-									<a href="#" class="badge bg-primary me-1 my-1">JavaScript</a>
-									<a href="#" class="badge bg-primary me-1 my-1">Sass</a>
-									<a href="#" class="badge bg-primary me-1 my-1">Angular</a>
-									<a href="#" class="badge bg-primary me-1 my-1">Vue</a>
-									<a href="#" class="badge bg-primary me-1 my-1">React</a>
-									<a href="#" class="badge bg-primary me-1 my-1">Redux</a>
-									<a href="#" class="badge bg-primary me-1 my-1">UI</a>
-									<a href="#" class="badge bg-primary me-1 my-1">UX</a>
-								</div>
-								<hr class="my-0" />
-								<div class="card-body">
-									<h5 class="h6 card-title">About</h5>
-									<ul class="list-unstyled mb-0">
-										<li class="mb-1"><span data-feather="home" class="feather-sm me-1"></span> Lives in <a href="#">San Francisco, SA</a></li>
-
-										<li class="mb-1"><span data-feather="briefcase" class="feather-sm me-1"></span> Works at <a href="#">GitHub</a></li>
-										<li class="mb-1"><span data-feather="map-pin" class="feather-sm me-1"></span> From <a href="#">Boston</a></li>
-									</ul>
-								</div>
-								<hr class="my-0" />
-								
-								<div class="card-body">
-									<h5 class="h6 card-title">Elsewhere</h5>
-									<ul class="list-unstyled mb-0">
-										<li class="mb-1"><a href="#">staciehall.co</a></li>
-										<li class="mb-1"><a href="#">Twitter</a></li>
-										<li class="mb-1"><a href="#">Facebook</a></li>
-										<li class="mb-1"><a href="#">Instagram</a></li>
-										<li class="mb-1"><a href="#">LinkedIn</a></li>
-									</ul>
-								</div>
-								--%>
-							</form>
+							 <form class="card mb-3" method="post" action="updateProfile" enctype="multipart/form-data"> 
+        <div class="card-header">
+            <h5 class="card-title mb-0"><fmt:message key="profile_details" /></h5>
+        </div>
+        <div class="card-body text-center">
+            <img src="${image}" style="width: 40%; height: auto;" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
+            <br><br>
+        
+            <div class="form-group">
+                <label class="btn btn-outline-primary">
+                  <fmt:message key="update_image_file" /><input type="file" name="image" multiple="multiple" class="form-control" value="" />
+                </label>
+            </div>					              
+        </div>
+        <hr class="my-0" />
+        
+        <div class="card-body">
+            <h5 class="h6 card-title">Info</h5>
+            <div class="form-group">
+              <label for="userId"><fmt:message key="id" /></label>
+              <input type="text" class="form-control" id="userId" name="user_id" value="${profile.user_id}" readonly>
+            </div>
+            
+            <div class="form-group">
+              <label for="name"><fmt:message key="name" /></label>
+              <input type="text" class="form-control" id="name" name="user_name" value="${profile.user_name}">
+            </div>
+            
+            <div class="form-group">
+              <label for="email"><fmt:message key="email" /></label>
+              <input type="email" class="form-control" id="email" name="email" value="${profile.email}">
+            </div>
+            
+            <div class="form-group">
+              <label for="company_id"><fmt:message key="company_id" /></label>
+              <input type="text" class="form-control" id="company_id" name="company_id" value="${profile.company_id}">
+            </div>
+            <input type="hidden" class="form-control" name="image" value="${profile.image}">
+            
+            <hr class="my-3" />
+            <div class="d-grid">
+                <input type="submit" class="btn btn-primary" value="<fmt:message key="update_profile" />"/>
+            </div>
+        </div>
+    </form>
 						</div>
 
 						<div class="col-md-8 col-xl-7">

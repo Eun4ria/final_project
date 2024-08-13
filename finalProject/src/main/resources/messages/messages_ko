@@ -1,1 +1,7 @@
-welcome.message=환영합니다
+profile_details=프로필 정보
+update_image_file=이미지 파일 업데이트
+id=아이디
+name=이름
+email=이메일
+company_id=회사 아이디
+update_profile=프로필 업데이트
