@@ -1,5 +1,5 @@
 SELECT * FROM users;
-SELECT * FROM chat;
+SELECT * FROM chat;wlrmagk
 
 SELECT COUNT(*) FROM chat c
 WHERE owner_id = 'N_0047'
@@ -232,4 +232,9 @@ SELECT * FROM CHAT
 WHERE project_id = 'PRO_0003'
 AND (user_id = 'N_0047' OR owner_id='N_0047');
 
-   
+SELECT constraint_name
+FROM user_constraints
+WHERE table_name = 'CHAT'
+  AND constraint_type = 'P';
+
+ALTER TABLE CHAT DROP CONSTRAINT SYS_C007359;

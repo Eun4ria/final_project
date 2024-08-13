@@ -345,6 +345,9 @@ $(document).ready(function(){
         window.location.href = 'message';
      }
  }
+ function goBack() {
+     window.history.back();
+ }
  
 
  </script>
@@ -390,10 +393,10 @@ $(document).ready(function(){
                            <button type="submit" id="mainBtn" style="background-color:transparent; border:none; color:white" >
                            <i class="fas fa-user-circle"></i> main page</button>
                         </form>
-                        <form method="post" action="mainpmFrm">
-                           <input type="submit" id="exitBtn" hidden >
-                           <i class="fas fa-users"></i> Add to close friends
-                        </form>
+                          
+                           <button type="submit" id="biBtn" >
+                           <i class="fas fa-users"></i> Big size</button>
+                        
                         <form method="post" action="mainpmFrm">
                            <input type="submit" id="exitBtn" hidden >
                            <i class="fas fa-plus"></i> Add to group
@@ -402,6 +405,13 @@ $(document).ready(function(){
                            <input type="submit" id="exitBtn" hidden >
                            <i class="fas fa-ban"></i> Block
                         </form>
+                        
+                           
+                           <button onclick="goBack()"style="background-color:transparent; border:none; color:white">
+                           <i class="fas fa-sign-out-alt">
+                           </i> Go Back</button>
+                           
+                       
                         <form method="get" action="chatmemListstart">
                            
                            <button onclick="clearLocalStorage()" id="exitBtn" style="background-color:transparent; border:none; color:white">
@@ -498,7 +508,7 @@ $(document).ready(function(){
       }
    </script>  
 
-    <script type="text/javascript">
+ <script type="text/javascript">
 // 메세지 보내는 소켓  
 var socket = new SockJS('/ws');
 var stompClient = Stomp.over(socket);
@@ -514,9 +524,9 @@ stompClient.connect({}, function(frame) {
         console.log("## 받은 이름 ##");
         console.log(obj.name);
 
-      //  if(curName != obj.name)
-     //       displayMessage(obj.name, obj.msg, 'left');
-
+        if(curName != obj.name){ //어제 지운거
+            displayMessage(obj.name, obj.msg, 'left'); //어제 지운거 :없으면 바로 화면에 안나옴
+       }
         // 받은 메시지를 localStorage에 저장
        // storeMessage(obj.name, obj.msg);
     });
@@ -524,7 +534,9 @@ stompClient.connect({}, function(frame) {
 
 // 메시지를 localStorage에 저장하는 함수
 function storeMessage(name, msg) {
-    var chatroom_id = document.getElementById('chatroom_id').value;
+	 var chatroom_id = document.getElementById('chatroom_id').value;
+   // var chatroom_id = document.getElementById('chatroom_id').value;
+   // var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
     var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
     messages.push({name: name, msg: msg});
     localStorage.setItem(chatroom_id, JSON.stringify(messages));
@@ -534,7 +546,7 @@ function storeMessage(name, msg) {
 function displayMessage(name, msg, alignment) {
     var messageDiv = document.createElement('div');
     messageDiv.classList.add(alignment);
-    //화면에 보이나
+    //화면에 보이는 부분
     messageDiv.innerHTML =  msg + "<br>";
     document.querySelector("#show").appendChild(messageDiv);
     document.getElementById('msg').value = '';
@@ -561,8 +573,8 @@ function sendName() {
     document.getElementById('msg').value = '';
 }
 function scrollToBottom() {
-	 var chatArea = document.getElementById('chatArea');
-	    chatArea.scrollTop = chatArea.scrollHeight;
+    var chatArea = document.getElementById('chatArea');
+       chatArea.scrollTop = chatArea.scrollHeight;
 }
 // 페이지 로드 시 localStorage에서 메시지 불러오기
 window.onload = function() {
@@ -577,13 +589,14 @@ window.onload = function() {
 
 // localStorage 내용 삭제
 function clearLocalStorage() {
+	 var chatroom_id = document.getElementById('chatroom_id').value;
    // localStorage.clear(); // 모든 채팅방에 대해 
-    localStorage.removeItem(chatroom_id)
+    localStorage.removeItem(chatroom_id) //현재 채팅
     document.querySelector("#show").innerHTML = '';
 }
 
 
-</script>
+</script> 
 
 
    </body>

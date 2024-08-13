@@ -74,28 +74,23 @@ int insertUser(Users ins);
 			+ "AND u.user_id != #{user_id}")
 	List<Users> getMemList(Users sch);
 	
+	
+	//생성
 	@Insert("INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id) " +
-            "VALUES ('CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '채팅'||TO_CHAR(chat_name_seq.nextval), #{owner_id}, #{user_id}, 'N', NULL, sysdate, #{project_id})")
+            "VALUES ('CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '채팅'||TO_CHAR(chatname_seq.nextval), #{owner_id}, #{user_id}, 'N', NULL, sysdate, #{project_id})")
 //    @Options(useGeneratedKeys = true, keyProperty = "chatroom_id", keyColumn = "chatroom_id")
 	int insertchatroom(Chat ins);
 	
 	@Insert("INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id) " +
-			"VALUES ('CT1_'||TO_CHAR(chat_seq1.nextval, 'FM0000'), '채팅'||TO_CHAR(chat_name_seq1.nextval), #{user_id}, #{owner_id}, 'N', NULL, sysdate, #{project_id})")
+			"VALUES ('CHT_'||TO_CHAR(chat_seq1.nextval, 'FM0000'), '채팅'||TO_CHAR(chatname_seq1.nextval), #{user_id}, #{owner_id}, 'N', NULL, sysdate, #{project_id})")
 //    @Options(useGeneratedKeys = true, keyProperty = "chatroom_id", keyColumn = "chatroom_id")
 	int insertchatroom1(Chat ins1);
 	
-	//채팅방정보 가져오기
-	@Select("select chatroom_id from chat \r\n"
+	@Select("select chatroom_id, chatroom_name from chat \r\n"
 			+ "where owner_id=#{owner_id} \r\n"
 			+ "and user_id=#{user_id}")
-	String getchatRoomId(Chat get);
-	
-	@Select("select chatroom_name from chat \r\n"
-			+ "where owner_id=#{owner_id} \r\n"
-			+ "and user_id=#{user_id}")
-	String getchatRoomName(Chat get);
-	
-	
+	Chat getchatRoomId(Chat get);
+//	
 //	//개인
 //	@Select("select user_name from users u\r\n"
 //			+ "join chat c"
@@ -109,20 +104,20 @@ int insertUser(Users ins);
 //			+ "where chatroom_name=#{chatroom_name} \r\n"
 //			+ "and u.user_id=c.user_id")
 //	Chat getchatMemnames(Chat getnames);
-	
+//	
 	//채팅방 유무 확인
-	@Select("SELECT COUNT(*) FROM chat c\r\n"
-			+ "WHERE owner_id = #{owner_id} \r\n"
-			+ "AND user_id=#{user_id} \r\n"
+	@Select("SELECT COUNT(*) FROM chat c \r\n"
+			+ "WHERE owner_id = #{owner_id}\r\n"
+			+ "AND user_id = #{user_id}\r\n"
 			+ "AND project_id = #{project_id}")
 	   int chatroomCk(Chat ch);
 	
 	//채팅 리스트
-	@Select("SELECT * FROM CHAT \r\n"
-			+ "WHERE project_id = #{project_id}\r\n"
-			+ "AND  owner_id=#{user_id}\r\n"
-			+ "AND owner_id != user_id")
-	List<Chat> getchatList(Chat chsch);
+		@Select("SELECT * FROM CHAT \r\n"
+				+ "WHERE project_id = #{project_id}\r\n"
+				+ "AND  owner_id=#{user_id}\r\n"
+				+ "AND owner_id != user_id")
+		List<Chat> getchatList(Chat chsch);
 	
 
 	
