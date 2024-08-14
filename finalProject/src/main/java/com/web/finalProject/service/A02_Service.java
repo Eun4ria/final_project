@@ -3,6 +3,7 @@ package com.web.finalProject.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -160,8 +161,14 @@ public class A02_Service {
 		
 // 업무(to do)
 			public List<Tasks> getTaskList(Tasks sch){
-				
 				return dao.getTaskList(sch);
 			}	
+			
+// ToDo detail
+			public List<Tasks> getTaskDetail(Tasks sch){
+				return dao.getTaskDetail(sch);
+			}	
+			
+		
 
 }

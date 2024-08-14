@@ -118,7 +118,9 @@
 
  body{
  background-color: rgba(248,249,251, 0.3);
+ overflow-x:hidden;
 }
+
 </style>
 </head>
 
@@ -129,131 +131,160 @@
 
 <%-- 본문내용 --%>
          <main class="content">
-            <div class="container-fluid p-0">
+           
 
           
-      <div class="container border rounded"> 
+      <div class="container border rounded" style="background:white"> 
 
         <div class="row mb-5">
           <div class="col-lg-12" style="background:white; padding:0">
-         
-            <form class="p-4 p-md-5 rounded" method="post">
+          
+<c:forEach var="task" items="${taskdetail }">
+  <%-- form --%>            
+              <form class="p-4  rounded" method="post">  
+          <div>
              <a class="sidebar-toggle js-sidebar-toggle">
           <i class="hamburger align-self-center"></i>  <i class="bi bi-x"></i>
         </a>
               <h3 class="text-black mb-5 border-bottom pb-2">Job Details</h3>
-         
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" class="form-control" id="email" placeholder="you@yourdomain.com">
-              </div>
-              <div class="form-group">
-                <label for="job-title">Job Title</label>
-                <input type="text" class="form-control" id="job-title" placeholder="Product Designer">
-              </div>
-              <div class="form-group">
-                <label for="job-location">Location</label>
-                <input type="text" class="form-control" id="job-location" placeholder="e.g. New York">
+              
+              
+      
+<%-- task id --%>
+        	 <div class="form-group">
+                <label for="taskid">Task ID</label>
+                <input type="text" class="form-control" id="taskid" value="${task_id }" readonly>
               </div>
 
+              
+ <%-- task name --%>
               <div class="form-group">
-                <label for="job-region">Job Region</label>
-                <select class="selectpicker border rounded" id="job-region" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Region">
-                      <option>Anywhere</option>
-                      <option>San Francisco</option>
-                      <option>Palo Alto</option>
-                      <option>New York</option>
-                      <option>Manhattan</option>
-                      <option>Ontario</option>
-                      <option>Toronto</option>
-                      <option>Kansas</option>
-                      <option>Mountain View</option>
-                    </select>
-              </div>
-
-              <div class="form-group">
-                <label for="job-type">Job Type</label>
-                <select class="selectpicker border rounded" id="job-type" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Job Type">
-                  <option>Part Time</option>
-                  <option>Full Time</option>
-                </select>
-              </div>
-
-
-              <div class="form-group">
-                <label for="job-description">Job Description</label>
-                <div class="editor" id="editor-1">
-                  <p>Write Job Description!</p>
-                </div>
-              </div>
-
-
-              <h3 class="text-black my-5 border-bottom pb-2">Company Details</h3>
-              <div class="form-group">
-                <label for="company-name">Company Name</label>
-                <input type="text" class="form-control" id="company-name" placeholder="e.g. New York">
-              </div>
-
-              <div class="form-group">
-                <label for="company-tagline">Tagline (Optional)</label>
-                <input type="text" class="form-control" id="company-tagline" placeholder="e.g. New York">
-              </div>
-
-              <div class="form-group">
-                <label for="job-description">Company Description (Optional)</label>
-                <div class="editor" id="editor-2">
-                  <p>Description</p>
-                </div>
+                <label for="job-title">Task Title</label>
+                <input type="text" class="form-control" id="task-title" value="${task.task_name}">
               </div>
               
-              <div class="form-group">
-                <label for="company-website">Website (Optional)</label>
-                <input type="text" class="form-control" id="company-website" placeholder="https://">
+   <%-- Day --%>           
+   			  <div class="form-group">
+                <label for="start">Start Date</label>
+                <input type="Date" class="form-control" id="start" value="${task.startDateFormatted}">
+              </div>
+              
+              
+               <div class="form-group">
+                <label for="end">End Date</label>
+                <input type="Date" class="form-control" id="end" value="${task.endDateFormatted}">
               </div>
 
-              <div class="form-group">
-                <label for="company-website-fb">Facebook Username (Optional)</label>
-                <input type="text" class="form-control" id="company-website-fb" placeholder="companyname">
+  <%-- Status  --%>  
+              
+              <div class="form-group" style="display:inline-block">
+                <label for="tstatus" style="padding-right:11rem;">Status</label>   <label for="priority">priority</label><br> 
+         
+                <select class="selectpicker border rounded" id="tstatus" data-style="btn-black" data-live-search="true" 
+                					title="${task.tstatus}" v-model="tstatus" name="tstatus" > 
+		        	<option class="text-center"  value="진행중">진행중</option>
+		        	<option class="text-center"  value="중단">중단</option>
+		        	<option class="text-center"  value="막힘">막힘</option>
+		        	<option class="text-center"  value="보완">보완</option>
+		        	<option class="text-center"  value="완료">완료</option>
+                  </select>
+              
+              
+  <%-- priority --%>   
+              
+                 <select class="selectpicker border rounded" id="priority" data-style="btn-black" data-live-search="true" title="${task.priority}" v-model="priority" name="priority">
+		        	<option class="text-center"  value="상">상</option>
+		        	<option class="text-center"  value="중">중</option>
+		        	<option class="text-center"  value="하">하</option>
+                 </select>
               </div>
 
-              <div class="form-group">
-                <label for="company-website-tw">Twitter Username (Optional)</label>
-                <input type="text" class="form-control" id="company-website-tw" placeholder="@companyname">
+ <%-- parent id --%> 
+               <div class="form-group">
+                <label for="parent_id">Parent ID</label>
+                <input type="text" class="form-control" id="parent_id" value="${task.parent_id}">
               </div>
-              <div class="form-group">
-                <label for="company-website-tw">Linkedin Username (Optional)</label>
-                <input type="text" class="form-control" id="company-website-tw" placeholder="companyname">
+              
+              
+ <%-- background color --%> 
+               <div class="form-group">
+                <label for="parent_id">Background Color</label>
+                <input type="text" class="form-control" id="backgroundcolor" value="${task.backgroundcolor}">
+              </div>
+              
+ <%-- Text color --%> 
+               <div class="form-group">
+                <label for="textcolor">Text Color</label>
+                <input type="text" class="form-control" id="textcolor" value="${task.textcolor}">
+              </div>
+              
+ <%-- User id --%> 
+               <div class="form-group">
+                <label for="user_id">User Id</label>
+                <input type="text" class="form-control" id="user_id" value="${task.user_id}">
+              </div>
+              
+ <%-- Project id --%> 
+               <div class="form-group">
+                <label for="project_id">User Id</label>
+                <input type="text" class="form-control" id="project_id" value="${task.project_id}">
               </div>
 
+ <%-- Progress --%> 
               <div class="form-group">
-                <label for="company-website-tw d-block">Upload Logo</label> <br>
+                <label for="company-website-tw d-block">Progress</label> <br>        
+                
+                   <div class="progress-info">
+                     <div class="progress-percentage">
+                       <span class="text-xs font-weight-bold">${task.progress}%</span>
+                     </div>
+                   </div>
+                   <div class="progress mx-auto">
+                   <div class="progress-bar bg-gradient-info" style="width: ${task.progress}%;" role="progressbar" aria-valuenow="${pro.progress}" aria-valuemin="0" aria-valuemax="100"></div>
+                   </div>      
+              </div>
+              
+ <%-- content --%> 
+              <div class="form-group">
+                <label for="comment">content</label>
+   <%--            <div class="editor" id="editor-1">
+                  <p>Write Job Description!</p>
+                </div>
+            --%>  
+              <input type="text" class="form-control" id="content" value="${task.content}">
+              </div>
+
+
+ <%-- Upload File --%> 
+              <div class="form-group">
+                <label for="company-website-tw d-block">Upload File</label> <br>
                 <label class="btn btn-primary btn-md btn-file">
-                  Browse File<input type="file" hidden>
+                  Browse File<input type="file" >
                 </label>
               </div>
 
+
             </form>
-            
+           </c:forEach> 
            
-         
- <div class="row align-items-center mb-5">
-          
+        
           <div class="col-lg-4 ml-auto">
             <div class="row">
               <div class="col-6">
                 <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Preview</a>
               </div>
               <div class="col-6">
-                <a href="#" class="btn btn-block btn-primary btn-md">Save Job</a>
+             	 <input type="submit" placeholder="save" class="btn btn-block btn-primary btn-md">
               </div>
             </div>
           </div>
-        </div>
+         </div>
+
          
         </div>
         </div>
-      </div>
-    </div>
+ <br><br>
+  
     </main>
   
 

@@ -59,12 +59,6 @@ int insertUser(Users ins);
 			+ "    t.user_id = #{user_id}")
 	List<Project> getProjectList(@Param("user_id") String user_id);	
 	
-// todo 리스트
-//	@Select("SELECT * FROM task\r\n"
-//			+ "WHERE user_id = #{user_id}\r\n"
-//			+ "AND project_id = #{project_id}")
-//	List<Task> getTaskList(Task sch);
-	
 	
 //채팅 리스트-프젝에 속한 모든 팀원
 	@Select("SELECT *\r\n"
@@ -75,7 +69,7 @@ int insertUser(Users ins);
 	List<Users> getMemList(Users sch);
 	
 	
-	//생성
+	//채팅방생성
 	@Insert("INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id) " +
             "VALUES ('CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '채팅'||TO_CHAR(chatname_seq.nextval), #{owner_id}, #{user_id}, 'N', NULL, sysdate, #{project_id})")
 //    @Options(useGeneratedKeys = true, keyProperty = "chatroom_id", keyColumn = "chatroom_id")
@@ -91,19 +85,7 @@ int insertUser(Users ins);
 			+ "and user_id=#{user_id}")
 	Chat getchatRoomId(Chat get);
 //	
-//	//개인
-//	@Select("select user_name from users u\r\n"
-//			+ "join chat c"
-//			+ "where chatroom_id=#{chatroom_id} \r\n"
-//			+ "and u.user_id=c.user_id")
-//	Users getchatMemname(Users getname);
-//	
-//	//단체
-//	@Select("select user_name from users u\r\n"
-//			+ "join chat c"
-//			+ "where chatroom_name=#{chatroom_name} \r\n"
-//			+ "and u.user_id=c.user_id")
-//	Chat getchatMemnames(Chat getnames);
+
 //	
 	//채팅방 유무 확인
 	@Select("SELECT COUNT(*) FROM chat c \r\n"
@@ -120,18 +102,16 @@ int insertUser(Users ins);
 		List<Chat> getchatList(Chat chsch);
 	
 
-	
-//	@Select("SELECT * FROM Chat\r\n"
-//			+ "WHERE user_id = #{user_id} \r\n"
-//			+ "AND project_id=#{project_id}")
-//	Chat chat(Chat chat);
-	
+	// ToDo List
 	@Select("SELECT * FROM task\r\n"
 			+ "WHERE user_id = #{user_id}\r\n"
 			+ "AND project_id = #{project_id}")
 	List<Tasks> getTaskList(Tasks sch);
 	
-	
+	// ToDo detail
+	@Select("SELECT * FROM TASK t \r\n"
+			+ "WHERE task_id = #{task_id}")
+	List<Tasks> getTaskDetail(Tasks sch);
 	
 	
 	

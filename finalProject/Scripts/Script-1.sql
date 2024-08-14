@@ -1,6 +1,6 @@
 SELECT * FROM CHAT;
 SELECT * FROM team;
-
+SELECT * FROM task;
 
 
 SELECT COUNT(*) FROM CHAT c 
@@ -22,3 +22,8 @@ AND project_id = 'PRO_0003';
 select chatroom_id, chatroom_name from chat
 where owner_id='P_0001'
 and user_id='N_0047';
+
+SELECT * FROM task;
+
+SELECT * FROM TASK t 
+WHERE task_id = 'TSK_0001'; 

@@ -444,9 +444,11 @@ public class A02_Controller {
 			    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			    // 날짜를 문자열로 변환
 			    for (Tasks task : tasks) {
-			    	 if (task.getEnd_date() != null) {
+			    	 if (task.getEnd_date() != null || task.getStart_date() != null) {
 			             String endDateFormatted = dateFormat.format(task.getEnd_date());
 			             task.setEndDateFormatted(endDateFormatted);
+			             String startDateFormatted = dateFormat.format(task.getStart_date());
+			             task.setStartDateFormatted(startDateFormatted);
 			            // System.out.println(endDateFormatted);
 			         }
 		          
@@ -458,9 +460,65 @@ public class A02_Controller {
 
 				
 				// return "WEB-INF\\views\\a02_todo.jsp"; //원래
-			     return "WEB-INF\\views\\a02_taskdo3.jsp"; //지금
+			     return "WEB-INF\\views\\a02_taskdoList.jsp"; //지금
 			    
 			}
+	//task detail	
+		  @PostMapping("/setTaskId")
+		    public ResponseEntity<Void> setTaskId(@RequestParam String task_id, HttpServletRequest request) { 
+			   // void : 반환값 없음
+		        HttpSession session = request.getSession();
+		        session.setAttribute("task_id", task_id);
+		        System.out.println(task_id);
+		        return ResponseEntity.ok().build();
+		    }
+			
+			// http://localhost:4040/taskdo 
+		  //todo detail
+			@RequestMapping("taskdo")
+			public String taskdo1(Tasks sch,HttpServletRequest request, Model d) {
+	
+				HttpSession session = request.getSession(); 
+				String task_id = (String) session.getAttribute("task_id");
+				String project_id = (String) session.getAttribute("project_id");
+				String user_id = (String) session.getAttribute("user_id");
+				
+				session.setAttribute("project_id", project_id);
+				session.setAttribute("task_id", task_id);
+				session.setAttribute("user_id", user_id);
+				
+			
+				
+	             
+				
+				System.out.println("업무 아이디: "+ task_id);
+				System.out.println("프로젝트 아이디: "+ project_id);
+				System.out.println("되나");
+				
+			    // 모델에 데이터 추가
+			    sch.setTask_id(task_id); // 해당하는 아이디를 다시 세팅
+			 // 세션에서 받아온 task_id에 대한 업무 리스트를 가져온다.
+			    List<Tasks> tasks = service.getTaskDetail(sch); 
+			     
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				// 날짜를 문자열로 변환
+			    for (Tasks task : tasks) {
+			    	 if (task.getEnd_date() != null || task.getStart_date() != null) {
+			             String endDateFormatted = dateFormat.format(task.getEnd_date());
+			             task.setEndDateFormatted(endDateFormatted);
+			             String startDateFormatted = dateFormat.format(task.getStart_date());
+			             task.setStartDateFormatted(startDateFormatted);
+			            // System.out.println(endDateFormatted);
+			         }
+		          
+			    }
+				 
+			    d.addAttribute("taskdetail", tasks);
+			    System.out.println("taskdetail:" + tasks);
+				
+				return "WEB-INF\\views\\a02_taskdetail.jsp";
+			}
+				
 
 			
 			
@@ -472,25 +530,21 @@ public class A02_Controller {
         return "WEB-INF\\views\\a00_index.jsp";
     }
 	
-	//필요없는 파일 :task2
-//board
-//	// http://localhost:4040/taskdo
-//	@RequestMapping("task2")
-//	public String taskdo(HttpServletRequest request, Model d) {
-//		
-//		return "WEB-INF\\views\\a02_task2.jsp";
-//	}
-	// http://localhost:4040/taskdo
-	@RequestMapping("taskdo")
-	public String taskdo1(HttpServletRequest request, Model d) {
-		
-		return "WEB-INF\\views\\a02_taskdo.jsp";
-	}
-			  		   
+
+		  		   
 			
 			
 
 }
+
+
+
+
+
+
+
+
+
 class msgList2{
 	   private String msg;
 	   private String msg1;
