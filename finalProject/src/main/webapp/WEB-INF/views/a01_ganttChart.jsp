@@ -225,6 +225,20 @@ function goChat(user_id){
 			grouping: true
 		});
 		
+		// 날짜 변환 함수
+		function parseDate(dateString) {
+			// 날짜 형식: dd-MM-yyyy
+		    var parts = dateString.split("-");
+		    return new Date(parts[2], parts[1] - 1, parts[0]); // 연, 월, 일
+		}
+		// 정렬 함수
+		function sortTasksByStartDate(tasks) {
+		    return tasks.sort(function(a, b) {
+		        return new Date(a.start_date) - new Date(b.start_date);
+		    });
+		}
+		
+		
 		$.ajax({
 			type:"post",
 			url:"ganttList",
@@ -235,8 +249,25 @@ function goChat(user_id){
 				console.log("#로딩 시 전체 데이터 출력(gantt,resource)#")
 				console.log(data)
               						
-                // gantt data           
-                var gdata = {data:data.ganttList}   
+                var tasks = data.ganttList.map(function(task) {
+		            return {
+		                id: task.id,
+		                text: task.text,
+		                start_date: parseDate(task.start_date), // 날짜 변환
+		                duration: task.duration || 1,
+		                priority: task.priority,
+		                user: task.user,
+		                open: task.open,
+		                parent: task.parent,
+		                progress: task.progress || 0,
+		                color: task.color,
+		                textColor: task.textcolor
+		            };
+		        });
+				var sortedTasks = sortTasksByStartDate(tasks);
+
+		        var gdata = { data: sortedTasks };
+		        
 				console.log("#gantt 데이터 출력#");  
                 console.log(gdata)
                 // gantt적용
@@ -314,14 +345,13 @@ function goChat(user_id){
 		    duration:28
 		}, "project_2", 2); 
 		*/
-		
         
 		// 재사용 함수
 		function ajaxFun(url,task){
         	$.ajax({
     			type:"post",
     			url:url,
-    			data:{
+    			data:JSON.stringify({
 					id:task.id,
     				start_date: task.start_date.toISOString(),
     		        text: task.text,
@@ -333,7 +363,8 @@ function goChat(user_id){
     		        textcolor: task.textcolor,
     		        user: task.user,
     		        project_id: "${sessionScope.project_id}"
-    		    },
+    		    }),
+    		    contentType: "application/json; charset=utf-8",
     			dataType:"json",
     			success: function(result) {
     				console.log(result.msg,("!!!!!")); // 결과 메시지	
@@ -363,14 +394,24 @@ function goChat(user_id){
 			    console.log("삭제할 데이터(url 호출 전):", id, task);
 			    ajaxFun("deleteGantt", task);
 			});
+	        
+	        gantt.attachEvent("onTaskDrag", function(id, mode) {
+	            console.log("드래그 시작:", id, mode);
+	            // 추가적인 로직
+	        });
+
+	        gantt.attachEvent("onTaskDragEnd", function(id) {
+	            console.log("드래그 종료:", id);
+	            var task = gantt.getTask(id);
+	            console.log("드래그")
+	            console.log(task)
+	            ajaxFun("updateGantt", task); // 드래그 후 서버에 데이터 전송
+	        });
+	        
 		}
 		
-		// 날짜 포맷 변환 함수
-		function formatDate(dateStr) {
-		    var date = new Date(dateStr);
-		    return gantt.date.date_to_str(gantt.config.date_format)(date);
-		}
-		
+		gantt.config.drag_move = true;  // 드래그 이동 활성화
+		gantt.config.drag_resize = true; // 드래그 크기 조정 활성화
 		
 		/*
 		// 일정 추가			

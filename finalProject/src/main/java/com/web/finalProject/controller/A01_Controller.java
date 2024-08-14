@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.LocaleResolver;
@@ -83,7 +85,25 @@ public class A01_Controller {
  	public String find_id_result(Users user, Model d) { 
  		d.addAttribute("result", service.find_id(user));
  		return "WEB-INF\\views\\a01_find_id_result.jsp"; 
- 	}    
+ 	} 
+ 	
+ 	//비밀번호 찾기
+    // http://localhost:4040/find_pwd
+    @GetMapping("find_pwd")
+    public String find_pwd() {
+        return "WEB-INF\\views\\a01_find_pwd.jsp";
+    }
+    @PostMapping("find_pwd")
+    public String findPassword(Users user, @RequestParam("email") String email,
+    		Model d) {
+        String result = service.find_pwd(user);
+        if ("해당 계정 정보 없습니다".equals(result)) { // 계정 정보가 없는 경우
+        	d.addAttribute("msg", result);
+        } else {
+        	 d.addAttribute("msg",service.makeTempPwd(user));
+        }
+        return "WEB-INF\\views\\a01_find_pwd.jsp";
+    }
  	
 		
 	// 간트 페이지
@@ -115,11 +135,18 @@ public class A01_Controller {
 				service.getGantt(ins.getProject_id())));
 	}
 	@PostMapping("updateGantt")
-	public ResponseEntity<?> updateGantt(GanttTask upt) {
-		System.out.println("수정할 task명:"+upt.getText());
-		return ResponseEntity.ok(new TaskList(
-				service.updateGantt(upt),
-				service.getGantt(upt.getProject_id())));
+	public ResponseEntity<?> updateGantt(@RequestBody GanttTask upt) {
+		try {
+	        System.out.println("수정할 task명: " + upt.getText());
+	        // Call service to update task
+	        TaskList updatedTaskList = new TaskList(
+	            service.updateGantt(upt), 
+	            service.getGantt(upt.getProject_id()));
+	        return ResponseEntity.ok(updatedTaskList);
+	    } catch (Exception e) {
+	        e.printStackTrace(); // Print stack trace for debugging
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred");
+	    }
 	}
 	@PostMapping("deleteGantt")
 	public ResponseEntity<?> deleteGantt(@RequestParam("id") String task_id) {
@@ -146,40 +173,42 @@ public class A01_Controller {
 	    return "WEB-INF\\views\\a00_main.jsp";
 	}  
     
-	//비밀번호 찾기
-    // http://localhost:4040/find_pwd
-    @GetMapping("find_pwd")
-    public String find_pwd() {
-        return "WEB-INF\\views\\a01_find_pwd.jsp";
-    }
-    @PostMapping("find_pwd")
-    public String findPassword(Users user, @RequestParam("email") String email,
-    		Model d) {
-        String result = service.find_pwd(user);
-        if ("해당 계정 정보 없습니다".equals(result)) { // 계정 정보가 없는 경우
-        	d.addAttribute("msg", result);
-        } else {
-        	 d.addAttribute("msg",service.makeTempPwd(user));
-        }
-        return "WEB-INF\\views\\a01_find_pwd.jsp";
-    }
+	
     
-    
-    // 캘린더
+    // 캘린더 페이지
     // http://localhost:4040/fullcalendar
  	@GetMapping("fullcalendar")
-	public String fullcalendar(HttpServletRequest request, Model d) {	        
+	public String fullcalendar( HttpServletRequest request, Model d) {	        
 		d.addAttribute("currentUrl", request.getRequestURI());
 	    return "WEB-INF\\views\\a01_fullcalendar.jsp";
 	}
-
- 	// http://localhost:3030/calList 
- 	@PostMapping("calList")
- 	public ResponseEntity<List<Calendar>> getCalList(HttpServletRequest request){
+ 	/*
+ 	// 간트(task) 캘린더
+ 	// http://localhost:4040/ganttCalList 
+ 	@PostMapping("ganttCalList")
+ 	public ResponseEntity<List<Calendar>> getGanttCalList(HttpServletRequest request){
  		HttpSession session = request.getSession(false); 
         String project_id = (String) session.getAttribute("project_id");  
- 		return ResponseEntity.ok(service.getCalendarList(project_id));
+ 		return ResponseEntity.ok(service.getGanttCalList(project_id));
  	}
+ 	// 개인/팀 캘린더
+ 	@PostMapping("PCalList")
+ 	public ResponseEntity<List<Calendar>> getPCalList(HttpServletRequest request){
+ 		HttpSession session = request.getSession(false); 
+        String user_id = (String) session.getAttribute("user_id");  
+        String project_id = (String) session.getAttribute("project_id");  
+ 		return ResponseEntity.ok(service.getTCalList(project_id));
+ 	}
+ 	*/
+ 	// http://localhost:4040/calList 
+  	@GetMapping("calList")
+  	public ResponseEntity<List<Calendar>> getCalList(@RequestParam(value="sel", defaultValue="P") String sel,
+  			HttpServletRequest request){
+  		HttpSession session = request.getSession(false); 
+         String user_id = (String) session.getAttribute("user_id");  
+         String project_id = (String) session.getAttribute("project_id");  
+  		return ResponseEntity.ok(service.getCalList(sel,user_id,project_id));
+  	}
 
  	
  	

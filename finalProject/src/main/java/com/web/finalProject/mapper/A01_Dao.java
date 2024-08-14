@@ -70,7 +70,7 @@ public interface A01_Dao {
 	@Update("UPDATE task " +
 	        "SET task_name = #{text}, " +
 	        "    start_date = #{start_date}, " +
-	        "    end_date = (#{start_date} + INTERVAL '1' DAY * #{duration}), " +
+	        "    end_date = #{start_date} + INTERVAL '#{duration} DAY', " +
 	        "    parent_id = #{parent}, " +
 	        "    priority = #{priority}, " +
 	        "    progress = #{progress}, " +
@@ -168,18 +168,62 @@ public interface A01_Dao {
 	List<Project> getComProjectList(@Param("user_id") String user_id);
 	
 	
-	// 캘린더
+	// 간트(task)캘린더
 	@Select("SELECT\r\n"
-			+ "task_id AS id,\r\n"
-			+ "task_name AS title,\r\n"
-			+ "start_date AS \"start\",\r\n"
-			+ "end_date AS \"end\",\r\n"
-			+ "backgroundcolor AS backgroundColor,\r\n"
-			+ "textcolor AS textColor\r\n"
+			+ "    task_id AS id,\r\n"
+			+ "    task_name AS title,\r\n"
+			+ "    start_date AS \"start\",\r\n"
+			+ "    end_date AS \"end\",\r\n"
+			+ "    content,\r\n"
+			+ "    '#d8ee95' AS backgroundColor,\r\n"
+			+ "    'black' AS textColor \r\n"
 			+ "FROM task\r\n"
-			+ "where project_id=#{project_id}")
-	List<Calendar> getCalendarList(@Param("project_id")String project_id);
-	
+			+ "WHERE project_id = #{project_id}")
+	List<Calendar> getGanttCalList(@Param("project_id")String project_id);
+	// 개인 캘린더
+	@Select("SELECT \r\n"
+			+ "    c.cal_id AS id, \r\n"
+			+ "    c.title,\r\n"
+			+ "    c.start1 \"start\",\r\n"
+			+ "    c.end1 \"end\",\r\n"
+			+ "    c.content,\r\n"
+			+ "    '#85eee2' AS backgroundColor,\r\n"
+			+ "    'black' AS textColor, \r\n"
+			+ "    c.urllink AS urlLink, \r\n"
+			+ "    c.user_id AS user_id, \r\n"
+			+ "    c.entity_type,\r\n"
+			+ "    u.user_name AS writer \r\n"
+			+ "FROM \r\n"
+			+ "    calendar c\r\n"
+			+ "JOIN \r\n"
+			+ "    users u ON c.user_id = u.user_id \r\n"
+			+ "WHERE \r\n"
+			+ "    entity_type='P' AND c.user_id = #{user_id}")
+	List<Calendar> getPCalList(@Param("user_id") String user_id);
+	// 팀 캘린더
+	@Select("SELECT \r\n"
+			+ "    c.cal_id as id, \r\n"
+			+ "    c.title,\r\n"
+			+ "    c.start1 \"start\",\r\n"
+			+ "    c.end1 \"end\",\r\n"
+			+ "    c.content,\r\n"
+			+ "    '#c266f4' AS backgroundColor,\r\n"
+			+ "    'white' AS textColor, \r\n"
+			+ "    c.urllink AS urlLink, \r\n"
+			+ "    c.user_id AS user_id, \r\n"
+			+ "    t.project_id,\r\n"
+			+ "    c.entity_type,\r\n"
+			+ "    u.user_name AS writer \r\n"
+			+ "FROM \r\n"
+			+ "    calendar c\r\n"
+			+ "JOIN \r\n"
+			+ "    users u ON c.user_id = u.user_id \r\n"
+			+ "JOIN\r\n"
+			+ "    team t ON t.user_id = u.user_id\r\n"
+			+ "WHERE \r\n"
+			+ "entity_type='T'\r\n"
+			+ "AND project_id=#{project_id}")
+	List<Calendar> getTCalList(@Param("project_id") String project_id);
 	
 	// 프로필
 	@Select("SELECT\r\n"

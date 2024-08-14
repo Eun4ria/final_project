@@ -44,13 +44,15 @@
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#pmGantt").hide()
+		//$("#pmGantt").hide()
 		$("#Output").hide()
 		$("#todo").show()
+		/*
 		if("${sessionScope.role_code}"=="P"){
 			$("#pmGantt").show()
 			$("#Output").show()
 		}
+		*/
 		
 		 // 현재 URL을 JavaScript 변수로 설정
         var currentUrl = window.location.pathname;
