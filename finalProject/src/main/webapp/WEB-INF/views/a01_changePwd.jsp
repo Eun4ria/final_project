@@ -67,6 +67,9 @@ $(document).ready(function() {
 	var msg="${msg}"
 	if(msg!=""){
 		alert(msg)
+		if(msg=="수정 성공"){
+			location.href="profile"
+		}
 	}
 	
     function updateMessages() {

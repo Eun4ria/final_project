@@ -279,9 +279,72 @@ FROM
 ORDER BY
     u.user_id, p.project_id;
 
+SELECT * FROM calendar;
+
+ALTER TABLE calendar
+ADD (entity_type VARCHAR2(20));
+
+SELECT * FROM task;
+ALTER TABLE calendar
+DROP (
+    entity_type
+);
+
+UPDATE calendar SET 
+entity_type='T'
+WHERE user_id='M_0003';
+SELECT * FROM calendar;
+
+INSERT INTO calendar values('CAL_'||TO_CHAR(calendar_seq.nextval, 'FM0000'),'가족여행',sysdate, TO_DATE('2024-08-20', 'YYYY-MM-DD'), '휴가를 떠나요',NULL,NULL,NULL,NULL,'P_0001','P');
+
+
+SELECT 
+    c.cal_id, 
+    c.title,
+    c.start1 "start",
+    c.end1 "end",
+    c.content,
+    '#85eee2' AS backgroundColor,
+    'black' AS textColor, 
+    c.urllink AS urlLink, 
+    c.allday AS allDay,
+    c.user_id AS user_id, 
+    c.entity_type,
+    u.user_name AS writer  -- 사용자 이름을 가져옵니다.
+FROM 
+    calendar c
+JOIN 
+    users u ON c.user_id = u.user_id  -- user_id를 기준으로 조인합니다.
+WHERE 
+     entity_type='P' AND c.user_id = 'P_0001';
+   
+SELECT 
+    c.cal_id AS id, 
+    c.title,
+    c.start1 "start",
+    c.end1 "end",
+    c.content,
+    '#85eee2' AS backgroundColor,
+    'black' AS textColor, 
+    c.urllink AS urlLink, 
+    c.user_id AS user_id, 
+    t.project_id,
+    c.entity_type,
+    u.user_name AS writer  -- 사용자 이름을 가져옵니다.
+FROM 
+    calendar c
+JOIN 
+    users u ON c.user_id = u.user_id  -- user_id를 기준으로 조인합니다.
+JOIN
+    team t ON t.user_id = u.user_id
+WHERE entity_type='T' AND project_id='PRO_0003';
+   
 
 
 
+SELECT * FROM calendar;
+
+ALTER TABLE calendar RENAME COLUMN urlink to urllink;
 
 
 

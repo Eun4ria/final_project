@@ -93,6 +93,15 @@ function goChat(user_id){
 <script type="text/javascript">
 	var calendar;
 	document.addEventListener('DOMContentLoaded', function() {
+
+		function getSelectedCheckboxValues() {
+		    var selectedValues = [];
+		    $('input[type="checkbox"]:checked').each(function() {
+		        selectedValues.push($(this).val());
+		    });
+		    return selectedValues;
+		}
+		
 		var calendarEl = document.getElementById('calendar');
 		var today = new Date()
 		// 오늘 날짜 세팅
@@ -137,15 +146,20 @@ function goChat(user_id){
 			editable : true,
 			dayMaxEvents : true, // allow "more" link when too many events
 			events : function(info, successCallback, failureCallback) {
+				var selectedValues = getSelectedCheckboxValues();
+				
 				$.ajax({
 					url : "calList",
-					method:"post",
+					method:"get",
+					data: { "sel": selectedValues},
 					dataType : "json",
 					success : function(data) {
 						console.log(data)
 						calendar.removeAllEvents()
 						successCallback(data)
 						// 조회시:data,  등록,수정,삭제시:  data.msg data.calList
+						console.log("선택한 보기")
+						console.log(selectedValues)
 
 					},
 					error : function(err) {
@@ -350,6 +364,14 @@ function goChat(user_id){
          
         <div class="content">
             <div class="container">
+            
+            <label>간트</label>
+            <input type="checkbox" value="G"/>
+            <label>팀</label>
+            <input type="checkbox" value="T"/>
+            <label>개인</label>
+            <input type="checkbox" value="P"/>
+            
                 <div id='calendar'></div>
 
 				<div id="showModel" data-toggle="modal" data-target="#calModal"></div>
@@ -372,7 +394,7 @@ function goChat(user_id){
 										<div class="input-group-prepend ">
 											<span class="input-group-text  justify-content-center">일정명</span>
 										</div>
-										<input name="title" placeholder="입정 입력"  class="form-control" />	
+										<input name="title" placeholder="일정 입력"  class="form-control" />	
 									</div>	
 									<div class="input-group mb-3">	
 										<div class="input-group-prepend ">
@@ -384,7 +406,7 @@ function goChat(user_id){
 										<div class="input-group-prepend ">
 											<span class="input-group-text  justify-content-center">시 작(일/시)</span>
 										</div>
-										<input id="start"  class="form-control" /><!-- 화면에 보일 날짜/시간.. -->	
+										<input id="start" class="form-control" /><!-- 화면에 보일 날짜/시간.. -->	
 										<input name="start" type="hidden"   />	<!-- 실제 저장할 날짜/시간 -->
 									</div>	
 									<div class="input-group mb-3">	
@@ -401,33 +423,7 @@ function goChat(user_id){
 										<textarea name="content" rows="5" cols="10" class="form-control"></textarea>			
 									</div>	
 																				
-									<div class="input-group mb-3">	
-										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center">배경색상</span>
-										</div>
-										<input name="backgroundColor" value="#0099cc" type="color" placeholder="색상선택"  class="form-control" />	
-									</div>	
-									<div class="input-group mb-3">	
-										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center">글자색상</span>
-										</div>
-										<input name="textColor"   value="#ccffff"  type="color" placeholder="글자선택"  class="form-control" />	
-									</div>							
-									<div class="input-group mb-3">	
-										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center">종일여부</span>
-										</div>
-										<select name="allDay"  class="form-control" >
-											<option value="1">종일</option>
-											<option value="0">시간</option>
-										</select>	
-									</div>	
-									<div class="input-group mb-3">	
-										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center">연관페이지</span>
-										</div>
-										<input name="urlLink" placeholder="연관 url링크 주소 입력"  class="form-control" />	
-									</div>																										
+																																		
 				
 			
 			

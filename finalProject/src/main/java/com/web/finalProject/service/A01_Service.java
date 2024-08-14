@@ -110,12 +110,31 @@ public class A01_Service {
 		return msg;
 	}
     
-	
 	// 캘린더
-	public List<Calendar> getCalendarList(String project_id){
-		return dao.getCalendarList(project_id);
+	public List<Calendar> getCalList(String sel, String user_id, String project_id){
+		if(sel.equals("G")) {
+			return dao.getGanttCalList(project_id);
+		}else if(sel.equals("P")) {
+			return dao.getPCalList(user_id);
+		}else{
+			return dao.getTCalList(project_id);
+		}
 	}
 	
+	/*
+	// 간트(task) 캘린더
+	public List<Calendar> getGanttCalList(String project_id){
+		return dao.getGanttCalList(project_id);
+	}
+	// 개인 캘린더
+	public List<Calendar> getPCalList(String user_id){
+		return dao.getPCalList(user_id);
+	}
+	// 캘린더
+	public List<Calendar> getTCalList(String project_id){
+		return dao.getTCalList(project_id);
+	}
+	*/
 	
 	
 	// 프로필
