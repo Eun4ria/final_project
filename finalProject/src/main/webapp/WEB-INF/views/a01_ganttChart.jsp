@@ -416,6 +416,7 @@ function goChat(user_id){
     		});
         }
 		
+		
 		var sessionRole="${sessionScope.role_code}"
 		// 등록/수정/삭제는 PM권한
 		if(sessionRole=="P"){

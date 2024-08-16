@@ -2,12 +2,13 @@ package com.web.finalProject.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
-import org.springframework.scheduling.config.Task;
+import org.apache.ibatis.annotations.Update;
 
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Project;
@@ -59,12 +60,6 @@ int insertUser(Users ins);
 			+ "    t.user_id = #{user_id}")
 	List<Project> getProjectList(@Param("user_id") String user_id);	
 	
-// todo 리스트
-//	@Select("SELECT * FROM task\r\n"
-//			+ "WHERE user_id = #{user_id}\r\n"
-//			+ "AND project_id = #{project_id}")
-//	List<Task> getTaskList(Task sch);
-	
 	
 //채팅 리스트-프젝에 속한 모든 팀원
 	@Select("SELECT *\r\n"
@@ -75,7 +70,7 @@ int insertUser(Users ins);
 	List<Users> getMemList(Users sch);
 	
 	
-	//생성
+	//채팅방생성
 	@Insert("INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id) " +
             "VALUES ('CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '채팅'||TO_CHAR(chatname_seq.nextval), #{owner_id}, #{user_id}, 'N', NULL, sysdate, #{project_id})")
 //    @Options(useGeneratedKeys = true, keyProperty = "chatroom_id", keyColumn = "chatroom_id")
@@ -91,19 +86,7 @@ int insertUser(Users ins);
 			+ "and user_id=#{user_id}")
 	Chat getchatRoomId(Chat get);
 //	
-//	//개인
-//	@Select("select user_name from users u\r\n"
-//			+ "join chat c"
-//			+ "where chatroom_id=#{chatroom_id} \r\n"
-//			+ "and u.user_id=c.user_id")
-//	Users getchatMemname(Users getname);
-//	
-//	//단체
-//	@Select("select user_name from users u\r\n"
-//			+ "join chat c"
-//			+ "where chatroom_name=#{chatroom_name} \r\n"
-//			+ "and u.user_id=c.user_id")
-//	Chat getchatMemnames(Chat getnames);
+
 //	
 	//채팅방 유무 확인
 	@Select("SELECT COUNT(*) FROM chat c \r\n"
@@ -112,26 +95,51 @@ int insertUser(Users ins);
 			+ "AND project_id = #{project_id}")
 	   int chatroomCk(Chat ch);
 	
-	//채팅 리스트
-		@Select("SELECT * FROM CHAT \r\n"
-				+ "WHERE project_id = #{project_id}\r\n"
-				+ "AND  owner_id=#{user_id}\r\n"
-				+ "AND owner_id != user_id")
-		List<Chat> getchatList(Chat chsch);
+//채팅 리스트
+	@Select("SELECT * FROM CHAT \r\n"
+			+ "WHERE project_id = #{project_id}\r\n"
+			+ "AND  owner_id=#{user_id}\r\n"
+			+ "AND owner_id != user_id")
+	List<Chat> getchatList(Chat chsch);
 	
 
-	
-//	@Select("SELECT * FROM Chat\r\n"
-//			+ "WHERE user_id = #{user_id} \r\n"
-//			+ "AND project_id=#{project_id}")
-//	Chat chat(Chat chat);
-	
+//todo
+	// ToDo List -조회
 	@Select("SELECT * FROM task\r\n"
 			+ "WHERE user_id = #{user_id}\r\n"
 			+ "AND project_id = #{project_id}")
 	List<Tasks> getTaskList(Tasks sch);
 	
+	// ToDo List -조회 : pm
+	@Select("SELECT * FROM task\r\n"
+			+ "WHERE project_id = #{project_id}")
+	List<Tasks> getAllTaskList(Tasks sch);
 	
+	// ToDo detail - 상세
+	@Select("SELECT * FROM TASK t \r\n"
+			+ "WHERE task_id = #{task_id}")
+	Tasks getTaskDetail(@Param("task_id") String task_id);
+	
+// ToDo update - 수정
+	@Update("UPDATE task\r\n"
+			+ "SET task_id = #{task_id},\r\n"
+			+ "    task_name = #{task_name},\r\n"
+			+ "    start_date = #{start_date},\r\n"
+			+ "    end_date = #{end_date},\r\n"
+			+ "    priority = #{priority},\r\n"
+			+ "    parent_id = #{parent_id},\r\n"
+			+ "    content = #{content},\r\n"
+			+ "    progress = #{progress},\r\n"
+			+ "    tstatus = #{tstatus},\r\n"
+			+ "    user_id = #{user_id},\r\n"
+			+ "    project_id = #{project_id}\r\n"
+			+ "WHERE task_id = #{task_id}")
+	int updatetask(Tasks upt);
+	
+	// ToDo Delete - 삭제
+	@Delete("delete from task \r\n"
+			+ "where task_id=#{task_id}")
+	int deletetask(@Param("task_id") String task_id);
 	
 	
 	

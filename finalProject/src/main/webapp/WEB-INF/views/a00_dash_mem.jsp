@@ -262,36 +262,50 @@ function goChat(user_id){
                   <thead>
                     <tr>
                     <th></th>
-                      <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">c</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task Name</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Completion</th>
                     </tr>
                   </thead>
                   <tbody>
                   <c:forEach var="task" items="${tasklist}">
-                    <tr>
-                    <td>
-	                    <div>
-                            <input type="checkbox" id="task1" >
-           			
-                          </div>
-                    </td>
+                    <tr ondblclick="taskPage('${task.task_id}')">
                       <td>
-                        <div class="d-flex px-2 py-1">
+                         <div class="align-middle text-center" style="border:none">
                          
-                          <div class="d-flex flex-column justify-content-center">
+                          <div class="align-middle text-center ">
+                          	<input type="checkbox" id="task1" >
                             <h6 class="mb-0 text-sm">${task.task_name}</h6>
                           </div>
                         </div>
                       </td>
                       
+                      <td >
+                      <div class="align-middle text-center" style="border:none">
+                         
+                          <div class="align-middle text-center ">
+                            <h6 class="mb-0 text-center">${task.endDateFormatted }</h6>
+                          </div>
+                        </div>
+                        
+                      </td>
+                    
+                      <td class="align-middle text-center">
+                          <div class="align-middle text-center ">
+                            <h6 class="mb-0 text-center">${task.tstatus }</h6>
+                          </div>
+                        </div>
+                      </td>
+                     
+                     
                       <td class="align-middle">
-                        <div class="progress-wrapper w-75 mx-auto">
+                        <div class="progress-wrapper  mx-auto">
                           <div class="progress-info">
                             <div class="progress-percentage">
                               <span class="text-xs font-weight-bold">${task.progress}%</span>
                             </div>
                           </div>
-                          <div class="progress">
+                          <div class="progress mx-auto">
                           <div class="progress-bar bg-gradient-info" style="width: ${task.progress}%;" role="progressbar" aria-valuenow="${pro.progress}" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </div>

@@ -22,6 +22,7 @@ public class Tasks {
     private String project_id;
     
     private String endDateFormatted;
+    private String startDateFormatted;
     
 	public Tasks() {
 		super();
@@ -128,6 +129,12 @@ public class Tasks {
 	}
 	public void setEndDateFormatted(String endDateFormatted) {
 		this.endDateFormatted = endDateFormatted;
+	}
+	public String getStartDateFormatted() {
+		return startDateFormatted;
+	}
+	public void setStartDateFormatted(String startDateFormatted) {
+		this.startDateFormatted = startDateFormatted;
 	}
 	
 	

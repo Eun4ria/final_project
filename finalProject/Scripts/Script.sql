@@ -1,5 +1,6 @@
 SELECT * FROM users;
-SELECT * FROM chat;wlrmagk
+SELECT * FROM chat;
+SELECT * FROM TASK;
 
 SELECT COUNT(*) FROM chat c
 WHERE owner_id = 'N_0047'
