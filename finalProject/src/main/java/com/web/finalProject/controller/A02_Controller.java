@@ -40,6 +40,8 @@ public class A02_Controller {
 	//로그인
    // 로그인 처음 폼
    // http://192.168.0.42:4040/signinFrm
+// http://192.168.45.181:4040/signinFrm  //노트북
+// http://localhost:4040/signinFrm  //노트북
    @GetMapping("signinFrm")
    public String sign_in() {
       return "WEB-INF\\views\\a02_sign_in.jsp";
