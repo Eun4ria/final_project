@@ -110,17 +110,25 @@ public class A01_Service {
 		return msg;
 	}
     
-	// 캘린더
-	public List<Calendar> getCalList(String sel, String user_id, String project_id){
-		if(sel.equals("G")) {
-			return dao.getGanttCalList(project_id);
-		}else if(sel.equals("P")) {
-			return dao.getPCalList(user_id);
-		}else{
-			return dao.getTCalList(project_id);
-		}
-	}
 	
+	// 개인 및 팀 캘린더 일정조회
+    public List<Calendar> getCalendarList(String sel, String user_id, String project_id) {
+        if ("P".equals(sel)) {
+            return dao.getPCalList(user_id);
+        } else if ("T".equals(sel)) {
+            return dao.getTCalList(project_id);
+        } else if ("G".equals(sel)) {
+        	return dao.getGanttCalList(project_id);
+        } else {
+            return List.of(); // 빈 리스트 반환
+        }
+    }
+    /*
+	// 간트 캘린더
+	public List<Calendar> getCalList(String project_id){
+			return dao.getGanttCalList(project_id);
+	}
+	*/
 	/*
 	// 간트(task) 캘린더
 	public List<Calendar> getGanttCalList(String project_id){

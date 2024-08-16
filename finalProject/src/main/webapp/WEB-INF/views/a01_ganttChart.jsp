@@ -238,7 +238,6 @@ function goChat(user_id){
 		    });
 		}
 		
-		
 		$.ajax({
 			type:"post",
 			url:"ganttList",
@@ -327,9 +326,6 @@ function goChat(user_id){
 		});
 		
 		
-        
-		
-		
 		
 		/* 
 		// 라이트 박스 옵션
@@ -351,7 +347,7 @@ function goChat(user_id){
         	$.ajax({
     			type:"post",
     			url:url,
-    			data:JSON.stringify({
+    			data:{
 					id:task.id,
     				start_date: task.start_date.toISOString(),
     		        text: task.text,
@@ -363,24 +359,65 @@ function goChat(user_id){
     		        textcolor: task.textcolor,
     		        user: task.user,
     		        project_id: "${sessionScope.project_id}"
-    		    }),
-    		    contentType: "application/json; charset=utf-8",
+    		    },
     			dataType:"json",
     			success: function(result) {
-    				console.log(result.msg,("!!!!!")); // 결과 메시지	
+    				var tasks = result.ganttList.map(function(task) {
+    		            return {
+    		                id: task.id,
+    		                text: task.text,
+    		                start_date: parseDate(task.start_date), // 날짜 변환
+    		                duration: task.duration || 1,
+    		                priority: task.priority,
+    		                user: task.user,
+    		                open: task.open,
+    		                parent: task.parent,
+    		                progress: task.progress || 0,
+    		                color: task.color,
+    		                textColor: task.textcolor
+    		            };
+    		        });
+    				var sortedTasks = sortTasksByStartDate(tasks);
+
+    		        var gdata = { data: sortedTasks };
+    		        
+    				console.log("#gantt 데이터 출력#");  
+                    console.log(gdata)
+                    
+    				console.log(result.msg,("!!!!!")); // 결과 메시지
+    				
+    				gantt.clearAll();   // 기존 데이터 및 설정 지우기
+    	            gantt.parse(gdata);  // 새로운 데이터를 파싱하여 로드
+    	            gantt.render();     // 차트를 다시 렌더링
     	        },
     			error:function(err){
     				console.log(err)
     			}
     		});
         }
-        
+		
 		var sessionRole="${sessionScope.role_code}"
+		// 등록/수정/삭제는 PM권한
 		if(sessionRole=="P"){
 	        // 일정 등록
 	        gantt.attachEvent("onAfterTaskAdd", function(id, task) {
 	        	console.log("등록할 데이터(url 호출 전):", id, task);
-	            ajaxFun("insertGantt",task);
+	        	
+	        	// 등록 컨펌창
+	        	gantt.confirm({
+	    	    	text: "Are you sure you want to save this?",
+	    		    ok:"Yes", 
+	    		    cancel:"No",
+	    		    callback: function(result) { 
+	    	            if (result) {  // 확인을 클릭할 경우
+	    	                console.log("등록할 데이터(url 호출 전):", id, task);
+	    	                ajaxFun("insertGantt", task);  // 등록함수 호출
+	    	            } else {  // 취소할 경우
+	    	            	 gantt.deleteTask(id, false);  // 작업을 삭제 (롤백)
+	    	            }
+	    	        }
+	    		});
+	        	
 	        });
 	        
 	        // 일정 수정
@@ -407,12 +444,11 @@ function goChat(user_id){
 	            console.log(task)
 	            ajaxFun("updateGantt", task); // 드래그 후 서버에 데이터 전송
 	        });
-	        
 		}
-		
+
 		gantt.config.drag_move = true;  // 드래그 이동 활성화
 		gantt.config.drag_resize = true; // 드래그 크기 조정 활성화
-		
+
 		/*
 		// 일정 추가			
 		gantt.attachEvent("onAfterTaskDelete", function(id, task) {

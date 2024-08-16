@@ -1,5 +1,6 @@
 package com.web.finalProject.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -134,26 +135,21 @@ public class A01_Controller {
 				service.insertGantt(ins),
 				service.getGantt(ins.getProject_id())));
 	}
-	@PostMapping("updateGantt")
-	public ResponseEntity<?> updateGantt(@RequestBody GanttTask upt) {
-		try {
-	        System.out.println("수정할 task명: " + upt.getText());
-	        // Call service to update task
-	        TaskList updatedTaskList = new TaskList(
+	@RequestMapping("updateGantt")
+	public ResponseEntity<?> updateGantt(GanttTask upt) {
+	    System.out.println("수정할 task명: " + upt.getText());
+	    return ResponseEntity.ok(new TaskList(
 	            service.updateGantt(upt), 
-	            service.getGantt(upt.getProject_id()));
-	        return ResponseEntity.ok(updatedTaskList);
-	    } catch (Exception e) {
-	        e.printStackTrace(); // Print stack trace for debugging
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred");
-	    }
+	            service.getGantt(upt.getProject_id())));
 	}
 	@PostMapping("deleteGantt")
-	public ResponseEntity<?> deleteGantt(@RequestParam("id") String task_id) {
+	public ResponseEntity<?> deleteGantt(@RequestParam("id") String task_id,HttpServletRequest request) {
 		System.out.println("삭제할 task id:"+task_id);
+		HttpSession session = request.getSession(false); 
+		String project_id = (String) session.getAttribute("project_id"); 
 		return ResponseEntity.ok(new TaskList(
 				service.deleteGantt(task_id),
-				service.getGantt(task_id)));
+				service.getGantt(project_id)));
 	}
 	
 	
@@ -201,13 +197,24 @@ public class A01_Controller {
  	}
  	*/
  	// http://localhost:4040/calList 
-  	@GetMapping("calList")
-  	public ResponseEntity<List<Calendar>> getCalList(@RequestParam(value="sel", defaultValue="P") String sel,
+  	@PostMapping("calList")
+  	public ResponseEntity<List<Calendar>> getCalList(@RequestParam(name="sel", defaultValue="") List<String> sel,
   			HttpServletRequest request){
   		HttpSession session = request.getSession(false); 
-         String user_id = (String) session.getAttribute("user_id");  
-         String project_id = (String) session.getAttribute("project_id");  
-  		return ResponseEntity.ok(service.getCalList(sel,user_id,project_id));
+        String user_id = (String) session.getAttribute("user_id");  
+        String project_id = (String) session.getAttribute("project_id");  
+        
+        System.out.println("선택한 보기방식:"+sel);
+         
+        List<Calendar> calendarList = new ArrayList<>();
+        
+        if (sel != null && !sel.isEmpty()) {
+            for (String s : sel) {
+                calendarList.addAll(service.getCalendarList(s, user_id, project_id));
+            }
+        }
+
+        return ResponseEntity.ok(calendarList);
   	}
 
  	
