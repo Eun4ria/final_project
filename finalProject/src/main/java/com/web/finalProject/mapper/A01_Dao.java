@@ -70,7 +70,7 @@ public interface A01_Dao {
 	@Update("UPDATE task " +
 	        "SET task_name = #{text}, " +
 	        "    start_date = #{start_date}, " +
-	        "    end_date = #{start_date} + INTERVAL '#{duration} DAY', " +
+	        "    end_date = #{start_date} + #{duration}, " +
 	        "    parent_id = #{parent}, " +
 	        "    priority = #{priority}, " +
 	        "    progress = #{progress}, " +
