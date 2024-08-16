@@ -147,7 +147,7 @@
      
 <li class="nav-item dropdown">   
                      <a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
+                 <img src="z01_upload/${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
 				<c:choose>
 				    <c:when test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
 				        <span class="text-dark">Welcome, PM_${user_name}</span>
@@ -197,16 +197,15 @@
 						            <h5 class="card-title mb-0"><fmt:message key="profile_details" /></h5>
 						        </div>
 						        <div class="card-body text-center">
-						            <img src="${image}" style="width: 40%; height: auto;" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
+						            <img src="z01_upload/${image}" style="width: 40%; height: auto;" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
 						            <br><br>
 						
 						            <div class="form-group">
 						                <label class="btn btn-outline-primary">
 						                    <fmt:message key="update_image_file" />
-						                    <input type="file" name="image" multiple="multiple" class="form-control" value="" />
+						                    <input type="file" name="image" class="form-control" value="${profile.image}"/>
 						                </label>
-						            </div>
-						
+						            </div>						
 						        </div>
 						        <hr class="my-0" />
 						
@@ -230,9 +229,7 @@
 						            <div class="form-group">
 						                <label for="company_id"><fmt:message key="company_id" /></label>
 						                <input type="text" class="form-control" id="company_id" name="company_id" value="${profile.company_id}">
-						            </div>
-						            <input type="hidden" class="form-control" name="image" value="${profile.image}">
-						
+						            </div>						
 						            <hr class="my-3" />
 						            <div class="d-grid">
 						                <input type="submit" class="btn btn-primary" value="<fmt:message key='update_profile' />"/>

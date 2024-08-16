@@ -1,11 +1,14 @@
 package com.web.finalProject.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.web.finalProject.mapper.A01_Dao;
 import com.web.finalProject.util.Util;
@@ -143,15 +146,52 @@ public class A01_Service {
 		return dao.getTCalList(project_id);
 	}
 	*/
-	
-	
+    
 	// 프로필
 	public Users getProfile(String id) {
 		return dao.getProfile(id);
 	}
-	public String updateProfile(Users upt) {
-		return dao.updateProfile(upt)>0?"수정 성공":"수정 실패";
+	
+	@Value("${user.upload}")
+	String path;
+	
+	public String updateProfileWithFile(MultipartFile file, Users user) {
+	    String msg = "수정 실패";
+
+	    try {
+	        if (file != null && !file.isEmpty()) {
+	            String fileName = file.getOriginalFilename();
+	            if (fileName == null || fileName.isEmpty()) {
+	                throw new IllegalArgumentException("파일 이름이 유효하지 않습니다.");
+	            }
+
+	            File uploadDir = new File(path);
+	            if (!uploadDir.exists()) {
+	                uploadDir.mkdirs(); // 디렉토리 생성
+	            }
+	            File serverFile = new File(uploadDir, fileName);
+
+	            file.transferTo(serverFile);
+
+	            user.setImage(fileName);
+	        }
+
+	        int result = dao.updateProfile(user);
+	        if (result > 0) {
+	            msg = "수정 성공";
+	        }
+	    } catch (IOException e) {
+	        msg = "파일 등록 중 에러 발생: " + e.getMessage();
+	    } catch (IllegalArgumentException e) {
+	        msg = e.getMessage();
+	    } catch (Exception e) {
+	        msg = "기타 에러 발생: " + e.getMessage();
+	    }
+
+	    return msg;
 	}
+
+	
 	public int checkOldPwd(Users cpw) {
 		return dao.checkOldPwd(cpw);
 	}

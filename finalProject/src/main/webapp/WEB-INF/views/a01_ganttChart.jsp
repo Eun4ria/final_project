@@ -229,7 +229,7 @@ function goChat(user_id){
 		function parseDate(dateString) {
 			// 날짜 형식: dd-MM-yyyy
 		    var parts = dateString.split("-");
-		    return new Date(parts[2], parts[1] - 1, parts[0]); // 연, 월, 일
+		    return new Date(parts[2], parts[1] - 1, parseInt(parts[0]) + 1); // 연, 월, 일
 		}
 		// 정렬 함수
 		function sortTasksByStartDate(tasks) {
@@ -298,6 +298,13 @@ function goChat(user_id){
 
                	// Gantt 차트 강제 업데이트
                 gantt.render();
+               	
+            	// 모든 자식 작업 열기
+                gantt.eachTask(function(task) {
+                    if (task.parent) {
+                        gantt.open(task.parent);
+                    }
+                });
                   
 		 	  	/*		 	  	
 		 	  	var tasks={
@@ -341,7 +348,13 @@ function goChat(user_id){
 		    duration:28
 		}, "project_2", 2); 
 		*/
-        
+		// 날짜를 +1일 하는 함수
+		function subtractOneDay(date) {
+		    var newDate = new Date(date);
+		    newDate.setDate(newDate.getDate() + 1);
+		    return newDate;
+		}
+		
 		// 재사용 함수
 		function ajaxFun(url,task){
         	$.ajax({
@@ -349,7 +362,7 @@ function goChat(user_id){
     			url:url,
     			data:{
 					id:task.id,
-    				start_date: task.start_date.toISOString(),
+    				start_date: subtractOneDay(task.start_date).toISOString(),
     		        text: task.text,
     		        duration: task.duration,
     		        parent:task.parent,
@@ -389,6 +402,13 @@ function goChat(user_id){
     				gantt.clearAll();   // 기존 데이터 및 설정 지우기
     	            gantt.parse(gdata);  // 새로운 데이터를 파싱하여 로드
     	            gantt.render();     // 차트를 다시 렌더링
+    	            
+    	         	// 모든 자식 작업 열기
+    	            gantt.eachTask(function(task) {
+    	                if (task.parent) {
+    	                    gantt.open(task.parent);
+    	                }
+    	            });
     	        },
     			error:function(err){
     				console.log(err)
@@ -437,9 +457,8 @@ function goChat(user_id){
 	            // 추가적인 로직
 	        });
 
-	        gantt.attachEvent("onTaskDragEnd", function(id) {
+	        gantt.attachEvent("onTaskDragEnd", function(id, task) {
 	            console.log("드래그 종료:", id);
-	            var task = gantt.getTask(id);
 	            console.log("드래그")
 	            console.log(task)
 	            ajaxFun("updateGantt", task); // 드래그 후 서버에 데이터 전송
