@@ -38,7 +38,7 @@ public class A02_Controller {
 	private A02_Service service;
 	
 	//로그인
-   // 로그인 처음 폼
+   // 로그인 처음 폼 
    // http://192.168.0.42:4040/signinFrm
 // http://192.168.45.181:4040/signinFrm  //노트북
 // http://localhost:4040/signinFrm  //노트북
