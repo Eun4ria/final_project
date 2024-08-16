@@ -152,34 +152,7 @@ public class A02_Controller {
       
         return "WEB-INF\\views\\a00_dash_mem.jsp";
 	}
-	
-//// todo list
-//	// http://localhost:4040/todoFrm
-//	@GetMapping("todoFrm")
-//	public String getTaskList(Task sch, Model d, HttpServletRequest request) {
-//		HttpSession session = request.getSession(); 
-//		String project_id = (String) session.getAttribute("project_id");
-//		String user_id = (String) session.getAttribute("user_id");
-//		 
-//		    System.out.println("PROJECT_ID:" + project_id);
-//		    // Chat 객체에 project_id와 user_id를 설정
-//		    sch.setProject_id(project_id);
-//		    sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
-//		    
-//		    // 회원 리스트를 가져온다.
-//		    List<Task> members = service.getmemList(sch);
-//		    
-//		    // 모델에 데이터 추가
-//		    d.addAttribute("memList", members);
-//		    System.out.println("memlist:" + members);
-//		    
-//		    // JSP 페이지로 이동
-//		   // return "WEB-INF\\views\\a02_chat2.jsp";	
-//		    return "WEB-INF\\views\\a02_chat_last.jsp"
-//		
-//		
-//		return "WEB-INF\\views\\a00_todo.jsp";
-//	}
+
 //	
 	// 대시보드 -> todoList
 	@GetMapping("todopmFrm")
@@ -355,7 +328,7 @@ public class A02_Controller {
 		    System.out.println("소켓 확인:"+socketServer);
 		//	return "WEB-INF\\views\\a02_chat2.jsp";
 			return "WEB-INF\\views\\a02_chat_last.jsp"; //원래
-		// return "WEB-INF\\views\\a02_chatmodal.jsp"; //모달
+		//return "WEB-INF\\views\\a02_chatmodal.jsp"; //모달
 		    
 
 		}
@@ -422,7 +395,7 @@ public class A02_Controller {
     }
 
 	
-	// todo list
+	// todo list - 조회
 		// http://localhost:4040/todoFrm
 			@GetMapping("todoFrm")
 			public String getTasksList(Tasks sch, Model d, HttpServletRequest request) {
@@ -433,8 +406,8 @@ public class A02_Controller {
 				session.setAttribute("project_id", project_id);
 				session.setAttribute("user_id", user_id);
 				
-				System.out.println(project_id);
-				System.out.println(user_id);
+				System.out.println("list project_id"+project_id);
+				System.out.println("list user__id"+user_id);
 				
 				// Task 객체에 project_id와 user_id를 설정
 				sch.setProject_id(project_id);
@@ -443,26 +416,113 @@ public class A02_Controller {
 			    // 업무 리스트를 가져온다.
 			    List<Tasks> tasks = service.getTaskList(sch);
 			    
+			    List<Tasks> taskall = service.getAllTaskList(sch);
+			    
+			   
 			    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			    // 날짜를 문자열로 변환
 			    for (Tasks task : tasks) {
-			    	 if (task.getEnd_date() != null) {
+			    	 if (task.getEnd_date() != null || task.getStart_date() != null) {
 			             String endDateFormatted = dateFormat.format(task.getEnd_date());
 			             task.setEndDateFormatted(endDateFormatted);
+			             String startDateFormatted = dateFormat.format(task.getStart_date());
+			             task.setStartDateFormatted(startDateFormatted);
 			            // System.out.println(endDateFormatted);
 			         }
 		          
 			    }
-				    
+			    // 날짜를 문자열로 변환
+			    for (Tasks task : taskall) {
+			    	if (task.getEnd_date() != null || task.getStart_date() != null) {
+			    		String endDateFormatted = dateFormat.format(task.getEnd_date());
+			    		task.setEndDateFormatted(endDateFormatted);
+			    		String startDateFormatted = dateFormat.format(task.getStart_date());
+			    		task.setStartDateFormatted(startDateFormatted);
+			    		// System.out.println(endDateFormatted);
+			    	}
+			    	
+			    }
+			    
+			    if(user_id != null && user_id.startsWith("P")) {
+			    // 모델에 데이터 추가
+			    d.addAttribute("tasklist", taskall);
+			    System.out.println("tasklist:" + taskall);
+			    }else {			   
 			    // 모델에 데이터 추가
 			    d.addAttribute("tasklist", tasks);
 			    System.out.println("tasklist:" + tasks);
-
+			    }    
+			   
+			 // return "WEB-INF\\views\\a02_todo.jsp"; //원래
+			    return "WEB-INF\\views\\a02_taskdoList.jsp"; //지금
 				
-				// return "WEB-INF\\views\\a02_todo.jsp"; //원래
-			     return "WEB-INF\\views\\a02_taskdo3.jsp"; //지금
+				
 			    
 			}
+	//task detail - task id 체크
+		  @PostMapping("/setTaskId")
+		    public ResponseEntity<Void> setTaskId(@RequestParam String task_id, HttpServletRequest request) { 
+			   // void : 반환값 없음
+		        HttpSession session = request.getSession();
+		        session.setAttribute("task_id", task_id);
+		        System.out.println(task_id);
+		        return ResponseEntity.ok().build();
+		    }
+	
+	// http://localhost:4040/taskdo 
+  //todo detail - 상세
+	@RequestMapping("taskdo")
+	public String taskdo1(HttpServletRequest request, Model d) {
+		HttpSession session = request.getSession(); 
+		String task_id = (String) session.getAttribute("task_id");
+		String user_id = (String) session.getAttribute("user_id");
+		System.out.println("확인");
+		session.setAttribute("task_id", task_id);
+		session.setAttribute("user_id", user_id);
+		System.out.println("task_id"+task_id);
+		System.out.println("user_id"+user_id);
+		
+		Tasks item = service.getTaskDetail(task_id);
+		
+     
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		// 날짜를 문자열로 변환
+
+	  if (item.getEnd_date() != null) {
+	        String endDateFormatted = dateFormat.format(item.getEnd_date());
+	        item.setEndDateFormatted(endDateFormatted);
+	    }
+	    
+	    if (item.getStart_date() != null) {
+	        String startDateFormatted = dateFormat.format(item.getStart_date());
+	        item.setStartDateFormatted(startDateFormatted);
+	    }
+
+		
+		d.addAttribute("taskdetail", item);   
+		System.out.println("taskdetail:" + item);
+		
+		return "WEB-INF\\views\\a02_taskdetail.jsp";
+	}
+	// to do uptdate - 수정
+	@PostMapping("upttask")
+	public String updatetask(Tasks upt, Model d) {
+		d.addAttribute("msg", service.updatetask(upt));
+		d.addAttribute("taskdetail", service.getTaskDetail(upt.getTask_id()));
+		return "redirect:taskdo";
+	}
+	// to do delete - 삭제
+	@RequestMapping("deltask")
+	public String deletetask(HttpServletRequest request, Model d) {
+		HttpSession session = request.getSession(); 
+		String task_id = (String) session.getAttribute("task_id");
+		session.setAttribute("task_id", task_id);
+		
+		d.addAttribute("msg", service.deletetask(task_id));
+		d.addAttribute("proc", "del");
+		return "WEB-INF\\views\\a02_taskdetail.jsp";
+	}
+		
 
 			
 			
@@ -474,25 +534,21 @@ public class A02_Controller {
         return "WEB-INF\\views\\a00_index.jsp";
     }
 	
-	//필요없는 파일 :task2
-//board
-//	// http://localhost:4040/taskdo
-//	@RequestMapping("task2")
-//	public String taskdo(HttpServletRequest request, Model d) {
-//		
-//		return "WEB-INF\\views\\a02_task2.jsp";
-//	}
-	// http://localhost:4040/taskdo
-	@RequestMapping("taskdo")
-	public String taskdo1(HttpServletRequest request, Model d) {
-		
-		return "WEB-INF\\views\\a02_taskdo.jsp";
-	}
-			  		   
+
+		  		   
 			
 			
 
 }
+
+
+
+
+
+
+
+
+
 class msgList2{
 	   private String msg;
 	   private String msg1;

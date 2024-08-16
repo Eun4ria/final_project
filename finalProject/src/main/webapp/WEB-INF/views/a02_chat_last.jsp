@@ -400,7 +400,7 @@ $(document).ready(function(){
                       <c:forEach var="chat" items="${chatList}" varStatus="status">   
                       
                                             
-                     <div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${sessionScope.user_id}')" 
+                     <div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${chat.user_id}')" 
                      style="padding-top:0.5rem;height:4rem" >
                         <div class="img_cont" style="padding-left:1rem">
                         <img src="${path}/material-dashboard-2/assets/img/HPM-icon.png" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
@@ -500,9 +500,9 @@ $(document).ready(function(){
    <div class="input-group">   
    <input id="chatroom_id" value="${chatroom_id}" hidden/>
    <input id="chatroom_name" value="${chatroom_name}" hidden/>
-   <input id="curName" value="${sessionScope.user_name}" />
+   <input id="curName" value="${sessionScope.user_name}" hidden />
    
-    <input id="name" value="${param.user_id}" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
+    <input id="name" value="${param.user_id}" style="background:lightgray;width:4rem;" class="border rounded" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
     </div>
     
    <div class="card-body input-group-append scrollbar" id="chatArea" >
@@ -593,9 +593,10 @@ stompClient.connect({}, function(frame) {
 
         if(curName != obj.name){ //어제 지운거
             displayMessage(obj.name, obj.msg, 'left'); //어제 지운거 :없으면 바로 화면에 안나옴
+            // 받은 메시지를 localStorage에 저장
+            storeMessage(obj.name, obj.msg);
        }
-        // 받은 메시지를 localStorage에 저장
-       // storeMessage(obj.name, obj.msg);
+      
     });
 });
 

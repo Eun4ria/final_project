@@ -348,6 +348,21 @@ ALTER TABLE calendar RENAME COLUMN urlink to urllink;
 
 
 
+UPDATE task
+SET task_name = '화면설계dd',
+    start_date = TO_DATE('2024-07-01', 'YYYY-MM-DD'),
+    end_date = TO_DATE('2024-07-01', 'YYYY-MM-DD') + INTERVAL '1' DAY * 10,
+    parent_id = null,
+    priority = '중',
+    progress = 50,
+    backgroundcolor = 'red',
+    textcolor = 'white',
+    user_id = 'P_0001',
+    project_id = 'PRO_0003'
+WHERE task_id = 'TSK_0193';
 
+SELECT * FROM task;
 
+SELECT * FROM calendar;
+INSERT INTO CALENDAR values()
 

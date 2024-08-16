@@ -68,17 +68,17 @@ public interface A01_Dao {
 	
 	// 간트에서 task 수정
 	@Update("UPDATE task " +
-	        "SET task_name = #{text}, " +
-	        "    start_date = #{start_date}, " +
-	        "    end_date = #{start_date} + INTERVAL '#{duration} DAY', " +
-	        "    parent_id = #{parent}, " +
-	        "    priority = #{priority}, " +
-	        "    progress = #{progress}, " +
-	        "    backgroundcolor = #{color}, " +
-	        "    textcolor = #{textcolor}, " +
-	        "    user_id = #{user}, " +
-	        "    project_id = #{project_id} " +
-	        "WHERE task_id = #{id}")
+	        "SET task_name = #{text, jdbcType=VARCHAR}, " +
+	        "    start_date = #{start_date, jdbcType=DATE}, " +
+	        "    end_date = #{start_date, jdbcType=DATE} + #{duration}, " +
+	        "    parent_id = #{parent, jdbcType=VARCHAR}, " +
+	        "    priority = #{priority, jdbcType=VARCHAR}, " +
+	        "    progress = #{progress, jdbcType=INTEGER}, " +
+	        "    backgroundcolor = #{color, jdbcType=VARCHAR}, " +
+	        "    textcolor = #{textcolor, jdbcType=VARCHAR}, " +
+	        "    user_id = #{user, jdbcType=CHAR}, " +
+	        "    project_id = #{project_id, jdbcType=CHAR} " +
+	        "WHERE task_id = #{id, jdbcType=CHAR}")
 	int updateGantt(GanttTask upt);
 	
 	// 간트에서 task 삭제

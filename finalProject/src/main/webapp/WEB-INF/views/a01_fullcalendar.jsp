@@ -93,14 +93,6 @@ function goChat(user_id){
 <script type="text/javascript">
 	var calendar;
 	document.addEventListener('DOMContentLoaded', function() {
-
-		function getSelectedCheckboxValues() {
-		    var selectedValues = [];
-		    $('input[type="checkbox"]:checked').each(function() {
-		        selectedValues.push($(this).val());
-		    });
-		    return selectedValues;
-		}
 		
 		var calendarEl = document.getElementById('calendar');
 		var today = new Date()
@@ -146,13 +138,13 @@ function goChat(user_id){
 			editable : true,
 			dayMaxEvents : true, // allow "more" link when too many events
 			events : function(info, successCallback, failureCallback) {
-				var selectedValues = getSelectedCheckboxValues();
+				var selectedValues = getSelectboxArray();
 				
 				$.ajax({
 					url : "calList",
-					method:"get",
-					data: { "sel": selectedValues},
-					dataType : "json",
+					method:"post",
+					traditional: true, // 배열을 직렬화할 때 사용
+					data: { sel: selectedValues},
 					success : function(data) {
 						console.log(data)
 						calendar.removeAllEvents()
@@ -171,6 +163,11 @@ function goChat(user_id){
 			
 		});
 		calendar.render();
+        
+        // 체크박스 상태에 따라 일정을 새로 고침합니다.
+        $("#personal, #team, #gantt").change(function() {
+            calendar.refetchEvents();
+        });
 		
 		
 		$("#regBtn").click(function(){
@@ -200,11 +197,11 @@ function goChat(user_id){
 			if(proc != "I" ){
 				$("[name=id]").val(event.id)
 				$("[name=backgroundColor]").val(event.backgroundColor)
-				$("[name=textColor]").val(event.textColor)
-				
+				$("[name=textColor]").val(event.textColor)				
 				$("[name=writer]").val(event.extendedProps.writer)
 				$("[name=content]").val(event.extendedProps.content)
-				$("[name=urlLink]").val(event.extendedProps.urlLink)				
+				$("[name=urlLink]").val(event.extendedProps.urlLink)	
+				$("[name=sel]").val(event.extendedProps.sel);
 			}
 			$("[name=title]").val(event.title)
 			$("[name=start]").val(event.startStr)
@@ -217,6 +214,11 @@ function goChat(user_id){
 				$("#end").val(event.start.toLocaleString())			
 			}			
 			$("[name=allDay]").val(event.allDay?1:0)
+			
+            // 기본값 설정: "팀/개인"을 팀으로 기본 선택
+            if (proc === "I") {
+                $("[name=sel]").val("T");
+            }
 			
 			// 추가 속성..
 
@@ -244,6 +246,14 @@ function goChat(user_id){
 				}
 			})
 		}
+		// 체크박스 상태에 따라 div 배열 생성
+        function getSelectboxArray() {
+            var sel = [];
+            if ($("#personal").is(":checked")) sel.push("P");
+            if ($("#team").is(":checked")) sel.push("T");
+            if ($("#gantt").is(":checked")) sel.push("G");
+            return sel;
+        }
 		
 		
 	});
@@ -365,12 +375,15 @@ function goChat(user_id){
         <div class="content">
             <div class="container">
             
-            <label>간트</label>
-            <input type="checkbox" value="G"/>
-            <label>팀</label>
-            <input type="checkbox" value="T"/>
-            <label>개인</label>
-            <input type="checkbox" value="P"/>
+            <label for="personal" class="p-1" style="background:#85eee2;color:black; border-radius:5px;">
+                <input type="checkbox" id="personal" checked> 개인
+            </label>
+            <label for="team" class="p-1" style="background:#c266f4;color:white; border-radius:5px;">
+                <input type="checkbox" id="team"> 팀
+            </label>
+            <label for="gantt" class="p-1" style="background:#d8ee95;color:black; border-radius:5px;">
+                <input type="checkbox" id="gantt"> 간트
+            </label>
             
                 <div id='calendar'></div>
 
@@ -415,7 +428,16 @@ function goChat(user_id){
 										</div>
 										<input id="end"  class="form-control" />	
 										<input name="end" type="hidden"   />	
-									</div>		
+									</div>
+									<div class="input-group mb-3">	
+										<div class="input-group-prepend ">
+											<span class="input-group-text  justify-content-center">팀/개인</span>
+										</div>
+										<select name="sel" class="form-control">
+											<option value="T">팀</option>
+											<option value="P">개인</option>
+										</select>
+									</div>			
 									<div class="input-group mb-3">	
 										<div class="input-group-prepend ">
 											<span class="input-group-text  justify-content-center">내용</span>

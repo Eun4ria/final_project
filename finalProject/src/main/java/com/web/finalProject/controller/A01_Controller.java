@@ -1,22 +1,25 @@
 package com.web.finalProject.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.LocaleResolver;
 
 import com.web.finalProject.service.A01_Service;
 import com.web.finalProject.vo.Calendar;
+import com.web.finalProject.vo.Gantt;
 import com.web.finalProject.vo.GanttTask;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Users;
@@ -114,7 +117,7 @@ public class A01_Controller {
 		return "WEB-INF\\views\\a01_ganttChart.jsp";
 	}
 	// 간트 조회
-	// http://localhost:4040/ganttList?project_id=PRO_0001
+	// http://localhost:4040/ganttList?project_id=PRO_0003
 	@RequestMapping("ganttList")
 	public ResponseEntity<?> getGantt(HttpServletRequest request, Model d) {
 		
@@ -135,25 +138,23 @@ public class A01_Controller {
 				service.getGantt(ins.getProject_id())));
 	}
 	@PostMapping("updateGantt")
-	public ResponseEntity<?> updateGantt(@RequestBody GanttTask upt) {
-		try {
-	        System.out.println("수정할 task명: " + upt.getText());
-	        // Call service to update task
-	        TaskList updatedTaskList = new TaskList(
+	public ResponseEntity<?> updateGantt(GanttTask upt) {
+		System.out.println("수정할 task_id: " + upt.getId());
+	    System.out.println("수정할 task명: " + upt.getText());
+	    System.out.println("수정할 글자색상: " + upt.getTextcolor());
+	    System.out.println("수정할 배경색상: " + upt.getColor());
+	    return ResponseEntity.ok(new TaskList(
 	            service.updateGantt(upt), 
-	            service.getGantt(upt.getProject_id()));
-	        return ResponseEntity.ok(updatedTaskList);
-	    } catch (Exception e) {
-	        e.printStackTrace(); // Print stack trace for debugging
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred");
-	    }
+	            service.getGantt(upt.getProject_id())));
 	}
 	@PostMapping("deleteGantt")
-	public ResponseEntity<?> deleteGantt(@RequestParam("id") String task_id) {
+	public ResponseEntity<?> deleteGantt(@RequestParam("id") String task_id,HttpServletRequest request) {
 		System.out.println("삭제할 task id:"+task_id);
+		HttpSession session = request.getSession(false); 
+		String project_id = (String) session.getAttribute("project_id"); 
 		return ResponseEntity.ok(new TaskList(
 				service.deleteGantt(task_id),
-				service.getGantt(task_id)));
+				service.getGantt(project_id)));
 	}
 	
 	
@@ -201,13 +202,24 @@ public class A01_Controller {
  	}
  	*/
  	// http://localhost:4040/calList 
-  	@GetMapping("calList")
-  	public ResponseEntity<List<Calendar>> getCalList(@RequestParam(value="sel", defaultValue="P") String sel,
+  	@PostMapping("calList")
+  	public ResponseEntity<List<Calendar>> getCalList(@RequestParam(name="sel", defaultValue="") List<String> sel,
   			HttpServletRequest request){
   		HttpSession session = request.getSession(false); 
-         String user_id = (String) session.getAttribute("user_id");  
-         String project_id = (String) session.getAttribute("project_id");  
-  		return ResponseEntity.ok(service.getCalList(sel,user_id,project_id));
+        String user_id = (String) session.getAttribute("user_id");  
+        String project_id = (String) session.getAttribute("project_id");  
+        
+        System.out.println("선택한 보기방식:"+sel);
+         
+        List<Calendar> calendarList = new ArrayList<>();
+        
+        if (sel != null && !sel.isEmpty()) {
+            for (String s : sel) {
+                calendarList.addAll(service.getCalendarList(s, user_id, project_id));
+            }
+        }
+
+        return ResponseEntity.ok(calendarList);
   	}
 
  	
@@ -278,13 +290,23 @@ public class A01_Controller {
         d.addAttribute("cpro", service.getComProjectList(user_id));        
         return "WEB-INF\\views\\a01_profile.jsp";
     }
-    // 프로필 변경
-    @PostMapping("updateProfile")
-    public String updateProfil(Users upt, Model d) {
-    	d.addAttribute("msg", service.updateProfile(upt));
-    	d.addAttribute("profile", service.getProfile(upt.getUser_id()));
-    	return "WEB-INF\\views\\a01_profile.jsp";
+    
+    @PostMapping("/updateProfile")
+    public String updateProfileWithFile(HttpServletRequest request, MultipartFile file, Users user, Model model) {
+    	HttpSession session = request.getSession(false); 
+    	String user_id = (String) session.getAttribute("user_id"); 
+    	// 프로필 업데이트 및 파일 저장
+    	user.setUser_id(user_id);
+        String msg = service.updateProfileWithFile(file, user);
+
+        // 결과 메시지와 프로필 정보를 모델에 추가
+        model.addAttribute("msg", msg);
+        model.addAttribute("profile", service.getProfile(user.getUser_id()));
+
+        return "WEB-INF/views/profile.jsp"; // 결과를 보여줄 JSP 페이지
     }
+    
+    
     // 비밀번호 변경 페이지
     // http://localhost:4040/changePassword
     @GetMapping("changePassword")
@@ -316,32 +338,6 @@ public class A01_Controller {
     
     
     
-	
-}
-class Gantt{
-	private List<GanttTask> ganttList;
-	private List<Users> resource;
-	public Gantt() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public Gantt(List<GanttTask> ganttList, List<Users> resource) {
-		super();
-		this.ganttList = ganttList;
-		this.resource = resource;
-	}
-	public List<GanttTask> getGanttList() {
-		return ganttList;
-	}
-	public void setGanttList(List<GanttTask> ganttList) {
-		this.ganttList = ganttList;
-	}
-	public List<Users> getResource() {
-		return resource;
-	}
-	public void setResource(List<Users> resource) {
-		this.resource = resource;
-	}
 	
 }
 class TaskList{

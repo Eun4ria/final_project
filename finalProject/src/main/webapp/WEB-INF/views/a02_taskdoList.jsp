@@ -71,7 +71,24 @@
  
     <%-- 기존 --%>
   <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+	     // 서버에서 user_id 값을 가져옵니다.
+	     var userId = "${sessionScope.user_id}";
+
+	     // user_id가 "P"로 시작하는지 확인합니다.
+	     if (userId.startsWith("P")) {
+	         // #pmonly 요소를 보이도록 설정합니다.
+	         document.getElementById("pmonly").style.display = "block";
+	     } else {
+	         // #pmonly 요소를 숨깁니다.
+	         document.getElementById("pmonly").style.display = "none";
+	     }
+	 });
+  </script>
  <script>
+
+ 
  var msg="${msg}"
  if(msg != "") {
      alert(msg); // 알림 메시지 표시
@@ -116,6 +133,9 @@ document.addEventListener('DOMContentLoaded', function() {
         row.addEventListener('dblclick', handleDblClick);
     });
 });
+
+
+
 </script>
   <style>
        #main {
@@ -130,23 +150,25 @@ document.addEventListener('DOMContentLoaded', function() {
         /* Style for the toggled div */
         #toggleDiv {
             position: absolute;
-            top: -2rem;
-            right: -100%; /* Start off-screen to the right */
+            top: -3rem;
+            right: -130%; /* Start off-screen to the right */
             width: 70%; /* Adjust width as needed */
-            height: 200%;
+            height: 230%;
             background-color: rgba(0, 0, 0, 0.5);
             color: white;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            transition: right 0.5s; /* Smooth transition */
+            transition: right 0.8s; /* Smooth transition */
+            overflow-x: hidden; /* 가로 스크롤 숨기기 */
         }
 
         iframe {
             width: 100%;
             height: 100%;
             border: none;
+            overflow-x: hidden; /* 가로 스크롤 숨기기 */
         }
     </style>
 </head>
@@ -283,10 +305,10 @@ document.addEventListener('DOMContentLoaded', function() {
             <table class="table align-items-center mb-0" id="taskTable">
                   <thead>
                     <tr>
-                    <th></th>
-                      <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task</th>
-                     
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">End Date</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task ID</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task Name</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 pmonly">Responsibility</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 "> End Date</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Priority</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Completion</th>
@@ -298,14 +320,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>
 	                    <div>
                             <input type="checkbox" id="task1" >
-           			
+           			${task.task_id}
                           </div>
                     </td>
                       <td>
-                        <div class="d-flex px-2 py-1">
+                         <div class="align-middle text-center" style="border:none">
                          
-                          <div class="d-flex flex-column justify-content-center">
+                          <div class="align-middle text-center ">
                             <h6 class="mb-0 text-sm">${task.task_name}</h6>
+                          </div>
+                        </div>
+                      </td>
+                       <td class="pmonly">
+                         <div class="align-middle text-center" style="border:none">
+                         
+                          <div class="align-middle text-center ">
+                            <h6 class="mb-0 text-sm">${task.user_id}</h6>
                           </div>
                         </div>
                       </td>
@@ -314,28 +344,31 @@ document.addEventListener('DOMContentLoaded', function() {
                       <div class="align-middle text-center" style="border:none">
                          
                           <div class="align-middle text-center ">
-                            <h6 class="ml-5 text-center">${task.endDateFormatted }</h6>
+                            <h6 class="mb-0 text-center">${task.endDateFormatted }</h6>
                           </div>
                         </div>
                         
                       </td>
-                      <td class="align-middle text-center text-sm">
-                        <select  class="form-control text-center"  v-model="sta.tstatus" name="tstatus">
-				        	<option value="N">${task.tstatus}</option>
-				        	<option value="진행중">진행중</option>
-				        	<option value="완료">완료</option>
-				        	<option value="중단">중단</option>
-				        	<option value="막힘">막힘</option>
+                      <form>
+                      <td class="align-middle text-center">
+                        <select  class="form-control text-center"  v-model="tstatus" name="tstatus">
+				        	<option class="text-center"  value="N">${task.tstatus}</option>
+				        	<option class="text-center"  value="진행중">진행중</option>
+				        	<option class="text-center"  value="중단">중단</option>
+				        	<option class="text-center"  value="막힘">막힘</option>
 			       		</select>
                       </td>
-                      <td class="align-middle text-center text-sm">
-                        <select  class="form-control text-center"  v-model="pri.priority" name="priority">
-				        	<option value="N">${task.priority}</option>
-				        	<option value="상">상</option>
-				        	<option value="중">중</option>
-				        	<option value="하">하</option>
+                      </form>
+                      <form>
+                       <td class="align-middle text-center">
+                        <select  class="form-control text-center"  v-model="priority" name="priority">
+				        	<option class="text-center"  value="N">${task.priority}</option>
+				        	<option class="text-center"  value="상">상</option>
+				        	<option class="text-center"  value="중">중</option>
+				        	<option class="text-center"  value="하">하</option>
 			       		</select>
                       </td>
+                      </form>
                       <td class="align-middle">
                         <div class="progress-wrapper  mx-auto">
                           <div class="progress-info">
@@ -352,27 +385,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     </c:forEach>
                   </tbody>
                 </table>
-                <div id="toggleDiv">
+                <div id="toggleDiv" >
             <iframe id="taskFrame" src="">
                
             </iframe>
         </div>
- <%-- 
-        <table id="taskTable">
-            <tr data-task-id="1">
-                <td>Task 1</td>
-            </tr>
-            <tr data-task-id="2">
-                <td>Task 2</td>
-            </tr>
-            <tr data-task-id="3">
-                <td>Task 3</td>
-            </tr>
-        </table>
-        <div id="toggleDiv">
-            Toggled Content
-        </div>
-        --%> 
+
     </div>
 </div>
 </div>
@@ -380,12 +398,30 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
  <script>
- function taskPage(taskId) {
-     var iframe = document.getElementById('taskFrame');
-    // iframe.src = `taskdo?task_id=${taskId}`; // URL 연결로 수정
-     iframe.src = `taskdo`; // URL 연결로 수정
-     toggleDiv();
+
+ function taskPage(task_id) {
+	  //var sessionTaskId = '${sessionScope.task_id}'; // 로그인한 사용자 데이터
+     // var sessionProId = '${sessionScope.project_id}'; // 로그인한 사용자 데이터
+     $.ajax({
+         url: '/setTaskId',
+         type: 'POST',
+         data: { 
+				task_id: task_id
+               // project_id: sessionProId // 서버로 전송할 데이터
+                },
+         success: function(response) {
+             console.log("Task ID set in session");
+             var iframe = document.getElementById('taskFrame');
+             iframe.src = `taskdo?task_id=${task_id}`; // URL 연결로 수정
+             toggleDiv();
+         },
+         error: function(error) {
+             console.error("Error setting Task ID", error);
+         }
+     });
  }
+ 
+
 
  function toggleDiv() {
      var toggleDiv = document.getElementById('toggleDiv');
@@ -405,7 +441,21 @@ document.addEventListener('DOMContentLoaded', function() {
      if (!toggleDiv.contains(event.target) ) {
          toggleDiv.style.right = '-130%'; // Slide out
          document.removeEventListener('click', outsideClickListener);
+         
+         window.location.reload();
      }
+ }
+ window.addEventListener("message", function(event) {
+     if (event.data === "closeAndReload") {
+         var toggleDiv = document.getElementById('toggleDiv');
+         toggleDiv.style.right = '-130%'; // Slide out
+         document.removeEventListener('click', outsideClickListener);
+         window.location.reload();
+     }
+ }, false);
+
+ function setupOutsideClickListener() {
+     document.addEventListener('click', outsideClickListener);
  }
     </script>
            

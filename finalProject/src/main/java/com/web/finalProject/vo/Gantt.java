@@ -1,6 +1,8 @@
 package com.web.finalProject.vo;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Gantt {
 	private List<GanttTask> ganttList;
@@ -14,6 +16,7 @@ public class Gantt {
 		this.ganttList = ganttList;
 		this.resource = resource;
 	}
+    
 	public List<GanttTask> getGanttList() {
 		return ganttList;
 	}
