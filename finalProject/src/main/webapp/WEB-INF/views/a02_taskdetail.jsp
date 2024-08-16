@@ -3,6 +3,7 @@
     import="java.util.*"
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>     
@@ -73,13 +74,21 @@
   <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
  <script>
  var msg="${msg}"
+var proc = "${proc}"
  if(msg != "") {
-     alert(msg); // 알림 메시지 표시
+     
 
-     if (msg=="생성 완료") {
-        $(".close").click();
-        window.location.href = 'main';
+     if (msg=="수정성공"){
+
+    	 // 부모 페이지를 새로 고침하는 함수
+    	 parent.window.location.href = parent.window.location.href;
      }
+    
+	if(proc == 'del'){
+		alert(msg)
+		
+		location.href="todoFrm"
+	}
  }
  
  let isExpanded = false;
@@ -112,6 +121,7 @@
          isExpanded = false;  // 상태 리셋
      }
  });
+
  
 </script>
 <style>
@@ -122,6 +132,7 @@
 }
 
 </style>
+
 </head>
 
 <body>
@@ -139,95 +150,76 @@
         <div class="row mb-5">
           <div class="col-lg-12" style="background:white; padding:0">
           
-<c:forEach var="task" items="${taskdetail }">
-  <%-- form --%>            
-              <form class="p-4  rounded" method="post">  
+<%-- pm권한 --%>
+  <%-- form --%>  
+<c:choose>  
+ <c:when test="${fn:startsWith(sessionScope.user_id, 'P_')}"> 
+          <form class="p-4  rounded" method="post" id="PMrole" >  
           <div>
              <a class="sidebar-toggle js-sidebar-toggle">
           <i class="hamburger align-self-center"></i>  <i class="bi bi-x"></i>
         </a>
-              <h3 class="text-black mb-5 border-bottom pb-2">Job Details</h3>
+              <h3 class="text-black mb-3 border-bottom pb-2">Job Details</h3>
               
               
       
-<%-- task id --%>
+<%-- task id --%> <%-- parent id --%>
         	 <div class="form-group">
-                <label for="taskid">Task ID</label>
-                <input type="text" class="form-control" id="taskid" value="${task_id }" readonly>
+                <label for="taskid" style="padding-right:12rem;">Task ID</label>  <label for="parent_id">Parent ID</label><br>
+                <input type="text" class="form-control" id="task_id" style="width:15rem;display:inline-block" name="task_id" value="${taskdetail.task_id }" readonly>
+          
+ 				<input type="text" class="form-control" id="parent_id" style="width:15rem;display:inline-block" name="parent_id" value="${taskdetail.parent_id}" readonly>
               </div>
+  <%-- user Id --%>               
+              <div class="form-group">
+               <label for="user_id">User ID</label>
+                <input type="text" class="form-control" id="user_id" style="width:14rem;display:inline-block" name="user_id" value="${taskdetail.user_id}">
 
-              
+              </div>
+           
  <%-- task name --%>
               <div class="form-group">
                 <label for="job-title">Task Title</label>
-                <input type="text" class="form-control" id="task-title" value="${task.task_name}">
+                <input type="text" class="form-control" id="task-title" name="task_name" value="${taskdetail.task_name}" >
               </div>
               
    <%-- Day --%>           
    			  <div class="form-group">
-                <label for="start">Start Date</label>
-                <input type="Date" class="form-control" id="start" value="${task.startDateFormatted}">
-              </div>
-              
-              
-               <div class="form-group">
-                <label for="end">End Date</label>
-                <input type="Date" class="form-control" id="end" value="${task.endDateFormatted}">
+                <label for="start"  style="padding-right:11rem;">Start Date</label> <label for="end">End Date</label><br>
+                <input type="Date" class="form-control" id="start" style="width:15rem;display:inline-block" name="start_date" value="${taskdetail.startDateFormatted}" >
+             
+                
+                <input type="Date" class="form-control" id="end" style="width:15rem;display:inline-block" name="end_date" value="${taskdetail.endDateFormatted}" >
               </div>
 
-  <%-- Status  --%>  
+   <%-- Status  --%>  
               
-              <div class="form-group" style="display:inline-block">
+              <div class="form-group" style="display:inline-block" id="app">
                 <label for="tstatus" style="padding-right:11rem;">Status</label>   <label for="priority">priority</label><br> 
          
-                <select class="selectpicker border rounded" id="tstatus" data-style="btn-black" data-live-search="true" 
-                					title="${task.tstatus}" v-model="tstatus" name="tstatus" > 
+                <select class="selectpicker border rounded" data-live-search="true" name="tstatus" > 
+		        	<option class="text-center"  value="${taskdetail.tstatus}" hidden>${taskdetail.tstatus}</option>
 		        	<option class="text-center"  value="진행중">진행중</option>
 		        	<option class="text-center"  value="중단">중단</option>
 		        	<option class="text-center"  value="막힘">막힘</option>
 		        	<option class="text-center"  value="보완">보완</option>
-		        	<option class="text-center"  value="완료">완료</option>
                   </select>
               
               
   <%-- priority --%>   
               
-                 <select class="selectpicker border rounded" id="priority" data-style="btn-black" data-live-search="true" title="${task.priority}" v-model="priority" name="priority">
+                 <select class="selectpicker border rounded" id="priority" data-style="btn-black" data-live-search="true"  :title="${taskdetail.priority}" name="priority">
+		        	<option class="text-center"  value="${taskdetail.priority}" hidden>${taskdetail.priority}</option>
 		        	<option class="text-center"  value="상">상</option>
 		        	<option class="text-center"  value="중">중</option>
 		        	<option class="text-center"  value="하">하</option>
                  </select>
               </div>
-
- <%-- parent id --%> 
-               <div class="form-group">
-                <label for="parent_id">Parent ID</label>
-                <input type="text" class="form-control" id="parent_id" value="${task.parent_id}">
-              </div>
-              
-              
- <%-- background color --%> 
-               <div class="form-group">
-                <label for="parent_id">Background Color</label>
-                <input type="text" class="form-control" id="backgroundcolor" value="${task.backgroundcolor}">
-              </div>
-              
- <%-- Text color --%> 
-               <div class="form-group">
-                <label for="textcolor">Text Color</label>
-                <input type="text" class="form-control" id="textcolor" value="${task.textcolor}">
-              </div>
-              
- <%-- User id --%> 
-               <div class="form-group">
-                <label for="user_id">User Id</label>
-                <input type="text" class="form-control" id="user_id" value="${task.user_id}">
-              </div>
               
  <%-- Project id --%> 
                <div class="form-group">
-                <label for="project_id">User Id</label>
-                <input type="text" class="form-control" id="project_id" value="${task.project_id}">
+               <%--  <label for="project_id">Project Id</label>--%>
+                <input type="text" class="form-control" id="project_id" name="project_id" value="${taskdetail.project_id}" hidden>
               </div>
 
  <%-- Progress --%> 
@@ -235,15 +227,14 @@
                 <label for="company-website-tw d-block">Progress</label> <br>        
                 
                    <div class="progress-info">
-                     <div class="progress-percentage">
-                       <span class="text-xs font-weight-bold">${task.progress}%</span>
+                     <div class="progress-percentage"> 
+                       <input class="text-xs font-weight-bold" id="progress" name="progress" value="${taskdetail.progress}" style="border:none;width:2rem;" ><span  class="text-xs font-weight-bold" >%</span>
                      </div>
                    </div>
                    <div class="progress mx-auto">
-                   <div class="progress-bar bg-gradient-info" style="width: ${task.progress}%;" role="progressbar" aria-valuenow="${pro.progress}" aria-valuemin="0" aria-valuemax="100"></div>
+                   <div class="progress-bar bg-gradient-info" style="width: ${taskdetail.progress}%;" role="progressbar" aria-valuenow="${taskdetail.progress}" aria-valuemin="0" aria-valuemax="100"></div>
                    </div>      
               </div>
-              
  <%-- content --%> 
               <div class="form-group">
                 <label for="comment">content</label>
@@ -251,7 +242,7 @@
                   <p>Write Job Description!</p>
                 </div>
             --%>  
-              <input type="text" class="form-control" id="content" value="${task.content}">
+              <input type="text" class="form-control" id="content" name="content" value="${taskdetail.content}">
               </div>
 
 
@@ -262,22 +253,147 @@
                   Browse File<input type="file" >
                 </label>
               </div>
-
-
-            </form>
-           </c:forEach> 
-           
-        
-          <div class="col-lg-4 ml-auto">
+ 		
+ 		
+ 		<div class="col-lg-4 ml-auto">
             <div class="row">
               <div class="col-6">
-                <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Preview</a>
+                <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Go Up</a>
               </div>
               <div class="col-6">
-             	 <input type="submit" placeholder="save" class="btn btn-block btn-primary btn-md">
+             	 <input type="button" value="수정" class="btn btn-block btn-primary btn-md" id=uptPMBtn> 
+             	 <input type="button" value="삭제" class="btn btn-block btn-primary btn-md" id="delBtn"> 
               </div>
             </div>
           </div>
+</div>
+            </form>
+    <%--  pm 권한 끝--%> 
+ 
+ </c:when>
+ <c:otherwise>
+ 
+   <%-- 멤버 권한  --%> 
+   <%-- form --%>            
+              <form class="p-4  rounded" method="post" id="MEMrole" >  
+          <div>
+             <a class="sidebar-toggle js-sidebar-toggle">
+          <i class="hamburger align-self-center"></i>  <i class="bi bi-x"></i>
+        </a>
+              <h3 class="text-black mb-3 border-bottom pb-2">Job Details</h3>
+              
+              
+      
+<%-- task id --%> <%-- parent id --%>
+        	 <div class="form-group">
+                <label for="taskid" style="padding-right:12rem;">Task ID</label>  <label for="parent_id">Parent ID</label><br>
+                <input type="text" class="form-control" id="task_id" style="width:15rem;display:inline-block" name="task_id" value="${taskdetail.task_id }" readonly>
+          
+ 				<input type="text" class="form-control" id="parent_id" style="width:15rem;display:inline-block" name="parent_id" value="${taskdetail.parent_id}" readonly>
+                <input type="text" class="form-control" id="user_id" style="width:14rem;display:inline-block" name="user_id" value="${taskdetail.user_id}" hidden>
+             
+              
+               
+              </div>
+              
+ <%-- task name --%>
+              <div class="form-group">
+                <label for="job-title">Task Title</label>
+                <input type="text" class="form-control" id="task-title" name="task_name" value="${taskdetail.task_name}" >
+              </div>
+              
+   <%-- Day --%>           
+   			  <div class="form-group">
+                <label for="start"  style="padding-right:11rem;">Start Date</label> <label for="end">End Date</label><br>
+                <input type="Date" class="form-control" id="start" style="width:15rem;display:inline-block" name="start_date" value="${taskdetail.startDateFormatted}" readonly>
+             
+                
+                <input type="Date" class="form-control" id="end" style="width:15rem;display:inline-block" name="end_date" value="${taskdetail.endDateFormatted}" readonly>
+              </div>
+
+  <%-- Status  --%>  
+              
+              <div class="form-group" style="display:inline-block" id="app">
+                <label for="tstatus" style="padding-right:11rem;">Status</label>   <label for="priority">priority</label><br> 
+         
+                <select class="selectpicker border rounded" data-live-search="true" name="tstatus" > 
+		        	<option class="text-center"  value="${taskdetail.tstatus}" hidden>${taskdetail.tstatus}</option>
+		        	<option class="text-center"  value="진행중">진행중</option>
+		        	<option class="text-center"  value="중단">중단</option>
+		        	<option class="text-center"  value="막힘">막힘</option>
+		        	<option class="text-center"  value="보완">보완</option>
+                  </select>
+              
+              
+  <%-- priority --%>   
+              
+                 <select class="selectpicker border rounded" id="priority" data-style="btn-black" data-live-search="true"  :title="${taskdetail.priority}" name="priority">
+		        	<option class="text-center"  value="${taskdetail.priority}" hidden>${taskdetail.priority}</option>
+		        	<option class="text-center"  value="상">상</option>
+		        	<option class="text-center"  value="중">중</option>
+		        	<option class="text-center"  value="하">하</option>
+                 </select>
+              </div>
+
+              
+ <%-- Project id --%> 
+               <div class="form-group">
+               <%--  <label for="project_id">Project Id</label>--%>
+                <input type="text" class="form-control" id="project_id" name="project_id" value="${taskdetail.project_id}" hidden>
+              </div>
+
+ <%-- Progress --%> 
+              <div class="form-group">
+                <label for="company-website-tw d-block">Progress</label> <br>        
+                
+                   <div class="progress-info">
+                     <div class="progress-percentage"> 
+                       <input class="text-xs font-weight-bold" id="progress" name="progress" value="${taskdetail.progress}" style="border:none;width:2rem;" readonly><span  class="text-xs font-weight-bold" >%</span>
+                     </div>
+                   </div>
+                   <div class="progress mx-auto">
+                   <div class="progress-bar bg-gradient-info" style="width: ${taskdetail.progress}%;" role="progressbar" aria-valuenow="${taskdetail.progress}" aria-valuemin="0" aria-valuemax="100"></div>
+                   </div>      
+              </div>
+ <%-- content --%> 
+              <div class="form-group">
+                <label for="comment">content</label>
+   <%--            <div class="editor" id="editor-1">
+                  <p>Write Job Description!</p>
+                </div>
+            --%>  
+              <input type="text" class="form-control" id="content" name="content" value="${taskdetail.content}">
+              </div>
+
+
+ <%-- Upload File --%> 
+              <div class="form-group">
+                <label for="company-website-tw d-block">Upload File</label> <br>
+                <label class="btn btn-primary btn-md btn-file">
+                  Browse File<input type="file" >
+                </label>
+              </div>
+ 		
+ 		
+ 		<div class="col-lg-4 ml-auto">
+            <div class="row">
+              <div class="col-6">
+                <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Go Up</a>
+              </div>
+              <div class="col-6">
+             	 <input type="button" value="수정" class="btn btn-block btn-primary btn-md" id="uptBtn"> 
+              </div>
+            </div>
+          </div>
+</div>
+            </form>
+          
+           <%-- 멤버 권한 끝 --%> 
+            </c:otherwise>
+ </c:choose>              
+           
+        
+         
          </div>
 
          
@@ -304,8 +420,43 @@
     
     <script src="${path}/jobboard-master/js/bootstrap-select.min.js"></script>
     
+    <script>
+    var vm = Vue.createApp({
+    	name:"App",
+    	data(){
+    		return {pr:{priority:"${taskdetail.priority}"},
+    				st:{tstatus:"${taskdetail.tstatus}"}
+    				
+    		};
+    	};
+    }).mount('#app');
+</script>
     <script src="${path}/jobboard-master/js/custom.js"></script>
-   
+  <!-- End General Form Elements -->
+		<script type="text/javascript">
+			$("#uptBtn").click(function() {
+				if (confirm("수정하시겠습니까?")) {
+					$("#MEMrole").attr("action", "upttask");
+					$("#MEMrole").submit();
+					
+				}
+			})
+			$("#uptPMBtn").click(function() {
+				if (confirm("pm: 수정하시겠습니까?")) {
+					$("#PMrole").attr("action", "upttask");
+					$("#PMrole").submit();
+				}
+			})
+			
+			$("#delBtn").click(function() {
+				if (confirm("삭제하시겠습니까?")) { 
+					location.href = "deltask?task_id="+ $("[name=task_id]").val()
+				}
+			})
+			
+	</script>      
+ 
+ 
    
      
   </body>

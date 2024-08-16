@@ -71,7 +71,24 @@
  
     <%-- 기존 --%>
   <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+	     // 서버에서 user_id 값을 가져옵니다.
+	     var userId = "${sessionScope.user_id}";
+
+	     // user_id가 "P"로 시작하는지 확인합니다.
+	     if (userId.startsWith("P")) {
+	         // #pmonly 요소를 보이도록 설정합니다.
+	         document.getElementById("pmonly").style.display = "block";
+	     } else {
+	         // #pmonly 요소를 숨깁니다.
+	         document.getElementById("pmonly").style.display = "none";
+	     }
+	 });
+  </script>
  <script>
+
+ 
  var msg="${msg}"
  if(msg != "") {
      alert(msg); // 알림 메시지 표시
@@ -116,6 +133,9 @@ document.addEventListener('DOMContentLoaded', function() {
         row.addEventListener('dblclick', handleDblClick);
     });
 });
+
+
+
 </script>
   <style>
        #main {
@@ -131,9 +151,9 @@ document.addEventListener('DOMContentLoaded', function() {
         #toggleDiv {
             position: absolute;
             top: -3rem;
-            right: -100%; /* Start off-screen to the right */
+            right: -130%; /* Start off-screen to the right */
             width: 70%; /* Adjust width as needed */
-            height: 180%;
+            height: 230%;
             background-color: rgba(0, 0, 0, 0.5);
             color: white;
             display: flex;
@@ -286,7 +306,8 @@ document.addEventListener('DOMContentLoaded', function() {
                   <thead>
                     <tr>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task ID</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task Name</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 pmonly">Responsibility</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 "> End Date</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Priority</th>
@@ -307,6 +328,14 @@ document.addEventListener('DOMContentLoaded', function() {
                          
                           <div class="align-middle text-center ">
                             <h6 class="mb-0 text-sm">${task.task_name}</h6>
+                          </div>
+                        </div>
+                      </td>
+                       <td class="pmonly">
+                         <div class="align-middle text-center" style="border:none">
+                         
+                          <div class="align-middle text-center ">
+                            <h6 class="mb-0 text-sm">${task.user_id}</h6>
                           </div>
                         </div>
                       </td>
@@ -412,7 +441,21 @@ document.addEventListener('DOMContentLoaded', function() {
      if (!toggleDiv.contains(event.target) ) {
          toggleDiv.style.right = '-130%'; // Slide out
          document.removeEventListener('click', outsideClickListener);
+         
+         window.location.reload();
      }
+ }
+ window.addEventListener("message", function(event) {
+     if (event.data === "closeAndReload") {
+         var toggleDiv = document.getElementById('toggleDiv');
+         toggleDiv.style.right = '-130%'; // Slide out
+         document.removeEventListener('click', outsideClickListener);
+         window.location.reload();
+     }
+ }, false);
+
+ function setupOutsideClickListener() {
+     document.addEventListener('click', outsideClickListener);
  }
     </script>
            

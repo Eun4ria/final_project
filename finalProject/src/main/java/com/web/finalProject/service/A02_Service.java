@@ -142,33 +142,45 @@ public class A02_Service {
 			 return dao.getchatRoomId(get); 
 		 } 
 		
-		//채팅 등록
-			public String insertchatroom(Chat ins) {
-				
-				return dao.insertchatroom(ins)>0?"생성 완료":"생성 실패";
-			}
-			//채팅 등록
-			public String insertchatroom1(Chat ins1) {
-				
-				return dao.insertchatroom1(ins1)>0?"생성 완료":"생성 실패";
-			}
+	//채팅 등록
+		public String insertchatroom(Chat ins) {
 			
+			return dao.insertchatroom(ins)>0?"생성 완료":"생성 실패";
+		}
+	//채팅 등록
+		public String insertchatroom1(Chat ins1) {
+			
+			return dao.insertchatroom1(ins1)>0?"생성 완료":"생성 실패";
+		}
+		
 	//채팅 리스트
 		public List<Chat> getchatList(Chat chsch){
 			return dao.getchatList(chsch);
 		}
 	
 		
-// 업무(to do)
-			public List<Tasks> getTaskList(Tasks sch){
-				return dao.getTaskList(sch);
-			}	
+// 업무(to do) : 멤버
+		public List<Tasks> getTaskList(Tasks sch){
+			return dao.getTaskList(sch);
+		}	
+// 업무(to do) : PM
+		public List<Tasks> getAllTaskList(Tasks sch){
+			return dao.getAllTaskList(sch);
+		}	
 			
-// ToDo detail
-			public List<Tasks> getTaskDetail(Tasks sch){
-				return dao.getTaskDetail(sch);
-			}	
-			
+// ToDo detail -상세
+		public Tasks getTaskDetail(String task_id){
+			return dao.getTaskDetail(task_id);
+		}	
+// ToDo update -> 수정
+		public String updatetask(Tasks upt) {
+			return dao.updatetask(upt)>0? "수정성공":"수정실패";
+		}
+// ToDo delete -> 삭제
+		public String deletetask(String del) {
+			return dao.deletetask(del)>0? "삭제성공":"삭제실패";
+		}
+				
 		
 
 }

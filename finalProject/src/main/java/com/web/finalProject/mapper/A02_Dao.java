@@ -2,12 +2,13 @@ package com.web.finalProject.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
-import org.springframework.scheduling.config.Task;
+import org.apache.ibatis.annotations.Update;
 
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Project;
@@ -94,24 +95,51 @@ int insertUser(Users ins);
 			+ "AND project_id = #{project_id}")
 	   int chatroomCk(Chat ch);
 	
-	//채팅 리스트
-		@Select("SELECT * FROM CHAT \r\n"
-				+ "WHERE project_id = #{project_id}\r\n"
-				+ "AND  owner_id=#{user_id}\r\n"
-				+ "AND owner_id != user_id")
-		List<Chat> getchatList(Chat chsch);
+//채팅 리스트
+	@Select("SELECT * FROM CHAT \r\n"
+			+ "WHERE project_id = #{project_id}\r\n"
+			+ "AND  owner_id=#{user_id}\r\n"
+			+ "AND owner_id != user_id")
+	List<Chat> getchatList(Chat chsch);
 	
 
-	// ToDo List
+//todo
+	// ToDo List -조회
 	@Select("SELECT * FROM task\r\n"
 			+ "WHERE user_id = #{user_id}\r\n"
 			+ "AND project_id = #{project_id}")
 	List<Tasks> getTaskList(Tasks sch);
 	
-	// ToDo detail
+	// ToDo List -조회 : pm
+	@Select("SELECT * FROM task\r\n"
+			+ "WHERE project_id = #{project_id}")
+	List<Tasks> getAllTaskList(Tasks sch);
+	
+	// ToDo detail - 상세
 	@Select("SELECT * FROM TASK t \r\n"
 			+ "WHERE task_id = #{task_id}")
-	List<Tasks> getTaskDetail(Tasks sch);
+	Tasks getTaskDetail(@Param("task_id") String task_id);
+	
+// ToDo update - 수정
+	@Update("UPDATE task\r\n"
+			+ "SET task_id = #{task_id},\r\n"
+			+ "    task_name = #{task_name},\r\n"
+			+ "    start_date = #{start_date},\r\n"
+			+ "    end_date = #{end_date},\r\n"
+			+ "    priority = #{priority},\r\n"
+			+ "    parent_id = #{parent_id},\r\n"
+			+ "    content = #{content},\r\n"
+			+ "    progress = #{progress},\r\n"
+			+ "    tstatus = #{tstatus},\r\n"
+			+ "    user_id = #{user_id},\r\n"
+			+ "    project_id = #{project_id}\r\n"
+			+ "WHERE task_id = #{task_id}")
+	int updatetask(Tasks upt);
+	
+	// ToDo Delete - 삭제
+	@Delete("delete from task \r\n"
+			+ "where task_id=#{task_id}")
+	int deletetask(@Param("task_id") String task_id);
 	
 	
 	
