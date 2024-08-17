@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +22,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.web.finalProject.service.A02_Service;
 import com.web.finalProject.vo.Chat;
+import com.web.finalProject.vo.Taskfile;
 import com.web.finalProject.vo.Tasks;
 import com.web.finalProject.vo.Users;
 
@@ -152,41 +152,6 @@ public class A02_Controller {
       
         return "WEB-INF\\views\\a00_dash_mem.jsp";
 	}
-
-//	
-	// 대시보드 -> todoList
-	@GetMapping("todopmFrm")
-	public String todopmFrm(@RequestParam("project_id") String project_id,
-			HttpServletRequest request,  Model d) {
-		
-	    HttpSession session = request.getSession(); 
-	    // 세션에 프로젝트 아이디 생성
-        session.setAttribute("project_id", project_id);
-      
-        return "WEB-INF\\views\\a02_todo_pm.jsp";
-	}
-	@GetMapping("todomemFrm")
-	public String todomemFrm(@RequestParam("project_id") String project_id,
-			HttpServletRequest request,  Model d) {
-		
-		HttpSession session = request.getSession(); 
-		// 세션에 프로젝트 아이디 생성
-		session.setAttribute("project_id", project_id);
-		
-		String user_id = (String) session.getAttribute("user_id");
-		
-		session.setAttribute("user_id", user_id);
-		
-		System.out.println(project_id);
-		System.out.println(user_id);
-		
-	
-		
-		
-		return "WEB-INF\\views\\a02_todo_mem.jsp";
-	}
-	
-	
 	
 	@GetMapping("Deliverables")
 	public String Deliverables(@RequestParam("project_id") String project_id,
@@ -484,6 +449,11 @@ public class A02_Controller {
 		
 		Tasks item = service.getTaskDetail(task_id);
 		
+		List<Taskfile> fileinfo = service.getfilename(task_id);
+		
+		if (fileinfo != null && !fileinfo.isEmpty()) {
+	        d.addAttribute("fileinfo", fileinfo);
+	    }
      
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //		// 날짜를 문자열로 변환
@@ -506,7 +476,7 @@ public class A02_Controller {
 	}
 	// to do uptdate - 수정
 	@PostMapping("upttask")
-	public String updatetask(Tasks upt, Model d) {
+	public String updatetask(@ModelAttribute Tasks upt, Model d) {
 		d.addAttribute("msg", service.updatetask(upt));
 		d.addAttribute("taskdetail", service.getTaskDetail(upt.getTask_id()));
 		return "redirect:taskdo";
@@ -523,9 +493,7 @@ public class A02_Controller {
 		return "WEB-INF\\views\\a02_taskdetail.jsp";
 	}
 		
-// 산출물 관리 - 파일 업로드
-	 @Autowired
-	 private A02_Service fileUploadService;
+
 	
 	
 	

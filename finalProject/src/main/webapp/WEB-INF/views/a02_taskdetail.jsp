@@ -275,7 +275,7 @@ var proc = "${proc}"
  
    <%-- 멤버 권한  --%> 
    <%-- form --%>            
-              <form class="p-4  rounded" method="post" id="MEMrole" >  
+              <form class="p-4  rounded" method="post" id="MEMrole" enctype="multipart/form-data">  
           <div>
              <a class="sidebar-toggle js-sidebar-toggle">
           <i class="hamburger align-self-center"></i>  <i class="bi bi-x"></i>
@@ -369,9 +369,27 @@ var proc = "${proc}"
  <%-- Upload File --%> 
               <div class="form-group">
                 <label for="company-website-tw d-block">Upload File</label> <br>
-                <label class="btn btn-primary btn-md btn-file">
-                  Browse File<input type="file" >
-                </label>
+                <input type="file" name="reports" multiple="multiple" class="form-control" value="" />	
+                
+                <br>
+                <label for="noti">Uploaded File</label> 
+                <c:choose>
+                 <c:when test="${not empty fileinfo}" >
+				    <!-- 파일 이름 리스트가 비어 있지 않은 경우 -->
+				    <ul>
+				        <c:forEach var="fileinfo" items="${fileinfo}">
+				            <li><p style="margin:0"> File name: ${fileinfo.fname}</p>  <p>-> upload time: ${fileinfo.regdate }</p> </li>
+				        </c:forEach>
+				    </ul>
+				</c:when>
+				 <c:otherwise>
+				   <p>  <!-- 파일 이름 리스트가 비어 있는 경우 --> </p>
+				 </c:otherwise>
+				
+				 </c:choose>
+				
+				
+                
               </div>
  		
  		
@@ -399,7 +417,7 @@ var proc = "${proc}"
          
         </div>
         </div>
- <br><br>
+ <br><br><br>
   
     </main>
   

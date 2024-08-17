@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Project;
+import com.web.finalProject.vo.Taskfile;
 import com.web.finalProject.vo.Tasks;
 import com.web.finalProject.vo.Users;
 
@@ -104,7 +105,7 @@ int insertUser(Users ins);
 	
 
 //todo
-	// ToDo List -조회
+//	// ToDo List -조회
 	@Select("SELECT * FROM task\r\n"
 			+ "WHERE user_id = #{user_id}\r\n"
 			+ "AND project_id = #{project_id}")
@@ -114,14 +115,13 @@ int insertUser(Users ins);
 	@Select("SELECT * FROM task\r\n"
 			+ "WHERE project_id = #{project_id}")
 	List<Tasks> getAllTaskList(Tasks sch);
+
 	
 	// ToDo detail - 상세
 	@Select("SELECT * FROM TASK t \r\n"
 			+ "WHERE task_id = #{task_id}")
 	Tasks getTaskDetail(@Param("task_id") String task_id);
-	
-// 파일업로드
-	@Insert("Insert into taskfile")
+
 	
 // ToDo update - 수정
 	@Update("UPDATE task\r\n"
@@ -138,6 +138,15 @@ int insertUser(Users ins);
 			+ "    project_id = #{project_id}\r\n"
 			+ "WHERE task_id = #{task_id}")
 	int updatetask(Tasks upt);
+	
+	//파일 업로드
+	@Insert("INSERT INTO TASKFILE (TASK_ID , FNAME  ,ETC ,REGDATE ,UPTDATE)\r\n"
+			+ "values(#{task_id}, #{fname} , #{etc} , sysdate  ,sysdate)")
+	int taskfileinsert(Taskfile ins);
+	//파일 이름
+	@Select("SELECT * FROM TASKFILE t \r\n"
+			+ "WHERE task_id = #{task_id}")
+	List<Taskfile> getfilename(@Param("task_id") String task_id);
 	
 	// ToDo Delete - 삭제
 	@Delete("delete from task \r\n"

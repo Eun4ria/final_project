@@ -291,7 +291,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <table class="table align-items-center mb-0" id="taskTable">
                   <thead>
                     <tr>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">cnt</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task ID</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">parent ID</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task Name</th>
                    
 				    <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
@@ -306,12 +308,23 @@ document.addEventListener('DOMContentLoaded', function() {
                   <tbody>
                   <c:forEach var="task" items="${tasklist}">
                     <tr ondblclick="taskPage('${task.task_id}')">
+                    <td >${task.cnt}</td>
                     <td>
 	                    <div>
                             <input type="checkbox" id="task1" >
-           			${task.task_id}
+                            <c:forEach begin="1"
+								end="${task.level}">  &nbsp;&nbsp;&nbsp;  //들여쓰기
+						 </c:forEach>${task.task_id}
                           </div>
                     </td>
+                    <td>
+                         <div class="align-middle text-center" style="border:none">
+                         
+                          <div class="align-middle text-center ">
+                            <h6 class="mb-0 text-sm">${task.parent_id}</h6>
+                          </div>
+                        </div>
+                      </td>
                       <td>
                          <div class="align-middle text-center" style="border:none">
                          

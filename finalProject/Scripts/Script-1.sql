@@ -1,6 +1,10 @@
 SELECT * FROM CHAT;
 SELECT * FROM team;
 SELECT * FROM task;
+SELECT * FROM taskfile;
+
+ALTER TABLE task
+MODIFY parent_id DEFAULT '0';
 
 
 SELECT COUNT(*) FROM CHAT c 
@@ -43,3 +47,26 @@ SET
     user_id = 'N_0047',
     project_id = 'PRO_0003'
 WHERE task_id = 'TSK_0133';
+
+SELECT * FROM TASKFILE t;
+INSERT INTO TASKFILE (TASK_ID , FNAME  ,ETC ,REGDATE ,UPTDATE)
+values('TSK_0004' , '디자인 시안.jpg  ','디자인 시안입니다' ,sysdate  ,sysdate);
+
+
+
+
+SELECT constraint_name, table_name, column_name
+FROM all_cons_columns
+WHERE constraint_name = 'SYS_C007342';
+
+SELECT fname
+FROM TASKFILE
+WHERE fname = 'Project4_구현상세.pptx';
+
+ALTER TABLE TASKFILE DROP CONSTRAINT SYS_C007342;
+
+SELECT fname FROM TASKFILE t 
+WHERE task_id ='TSK_0132';
+
+
+
