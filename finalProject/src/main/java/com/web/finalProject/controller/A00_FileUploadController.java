@@ -24,6 +24,7 @@ public class A00_FileUploadController {
 		 d.addAttribute("flist", service.getOutputFileList());
 		 return "WEB-INF\\views\\a02_outputlist.jsp";
 	 }
+	 
 	// 산출물 파일 업로드 페이지
     @GetMapping("uploadOutput")
     public String uploadOutput(Model d) {
