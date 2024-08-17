@@ -6,8 +6,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Tasks {
 	
+	private int cnt;  // 페이지 순서?
+	private int level;  // 자식 요소 레벨
+	private int no;  // 고유번호 => task_id
+	private int refno;  // 부모번호 => parent_id
+	
 	private String task_id;
-    private String task_name;
+    private String task_name; //subject
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date start_date;
     private Date end_date;
@@ -136,6 +141,31 @@ public class Tasks {
 	public void setStartDateFormatted(String startDateFormatted) {
 		this.startDateFormatted = startDateFormatted;
 	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	public int getNo() {
+		return no;
+	}
+	public void setNo(int no) {
+		this.no = no;
+	}
+	public int getRefno() {
+		return refno;
+	}
+	public void setRefno(int refno) {
+		this.refno = refno;
+	}
+	
 	
 	
     

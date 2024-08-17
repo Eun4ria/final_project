@@ -175,6 +175,8 @@ public class A02_Service {
 		public Tasks getTaskDetail(String task_id){
 			return dao.getTaskDetail(task_id);
 		}	
+		
+	//산출물 관리
 // ToDo update -> 수정
 		public String updatetask(Tasks upt) {
 			return dao.updatetask(upt)>0? "수정성공":"수정실패";

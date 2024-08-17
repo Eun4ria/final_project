@@ -120,6 +120,9 @@ int insertUser(Users ins);
 			+ "WHERE task_id = #{task_id}")
 	Tasks getTaskDetail(@Param("task_id") String task_id);
 	
+// 파일업로드
+	@Insert("Insert into taskfile")
+	
 // ToDo update - 수정
 	@Update("UPDATE task\r\n"
 			+ "SET task_id = #{task_id},\r\n"

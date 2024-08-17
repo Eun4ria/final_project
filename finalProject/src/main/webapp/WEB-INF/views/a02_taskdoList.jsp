@@ -71,21 +71,7 @@
  
     <%-- 기존 --%>
   <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
-  <script>
-  document.addEventListener("DOMContentLoaded", function() {
-	     // 서버에서 user_id 값을 가져옵니다.
-	     var userId = "${sessionScope.user_id}";
 
-	     // user_id가 "P"로 시작하는지 확인합니다.
-	     if (userId.startsWith("P")) {
-	         // #pmonly 요소를 보이도록 설정합니다.
-	         document.getElementById("pmonly").style.display = "block";
-	     } else {
-	         // #pmonly 요소를 숨깁니다.
-	         document.getElementById("pmonly").style.display = "none";
-	     }
-	 });
-  </script>
  <script>
 
  
@@ -260,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
      
 <li class="nav-item dropdown">   
                      <a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
+                 <img src="/z01_upload/${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
 				<c:choose>
 				    <c:when test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
 				        <span class="text-dark">Welcome, PM_${user_name}</span>
@@ -307,7 +293,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <tr>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task ID</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task Name</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 pmonly">Responsibility</th>
+                   
+				    <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 " >Responsibility</th>
+                     </c:if>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 "> End Date</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Priority</th>
@@ -331,7 +320,8 @@ document.addEventListener('DOMContentLoaded', function() {
                           </div>
                         </div>
                       </td>
-                       <td class="pmonly">
+                       <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
+                       <td >
                          <div class="align-middle text-center" style="border:none">
                          
                           <div class="align-middle text-center ">
@@ -339,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
                           </div>
                         </div>
                       </td>
-                      
+                      </c:if>
                       <td >
                       <div class="align-middle text-center" style="border:none">
                          
