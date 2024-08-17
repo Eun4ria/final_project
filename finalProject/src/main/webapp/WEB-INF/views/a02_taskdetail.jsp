@@ -197,7 +197,7 @@ var proc = "${proc}"
               <div class="form-group" style="display:inline-block" id="app">
                 <label for="tstatus" style="padding-right:11rem;">Status</label>   <label for="priority">priority</label><br> 
          
-                <select class="selectpicker border rounded" data-live-search="true" name="tstatus" > 
+                <select class="selectpicker border rounded" data-live-search="true" name="tstatus" style="width:15rem" > 
 		        	<option class="text-center"  value="${taskdetail.tstatus}" hidden>${taskdetail.tstatus}</option>
 		        	<option class="text-center"  value="진행중">진행중</option>
 		        	<option class="text-center"  value="중단">중단</option>
@@ -208,7 +208,7 @@ var proc = "${proc}"
               
   <%-- priority --%>   
               
-                 <select class="selectpicker border rounded" id="priority" data-style="btn-black" data-live-search="true"  :title="${taskdetail.priority}" name="priority">
+                 <select class="selectpicker border rounded" id="priority" data-style="btn-black" data-live-search="true" style="width:15rem" :title="${taskdetail.priority}" name="priority">
 		        	<option class="text-center"  value="${taskdetail.priority}" hidden>${taskdetail.priority}</option>
 		        	<option class="text-center"  value="상">상</option>
 		        	<option class="text-center"  value="중">중</option>
@@ -393,12 +393,12 @@ var proc = "${proc}"
               </div>
  		
  		
- 		<div class="col-lg-4 ml-auto">
+ 		<div class="col-lg-4 ml-auto " style="margin-bottom:20rem">
             <div class="row">
               <div class="col-6">
                 <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Go Up</a>
               </div>
-              <div class="col-6">
+              <div class="col-6" style="margin-bottom:3rem;">
              	 <input type="button" value="수정" class="btn btn-block btn-primary btn-md" id="uptBtn"> 
               </div>
             </div>
@@ -417,7 +417,7 @@ var proc = "${proc}"
          
         </div>
         </div>
- <br><br><br>
+
   
     </main>
   

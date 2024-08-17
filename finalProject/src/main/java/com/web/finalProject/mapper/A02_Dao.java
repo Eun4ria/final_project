@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
+import com.web.finalProject.vo.Budget;
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Taskfile;
@@ -154,6 +155,9 @@ int insertUser(Users ins);
 	int deletetask(@Param("task_id") String task_id);
 	
 	
-	
+//예산관리
+	@Select("SELECT * FROM BUDGET b \r\n"
+			+ "WHERE PROJECT_ID = #{project_id}")
+	List<Budget> getBudgetList(Budget sch);
 	
 }

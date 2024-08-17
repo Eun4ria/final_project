@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.web.finalProject.mapper.A02_Dao;
 import com.web.finalProject.util.Util;
+import com.web.finalProject.vo.Budget;
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.RegMember;
@@ -221,6 +222,9 @@ public class A02_Service {
 			return dao.deletetask(del)>0? "삭제성공":"삭제실패";
 		}
 
-	    
+// 예산 관리
+	public List<Budget> getBudgetList(Budget sch){
+		return dao.getBudgetList(sch);
+	}
 	    
 }
