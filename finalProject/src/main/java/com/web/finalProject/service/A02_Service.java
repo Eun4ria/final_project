@@ -1,14 +1,17 @@
 package com.web.finalProject.service;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.web.finalProject.mapper.A02_Dao;
 import com.web.finalProject.util.Util;
@@ -180,7 +183,7 @@ public class A02_Service {
 		public String deletetask(String del) {
 			return dao.deletetask(del)>0? "삭제성공":"삭제실패";
 		}
-				
-		
 
+	    
+	    
 }

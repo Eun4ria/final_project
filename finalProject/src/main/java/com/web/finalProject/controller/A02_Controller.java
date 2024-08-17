@@ -523,7 +523,13 @@ public class A02_Controller {
 		return "WEB-INF\\views\\a02_taskdetail.jsp";
 	}
 		
-
+// 산출물 관리 - 파일 업로드
+	 @Autowired
+	 private A02_Service fileUploadService;
+	
+	
+	
+	
 			
 			
 //board
