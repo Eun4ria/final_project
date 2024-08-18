@@ -55,6 +55,18 @@
 	if(msg!=""){
 		alert(msg)
 	}
+	var role_code = "${sessionScope.role_code}"
+	function projectPage(project_id){ // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
+	   if(role_code!="" && role_code!=null){
+	      if(role_code=="P"){
+	         location.href="dashpmFrm?project_id="+project_id
+	      }else{
+	         location.href="dashmemFrm?project_id="+project_id
+	      }
+	   }else{
+	      alert("비정상적인 접근! 관리자에게 문의해주세요")
+	   }    
+	 }
 </script>
 <style>
 	.project-item:hover{
@@ -248,7 +260,7 @@
 								</div>
 								<div class="card-body">
 									<c:forEach var="pro" items="${pro}">
-									<div class="d-flex align-items-start project-item" onclick="getPro('${pro.project_id}')" style="padding:10px;">
+									<div class="d-flex align-items-start project-item" onclick="projectPage('${pro.project_id}')" style="padding:10px;">
 										<img src="${pro.logo}" width="30" height="30" class="rounded-circle me-2" alt="${pro.project_name} }">
 										<div class="flex-grow-1">
 											<small class="float-end text-navy">
@@ -269,7 +281,7 @@
 									</div>
 								<div class="card-body">
 									<c:forEach var="cpro" items="${cpro}">
-									<div class="d-flex align-items-start project-item" onclick="getPro('${cpro.project_id}')" style="padding:10px;">
+									<div class="d-flex align-items-start project-item" onclick="projectPage('${cpro.project_id}')" style="padding:10px;">
 										<img src="${cpro.logo}" width="30" height="30" class="rounded-circle me-2" alt="${cpro.project_name} }">
 										<div class="flex-grow-1">
 											<small class="float-end text-navy">

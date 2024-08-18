@@ -5,7 +5,6 @@ import java.util.Date;
 public class Calendar {
 	private String id;
 	private String title;
-	private String writer;
 	private Date start;
 	private Date end;
 	private String content;
@@ -16,27 +15,13 @@ public class Calendar {
 	private String user_id;
 	private boolean allDay;
 	private String project_id;
-	
-
+	private String writer;
 	private String sel;
-	
-	public boolean isAllDay() {
-		return allDay;
+	public String getWriter() {
+		return writer;
 	}
-	public void setAllDay(boolean allDay) {
-		this.allDay = allDay;
-	}
-	public String getSel() {
-		return sel;
-	}
-	public void setSel(String sel) {
-		this.sel = sel;
-	}
-	public String getProject_id() {
-		return project_id;
-	}
-	public void setProject_id(String project_id) {
-		this.project_id = project_id;
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
 	public String getId() {
 		return id;
@@ -49,12 +34,6 @@ public class Calendar {
 	}
 	public void setTitle(String title) {
 		this.title = title;
-	}
-	public String getWriter() {
-		return writer;
-	}
-	public void setWriter(String writer) {
-		this.writer = writer;
 	}
 	public Date getStart() {
 		return start;
@@ -104,6 +83,25 @@ public class Calendar {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
+	public boolean isAllDay() {
+		return allDay;
+	}
+	public void setAllDay(boolean allDay) {
+		this.allDay = allDay;
+	}
+	public String getProject_id() {
+		return project_id;
+	}
+	public void setProject_id(String project_id) {
+		this.project_id = project_id;
+	}
+	public String getSel() {
+		return sel;
+	}
+	public void setSel(String sel) {
+		this.sel = sel;
+	}
+	
 	
 	
 	

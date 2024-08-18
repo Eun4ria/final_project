@@ -175,6 +175,8 @@ public interface A01_Dao {
 			+ "    start_date AS \"start\",\r\n"
 			+ "    end_date AS \"end\",\r\n"
 			+ "    content,\r\n"
+			+ "    1 allDay,\r\n"			
+			+ "    project_id,\r\n"	
 			+ "    '#d8ee95' AS backgroundColor,\r\n"
 			+ "    'black' AS textColor \r\n"
 			+ "FROM task\r\n"
@@ -192,6 +194,7 @@ public interface A01_Dao {
 			+ "    c.urllink AS urlLink, \r\n"
 			+ "    c.user_id AS user_id, \r\n"
 			+ "    c.entity_type,\r\n"
+			+ "    c.allDay,\r\n"
 			+ "    u.user_name AS writer \r\n"
 			+ "FROM \r\n"
 			+ "    calendar c\r\n"
@@ -202,7 +205,7 @@ public interface A01_Dao {
 	List<Calendar> getPCalList(@Param("user_id") String user_id);
 	// 팀 캘린더
 	@Select("SELECT \r\n"
-			+ "    c.cal_id as id, \r\n"
+			+ "    c.cal_id AS id, \r\n"
 			+ "    c.title,\r\n"
 			+ "    c.start1 \"start\",\r\n"
 			+ "    c.end1 \"end\",\r\n"
@@ -210,20 +213,48 @@ public interface A01_Dao {
 			+ "    '#c266f4' AS backgroundColor,\r\n"
 			+ "    'white' AS textColor, \r\n"
 			+ "    c.urllink AS urlLink, \r\n"
+			+ "    c.allday AS allDay,\r\n"
 			+ "    c.user_id AS user_id, \r\n"
-			+ "    t.project_id,\r\n"
-			+ "    c.entity_type,\r\n"
-			+ "    u.user_name AS writer \r\n"
-			+ "FROM \r\n"
-			+ "    calendar c\r\n"
-			+ "JOIN \r\n"
-			+ "    users u ON c.user_id = u.user_id \r\n"
-			+ "JOIN\r\n"
-			+ "    team t ON t.user_id = u.user_id\r\n"
-			+ "WHERE \r\n"
-			+ "entity_type='T'\r\n"
-			+ "AND project_id=#{project_id}")
+			+ "    c.project_id,\r\n"
+			+ "	c.entity_type,\r\n"
+			+ "	c.allDay,\r\n"
+			+ "	u.user_name AS writer \r\n"
+			+ "	FROM\r\n"
+			+ "	 calendar c\r\n"
+			+ "	JOIN\r\n"
+			+ "	users u ON c.user_id = u.user_id\r\n"
+			+ "	JOIN\r\n"
+			+ "	team t ON t.user_id = u.user_id\r\n"
+			+ "	AND t.PROJECT_ID = c.project_id\r\n"
+			+ "	WHERE\r\n"
+			+ "	entity_type='T'\r\n"
+			+ "	AND c.project_id=#{project_id}")
 	List<Calendar> getTCalList(@Param("project_id") String project_id);
+	
+	// 캘린더 등록
+	@Insert("INSERT INTO calendar values('CAL_'||TO_CHAR(calendar_seq.nextval, 'FM0000'),"
+			+ "#{title},#{start}, #{end}, #{content},NULL,NULL,#{allDay},NULL,#{user_id},#{entity_type},#{project_id})")
+	int insertCalendar(Calendar ins);
+
+	// 캘린더 수정
+    @Update("UPDATE calendar " +
+            "SET title = #{title}, " +
+            "    start1 = #{start}, " +
+            "    end1 = #{end}, " +
+            "    allDay = #{allDay}, " +
+            "    content = #{content}, " +
+            "    entity_type = #{entity_type} " +
+            "WHERE cal_id = #{id} and user_id = #{user_id}")
+    int updateCalendar(Calendar upt);
+
+    // 캘린더 삭제
+    @Delete("DELETE FROM calendar " +
+            "WHERE cal_id = #{id} and user_id = #{user_id}")
+    int deleteCalendar(@Param("id") String id,@Param("user_id") String user_id);
+	
+	
+	
+	
 	
 	// 프로필
 	@Select("SELECT\r\n"

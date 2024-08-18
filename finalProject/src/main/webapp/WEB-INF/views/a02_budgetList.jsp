@@ -128,7 +128,7 @@ function goChat(project_id){
                       </td>
                       <td >
                       <div class="align-middle text-center" style="border:none">
-                            <h6 class="ml-5 text-center">${bud.amount }</h6>
+                            <h6 class="ml-5 text-center"><fmt:formatNumber value="${bud.amount}" type="number"/></h6>
                           </div>                      
                       </td>
                       <td >

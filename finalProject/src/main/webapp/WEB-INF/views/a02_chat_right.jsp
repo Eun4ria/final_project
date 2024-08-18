@@ -382,7 +382,7 @@ $(document).ready(function(){
                   <div class="card-header msg_head">
                      <div class="d-flex bd-highlight">
                         <div class="img_cont">
-                           <%--<img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> --%>
+                           <%--<img src="z01_upload/${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> --%>
                            <img src="${path}/material-dashboard-2/assets/img/HPM-icon.png" class="avatar img-fluid rounded me-1" alt="Profile Picture"  style="width:4rem; height:4rem; "/>
                            <div style="font-size:0.6rem;padding-left:0.5rem;"> ${project_id } </div>
                         </div>

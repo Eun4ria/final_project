@@ -37,9 +37,7 @@
   <!-- Material Icons 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
  -->
-  <!-- CSS Files -->
-  
-  <link id="pagestyle" href="${path}/material-dashboard-2/assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+
 	
 <%--다시 adminkit --%>
 
@@ -55,6 +53,7 @@
 --%>
 <!-- jquery -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
 
 <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css">
 <link rel="stylesheet" href="${path}/a00_com/jquery-ui.css">
@@ -127,12 +126,19 @@ function goChat(user_id){
 			},
 			eventDrop:function(arg){
 				addForm(arg.event)
-				ajaxFun("updateCalendar")
-				
+				if (isGantt()) {
+	            alert("프로젝트 일정은 수정이 불가능합니다.");
+				}else{
+					ajaxFun("updateCalendar")
+				}	
 			},
 			eventResize:function(arg){
 				addForm(arg.event)
-				ajaxFun("updateCalendar")
+				if (isGantt()) {
+	            alert("프로젝트 일정은 수정이 불가능합니다.");
+				}else{
+					ajaxFun("updateCalendar")
+				}
 				
 			},			
 			editable : true,
@@ -176,17 +182,29 @@ function goChat(user_id){
 				 ajaxFun("insertCalendar")
 			}		
 		})
-		// uptBtn delBtn
 		$("#uptBtn").click(function(){
-			if(confirm("수정하시겠니까?")){
-				 ajaxFun("updateCalendar")
-			}		
+			if (isGantt()) {
+	            alert("프로젝트 일정은 수정이 불가능합니다.");
+			}else{
+				if(confirm("수정하시겠습니까?")){
+					 ajaxFun("updateCalendar")
+				}
+			}
 		})		
 		$("#delBtn").click(function(){
-			if(confirm("삭제하시겠니까?")){
-				 ajaxFun("deleteCalendar")
-			}		
-		})			
+			if (isGantt()) {
+	            alert("프로젝트 일정은 삭제가 불가능합니다.");
+			}else{
+				if(confirm("삭제하시겠습니까?")){
+					 ajaxFun("deleteCalendar")
+				}
+			}	
+		})	
+		function isGantt() {
+		    // writer 필드가 빈 값이거나 존재하지 않는 경우 간트 차트로 간주
+		    var writerVal = $("[name=writer]").val();
+		    return !writerVal; // writer가 빈 문자열인 경우 true 반환
+		}
 		
 		// 클릭시/선택시/스크롤시 전달되어온 일정을 매개변수로 모달 창에 할당 처리..
 		
@@ -194,15 +212,24 @@ function goChat(user_id){
 			console.log("#일정#")
 			console.log(event)
 			$("form")[0].reset()
+			$("[name=content]").val("");
+			
 			if(proc != "I" ){
 				$("[name=id]").val(event.id)
 				$("[name=backgroundColor]").val(event.backgroundColor)
 				$("[name=textColor]").val(event.textColor)				
 				$("[name=writer]").val(event.extendedProps.writer)
 				$("[name=content]").val(event.extendedProps.content)
-				$("[name=urlLink]").val(event.extendedProps.urlLink)	
-				$("[name=sel]").val(event.extendedProps.sel);
+				//$("[name=urlLink]").val(event.extendedProps.urlLink)	
+				//$("[name=sel]").val(event.extendedProps.sel);
+				$("[name=user_id]").val(event.extendedProps.user_id);
+				$("[name=project_id]").val(event.extendedProps.project_id);
+				// entity_type기본값 P로 설정
+				$("[name=entity_type]").val(event.extendedProps.entity_type || "P");
+			}else{// 등록 시 작성자명 세션에 저장된 이름 표시
+				$("[name=writer]").val("${sessionScope.user_name}")				
 			}
+			
 			$("[name=title]").val(event.title)
 			$("[name=start]").val(event.startStr)
 			$("#start").val(event.start.toLocaleString())
@@ -213,14 +240,16 @@ function goChat(user_id){
 				$("[name=end]").val(event.startStr)
 				$("#end").val(event.start.toLocaleString())			
 			}			
-			$("[name=allDay]").val(event.allDay?1:0)
+			$("[name=allDay]").val(event.allDay?1:0);
+			$("[name=entity_type]").change(function () { 
+		        if ($("[name=entity_type]").val() === "T") {
+		            $("[name=project_id]").val("${sessionScope.project_id}");
+		        } else {
+		            $("[name=project_id]").val("");
+		        }
+		    });
 			
-            // 기본값 설정: "팀/개인"을 팀으로 기본 선택
-            if (proc === "I") {
-                $("[name=sel]").val("T");
-            }
 			
-			// 추가 속성..
 
 			
 			//calendar.unselect()
@@ -232,13 +261,15 @@ function goChat(user_id){
 				data:$("form").serialize(),
 				dataType:"json",
 				success:function(data){
-					alert(data.msg)  //  data.msg data.calList
-					calendar.removeAllEvents()
-					calendar.addEventSource(data.calList)
-					// 수정 처리 외외는 창닫기 처리..
-					if(data.msg.indexOf("수정")==-1){
-						$("#clsBtn").click()	
-					}
+					if (data.msg.indexOf("실패") === -1) {
+						alert(data.msg)						
+                    }else{
+                    	alert(data.msg+"\n본인 일정이 아닙니다.")
+                    }
+					calendar.refetchEvents();
+					/* if (data.msg.indexOf("수정") === -1) { // data.msg에 수정이 포함되어 있지 않을 때
+						$("#clsBtn").click()
+                    } */
 					
 				},
 				error:function(err){
@@ -346,7 +377,7 @@ function goChat(user_id){
      
 			<li class="nav-item dropdown">   
                <a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
+                 <img src="z01_upload/${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
 				<c:choose>
 				    <c:when test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
 				        <span class="text-dark">Welcome, PM_${user_name}</span>
@@ -402,19 +433,25 @@ function goChat(user_id){
 							</div>
 							<div class="modal-body">
 								<form id="frm02" class="form" method="post">
-									<input type="hidden" name="id" value="0"/>
+								<input type="hidden" name="id"/>
+									<div class="input-group mb-3">	
+										<div class="input-group-prepend ">
+											<span class="input-group-text  justify-content-center">작성자</span>
+										</div>
+										<input name="writer"  class="form-control" readonly/>	
+									</div>
+									<div class="input-group mb-3">	
+										<div class="input-group-prepend ">
+											<span class="input-group-text  justify-content-center">프로젝트 ID</span>
+										</div>
+										<input name="project_id"  class="form-control" readonly/>	
+									</div>
 									<div class="input-group mb-3">	
 										<div class="input-group-prepend ">
 											<span class="input-group-text  justify-content-center">일정명</span>
 										</div>
 										<input name="title" placeholder="일정 입력"  class="form-control" />	
-									</div>	
-									<div class="input-group mb-3">	
-										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center">작성자</span>
-										</div>
-										<input name="writer" placeholder="작성자 입력"  class="form-control" />	
-									</div>	
+									</div>								
 									<div class="input-group mb-3">	
 										<div class="input-group-prepend ">
 											<span class="input-group-text  justify-content-center">시 작(일/시)</span>
@@ -429,11 +466,20 @@ function goChat(user_id){
 										<input id="end"  class="form-control" />	
 										<input name="end" type="hidden"   />	
 									</div>
+									<div class="input-group mb-3">
+										
+											<span class="input-group-text justify-content-center">종일여부</span>
+										
+										<select name="allDay" class="form-control">
+											<option value="1">종일</option>
+											<option value="0">시간</option>
+										</select>
+									</div>
 									<div class="input-group mb-3">	
 										<div class="input-group-prepend ">
 											<span class="input-group-text  justify-content-center">팀/개인</span>
 										</div>
-										<select name="sel" class="form-control">
+										<select name="entity_type" class="form-control">
 											<option value="T">팀</option>
 											<option value="P">개인</option>
 										</select>

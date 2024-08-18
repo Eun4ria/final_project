@@ -66,13 +66,14 @@
                 <a class="sidebar-link" onclick="goPage('profile')">
                     <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
                 </a>
-            </li>			
+            </li>	
+            <%-- 	
             <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('fullcalendar')">
                     <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Calendar</span>
                 </a>
             </li>
-            
+            --%>	
             <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('board')">
                     <i class="align-middle" data-feather="command"></i> <span class="align-middle">Board</span>
@@ -80,8 +81,8 @@
             </li>
             
              <li class="sidebar-item ${currentUrl == '/resource' ? 'active' : ''}">
-                <a class="sidebar-link" onclick="goPage('board')">
-                    <i class="align-middle" data-feather="command"></i> <span class="align-middle">Board</span>
+                <a class="sidebar-link" onclick="goPage('resource')">
+                    <i class="align-middle" data-feather="command"></i> <span class="align-middle">resource</span>
                 </a>                
             </li>
 

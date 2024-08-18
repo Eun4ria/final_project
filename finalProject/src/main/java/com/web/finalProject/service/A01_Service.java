@@ -126,6 +126,26 @@ public class A01_Service {
             return List.of(); // 빈 리스트 반환
         }
     }
+    
+    // 캘린더 등록
+    public String insertCalendar(Calendar ins) {
+        return dao.insertCalendar(ins)>0?"등록 성공":"등록 실패";
+    }
+
+    // 캘린더 수정
+    public String updateCalendar(Calendar upt) {
+        return dao.updateCalendar(upt)>0?"수정 성공":"수정 실패";
+    }
+
+    // 캘린더 삭제
+    public String deleteCalendar(String id, String user_id) {
+        return dao.deleteCalendar(id,user_id)>0?"삭제 성공":"삭제 실패";
+    }
+    
+    
+    
+    
+    
     /*
 	// 간트 캘린더
 	public List<Calendar> getCalList(String project_id){

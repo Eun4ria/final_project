@@ -1,12 +1,10 @@
 package com.web.finalProject.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -203,7 +201,7 @@ public class A01_Controller {
  	*/
  	// http://localhost:4040/calList 
   	@PostMapping("calList")
-  	public ResponseEntity<List<Calendar>> getCalList(@RequestParam(name="sel", defaultValue="") List<String> sel,
+  	public ResponseEntity<List<Calendar>> getCalList(@RequestParam(name ="sel") List<String> sel,
   			HttpServletRequest request){
   		HttpSession session = request.getSession(false); 
         String user_id = (String) session.getAttribute("user_id");  
@@ -221,8 +219,65 @@ public class A01_Controller {
 
         return ResponseEntity.ok(calendarList);
   	}
+  	
+  	// 캘린더 등록
+  	@PostMapping("insertCalendar")
+    public ResponseEntity<?> insertCalendar(@RequestParam(name ="sel", defaultValue="P") List<String> sel,
+    		Calendar ins, HttpServletRequest request) {
+  		HttpSession session = request.getSession(false); 
+        String user_id = (String) session.getAttribute("user_id");  
+        String project_id = (String) session.getAttribute("project_id");
+        // 세션에 저장되어 있는 user_id와 project_id를 세팅
+        ins.setUser_id(user_id);
+        ins.setProject_id(project_id);
 
- 	
+        List<Calendar> calendarList = new ArrayList<>();        
+        if (sel != null && !sel.isEmpty()) {
+            for (String s : sel) {
+                calendarList.addAll(service.getCalendarList(s, user_id, project_id));
+            }
+        }
+
+        return ResponseEntity.ok(new CalList(service.insertCalendar(ins), calendarList));
+    }
+
+    @PostMapping("updateCalendar")
+    public ResponseEntity<?> updateCalendar(@RequestParam(name ="sel", defaultValue="P") List<String> sel,
+    		Calendar upt, HttpServletRequest request) {
+  		HttpSession session = request.getSession(false); 
+        String user_id = (String) session.getAttribute("user_id");  
+        String project_id = (String) session.getAttribute("project_id");
+        // 세션에 저장되어 있는 user_id 세팅
+        upt.setUser_id(user_id);
+
+        List<Calendar> calendarList = new ArrayList<>();        
+        if (sel != null && !sel.isEmpty()) {
+            for (String s : sel) {
+                calendarList.addAll(service.getCalendarList(s, user_id, project_id));
+            }
+        }
+
+        return ResponseEntity.ok(new CalList(service.updateCalendar(upt), calendarList));
+    }
+
+    @PostMapping("deleteCalendar")
+    public ResponseEntity<?> deleteCalendar(@RequestParam(name ="sel", defaultValue="P") List<String> sel,
+    		@RequestParam("id") String id, HttpServletRequest request) {
+    	
+    	HttpSession session = request.getSession(false); 
+    	String user_id = (String) session.getAttribute("user_id");  
+        String project_id = (String) session.getAttribute("project_id");
+
+        List<Calendar> calendarList = new ArrayList<>();        
+        if (sel != null && !sel.isEmpty()) {
+            for (String s : sel) {
+                calendarList.addAll(service.getCalendarList(s, user_id, project_id));
+            }
+        }
+
+        return ResponseEntity.ok(new CalList(service.deleteCalendar(id, user_id), calendarList));
+    }
+
  	
     
     private final LocaleResolver localeResolver;
@@ -291,7 +346,7 @@ public class A01_Controller {
         return "WEB-INF\\views\\a01_profile.jsp";
     }
     
-    @PostMapping("/updateProfile")
+    @PostMapping("updateProfile")
     public String updateProfileWithFile(HttpServletRequest request, MultipartFile file, Users user, Model model) {
     	HttpSession session = request.getSession(false); 
     	String user_id = (String) session.getAttribute("user_id"); 

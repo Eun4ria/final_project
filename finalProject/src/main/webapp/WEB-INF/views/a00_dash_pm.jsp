@@ -149,7 +149,7 @@ function goChat(user_id){
      
 <li class="nav-item dropdown">   
                      <a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
+                 <img src="z01_upload/${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
 				<c:choose>
 				    <c:when test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
 				        <span class="text-dark">Welcome, PM_${user_name}</span>

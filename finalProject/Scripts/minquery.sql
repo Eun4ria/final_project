@@ -295,6 +295,7 @@ entity_type='T'
 WHERE user_id='M_0003';
 SELECT * FROM calendar;
 
+
 INSERT INTO calendar values('CAL_'||TO_CHAR(calendar_seq.nextval, 'FM0000'),'가족여행',sysdate, TO_DATE('2024-08-20', 'YYYY-MM-DD'), '휴가를 떠나요',NULL,NULL,NULL,NULL,'P_0001','P');
 
 
@@ -344,6 +345,7 @@ WHERE entity_type='T' AND project_id='PRO_0003';
 
 SELECT * FROM calendar;
 
+
 ALTER TABLE calendar RENAME COLUMN urlink to urllink;
 
 
@@ -364,5 +366,18 @@ WHERE task_id = 'TSK_0193';
 SELECT * FROM task;
 
 SELECT * FROM calendar;
-INSERT INTO CALENDAR values()
+
+DELETE FROM calendar WHERE cal_id = 'CAL_0035';
+
+UPDATE calendar
+SET title = '일정 수정',
+start =sysdate,
+end =sysdate,
+allDay = 1,
+content = '수정테스트',
+entity_type = 'P'
+WHERE cal_id = 'CAL_0036';
+
+
+SELECT * FROM calendar;
 

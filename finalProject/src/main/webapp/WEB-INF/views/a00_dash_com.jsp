@@ -146,7 +146,7 @@
               </a>
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                <img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> <span class="text-dark">Welcome, COM_${user_name}</span>
+                <img src="z01_upload/${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> <span class="text-dark">Welcome, COM_${user_name}</span>
               </a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
