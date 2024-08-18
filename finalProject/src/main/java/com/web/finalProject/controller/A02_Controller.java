@@ -3,6 +3,7 @@ package com.web.finalProject.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -508,6 +509,8 @@ public class A02_Controller {
 	    
 	    // 회원 리스트를 가져온다.
 	    List<Budget> Budget = service.getBudgetList(sch);
+	    
+	    
 	    d.addAttribute("BudList", Budget);
 		
 		return "WEB-INF\\views\\a02_budgetList.jsp";
