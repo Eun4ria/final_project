@@ -3,7 +3,6 @@ package com.web.finalProject.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.web.finalProject.service.A02_Service;
@@ -509,17 +509,43 @@ public class A02_Controller {
 	    
 	    // 회원 리스트를 가져온다.
 	    List<Budget> Budget = service.getBudgetList(sch);
+	    List<Budget> BudParent = service.getparentList(sch);
 	    
 	    
 	    d.addAttribute("BudList", Budget);
+	    d.addAttribute("BudParent", BudParent);
 		
 		return "WEB-INF\\views\\a02_budgetList.jsp";
 	}
 	
+	// 예산 입력
+	@RequestMapping("budgetinsert")
+	public String boardInsert(Budget ins, RedirectAttributes redirectAttributes) {
+		 String result = service.budgetInsert(ins); // Assuming it returns a message or status
+	      redirectAttributes.addFlashAttribute("msg", result);
+		 
+		return "redirect:/budgetFrm";
+	}
 	
-	
-	
-	
+	// 예산 - 수정
+	@RequestMapping("uptbudget")
+	public String budgetUpdate(@ModelAttribute Budget upt, Model d) {
+		d.addAttribute("msg", service.budgetUpdate(upt));
+		d.addAttribute("uptlist", service.getTaskDetail(upt.getBudget_id()));
+		return "redirect:budgetFrm";
+	}
+	// to do delete - 삭제
+	@RequestMapping("delbudget")
+	public String delbudget(HttpServletRequest request, Model d) {
+		HttpSession session = request.getSession(); 
+		String budget_id = (String) session.getAttribute("budget_id");
+		session.setAttribute("budget_id", budget_id);
+		
+		d.addAttribute("msg", service.deleteBudget(budget_id));
+		d.addAttribute("proc", "del");
+		return "WEB-INF\\views\\a02_budgetList.jsp";
+	}
+		
 	
 	
 	

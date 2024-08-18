@@ -15,6 +15,7 @@ public class Budget {
     private String project_id;  
     private String parent_id;    
     private int levels;
+    private String etc;
     private String user_id;
 	public Budget() {
 		super();
@@ -106,6 +107,12 @@ public class Budget {
 	}
 	public void setCount(int count) {
 		this.count = count;
+	}
+	public String getEtc() {
+		return etc;
+	}
+	public void setEtc(String etc) {
+		this.etc = etc;
 	}
 	
 	

@@ -77,7 +77,7 @@ function goChat(project_id){
          <main class="content" id="toggleclose">
             <div class="container-fluid p-0">
 
-               <h1 class="h3 mb-3"><strong>Budget</strong> Management</h1>
+               <h1 class="h3 mb-3"><strong>Budget</strong> Registration</h1>
      
             <div class="row mb-4">
         <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
@@ -114,7 +114,7 @@ function goChat(project_id){
                     </tr>
                   </thead>
                     <c:forEach var="bud" items="${BudList}">
-                    <tr ondblclick="BudPage('${bud.budget_id}')">
+                    <tr >
                       <td >
                       <div class="align-middle text-center" style="border:none">                      
                             <h6 class="ml-5 text-center">${bud.cnt }</h6>

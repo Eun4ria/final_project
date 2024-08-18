@@ -114,7 +114,7 @@ START WITH parent_id IS null
 CONNECT BY PRIOR parent_id = budget_id
 ORDER siblings BY regdate DESC)
 WHERE cnt BETWEEN 1 AND 5;
-
+SELECT * FROM BUDGET;
 
 SELECT count(*) FROM BUDGET b 
 WHERE project_id = 'PRO_0003';
@@ -156,8 +156,14 @@ ORDER siblings BY budget_id DESC);
 INSERT INTO budget (budget_id, budget_name, amount, regdate, usedate, project_id, parent_id, user_id)
 VALUES ('BUG_'||TO_CHAR(budget_seq.nextval, 'FM0000'), '운영 및 유지보수', 200000000, sysdate, NULL, 'PRO_0003','BUG_0023' ,'B_0047' );
 
+SELECT * FROM BUDGET b ;
+
+ALTER TABLE BUDGET 
+ADD etc VARCHAR2(255);
+
+
 ALTER TABLE BUDGET
-MODIFY REGDATE DEFAULT SYSDATE;
+MODIFY command varchar2(255);
 
 SELECT * FROM TASK t ;
 
@@ -182,7 +188,14 @@ START WITH parent_id IS NULL
 CONNECT BY PRIOR task_id = parent_id
 ORDER siblings BY task_id DESC);
 
-
+SELECT * from(
+SELECT rownum cnt, LEVEL AS lvl, b.*
+FROM budget b
+WHERE project_id = 'PRO_0003'
+START WITH parent_id IS NULL
+CONNECT BY PRIOR budget_id = parent_id
+ORDER siblings BY budget_id DESC)
+WHERE lvl=2;
 
 
 
