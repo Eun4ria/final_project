@@ -197,7 +197,7 @@ var proc = "${proc}"
               <div class="form-group" style="display:inline-block" id="app">
                 <label for="tstatus" style="padding-right:11rem;">Status</label>   <label for="priority">priority</label><br> 
          
-                <select class="selectpicker border rounded" data-live-search="true" name="tstatus" > 
+                <select class="selectpicker border rounded" data-live-search="true" name="tstatus" style="width:15rem" > 
 		        	<option class="text-center"  value="${taskdetail.tstatus}" hidden>${taskdetail.tstatus}</option>
 		        	<option class="text-center"  value="진행중">진행중</option>
 		        	<option class="text-center"  value="중단">중단</option>
@@ -208,7 +208,7 @@ var proc = "${proc}"
               
   <%-- priority --%>   
               
-                 <select class="selectpicker border rounded" id="priority" data-style="btn-black" data-live-search="true"  :title="${taskdetail.priority}" name="priority">
+                 <select class="selectpicker border rounded" id="priority" data-style="btn-black" data-live-search="true" style="width:15rem" :title="${taskdetail.priority}" name="priority">
 		        	<option class="text-center"  value="${taskdetail.priority}" hidden>${taskdetail.priority}</option>
 		        	<option class="text-center"  value="상">상</option>
 		        	<option class="text-center"  value="중">중</option>
@@ -275,7 +275,7 @@ var proc = "${proc}"
  
    <%-- 멤버 권한  --%> 
    <%-- form --%>            
-              <form class="p-4  rounded" method="post" id="MEMrole" >  
+              <form class="p-4  rounded" method="post" id="MEMrole" enctype="multipart/form-data">  
           <div>
              <a class="sidebar-toggle js-sidebar-toggle">
           <i class="hamburger align-self-center"></i>  <i class="bi bi-x"></i>
@@ -369,18 +369,36 @@ var proc = "${proc}"
  <%-- Upload File --%> 
               <div class="form-group">
                 <label for="company-website-tw d-block">Upload File</label> <br>
-                <label class="btn btn-primary btn-md btn-file">
-                  Browse File<input type="file" >
-                </label>
+                <input type="file" name="reports" multiple="multiple" class="form-control" value="" />	
+                
+                <br>
+                <label for="noti">Uploaded File</label> 
+                <c:choose>
+                 <c:when test="${not empty fileinfo}" >
+				    <!-- 파일 이름 리스트가 비어 있지 않은 경우 -->
+				    <ul>
+				        <c:forEach var="fileinfo" items="${fileinfo}">
+				            <li><p style="margin:0"> File name: ${fileinfo.fname}</p>  <p>-> upload time: ${fileinfo.regdate }</p> </li>
+				        </c:forEach>
+				    </ul>
+				</c:when>
+				 <c:otherwise>
+				   <p>  <!-- 파일 이름 리스트가 비어 있는 경우 --> </p>
+				 </c:otherwise>
+				
+				 </c:choose>
+				
+				
+                
               </div>
  		
  		
- 		<div class="col-lg-4 ml-auto">
+ 		<div class="col-lg-4 ml-auto " style="margin-bottom:20rem">
             <div class="row">
               <div class="col-6">
                 <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Go Up</a>
               </div>
-              <div class="col-6">
+              <div class="col-6" style="margin-bottom:3rem;">
              	 <input type="button" value="수정" class="btn btn-block btn-primary btn-md" id="uptBtn"> 
               </div>
             </div>
@@ -399,7 +417,7 @@ var proc = "${proc}"
          
         </div>
         </div>
- <br><br>
+
   
     </main>
   

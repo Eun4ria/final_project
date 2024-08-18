@@ -44,15 +44,20 @@
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		//$("#pmGantt").hide()
+		$("#pmGantt").hide()
 		$("#Output").hide()
 		$("#todo").show()
-		/*
+		$("#Budget").hide()
+		
+		
 		if("${sessionScope.role_code}"=="P"){
 			$("#pmGantt").show()
 			$("#Output").show()
 		}
-		*/
+		if("${sessionScope.role_code}"=="B"){
+			$("#Budget").show()
+		}
+		
 		
 		 // 현재 URL을 JavaScript 변수로 설정
         var currentUrl = window.location.pathname;
@@ -71,17 +76,17 @@
 				<a class="sidebar-brand" href="main">
           <span class="align-middle">HPM</span>
         </a>
-
 				<ul class="sidebar-nav">
             <li class="sidebar-header">
                 사용자
             </li>
 
-            <li class="sidebar-item ${currentUrl == '/dashpmFrm' ? 'active' : ''}">
-                <a class="sidebar-link" onclick="goPage('dashpmFrm')">
-                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+            <li id="pmdash" class="sidebar-item ${currentUrl == '/main' ? 'active' : ''}">
+                <a class="sidebar-link" onclick="goPage('main')">
+                    <i class="align-middle" data-feather="x"></i> <span class="align-middle">Main</span>
                 </a>
             </li>
+            
 			
             <li class="sidebar-item ${currentUrl == '/profile' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('profile')" >
@@ -114,6 +119,11 @@
             <li id="Output" class="sidebar-item ${currentUrl == '/Deliverables' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('Deliverables')">
                     <i class="align-middle" data-feather="command"></i> <span class="align-middle">Deliverables M</span>
+                </a>
+            </li>
+            <li id="Budget" class="sidebar-item ${currentUrl == '/budgetFrm' ? 'active' : ''}">
+                <a class="sidebar-link" onclick="goPage('budgetFrm')">
+                    <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Budget</span>
                 </a>
             </li>
             
@@ -150,8 +160,8 @@
         </script>
 		<script>
 		//var project_id="${sessionScope.project_id}"
+		//var user_id="${sessionScope.user_id}"
 		function goPage(url){
-			
 			location.href=url//+"?project_id="+project_id
 		}
 		</script>

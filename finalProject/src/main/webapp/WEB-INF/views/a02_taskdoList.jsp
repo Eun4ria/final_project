@@ -143,11 +143,12 @@ document.addEventListener('DOMContentLoaded', function() {
             background-color: rgba(0, 0, 0, 0.5);
             color: white;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             text-align: center;
             transition: right 0.8s; /* Smooth transition */
             overflow-x: hidden; /* 가로 스크롤 숨기기 */
+            
         }
 
         iframe {
@@ -163,104 +164,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
    <div class="wrapper">
 <jsp:include page="a00_sideBar.jsp"/>   
-   
-      <div class="main" >
-         <nav class="navbar navbar-expand navbar-light navbar-bg">
-            <a class="sidebar-toggle js-sidebar-toggle">
-          <i class="hamburger align-self-center"></i>
-        </a>
-
-            <div class="navbar-collapse collapse">
-               <ul class="navbar-nav navbar-align">
-                  <li class="nav-item dropdown">
-                     <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
-                        <div class="position-relative">
-                           <i class="align-middle" data-feather="bell"></i>
-                           <span class="indicator">4</span>
-                        </div>
-                     </a>
-                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
-                        <div class="dropdown-menu-header">
-                           4 New Notifications
-                        </div>
-                        <div class="list-group">
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-danger" data-feather="alert-circle"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Update completed</div>
-                                    <div class="text-muted small mt-1">Restart server 12 to complete the update.</div>
-                                    <div class="text-muted small mt-1">30m ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-warning" data-feather="bell"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Lorem ipsum</div>
-                                    <div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate hendrerit et.</div>
-                                    <div class="text-muted small mt-1">2h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-primary" data-feather="home"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Login from 192.186.1.8</div>
-                                    <div class="text-muted small mt-1">5h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-success" data-feather="user-plus"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">New connection</div>
-                                    <div class="text-muted small mt-1">Christina accepted your request.</div>
-                                    <div class="text-muted small mt-1">14h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                        </div>
-                        <div class="dropdown-menu-footer">
-                           <a href="#" class="text-muted">Show all notifications</a>
-                        </div>
-                     </div>
-                  </li>
-               <li class="nav-item dropdown">
-					<a class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.project_id}')" id="messagesDropdown">
-							<i class="align-middle" data-feather="message-square"></i>
-					</a>
-					
-				</li>                  
-     
-<li class="nav-item dropdown">   
-                     <a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <img src="/z01_upload/${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
-				<c:choose>
-				    <c:when test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
-				        <span class="text-dark">Welcome, PM_${user_name}</span>
-				    </c:when>
-				    <c:otherwise>
-				        <span class="text-dark">Welcome, MEM_${user_name}</span>
-				    </c:otherwise>
-				</c:choose>
-              </a>
-                    
-                  </li>
-               </ul>
-            </div>
-         </nav>
+    <div class="main">
+      <jsp:include page="a00_top.jsp"/>   
 
 <%-- 본문내용 --%>
          <main class="content" id="mainDiv">
@@ -291,7 +196,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <table class="table align-items-center mb-0" id="taskTable">
                   <thead>
                     <tr>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">cnt</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task ID</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">parent ID</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task Name</th>
                    
 				    <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
@@ -306,12 +213,23 @@ document.addEventListener('DOMContentLoaded', function() {
                   <tbody>
                   <c:forEach var="task" items="${tasklist}">
                     <tr ondblclick="taskPage('${task.task_id}')">
+                    <td >${task.cnt}</td>
                     <td>
 	                    <div>
                             <input type="checkbox" id="task1" >
-           			${task.task_id}
+                            <c:forEach begin="1"
+								end="${task.level}">  &nbsp;&nbsp;&nbsp;  //들여쓰기
+						 </c:forEach>${task.task_id}
                           </div>
                     </td>
+                    <td>
+                         <div class="align-middle text-center" style="border:none">
+                         
+                          <div class="align-middle text-center ">
+                            <h6 class="mb-0 text-sm">${task.parent_id}</h6>
+                          </div>
+                        </div>
+                      </td>
                       <td>
                          <div class="align-middle text-center" style="border:none">
                          

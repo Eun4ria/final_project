@@ -4,34 +4,41 @@ import java.util.Date;
 
 public class Taskfile {
 	
-	private int task_id; // no : 고유 번호
+	private String task_id; // no : 고유 번호
 	private String fname;
 	private String Etc;
-	private Date regdte;
-	private Date uptdte;
+	private Date regdate;
+	private Date uptdate;
 	public Taskfile() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Taskfile(String task_id, String fname, String etc) {
+		super();
+		this.task_id = task_id;
+		this.fname = fname;
+		Etc = etc;
+	}
+
 	public Taskfile(String fname, String etc) {
 		super();
 		this.fname = fname;
 		Etc = etc;
 	}
 
-	public Taskfile(int task_id, String fname, String etc, Date regdte, Date uptdte) {
+	public Taskfile(String task_id, String fname, String etc, Date regdate, Date uptdate) {
 		super();
 		this.task_id = task_id;
 		this.fname = fname;
 		Etc = etc;
-		this.regdte = regdte;
-		this.uptdte = uptdte;
+		this.regdate = regdate;
+		this.uptdate = uptdate;
 	}
-	public int getTask_id() {
+	public String getTask_id() {
 		return task_id;
 	}
-	public void setTask_id(int task_id) {
+	public void setTask_id(String task_id) {
 		this.task_id = task_id;
 	}
 	public String getFname() {
@@ -46,17 +53,17 @@ public class Taskfile {
 	public void setEtc(String etc) {
 		Etc = etc;
 	}
-	public Date getRegdte() {
-		return regdte;
+	public Date getRegdate() {
+		return regdate;
 	}
-	public void setRegdte(Date regdte) {
-		this.regdte = regdte;
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
 	}
-	public Date getUptdte() {
-		return uptdte;
+	public Date getUptdate() {
+		return uptdate;
 	}
-	public void setUptdte(Date uptdte) {
-		this.uptdte = uptdte;
+	public void setUptdte(Date uptdate) {
+		this.uptdate = uptdate;
 	}
 	
 	

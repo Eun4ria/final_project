@@ -3,7 +3,6 @@ package com.web.finalProject.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.web.finalProject.mapper.A02_Dao;
 import com.web.finalProject.util.Util;
+import com.web.finalProject.vo.Budget;
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.RegMember;
+import com.web.finalProject.vo.Taskfile;
 import com.web.finalProject.vo.Tasks;
 import com.web.finalProject.vo.Users;
 
@@ -120,11 +121,6 @@ public class A02_Service {
     	return dao.getProjectList(user_id);
     }
 
-// task 리스트
-//	public List<Task> getTaskList(Task sch){
-//		
-//		return dao.getTaskList(sch);
-//	}
 
 //채팅
 	//채팅-멤버 리스트
@@ -176,16 +172,59 @@ public class A02_Service {
 			return dao.getTaskDetail(task_id);
 		}	
 		
-	//산출물 관리
-// ToDo update -> 수정
+		@Value("${user.upload2}")
+		String path;
+// ToDo update -> 수정 + //산출물 관리
 		public String updatetask(Tasks upt) {
-			return dao.updatetask(upt)>0? "수정성공":"수정실패";
+			String msg = null;
+			msg = dao.updatetask(upt)>0? "수정성공":"수정실패";
+			
+			//파일 업로드 
+			if(upt.getReports()!=null && upt.getReports().length>0) {
+				try {
+					// 파일 업로드
+					int fcnt=0;
+					for(MultipartFile mp:upt.getReports() ) { //다중파일
+						String fnm = mp.getOriginalFilename();
+						if( fnm!=null && !fnm.equals("") ) {
+							System.out.println("파일 이름: " + fnm);
+							File fup = new File(path,fnm);
+							mp.transferTo(fup);
+							//fcnt++;
+							// 파일정보 등록.
+							fcnt+=dao.taskfileinsert(
+									new Taskfile(upt.getTask_id(), fnm, upt.getTask_id()+"관련 파일 등록") );
+						}
+					}
+					msg+="\n 파일 "+fcnt+"건 등록 성공";
+				} catch (IllegalStateException e) {
+					msg+="\n 파일 등록 에러 발생:"+e.getMessage();
+					
+				} catch (IOException e) {
+					msg+="\n 파일 등록 에러 발생"+e.getMessage();
+				} catch(Exception e) {
+					msg+="\n 파일 등록 기타 에러 발생"+e.getMessage();
+				}				
+				
+			}
+			System.out.println("메시지:"+msg);
+			
+			return msg;
 		}
+//파일 이름
+		public List<Taskfile> getfilename(String task_id) {
+			return dao.getfilename(task_id);
+		}
+		
+		
 // ToDo delete -> 삭제
 		public String deletetask(String del) {
 			return dao.deletetask(del)>0? "삭제성공":"삭제실패";
 		}
 
-	    
+// 예산 관리
+	public List<Budget> getBudgetList(Budget sch){
+		return dao.getBudgetList(sch);
+	}
 	    
 }

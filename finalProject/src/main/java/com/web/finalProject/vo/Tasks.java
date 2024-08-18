@@ -1,6 +1,9 @@
 package com.web.finalProject.vo;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -17,7 +20,7 @@ public class Tasks {
     private Date start_date;
     private Date end_date;
     private String priority;
-    private String parent_id;  // 부모 작업이 없을 수도 있으므로 Integer로 선언
+    private String parent_id;  // 부모 작업이 없을 수도 있으므로 String로 선언
     private String content;
     private int progress;
     private String backgroundcolor;
@@ -28,6 +31,10 @@ public class Tasks {
     
     private String endDateFormatted;
     private String startDateFormatted;
+    
+    //파일 업로드
+    private MultipartFile[] reports;
+	private List<String> fnames;
     
 	public Tasks() {
 		super();
@@ -164,6 +171,18 @@ public class Tasks {
 	}
 	public void setRefno(int refno) {
 		this.refno = refno;
+	}
+	public MultipartFile[] getReports() {
+		return reports;
+	}
+	public void setReports(MultipartFile[] reports) {
+		this.reports = reports;
+	}
+	public List<String> getFnames() {
+		return fnames;
+	}
+	public void setFnames(List<String> fnames) {
+		this.fnames = fnames;
 	}
 	
 	
