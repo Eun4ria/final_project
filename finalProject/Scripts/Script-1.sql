@@ -1,6 +1,7 @@
 SELECT * FROM CHAT;
 SELECT * FROM team;
 SELECT * FROM task;
+SELECT * FROM taskfile;
 
 
 SELECT COUNT(*) FROM CHAT c 
