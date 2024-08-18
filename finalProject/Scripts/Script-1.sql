@@ -114,10 +114,89 @@ START WITH parent_id IS null
 CONNECT BY PRIOR parent_id = budget_id
 ORDER siblings BY regdate DESC)
 WHERE cnt BETWEEN 1 AND 5;
-
+SELECT * FROM BUDGET;
 
 SELECT count(*) FROM BUDGET b 
 WHERE project_id = 'PRO_0003';
 
 SELECT * FROM BUDGET b ;
 WHERE PROJECT_ID = 'PRO_0003';
+
+ALTER TABLE BUDGET
+ADD no INT;
+
+ALTER TABLE BUDGET
+ADD levels INT;
+
+ALTER TABLE BUDGET
+drop column no ;
+
+MERGE INTO BUDGET b
+USING (
+    SELECT BUDGET_ID, ROW_NUMBER() OVER (ORDER BY REGDATE) AS row_num
+    FROM BUDGET
+) nd
+ON (b.BUDGET_ID = nd.BUDGET_ID)
+WHEN MATCHED THEN
+UPDATE SET b.no = nd.row_num;
+
+UPDATE budget 
+SET refno = null
+WHERE parent_id =null;
+
+SELECT * from(
+SELECT rownum cnt, LEVEL, b.*
+FROM budget b
+WHERE budget_name LIKE '%%'
+AND user_id LIKE '%%'
+START WITH parent_id IS NULL
+CONNECT BY PRIOR budget_id = parent_id
+ORDER siblings BY budget_id DESC);
+
+INSERT INTO budget (budget_id, budget_name, amount, regdate, usedate, project_id, parent_id, user_id)
+VALUES ('BUG_'||TO_CHAR(budget_seq.nextval, 'FM0000'), '운영 및 유지보수', 200000000, sysdate, NULL, 'PRO_0003','BUG_0023' ,'B_0047' );
+
+SELECT * FROM BUDGET b ;
+
+ALTER TABLE BUDGET 
+ADD etc VARCHAR2(255);
+
+
+ALTER TABLE BUDGET
+MODIFY command varchar2(255);
+
+SELECT * FROM TASK t ;
+
+SELECT * FROM task\r\n"
+			+ "WHERE user_id = #{user_id}\r\n"
+			+ "AND project_id = #{project_id}
+
+SELECT * FROM(
+SELECT rownum cnt, LEVEL, t.*
+FROM task t
+WHERE user_id = 'B_0047'
+AND project_id = 'PRO_0003'
+START WITH parent_id = '0'
+CONNECT BY PRIOR task_id = parent_id);
+
+SELECT * from(
+SELECT rownum cnt, LEVEL, t.*
+FROM task t
+WHERE user_id = 'B_0047'
+AND project_id = 'PRO_0003'
+START WITH parent_id IS NULL
+CONNECT BY PRIOR task_id = parent_id
+ORDER siblings BY task_id DESC);
+
+SELECT * from(
+SELECT rownum cnt, LEVEL AS lvl, b.*
+FROM budget b
+WHERE project_id = 'PRO_0003'
+START WITH parent_id IS NULL
+CONNECT BY PRIOR budget_id = parent_id
+ORDER siblings BY budget_id DESC)
+WHERE lvl=2;
+
+
+
+

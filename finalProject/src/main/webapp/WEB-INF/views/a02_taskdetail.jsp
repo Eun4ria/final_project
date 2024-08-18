@@ -255,17 +255,30 @@ var proc = "${proc}"
               </div>
  		
  		
- 		<div class="col-lg-4 ml-auto">
-            <div class="row">
-              <div class="col-6">
-                <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Go Up</a>
+ 		  <div class="form-group">
+                <label for="company-website-tw d-block">Upload File</label> <br>
+                <input type="file" name="reports" multiple="multiple" class="form-control" value="" />	
+                
+                <br>
+                <label for="noti">Uploaded File</label> 
+                <c:choose>
+                 <c:when test="${not empty fileinfo}" >
+				    <!-- 파일 이름 리스트가 비어 있지 않은 경우 -->
+				    <ul>
+				        <c:forEach var="fileinfo" items="${fileinfo}">
+				            <li><p style="margin:0"> File name: ${fileinfo.fname}</p>  <p>-> upload time: ${fileinfo.regdate }</p> </li>
+				        </c:forEach>
+				    </ul>
+				</c:when>
+				 <c:otherwise>
+				   <p>  <!-- 파일 이름 리스트가 비어 있는 경우 --> </p>
+				 </c:otherwise>
+				
+				 </c:choose>
+				
+				
+                
               </div>
-              <div class="col-6">
-             	 <input type="button" value="수정" class="btn btn-block btn-primary btn-md" id=uptPMBtn> 
-             	 <input type="button" value="삭제" class="btn btn-block btn-primary btn-md" id="delBtn"> 
-              </div>
-            </div>
-          </div>
 </div>
             </form>
     <%--  pm 권한 끝--%> 

@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <table class="table align-items-center mb-0" id="taskTable">
                   <thead>
                     <tr>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">cnt</th>
+                   
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task ID</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">parent ID</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task Name</th>
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <tbody>
                   <c:forEach var="task" items="${tasklist}">
                     <tr ondblclick="taskPage('${task.task_id}')">
-                    <td >${task.cnt}</td>
+               
                     <td>
 	                    <div>
                             <input type="checkbox" id="task1" >
