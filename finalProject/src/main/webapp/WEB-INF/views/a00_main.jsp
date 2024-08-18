@@ -89,6 +89,10 @@
 function goChat(user_id){
 	location.href="message?user_id="+user_id
 }
+function handleButtonClick(event) {
+    event.stopPropagation();
+    location.href="HR"
+  }
 </script>
 </head>
 
@@ -284,10 +288,10 @@ function goChat(user_id){
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Companies</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Members</th>
+                      <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7">Project name</th>                      
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Budget</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Completion</th>
+                      <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7 ps-2">Members</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -304,7 +308,7 @@ function goChat(user_id){
                           </div>
                         </div>
                       </td>
-                      <td>
+                     <%-- <td>
                         <div class="avatar-group mt-2">
                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
                             <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="user1">
@@ -318,22 +322,28 @@ function goChat(user_id){
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
                             <img src="${path}/material-dashboard-2/assets/img/team-1.jpg" alt="user4">
                           </a>
-                        </div>
+                        </div>                       
                       </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="amount text-xs font-weight-bold" >${pro.amount}</span>
+                       --%>
+                       <td class="align-middle">
+	                      <div style="text-align: right;">
+	                        <span class="amount text-xs font-weight-bold" >${pro.amount}</span>
+	                      </div>
                       </td>
                       <td class="align-middle">
-                        <div class="progress-wrapper w-75 mx-auto">
+                        <div class="progress-wrapper w-75 mx-auto text-center">
                           <div class="progress-info">
                             <div class="progress-percentage">
                               <span class="text-xs font-weight-bold">${pro.progress}%</span>
                             </div>
                           </div>
-                          <div class="progress">
+                          <div class="progress align-middle mx-auto">
                           <div class="progress-bar bg-gradient-info" style="width: ${pro.progress}%;" role="progressbar" aria-valuenow="${pro.progress}" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </div>
+                      </td>
+                      <td class="align-middle">
+                      <button class="btn btn-primary" onclick="handleButtonClick(event)">member</button>
                       </td>
                     </tr>
                     </c:forEach>
@@ -370,11 +380,16 @@ function goChat(user_id){
       </div>
       <div class="modal-body">
       <form id="modalFrm" class="form"  method="post" action="insertProject">
-      <input type="hidden" name="company_id" value="COM_0001"/>
+      <div class="row">
+         <div class="col">
+         <span>Company ID</span>
+           <input type="text" class="form-control" name="company_id"/>
+         </div>
+        </div>
         <div class="row">
          <div class="col">    
          <span>Project Name</span>              
-           <input type="text" class="form-control" name="project_name">
+           <input type="text" class="form-control" name="project_name"/>
          </div>
         </div>
         <div class="row">
@@ -386,15 +401,15 @@ function goChat(user_id){
         <div class="row">
          <div class="col">
          <span>Start Date</span>
-           <input type="date" class="form-control" placeholder="직책명 입력" name="start_date">
+           <input type="date" class="form-control" name="start_date"/>
          </div>
         </div>
         <div class="row">
          <div class="col">
          <span>End Date</span>
-           <input type="date" class="form-control" placeholder="직책명 입력" name="end_date">
+           <input type="date" class="form-control" name="end_date"/>
          </div>
-        </div>   
+        </div>            
         
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

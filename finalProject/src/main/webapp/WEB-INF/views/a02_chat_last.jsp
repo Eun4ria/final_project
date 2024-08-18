@@ -385,7 +385,7 @@ $(document).ready(function(){
                      <div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${mem.user_id}')" 
                      style="padding-top:0.5rem;height:4rem" >
                         <div class="img_cont" style="padding-left:1rem">
-                           <img src="${mem.image }" class="rounded-circle user_img" style="width:3rem; height:3rem; ">   
+                           <img src="z01_upload/${mem.image }" class="rounded-circle user_img" style="width:3rem; height:3rem; ">   
                         </div>
                         <div class="user_info">
                            <span>${mem.user_name}</span>

@@ -48,13 +48,20 @@ public class A01_Service {
     }
     public String deleteGantt(String task_id) {
     	return dao.deleteGantt(task_id)>0?"삭제 완료":"삭제 실패";
-    }
-    
-    
+    }   
     
     public String insertProject(Project ins) {
-    	return dao.insertProject(ins)>0?"생성 완료":"생성 실패";
+        dao.insertProject(ins);
+        // 생성된 project_id를 조회
+        String projectId = dao.getLastInsertedProjectId();
+        ins.setProject_id(projectId);
+        return "프로젝트 생성";
     }
+    public int insertProjectPM(String project_id, String user_id) {
+        return dao.insertProjectPM(project_id, user_id);
+    }
+    
+    
     public List<Users> getUsers(){
 		return dao.getUsers();
 	}

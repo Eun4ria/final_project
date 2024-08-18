@@ -380,4 +380,4 @@ WHERE cal_id = 'CAL_0036';
 
 
 SELECT * FROM calendar;
-
+SELECT * FROM project;

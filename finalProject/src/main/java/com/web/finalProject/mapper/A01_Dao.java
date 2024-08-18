@@ -91,8 +91,15 @@ public interface A01_Dao {
 	// 메인에서 프로젝트 생성
 	@Insert("INSERT INTO project (project_id, project_name, etc, start_date, end_date, create_date, company_id)\r\n"
 			+ "VALUES ('PRO_'||TO_CHAR(project_seq.nextval, 'FM0000'),"
-			+ " #{project_name}, #{etc}, TO_DATE(#{start_date}, 'YYYY-MM-DD'), TO_DATE(#{end_date}, 'YYYY-MM-DD'), sysdate, #{company_id})")
+			+ " #{project_name}, #{etc},#{start_date},#{end_date}, sysdate, #{company_id})")
 	int insertProject(Project ins);
+	// 생성된 project_id를 조회
+	@Select("SELECT project_id FROM project WHERE ROWNUM = 1 ORDER BY project_id DESC")
+    String getLastInsertedProjectId();
+	// 프로젝트 생성 시 team에 PM(생성자) 추가
+	@Insert("INSERT INTO team values(#{project_id},#{user_id})")
+	int insertProjectPM(@Param("project_id") String project_id, @Param("user_id") String user_id);
+	
 	// 프로젝트 생성 시 팀원 추가하기 위한 user리스트
 	@Select("SELECT\r\n"
 			+ "    u.user_id,\r\n"

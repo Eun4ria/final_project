@@ -160,10 +160,27 @@ public class A01_Controller {
 	
 	// 프로젝트 생성
 	@PostMapping("insertProject")
-	public String insertProject(Project ins, Model d){
-		d.addAttribute("msg", service.insertProject(ins));
-		return "WEB-INF\\views\\a00_main.jsp";
-	}	
+	public String insertProject(HttpServletRequest request, Project ins, Model d) {
+	    HttpSession session = request.getSession(false); 
+	    String user_id = (String) session.getAttribute("user_id"); 
+	    ins.setUser_id(user_id);
+	    
+	    String isIns = service.insertProject(ins);
+	    if("프로젝트 생성".equals(isIns)) {
+	        d.addAttribute("msg", service.insertProjectPM(ins.getProject_id(), user_id));
+	    }
+	    System.out.println("생성된 프로젝트 아이디:" + ins.getProject_id());
+	    return "redirect:main";
+	}
+	
+	// http://localhost:4040/HR
+    // 자원관리-인적자원 관리 페이지
+    @GetMapping("HR")
+    public String HR(HttpServletRequest request, Model d) {
+		d.addAttribute("currentUrl", request.getRequestURI());
+		return "WEB-INF\\views\\a01_human_resource.jsp";
+    }
+    @PostMapping("")
 	// 프로젝트 생성 시 팀원선택 드롭메뉴에 들어갈 전체 유저 리스트
 	// http://localhost:4040/getUsers
 	@GetMapping("getUsers")
@@ -382,13 +399,7 @@ public class A01_Controller {
     	return "WEB-INF\\views\\a01_changePwd.jsp";
     }
     
-    // http://localhost:4040/resource
-    // 자원관리-인적자원 관리 페이지
-    @GetMapping("resource")
-    public String resource(HttpServletRequest request, Model d) {
-		d.addAttribute("currentUrl", request.getRequestURI());
-		return "WEB-INF\\views\\a01_resource.jsp";
-    }
+   
     
     
     
