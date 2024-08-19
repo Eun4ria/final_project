@@ -13,7 +13,7 @@ WHERE OWNER_ID = 'N_0047'
 AND USER_ID ='N_0020';
 
 INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id) 
-VALUES ('CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '채팅'||TO_CHAR(chat_name_seq.nextval), 'N_0047', 'P_0001', 'N', NULL, sysdate,'PRO_0003');
+VALUES ('CHT_'||TO_CHAR(chat_name_seq.nextval, 'FM0000'), '채팅'||TO_CHAR(chat_name_seq.nextval), 'N_0047', 'P_0001', 'N', NULL, sysdate,'PRO_0003');
 
 SELECT * FROM CHAT 
 WHERE project_id = 'PRO_0003'
@@ -28,7 +28,10 @@ select chatroom_id, chatroom_name from chat
 where owner_id='P_0001'
 and user_id='N_0047';
 
-SELECT * FROM task;
+DROP table chat;
+CREATE TABLE CHAT 
+
+SELECT * FROM chat;
 
 SELECT * FROM TASK t 
 WHERE task_id = 'TSK_0001'; 
@@ -197,6 +200,11 @@ CONNECT BY PRIOR budget_id = parent_id
 ORDER siblings BY budget_id DESC)
 WHERE lvl=2;
 
+SELECT * FROM CHAT;
 
 
+INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id)
+VALUES ('CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '채팅'||TO_CHAR(chatname_seq.nextval), 'P_0001', 'B_0047', 'N', NULL, sysdate, 'PRO_0003')
 
+INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id) 
+VALUES ('CHT_'||TO_CHAR(chat_seq.currval, 'FM0000'), '채팅'||TO_CHAR(chatname_seq.currval), 'B_0047', 'P_0001', 'N', NULL, sysdate, 'PRO_0003');

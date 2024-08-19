@@ -166,6 +166,7 @@ public class A02_Controller {
 		}
 		
 		
+		
 	// 채팅
 		// 왼쪽 채팅 조회
 		
@@ -178,15 +179,20 @@ public class A02_Controller {
 			    String project_id = (String) session.getAttribute("project_id");
 			    String user_id = (String) session.getAttribute("user_id");
 			    System.out.println("PROJECT_ID:" + project_id);
+			    System.out.println("user_id: chat => " + user_id);
+			   
 			    // Chat 객체에 project_id와 user_id를 설정
 			    sch.setProject_id(project_id);
 			    sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
 			    chsch.setProject_id(project_id);
-			    chsch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
-			    
+			    chsch.setOwner_id(user_id); // user_id는 요청 파라미터로 전달된 값
+
+			 
 			    // 회원 리스트를 가져온다.
 			    List<Users> members = service.getmemList(sch);
 			    List<Chat> chatlist = service.getchatList(chsch);
+			    
+			  
 			    
 			    // 모델에 데이터 추가
 			    d.addAttribute("memList", members);
@@ -202,12 +208,12 @@ public class A02_Controller {
 		// http://localhost:4040/checkChatRoom?project_id=PRO_0003&user_name=M_0022&owner_id=N_0047
 		@PostMapping("checkChatRoom")
 		public ResponseEntity<?> getchatRoomId(Chat get)  {
-			System.out.println(get.getProject_id());
+			System.out.println("프로젝트 아이디: " + get.getProject_id());
 			System.out.println(get.getUser_id());
 			System.out.println(get.getOwner_id());
 			
 			int chatroomCk = service.chatroomCk(get);
-			
+			System.out.println("chatroomCk홛인 " +chatroomCk);
 			
 			if( chatroomCk > 0) {
 				System.out.println("채팅방 정보 있음");

@@ -63,46 +63,60 @@ int insertUser(Users ins);
 	List<Project> getProjectList(@Param("user_id") String user_id);	
 	
 	
-//채팅 리스트-프젝에 속한 모든 팀원
-	@Select("SELECT *\r\n"
-			+ "FROM users u\r\n"
-			+ "JOIN team t ON u.USER_ID = t.USER_ID\r\n"
-			+ "WHERE t.project_id = #{project_id} \r\n"
-			+ "AND u.user_id != #{user_id}")
-	List<Users> getMemList(Users sch);
-	
-	
-	//채팅방생성
-	@Insert("INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id) " +
-            "VALUES ('CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '채팅'||TO_CHAR(chatname_seq.nextval), #{owner_id}, #{user_id}, 'N', NULL, sysdate, #{project_id})")
-//    @Options(useGeneratedKeys = true, keyProperty = "chatroom_id", keyColumn = "chatroom_id")
-	int insertchatroom(Chat ins);
-	
-	@Insert("INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id) " +
-			"VALUES ('CHT_'||TO_CHAR(chat_seq1.nextval, 'FM0000'), '채팅'||TO_CHAR(chatname_seq1.nextval), #{user_id}, #{owner_id}, 'N', NULL, sysdate, #{project_id})")
-//    @Options(useGeneratedKeys = true, keyProperty = "chatroom_id", keyColumn = "chatroom_id")
-	int insertchatroom1(Chat ins1);
-	
-	@Select("select chatroom_id, chatroom_name from chat \r\n"
-			+ "where owner_id=#{owner_id} \r\n"
-			+ "and user_id=#{user_id}")
-	Chat getchatRoomId(Chat get);
-//	
-
-//	
-	//채팅방 유무 확인
-	@Select("SELECT COUNT(*) FROM chat c \r\n"
-			+ "WHERE owner_id = #{owner_id}\r\n"
-			+ "AND user_id = #{user_id}\r\n"
-			+ "AND project_id = #{project_id}")
-	   int chatroomCk(Chat ch);
-	
-//채팅 리스트
-	@Select("SELECT * FROM CHAT \r\n"
-			+ "WHERE project_id = #{project_id}\r\n"
-			+ "AND  owner_id=#{user_id}\r\n"
-			+ "AND owner_id != user_id")
-	List<Chat> getchatList(Chat chsch);
+	//채팅 리스트-프젝에 속한 모든 팀원
+		@Select("SELECT *\r\n"
+				+ "FROM users u\r\n"
+				+ "JOIN team t ON u.USER_ID = t.USER_ID\r\n"
+				+ "WHERE t.project_id = #{project_id} \r\n"
+				+ "AND u.user_id != #{user_id}")
+		List<Users> getMemList(Users sch);
+		
+		
+		//채팅방생성
+		@Insert("INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id) " +
+	            "VALUES ('CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '채팅'||TO_CHAR(chatname_seq.nextval), #{owner_id}, #{user_id}, 'N', NULL, sysdate, #{project_id})")
+//	    @Options(useGeneratedKeys = true, keyProperty = "chatroom_id", keyColumn = "chatroom_id")
+		int insertchatroom(Chat ins);
+		
+		@Insert("INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id) " +
+				"VALUES ('CHT_'||TO_CHAR(chat_seq.currval, 'FM0000'), '채팅'||TO_CHAR(chatname_seq.currval), #{user_id}, #{owner_id}, 'N', NULL, sysdate, #{project_id})")
+//	    @Options(useGeneratedKeys = true, keyProperty = "chatroom_id", keyColumn = "chatroom_id")
+		int insertchatroom1(Chat ins1);
+		
+		@Select("select chatroom_id, chatroom_name from chat \r\n"
+				+ "where owner_id=#{owner_id} \r\n"
+				+ "and user_id=#{user_id}")
+		Chat getchatRoomId(Chat get);
+	//	
+/*
+	// user_id
+	// project_id
+	// owner_id
+	 * 
+ * */
+	//	
+		//채팅방 유무 확인
+		@Select("SELECT COUNT(*) FROM chat2 c  \r\n"
+				+ "WHERE owner_id = #{owner_id} \r\n"
+				+ "AND user_id = #{user_id} \r\n"
+				+ "AND project_id = #{project_id} ")
+		int chatroomCk(Chat ch);
+		//채팅방 유무 확인
+		@Select("SELECT * FROM chat2 c  \r\n"
+				+ "WHERE owner_id = #{owner_id} \r\n"
+				+ "AND user_id = #{user_id} \r\n"
+				+ "AND project_id = #{project_id} ")
+		List<Chat>  chatroomCk2(Chat ch);
+		
+		// 
+		
+	//채팅 리스트
+		@Select("SELECT * FROM CHAT \r\n"
+				+ "WHERE project_id = #{project_id}\r\n"
+				+ "AND  owner_id=#{owner_id}")
+		List<Chat> getchatList(Chat chsch);
+		
+		
 	
 
 //todo

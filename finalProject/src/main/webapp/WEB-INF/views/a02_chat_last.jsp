@@ -355,6 +355,8 @@ $(document).ready(function(){
 
 -->
 <body> 
+<input type="hidden" name="project_id" value="${sessionScope.project_id }"/>
+<input type="hidden" name="user_id" value="${sessionScope.user_id }"/>
 
       <div class="container-fluid h-100">
          <div class="row justify-content-center h-100">

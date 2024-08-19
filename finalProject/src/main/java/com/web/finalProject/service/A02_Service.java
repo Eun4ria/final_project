@@ -122,41 +122,46 @@ public class A02_Service {
     }
 
 
-//채팅
-	//채팅-멤버 리스트
-		public List<Users> getmemList(Users sch){
-			if(sch.getProject_id()==null) sch.setProject_id("");
-			if(sch.getUser_id()==null) sch.setUser_id("");
-			return dao.getMemList(sch);
-		}
-//		public Chat chat(Chat chat) {
-//			return dao.chat(chat);
-//		}
-	// 채팅방 유무 확인 
-		 public int chatroomCk(Chat ch) {
-		      return dao.chatroomCk(ch); 
-		   } 
-		 // 채팅방 아이디, 이름 가져오기
-		 public Chat getchatRoomId(Chat get) {
-			 return dao.getchatRoomId(get); 
-		 } 
-		
-	//채팅 등록
-		public String insertchatroom(Chat ins) {
+
+	//채팅
+		//채팅-멤버 리스트
+			public List<Users> getmemList(Users sch){
+				if(sch.getProject_id()==null) sch.setProject_id("");
+				if(sch.getUser_id()==null) sch.setUser_id("");
+				return dao.getMemList(sch);
+			}
+//			public Chat chat(Chat chat) {
+//				return dao.chat(chat);
+//			}
+		// 채팅방 유무 확인 
+			 public int chatroomCk(Chat ch) {
+				 List<Chat> list = dao.chatroomCk2(ch);
+				 
+				 int cnt = dao.chatroomCk(ch);
+				 
+			      return cnt; 
+			   } 
+			 // 채팅방 아이디, 이름 가져오기
+			 public Chat getchatRoomId(Chat get) {
+				 return dao.getchatRoomId(get); 
+			 } 
 			
-			return dao.insertchatroom(ins)>0?"생성 완료":"생성 실패";
-		}
-	//채팅 등록
-		public String insertchatroom1(Chat ins1) {
+		//채팅 등록
+			public String insertchatroom(Chat ins) {
+				
+				return dao.insertchatroom(ins)>0?"생성 완료":"생성 실패";
+			}
+		//채팅 등록
+			public String insertchatroom1(Chat ins1) {
+				
+				return dao.insertchatroom1(ins1)>0?"생성 완료":"생성 실패";
+			}
 			
-			return dao.insertchatroom1(ins1)>0?"생성 완료":"생성 실패";
-		}
-		
-	//채팅 리스트
-		public List<Chat> getchatList(Chat chsch){
-			return dao.getchatList(chsch);
-		}
-	
+		//채팅 리스트
+			public List<Chat> getchatList(Chat chsch){
+				return dao.getchatList(chsch);
+			}
+			
 		
 // 업무(to do) : 멤버
 		public List<Tasks> getTaskList(Tasks sch){

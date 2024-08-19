@@ -10,7 +10,9 @@ public class Chat {
 	private String user_id;
 	private String user_name;
 	private String email;
-	
+	// user_id
+	// project_id
+	// owner_id
 	
     private String chatroom_id;
     private String chatroom_name;
