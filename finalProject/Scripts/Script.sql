@@ -259,7 +259,7 @@ WHERE owner_id = 'B_0047'
 AND user_id = 'P_0001'
 AND project_id = 'PRO_0003';
 
-SELECT * FROM CHAT 
+SELECT * FROM CHAT ;
 WHERE project_id = 'PRO_0003'
 AND  owner_id= 'B_0047';
 AND owner_id != 'B_0047';

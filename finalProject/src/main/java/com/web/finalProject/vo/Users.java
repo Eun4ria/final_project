@@ -1,5 +1,9 @@
 package com.web.finalProject.vo;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class Users {
 	
 	private String project_id;
@@ -16,22 +20,54 @@ public class Users {
 	private String id;
 	private String text;
 	private String key;
-	private String label;
 	private String image;
+	private String label;
 	private String new_password;
+	private String etc;
 	
-	public String getNew_password() {
-		return new_password;
-	}
-	public void setNew_password(String new_password) {
-		this.new_password = new_password;
-	}
+	
+	private MultipartFile[] reports;
+	private List<String> images;
+	
+	
+	
+	
+	
+	
+
 	public String getImage() {
 		return image;
 	}
 	public void setImage(String image) {
 		this.image = image;
 	}
+	public String getEtc() {
+		return etc;
+	}
+	public void setEtc(String etc) {
+		this.etc = etc;
+	}
+	
+	
+	public MultipartFile[] getReports() {
+		return reports;
+	}
+	public void setReports(MultipartFile[] reports) {
+		this.reports = reports;
+	}
+	public List<String> getImages() {
+		return images;
+	}
+	public void setImages(List<String> images) {
+		this.images = images;
+	}
+	public String getNew_password() {
+		return new_password;
+	}
+	public void setNew_password(String new_password) {
+		this.new_password = new_password;
+	}
+	
 	public String getKey() {
 		return key;
 	}

@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
 import com.web.finalProject.vo.Budget;
+import com.web.finalProject.vo.BudgetSch;
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.Taskfile;
@@ -96,17 +97,11 @@ int insertUser(Users ins);
  * */
 	//	
 		//채팅방 유무 확인
-		@Select("SELECT COUNT(*) FROM chat2 c  \r\n"
+		@Select("SELECT COUNT(*) FROM chat c  \r\n"
 				+ "WHERE owner_id = #{owner_id} \r\n"
 				+ "AND user_id = #{user_id} \r\n"
 				+ "AND project_id = #{project_id} ")
 		int chatroomCk(Chat ch);
-		//채팅방 유무 확인
-		@Select("SELECT * FROM chat2 c  \r\n"
-				+ "WHERE owner_id = #{owner_id} \r\n"
-				+ "AND user_id = #{user_id} \r\n"
-				+ "AND project_id = #{project_id} ")
-		List<Chat>  chatroomCk2(Chat ch);
 		
 		// 
 		
@@ -170,14 +165,21 @@ int insertUser(Users ins);
 	
 	
 //예산관리 - 검색
+	//전체 데이터 수
+	@Select("SELECT count(*)\r\n"
+			+ "FROM BUDGET\r\n"
+			+ "WHERE project_id = #{project_id}")
+	int getBudgetCount(BudgetSch sch);
+	
 	@Select("SELECT * from(\r\n"
 			+ "SELECT rownum cnt, LEVEL, b.*\r\n"
 			+ "FROM budget b\r\n"
 			+ "WHERE project_id = #{project_id}\r\n"
 			+ "START WITH parent_id IS NULL\r\n"
 			+ "CONNECT BY PRIOR budget_id = parent_id\r\n"
-			+ "ORDER siblings BY budget_id DESC)\r\n")
-	List<Budget> getBudgetList(Budget sch);
+			+ "ORDER siblings BY budget_id DESC)\r\n"
+			+ "WHERE cnt BETWEEN #{start} AND #{end}")
+	List<Budget> getBudgetList(BudgetSch sch);
 	
 	// 등록에서 list 뽑기
 	@Select("SELECT * from(\r\n"
@@ -188,7 +190,7 @@ int insertUser(Users ins);
 			+ "CONNECT BY PRIOR budget_id = parent_id\r\n"
 			+ "ORDER siblings BY budget_id DESC)\r\n"
 			+ "WHERE lvl= 2")
-	List<Budget> getparentList(Budget sch);
+	List<Budget> getparentList(BudgetSch sch);
 	
 	
 	// Budget 등록

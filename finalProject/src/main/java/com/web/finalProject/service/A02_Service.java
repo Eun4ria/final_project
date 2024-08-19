@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.web.finalProject.mapper.A02_Dao;
 import com.web.finalProject.util.Util;
 import com.web.finalProject.vo.Budget;
+import com.web.finalProject.vo.BudgetSch;
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.RegMember;
@@ -135,8 +136,6 @@ public class A02_Service {
 //			}
 		// 채팅방 유무 확인 
 			 public int chatroomCk(Chat ch) {
-				 List<Chat> list = dao.chatroomCk2(ch);
-				 
 				 int cnt = dao.chatroomCk(ch);
 				 
 			      return cnt; 
@@ -228,11 +227,45 @@ public class A02_Service {
 		}
 
 // 예산 관리
-	public List<Budget> getBudgetList(Budget sch){
+	public List<Budget> getBudgetList(BudgetSch sch){
+		if(sch.getProject_id()==null) sch.setProject_id("");
+		// 1. 총데이터 수 (DB)
+			sch.setCount(dao.getBudgetCount(sch));
+		// 2. 현재 클릭한 번호(화면단 요청값) - 초기값 1(첫번째 페이지)
+			if(sch.getCurPage()==0) {
+				sch.setCurPage(1);
+			}
+		// 3. 한 페이지에 보일 데이터 건수(화면단 선택으로 요청값) - 초기값5(첫번째 페이지)
+		if(sch.getPageSize()==0) {
+			sch.setPageSize(5);
+		}	
+		// 4. 총페이지수(수치 연산/알고리즘 - 총데이터 건수/한페이지에 보일 데이터 수)
+		sch.setPageCount((int)( Math.ceil(sch.getCount()/(double)sch.getPageSize())));	
+		//마지막 page block에서 next를 클릭하더라고 더이상 페이지 번호가 증가되지 않게
+			if(sch.getCurPage()>sch.getPageCount()) {
+				sch.setCurPage(sch.getPageCount());
+			}	
+		/* 5. 데이터 값: 시작번호/마지막번호 - 마지막 (한페이지에 보일 데이터 건수*현재 클릭한 번호) */
+			sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
+			int imEnd = sch.getPageSize()*sch.getCurPage();
+			sch.setEnd((imEnd)>sch.getCount()?sch.getCount():imEnd);
+			
+	// 6. 페이징 블럭 처리 
+			// 1) 블럭 크기 설정 
+			sch.setBlockSize(5);
+			// 2) 블럭 번호 지정  -  1~5 ==> 1,  6~10 ==> 2,  11~15 ==> 3
+			int blockNum = (int) Math.ceil(sch.getCurPage()/(double)sch.getBlockSize());
+			// 3) 시작 블럭
+			sch.setStartBlock((blockNum-1)*sch.getBlockSize()+1);
+			// 4) 마지막 블럭
+			int endBlock = blockNum*sch.getBlockSize();
+			sch.setEndBlock((endBlock)>sch.getPageCount()?sch.getPageCount():endBlock);
+			
+		
 		return dao.getBudgetList(sch);
 	}
 // 부모요소 선택
-	public List<Budget> getparentList(Budget sch){
+	public List<Budget> getparentList(BudgetSch sch){
 		return dao.getparentList(sch);
 	}
 	// budget 등록 
@@ -246,8 +279,8 @@ public class A02_Service {
 		return dao.budgetUpdate(upt)>0?"수정 완료":"수정 실패";
 	}
 	// budget 삭제
-	public String deleteBudget(String del) {
-		return dao.deleteBudget(del)>0? "삭제성공":"삭제실패";
+	public String deleteBudget(String budget_id) {
+		return dao.deleteBudget(budget_id)>0? "삭제 성공":"삭제 실패";
 	}
 
 	    

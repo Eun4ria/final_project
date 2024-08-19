@@ -23,6 +23,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.web.finalProject.service.A02_Service;
 import com.web.finalProject.vo.Budget;
+import com.web.finalProject.vo.BudgetSch;
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Taskfile;
 import com.web.finalProject.vo.Tasks;
@@ -87,7 +88,6 @@ public class A02_Controller {
 	       return new RedirectView("/signinFrm");
 	   }
 
-	   
 		// 회원가입
 		// 사용자 처음 폼
 		// http://localhost:4040/signupFrm
@@ -506,8 +506,8 @@ public class A02_Controller {
 
 //예산 관리
 	// http://localhost:4040/budgetFrm
-	@GetMapping("budgetFrm")
-	public String budgetFrm(HttpServletRequest request, Model d, Budget sch) {
+	@RequestMapping("budgetFrm")
+	public String budgetFrm(@ModelAttribute("sch") BudgetSch sch, HttpServletRequest request, Model d) {
 		HttpSession session = request.getSession(); 
 		String project_id = (String) session.getAttribute("project_id");
 		
@@ -541,6 +541,9 @@ public class A02_Controller {
 		d.addAttribute("uptlist", service.getTaskDetail(upt.getBudget_id()));
 		return "redirect:budgetFrm";
 	}
+	
+
+	
 	// to do delete - 삭제
 	@RequestMapping("delbudget")
 	public String delbudget(HttpServletRequest request, Model d) {

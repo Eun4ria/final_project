@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Update;
 import com.web.finalProject.vo.Calendar;
 import com.web.finalProject.vo.GanttTask;
 import com.web.finalProject.vo.Project;
+import com.web.finalProject.vo.Userfile;
 import com.web.finalProject.vo.Users;
 
 @Mapper
@@ -274,11 +275,28 @@ public interface A01_Dao {
 			+ "user_name=#{user_name},\r\n"
 			+ "email=#{email},\r\n"
 			+ "company_id=#{company_id},\r\n"
-			+ "image=#{image}\r\n"
 			+ "WHERE user_id=#{user_id}")
 	int updateProfile(Users upt);
 	
-	@Select("	select count(*) \r\n"
+	
+	
+	//프로필 파일 업로드
+	@Insert("insert into userfile(user_id, image) \r\n"
+			+ "values(#{user_id},#{image}")
+	int insertImage(Userfile ins);
+	//업데이트
+	@Update("UPDATE userfile \r\n"
+			+ "set image=#{image}\r\n"
+			+ "where user_id = #{user_id}")
+	int updateImage(Userfile upt);
+	//
+	@Select("Select image from userfile"
+			+ "where user_id=#{user_id}")
+	String getImage(@Param("user_id") String user_id);
+	
+	
+	
+	@Select("select count(*) \r\n"
 			+ "	from users\r\n"
 			+ "	where user_id=#{user_id}\r\n"
 			+ "and password = #{password}")
