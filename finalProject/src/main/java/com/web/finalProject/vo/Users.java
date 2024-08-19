@@ -23,15 +23,8 @@ public class Users {
 	private String image;
 	private String label;
 	private String new_password;
-<<<<<<< HEAD
 	private String etc;
-=======
-	private String dname;
-	private boolean project_status;
-	private int cnt;
->>>>>>> branch 'main-middle' of https://github.com/Eun4ria/final_project.git
 	
-<<<<<<< HEAD
 	
 	private MultipartFile[] reports;
 	private List<String> images;
@@ -42,32 +35,6 @@ public class Users {
 	
 	
 
-=======
-	public int getCnt() {
-		return cnt;
-	}
-	public void setCnt(int cnt) {
-		this.cnt = cnt;
-	}
-	public String getDname() {
-		return dname;
-	}
-	public void setDname(String dname) {
-		this.dname = dname;
-	}
-	public boolean isProject_status() {
-		return project_status;
-	}
-	public void setProject_status(boolean project_status) {
-		this.project_status = project_status;
-	}
-	public String getNew_password() {
-		return new_password;
-	}
-	public void setNew_password(String new_password) {
-		this.new_password = new_password;
-	}
->>>>>>> branch 'main-middle' of https://github.com/Eun4ria/final_project.git
 	public String getImage() {
 		return image;
 	}
