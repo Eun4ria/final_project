@@ -295,7 +295,7 @@
     display: inline-block;
     max-width: 80%;
     align-self: flex-start;
-    word-wrap: break-word; /* 단어가 길 경우 줄바꿈 처리 */	
+    word-wrap: break-word; /* 단어가 길 경우 줄바꿈 처리 */   
     margin-bottom:0.6rem;
 }
 
@@ -308,7 +308,7 @@
     display: inline-block;
     max-width: 80%;
     align-self: flex-end;
-   /* word-wrap: break-word;  단어가 길 경우 줄바꿈 처리 */	
+   /* word-wrap: break-word;  단어가 길 경우 줄바꿈 처리 */   
     margin-bottom:0.6rem;
 }
 
@@ -543,11 +543,12 @@ $(document).ready(function(){
          var sessionProId = '${sessionScope.project_id}'; // 로그인한 사용자 데이터
          $.ajax({
               url: 'checkChatRoom', 
-              method: 'POST',  // 전송할 데이터 형식
+              method: 'POST', 
+              dataType:'json', // 전송할 데이터 형식
               data: {
-                  user_id: "B_0047", // 서버로 전송할 데이터
-                  owner_id: "P_0001", // 서버로 전송할 데이터
-                  project_id: "PRO_0003" // 서버로 전송할 데이터
+                  user_id: user_id, // 서버로 전송할 데이터
+                  owner_id: sessionUserId, // 서버로 전송할 데이터
+                  project_id: sessionProId // 서버로 전송할 데이터
               },
               success: function(data) {
 
@@ -555,8 +556,8 @@ $(document).ready(function(){
                  console.log(data.msg1)
                   // 서버에서 응답을 성공적으로 받았을 때 처리
                   if (data.chatroom_id !=="" && data.chatroom_id !== null) {
-                	  // ajax에서는 
-                	//  console.log('채팅 왜 안되니:'+ project_id);
+                     // ajax에서는 
+                   //  console.log('채팅 왜 안되니:'+ project_id);
                    //   console.log('채팅 왜 안되니2:'+project_Id);
                       location.href = 'message?chatroom_id=' + data.chatroom_Id +'&user_id='+user_id+'&chatroom_name='+data.chatroom_Name;
                   } 
@@ -603,7 +604,7 @@ stompClient.connect({}, function(frame) {
 
 // 메시지를 localStorage에 저장하는 함수
 function storeMessage(name, msg) {
-	 var chatroom_id = document.getElementById('chatroom_id').value;
+    var chatroom_id = document.getElementById('chatroom_id').value;
    // var chatroom_id = document.getElementById('chatroom_id').value;
    // var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
     var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
@@ -658,7 +659,7 @@ window.onload = function() {
 
 // localStorage 내용 삭제
 function clearLocalStorage() {
-	 var chatroom_id = document.getElementById('chatroom_id').value;
+    var chatroom_id = document.getElementById('chatroom_id').value;
    // localStorage.clear(); // 모든 채팅방에 대해 
     localStorage.removeItem(chatroom_id) //현재 채팅
     document.querySelector("#show").innerHTML = '';

@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Update;
 import com.web.finalProject.vo.Calendar;
 import com.web.finalProject.vo.GanttTask;
 import com.web.finalProject.vo.Project;
+import com.web.finalProject.vo.UserSch;
 import com.web.finalProject.vo.Users;
 
 @Mapper
@@ -105,18 +106,50 @@ public interface A01_Dao {
 			@Param("user_id") String user_id);
 	
 	// 프로젝트 생성 시 팀원 추가하기 위한 user리스트
-	@Select("SELECT\r\n"
-			+ "    u.user_id,\r\n"
-			+ "    u.user_name,\r\n"
-			+ "    d.dname,\r\n"
-			+ "    u.deptno\r\n"
-			+ "FROM\r\n"
-			+ "    users u\r\n"
-			+ "JOIN\r\n"
-			+ "    department d ON u.deptno = d.deptno\r\n"
-			+ "ORDER BY\r\n"
-			+ "    u.user_id")
-	List<Users> getUsers();
+	@Select("SELECT *\r\n"
+			+ "FROM (\r\n"
+			+ "    SELECT rownum cnt,\r\n"
+			+ "        u.*, \r\n"
+			+ "        d.dname, \r\n"
+			+ "        CASE\r\n"
+			+ "            WHEN EXISTS (\r\n"
+			+ "                SELECT 1\r\n"
+			+ "                FROM team t\r\n"
+			+ "                JOIN project p ON t.project_id = p.project_id\r\n"
+			+ "                WHERE t.user_id = u.user_id\r\n"
+			+ "                  AND p.start_date <= SYSDATE\r\n"
+			+ "                  AND p.end_date >= SYSDATE\r\n"
+			+ "            ) THEN 1\r\n"
+			+ "            ELSE 0\r\n"
+			+ "        END AS project_status\r\n"
+			+ "    FROM\r\n"
+			+ "        users u\r\n"
+			+ "    JOIN\r\n"
+			+ "        department d ON u.deptno = d.deptno\r\n"
+			+ "    WHERE\r\n"
+			+ "        u.user_id LIKE '%'||#{sch,jdbcType=VARCHAR}||'%' \r\n"
+			+ "        OR d.dname LIKE '%'||#{sch,jdbcType=VARCHAR}||'%' \r\n"
+			+ "        OR u.company_id LIKE '%'||#{sch,jdbcType=VARCHAR}||'%' \r\n"
+			+ "        OR u.user_name LIKE '%'||#{sch,jdbcType=VARCHAR}||'%'\r\n"
+			+ "    ORDER BY\r\n"
+			+ "        u.user_id\r\n"
+			+ ")\r\n"
+			+ "WHERE cnt BETWEEN #{start} AND #{end}")
+	List<Users> getUserList(UserSch sch);
+	@Select("SELECT COUNT(*)\r\n"
+			+ "FROM users u\r\n"
+			+ "JOIN department d ON u.deptno = d.deptno\r\n"
+			+ "    where u.user_id LIKE '%'||#{sch,jdbcType=VARCHAR}||'%' "
+			+ "OR d.dname LIKE '%'||#{sch,jdbcType=VARCHAR}||'%' "
+			+ "or u.company_id LIKE '%'||#{sch,jdbcType=VARCHAR}||'%' "
+			+ "OR u.user_name LIKE '%'||#{sch,jdbcType=VARCHAR}||'%'")
+	int getUserCount(UserSch sch);
+	
+	@Select("select * from users\r\n"
+			+ "where user_id=#{user_id}")
+	List<Users> getUser(@Param("user_id") String user_id);
+	
+
 	
 	
 	// 로그인한 유저의 활동중인 프로젝트 리스트

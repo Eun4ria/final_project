@@ -19,7 +19,28 @@ public class Users {
 	private String label;
 	private String image;
 	private String new_password;
+	private String dname;
+	private boolean project_status;
+	private int cnt;
 	
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	public String getDname() {
+		return dname;
+	}
+	public void setDname(String dname) {
+		this.dname = dname;
+	}
+	public boolean isProject_status() {
+		return project_status;
+	}
+	public void setProject_status(boolean project_status) {
+		this.project_status = project_status;
+	}
 	public String getNew_password() {
 		return new_password;
 	}

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,7 @@ import com.web.finalProject.vo.Calendar;
 import com.web.finalProject.vo.Gantt;
 import com.web.finalProject.vo.GanttTask;
 import com.web.finalProject.vo.Project;
+import com.web.finalProject.vo.UserSch;
 import com.web.finalProject.vo.Users;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -177,19 +179,23 @@ public class A01_Controller {
 	
 	// http://localhost:4040/HR
     // 자원관리-인적자원 관리 페이지
-    @GetMapping("HR")
-    public String HR(HttpServletRequest request, Model d) {
+    @RequestMapping("HR")
+    public String HR(@ModelAttribute("sch") UserSch sch, 
+    		HttpServletRequest request, Model d) {
 		d.addAttribute("currentUrl", request.getRequestURI());
+		d.addAttribute("user", service.getUserList(sch));	
+		System.out.println("시작");
+		System.out.println(sch.getUser_name());
 		return "WEB-INF\\views\\a01_human_resource.jsp";
     }
-    @PostMapping("")
-	// 프로젝트 생성 시 팀원선택 드롭메뉴에 들어갈 전체 유저 리스트
-	// http://localhost:4040/getUsers
-	@GetMapping("getUsers")
-	public String getUsers(Model d) {
-		d.addAttribute("user", service.getUsers());
-	    return "WEB-INF\\views\\a00_main.jsp";
-	}
+    // http://localhost:4040/getUser?user_id=P_0001
+    @PostMapping("getUser")
+    public ResponseEntity<List<Users>> getUser(@RequestParam("user_id") String user_id, 
+    		HttpServletRequest request, Model d) {
+    	//d.addAttribute("currentUrl", request.getRequestURI());
+    	System.out.println(user_id);
+		return ResponseEntity.ok(service.getUser(user_id));
+    }
     
 	
     
@@ -359,8 +365,7 @@ public class A01_Controller {
                     locale = Locale.ENGLISH;
             }
             localeResolver.setLocale(request, response, locale);
-        }
-        
+        }        
         
         // 유저의 프로필 정보
         d.addAttribute("profile", service.getProfile(user_id));

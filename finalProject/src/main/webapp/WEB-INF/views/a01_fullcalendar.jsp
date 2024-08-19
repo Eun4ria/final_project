@@ -21,36 +21,7 @@
 	<meta name="author" content="AdminKit">
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
-<%-- material link --%>
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  	<link rel="apple-touch-icon" sizes="85x85" href="${path}/material-dashboard-2/assets/img/HPM-icon.png">
-  	<link rel="icon" sizes="85x85" type="image/png" href="${path}/material-dashboard-2/assets/img/HPM-icon.png">
-	 <!--     Fonts and icons     
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-  -->
-  <!-- Nucleo Icons -->
-  <link href="${path}/material-dashboard-2/assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="${path}/material-dashboard-2/assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- Font Awesome Icons   -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 
-  <!-- Material Icons 
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
- -->
-
-	
-<%--다시 adminkit --%>
-
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link rel="shortcut icon" href="${path}/adminkit-3.1.0/img/icons/icon-48x48.png" />
-
-	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
-
-	<title>HPM-Project Manager System</title>
-
-	<link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
-<%-- 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
---%>
 <!-- jquery -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
@@ -79,10 +50,7 @@
          padding: 20px;    
      }
 </style>
-<script src="${path}/a00_com/jquery.min.js"></script>
-<script src="${path}/a00_com/popper.min.js"></script>
-<script src="${path}/a00_com/bootstrap.min.js"></script>
-<script src="${path}/a00_com/jquery-ui.js"></script>
+
 <script src="${path}/a00_com/dist/index.global.js"></script>
 <script>
 function goChat(user_id){
@@ -124,12 +92,13 @@ function goChat(user_id){
 				$("#uptBtn").show()
 				$("#delBtn").show()			
 				addForm(arg.event)
+				// 간트 프로젝트 상세 부분
 				if(isGantt()){
 					$("#regBtn").hide()
 					$("#uptBtn").hide()
 					$("#delBtn").hide()
 					$("[name=writer]").val("프로젝트 일정")
-					$(".writer").text("일정명")
+					$(".writer").text("종류")
 					
 				}
 				
@@ -212,7 +181,10 @@ function goChat(user_id){
 			console.log("#일정#")
 			console.log(event)
 			$("form")[0].reset()
+			// 팝업창 content 비움
 			$("[name=content]").val("");
+			// 등록 기본값을 P(개인으로 설정)
+			$("[name=entity_type]").val("P");
 			
 			if(proc != "I" ){
 				$("[name=id]").val(event.id)
@@ -267,7 +239,7 @@ function goChat(user_id){
                     }
 					calendar.refetchEvents();
 					if (data.msg.indexOf("수정") === -1) { // data.msg에 수정이 포함되어 있지 않을 때
-						
+						$("#clsBtn").click()
                     }
 					
 				},
@@ -292,10 +264,11 @@ function goChat(user_id){
 
 <body>
     <div class="wrapper">
-<jsp:include page="a00_sideBar.jsp"/>	
+<jsp:include page="a00_sideBar.jsp"/>
 	
 		<div class="main">
-         <nav class="navbar navbar-expand navbar-light navbar-bg">
+        
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
             <a class="sidebar-toggle js-sidebar-toggle">
           <i class="hamburger align-self-center"></i>
         </a>
@@ -367,16 +340,16 @@ function goChat(user_id){
                         </div>
                      </div>
                   </li>
-                 <li class="nav-item">
+               <li class="nav-item dropdown">
 					<a class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.project_id}')" id="messagesDropdown">
 							<i class="align-middle" data-feather="message-square"></i>
 					</a>
 					
-				</li>        
+				</li>                  
      
-			<li class="nav-item dropdown">   
-               <a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <img src="z01_upload/${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
+<li class="nav-item dropdown">   
+                     <a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                 <img src="/z01_upload/${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
 				<c:choose>
 				    <c:when test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
 				        <span class="text-dark">Welcome, PM_${user_name}</span>
@@ -386,17 +359,7 @@ function goChat(user_id){
 				    </c:otherwise>
 				</c:choose>
               </a>
-                     <!-- <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
-                        <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
-                        <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
-                        <div class="dropdown-divider"></div>
-                        <form method="post" action="/logout">
-                        <input type="submit" class="dropdown-item" value="Log out" >
-                        </form>
-                     </div> -->
+                    
                   </li>
                </ul>
             </div>
@@ -435,7 +398,7 @@ function goChat(user_id){
 								<input type="hidden" name="id"/>
 									<div class="input-group mb-3">	
 										<div class="input-group-prepend ">
-											<span class="writer input-group-text  justify-content-center">작성자</span>
+											<span class="input-group-text  justify-content-center">작성자</span>
 										</div>
 										<input name="writer"  class="form-control" readonly/>	
 									</div>
@@ -475,12 +438,12 @@ function goChat(user_id){
 										</select>
 									</div>
 									<div class="input-group mb-3">	
-										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center">팀/개인</span>
+										<div class="input-group-prepend w-25 ">
+											<span class="input-group-text justify-content-center">팀/개인</span>
 										</div>
 										<select name="entity_type" class="form-control">
-											<option value="T">팀</option>
 											<option value="P">개인</option>
+											<option value="T">팀</option>											
 										</select>
 									</div>			
 									<div class="input-group mb-3">	
@@ -488,7 +451,7 @@ function goChat(user_id){
 											<span class="input-group-text  justify-content-center">내용</span>
 										</div>
 										<textarea name="content" rows="5" cols="10" class="form-control"></textarea>			
-									</div>	
+									</div>
 																				
 																																		
 				

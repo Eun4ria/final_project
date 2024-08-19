@@ -390,3 +390,105 @@ SELECT COUNT(*) FROM chat c
            select chatroom_id, chatroom_name from chat
 			where owner_id='P_0001'
 			and user_id='B_0047';
+SELECT
+    u.*,  -- users 테이블의 모든 열
+    d.dname,  -- department 테이블의 부서 이름
+    t.project_id,  -- team 테이블의 프로젝트 ID
+    p.project_name,  -- project 테이블의 프로젝트 이름
+    CASE
+        WHEN p.start_date <= CURRENT_TIMESTAMP AND p.end_date >= CURRENT_TIMESTAMP THEN 'Active'
+        ELSE 'Inactive'
+    END AS project_status  -- 현재 프로젝트가 활동 중인지 확인
+FROM
+    users u
+JOIN
+    department d ON u.deptno = d.deptno
+LEFT JOIN
+    team t ON u.user_id = t.user_id  -- team 테이블과 users 테이블을 user_id 기준으로 LEFT JOIN
+LEFT JOIN
+    project p ON t.project_id = p.project_id  -- project 테이블과 team 테이블을 project_id 기준으로 LEFT JOIN
+    ORDER BY
+    u.user_id;
+
+SELECT DISTINCT
+    u.*,  -- users 테이블의 모든 열
+    d.dname,  -- department 테이블의 부서 이름
+    CASE
+        WHEN EXISTS (
+            SELECT 1
+            FROM team t
+            JOIN project p ON t.project_id = p.project_id
+            WHERE t.user_id = u.user_id
+              AND p.start_date <= CURRENT_TIMESTAMP
+              AND p.end_date >= CURRENT_TIMESTAMP
+        ) THEN 'Active'
+        ELSE 'Inactive'
+    END AS project_status  -- 현재 프로젝트가 활동 중인지 확인
+FROM
+    users u
+JOIN
+    department d ON u.deptno = d.deptno
+LEFT JOIN
+    team t ON u.user_id = t.user_id  -- team 테이블과 users 테이블을 user_id 기준으로 LEFT JOIN
+LEFT JOIN
+    project p ON t.project_id = p.project_id  -- project 테이블과 team 테이블을 project_id 기준으로 LEFT JOIN
+ORDER BY
+    u.user_id;
+   
+   
+SELECT
+    u.*, 
+    d.dname, 
+    CASE
+        WHEN EXISTS (
+            SELECT 1
+            FROM team t
+            JOIN project p ON t.project_id = p.project_id
+            WHERE t.user_id = u.user_id
+              AND p.start_date <= sysdate
+              AND p.end_date >= sysdate
+        ) THEN 1
+        ELSE 0
+    END AS project_status  -- 현재 프로젝트가 활동 중인지 확인
+FROM
+    users u
+JOIN
+    department d ON u.deptno = d.deptno
+    where u.user_id='P_0001' OR d.dname='P_0001' or u.company_id ='P_0001' OR u.user_name='P_0001'
+ORDER BY
+    u.user_id;
+    
+SELECT COUNT(*)
+FROM users u
+JOIN department d ON u.deptno = d.deptno
+where u.user_id='P_0001' or d.dname='P_0001' or u.company_id ='P_0001' OR u.user_name='P_0001';
+
+SELECT *
+FROM (
+    SELECT rownum cnt, LEVEL
+        u.*, 
+        d.dname, 
+        CASE
+            WHEN EXISTS (
+                SELECT 1
+                FROM team t
+                JOIN project p ON t.project_id = p.project_id
+                WHERE t.user_id = u.user_id
+                  AND p.start_date <= SYSDATE
+                  AND p.end_date >= SYSDATE
+            ) THEN 1
+            ELSE 0
+        END AS project_status
+    FROM
+        users u
+    JOIN
+        department d ON u.deptno = d.deptno
+    WHERE
+        u.user_id = '' 
+        OR d.dname = '' 
+        OR u.company_id = '' 
+        OR u.user_name = ''
+    ORDER BY
+        u.user_id
+)
+WHERE ROWNUM BETWEEN 1 AND 5;
