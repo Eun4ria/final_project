@@ -160,14 +160,16 @@ public class A01_Controller {
 	
 	// 프로젝트 생성
 	@PostMapping("insertProject")
-	public String insertProject(HttpServletRequest request, Project ins, Model d) {
+	public String insertProject(HttpServletRequest request, Project ins,
+			Model d) {
 	    HttpSession session = request.getSession(false); 
 	    String user_id = (String) session.getAttribute("user_id"); 
 	    ins.setUser_id(user_id);
 	    
 	    String isIns = service.insertProject(ins);
 	    if("프로젝트 생성".equals(isIns)) {
-	        d.addAttribute("msg", service.insertProjectPM(ins.getProject_id(), user_id));
+	        d.addAttribute("msg",
+	        		service.insertProjectPM(ins.getProject_id(), user_id));
 	    }
 	    System.out.println("생성된 프로젝트 아이디:" + ins.getProject_id());
 	    return "redirect:main";
@@ -187,7 +189,7 @@ public class A01_Controller {
 	public String getUsers(Model d) {
 		d.addAttribute("user", service.getUsers());
 	    return "WEB-INF\\views\\a00_main.jsp";
-	}  
+	}
     
 	
     
@@ -251,11 +253,13 @@ public class A01_Controller {
         List<Calendar> calendarList = new ArrayList<>();        
         if (sel != null && !sel.isEmpty()) {
             for (String s : sel) {
-                calendarList.addAll(service.getCalendarList(s, user_id, project_id));
+                calendarList.addAll(service.getCalendarList(s, 
+                		user_id, project_id));
             }
         }
 
-        return ResponseEntity.ok(new CalList(service.insertCalendar(ins), calendarList));
+        return ResponseEntity.ok(new CalList(
+        		service.insertCalendar(ins), calendarList));
     }
 
     @PostMapping("updateCalendar")
@@ -270,11 +274,13 @@ public class A01_Controller {
         List<Calendar> calendarList = new ArrayList<>();        
         if (sel != null && !sel.isEmpty()) {
             for (String s : sel) {
-                calendarList.addAll(service.getCalendarList(s, user_id, project_id));
+                calendarList.addAll(service.getCalendarList(s,
+                		user_id, project_id));
             }
         }
 
-        return ResponseEntity.ok(new CalList(service.updateCalendar(upt), calendarList));
+        return ResponseEntity.ok(new CalList(
+        		service.updateCalendar(upt), calendarList));
     }
 
     @PostMapping("deleteCalendar")
@@ -288,11 +294,13 @@ public class A01_Controller {
         List<Calendar> calendarList = new ArrayList<>();        
         if (sel != null && !sel.isEmpty()) {
             for (String s : sel) {
-                calendarList.addAll(service.getCalendarList(s, user_id, project_id));
+                calendarList.addAll(service.getCalendarList(s,
+                		user_id, project_id));
             }
         }
 
-        return ResponseEntity.ok(new CalList(service.deleteCalendar(id, user_id), calendarList));
+        return ResponseEntity.ok(new CalList(
+        		service.deleteCalendar(id, user_id), calendarList));
     }
 
  	

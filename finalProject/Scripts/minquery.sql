@@ -381,3 +381,12 @@ WHERE cal_id = 'CAL_0036';
 
 SELECT * FROM calendar;
 SELECT * FROM project;
+
+SELECT COUNT(*) FROM chat c
+            WHERE owner_id = 'B_0047'
+            AND user_id = 'P_0001' 
+            AND project_id = 'PRO_0003';
+           
+           select chatroom_id, chatroom_name from chat
+			where owner_id='P_0001'
+			and user_id='B_0047';

@@ -541,12 +541,11 @@ $(document).ready(function(){
          var sessionProId = '${sessionScope.project_id}'; // 로그인한 사용자 데이터
          $.ajax({
               url: 'checkChatRoom', 
-              method: 'POST', 
-              dataType:'json', // 전송할 데이터 형식
+              method: 'POST',  // 전송할 데이터 형식
               data: {
-                  user_id: user_id, // 서버로 전송할 데이터
-                  owner_id: sessionUserId, // 서버로 전송할 데이터
-                  project_id: sessionProId // 서버로 전송할 데이터
+                  user_id: "B_0047", // 서버로 전송할 데이터
+                  owner_id: "P_0001", // 서버로 전송할 데이터
+                  project_id: "PRO_0003" // 서버로 전송할 데이터
               },
               success: function(data) {
 

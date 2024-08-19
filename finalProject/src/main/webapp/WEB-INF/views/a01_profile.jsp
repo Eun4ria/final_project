@@ -197,7 +197,6 @@
 								<option value="en" ${param.lang == 'en' ? 'selected' : ''}>English</option>
 								<option value="ko" ${param.lang == 'ko' ? 'selected' : ''}>한국어</option>
 								<option value="fa" ${param.lang == 'fa' ? 'selected' : ''}>فارسی</option>
-								
 							</select>
 						</form>
 					</div>

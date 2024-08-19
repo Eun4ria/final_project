@@ -114,7 +114,9 @@ function goChat(user_id){
 				$("#uptBtn").hide()
 				$("#delBtn").hide()
 				addForm(arg,"I")
+				
 			},
+			
 			eventClick : function(arg) {
 				$("#modalTitle").text("일정상세")
 				$("#showModel").click()
@@ -122,6 +124,14 @@ function goChat(user_id){
 				$("#uptBtn").show()
 				$("#delBtn").show()			
 				addForm(arg.event)
+				if(isGantt()){
+					$("#regBtn").hide()
+					$("#uptBtn").hide()
+					$("#delBtn").hide()
+					$("[name=writer]").val("프로젝트 일정")
+					$(".writer").text("일정명")
+					
+				}
 				
 			},
 			eventDrop:function(arg){
@@ -138,8 +148,7 @@ function goChat(user_id){
 	            alert("프로젝트 일정은 수정이 불가능합니다.");
 				}else{
 					ajaxFun("updateCalendar")
-				}
-				
+				}				
 			},			
 			editable : true,
 			dayMaxEvents : true, // allow "more" link when too many events
@@ -155,8 +164,7 @@ function goChat(user_id){
 						console.log(data)
 						calendar.removeAllEvents()
 						successCallback(data)
-						// 조회시:data,  등록,수정,삭제시:  data.msg data.calList
-						console.log("선택한 보기")
+						console.log("선택한 보기 방식")
 						console.log(selectedValues)
 
 					},
@@ -169,6 +177,11 @@ function goChat(user_id){
 			
 		});
 		calendar.render();
+		function isGantt() {
+		    // writer 필드가 빈 값이거나 존재하지 않는 경우 간트 차트로 간주
+		    var writerVal = $("[name=writer]").val();
+		    return !writerVal
+		}
         
         // 체크박스 상태에 따라 일정을 새로 고침합니다.
         $("#personal, #team, #gantt").change(function() {
@@ -178,33 +191,20 @@ function goChat(user_id){
 		
 		$("#regBtn").click(function(){
 			if(confirm("등록하시겠니까?")){
-				// 등록 처리 ajax 처리..
 				 ajaxFun("insertCalendar")
 			}		
 		})
 		$("#uptBtn").click(function(){
-			if (isGantt()) {
-	            alert("프로젝트 일정은 수정이 불가능합니다.");
-			}else{
-				if(confirm("수정하시겠습니까?")){
-					 ajaxFun("updateCalendar")
-				}
+			if(confirm("수정하시겠습니까?")){
+				 ajaxFun("updateCalendar")
 			}
 		})		
 		$("#delBtn").click(function(){
-			if (isGantt()) {
-	            alert("프로젝트 일정은 삭제가 불가능합니다.");
-			}else{
-				if(confirm("삭제하시겠습니까?")){
-					 ajaxFun("deleteCalendar")
-				}
+			if(confirm("삭제하시겠습니까?")){
+				ajaxFun("deleteCalendar")
 			}	
 		})	
-		function isGantt() {
-		    // writer 필드가 빈 값이거나 존재하지 않는 경우 간트 차트로 간주
-		    var writerVal = $("[name=writer]").val();
-		    return !writerVal; // writer가 빈 문자열인 경우 true 반환
-		}
+		
 		
 		// 클릭시/선택시/스크롤시 전달되어온 일정을 매개변수로 모달 창에 할당 처리..
 		
@@ -223,9 +223,8 @@ function goChat(user_id){
 				//$("[name=urlLink]").val(event.extendedProps.urlLink)	
 				//$("[name=sel]").val(event.extendedProps.sel);
 				$("[name=user_id]").val(event.extendedProps.user_id);
-				$("[name=project_id]").val(event.extendedProps.project_id);
-				// entity_type기본값 P로 설정
-				$("[name=entity_type]").val(event.extendedProps.entity_type || "P");
+				$("[name=project_id]").val(event.extendedProps.project_id);				
+				$("[name=entity_type]").val(event.extendedProps.entity_type);
 			}else{// 등록 시 작성자명 세션에 저장된 이름 표시
 				$("[name=writer]").val("${sessionScope.user_name}")				
 			}
@@ -267,9 +266,9 @@ function goChat(user_id){
                     	alert(data.msg+"\n본인 일정이 아닙니다.")
                     }
 					calendar.refetchEvents();
-					/* if (data.msg.indexOf("수정") === -1) { // data.msg에 수정이 포함되어 있지 않을 때
-						$("#clsBtn").click()
-                    } */
+					if (data.msg.indexOf("수정") === -1) { // data.msg에 수정이 포함되어 있지 않을 때
+						
+                    }
 					
 				},
 				error:function(err){
@@ -277,7 +276,7 @@ function goChat(user_id){
 				}
 			})
 		}
-		// 체크박스 상태에 따라 div 배열 생성
+		// 체크박스 상태에 따라 sel 배열 생성
         function getSelectboxArray() {
             var sel = [];
             if ($("#personal").is(":checked")) sel.push("P");
@@ -436,7 +435,7 @@ function goChat(user_id){
 								<input type="hidden" name="id"/>
 									<div class="input-group mb-3">	
 										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center">작성자</span>
+											<span class="writer input-group-text  justify-content-center">작성자</span>
 										</div>
 										<input name="writer"  class="form-control" readonly/>	
 									</div>
