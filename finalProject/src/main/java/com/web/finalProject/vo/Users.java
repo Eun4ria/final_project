@@ -1,5 +1,9 @@
 package com.web.finalProject.vo;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class Users {
 	
 	private String project_id;
@@ -16,30 +20,46 @@ public class Users {
 	private String id;
 	private String text;
 	private String key;
-	private String label;
 	private String image;
+	private String label;
 	private String new_password;
-	private String dname;
-	private boolean project_status;
-	private int cnt;
+	private String etc;
 	
-	public int getCnt() {
-		return cnt;
+	
+	private MultipartFile[] reports;
+	private List<String> images;
+	
+	
+	
+	
+	
+	
+
+	public String getImage() {
+		return image;
 	}
-	public void setCnt(int cnt) {
-		this.cnt = cnt;
+	public void setImage(String image) {
+		this.image = image;
 	}
-	public String getDname() {
-		return dname;
+	public String getEtc() {
+		return etc;
 	}
-	public void setDname(String dname) {
-		this.dname = dname;
+	public void setEtc(String etc) {
+		this.etc = etc;
 	}
-	public boolean isProject_status() {
-		return project_status;
+	
+	
+	public MultipartFile[] getReports() {
+		return reports;
 	}
-	public void setProject_status(boolean project_status) {
-		this.project_status = project_status;
+	public void setReports(MultipartFile[] reports) {
+		this.reports = reports;
+	}
+	public List<String> getImages() {
+		return images;
+	}
+	public void setImages(List<String> images) {
+		this.images = images;
 	}
 	public String getNew_password() {
 		return new_password;
@@ -47,12 +67,7 @@ public class Users {
 	public void setNew_password(String new_password) {
 		this.new_password = new_password;
 	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
+	
 	public String getKey() {
 		return key;
 	}

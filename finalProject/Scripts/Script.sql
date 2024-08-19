@@ -259,7 +259,7 @@ WHERE owner_id = 'B_0047'
 AND user_id = 'P_0001'
 AND project_id = 'PRO_0003';
 
-SELECT * FROM CHAT 
+SELECT * FROM CHAT ;
 WHERE project_id = 'PRO_0003'
 AND  owner_id= 'B_0047';
 AND owner_id != 'B_0047';
@@ -290,8 +290,31 @@ CREATE TABLE chat2
 AS SELECT * FROM chat;
 SELECT * FROM chat2;
 COMMIT;
-			
+SELECT * FROM userfile;		
+
+
+CREATE TABLE userfile (
+    user_id char(6) PRIMARY KEY, -- 사용자 ID, 고유 식별자로 설정
+    image VARCHAR2(100)              -- 이미지 파일 이름, 최대 길이 255자로 설정
+         -- 기타 정보, 최대 길이 4000자로 설정
+);
+
+DROP TABLE userfile;
 			
 PRO_0003
 P_0001
 B_0047
+
+SELECT * from(
+SELECT rownum cnt, LEVEL, b.*
+FROM budget b
+WHERE project_id = 'PRO_0003'
+START WITH parent_id IS NULL
+CONNECT BY PRIOR budget_id = parent_id
+ORDER siblings BY budget_id DESC)
+WHERE CNT BETWEEN 1 AND 7;
+
+SELECT count(*)
+FROM BUDGET
+WHERE project_id = 'PRO_0003';
+

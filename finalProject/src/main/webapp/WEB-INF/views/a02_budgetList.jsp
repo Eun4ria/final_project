@@ -62,10 +62,16 @@
      alert(msg); // 알림 메시지 표시
 
      if (msg=="등록 완료") {
-        $(".close").click();
+    	
         window.location.href = 'budgetFrm';
      }
  }
+ 
+ if(proc == 'del'){
+		alert(msg)
+		
+		location.href="budgetFrm"
+	}
  
 function goChat(project_id){
 	location.href="chatmemListstart?project_id="+project_id
@@ -74,6 +80,12 @@ function goChat(project_id){
 </head>
 
 <body>
+<c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
+    <script>
+        alert("로그인이 필요한 서비스입니다");
+        location.href = 'signinFrm';
+    </script>
+</c:if>
 
    <div class="wrapper">
 <jsp:include page="a00_sideBar.jsp"/>   
@@ -89,8 +101,8 @@ function goChat(project_id){
 
                <h1 class="h3 mb-3"><strong>Budget</strong> Management</h1>
      
-            <div class="row mb-4">
-        <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
+            <div class="row ">
+        <div class="col-lg-12 col-md-6 mb-md-0 ">
           <div class="card">
             <div class="card-header pb-0">
               <div class="row">
@@ -101,7 +113,12 @@ function goChat(project_id){
                     프로젝트 이름이나 기간 넣기?
                   </p>
                 </div>
-                
+                <form id="curPageFrm" class="form" method="post">
+			
+<%--현재 어느 페이지를 눌렀는지 --%>
+			<input type="hidden" name="curPage" value="${sch.curPage }">
+			
+		</form>
        
     
               </div>
@@ -109,7 +126,7 @@ function goChat(project_id){
             
            <%-- 찐본문 --%>
             <div class="card-body px-0 pb-2" id="mainDiv" >
-     <%-- 등록 모달 --%>       
+        
               <button class="btn btn-primary" data-toggle="modal" data-target="#ModalCenter" style="margin-left:1rem;"
            type="button">Regist Budget</button>
               <div class="table-responsive">
@@ -182,6 +199,21 @@ function goChat(project_id){
                   <div class="col-sm-11 col-lg-6 col-md-6 col-xl-6" >
                         
                     </div>
+                    
+                    <ul class="pagination justify-content-center" style="margin:0">
+						<li class="page-item" ><a class="page-link" href="javascript:goPage(${sch.startBlock-1})" style="width:5rem;">Previous</a></li>
+						<c:forEach var="pCnt" begin="${sch.startBlock }" end="${sch.endBlock }">
+						<li class="page-item ${sch.curPage==pCnt?'active':'' }">
+							<a class="page-link" href="javascript:goPage(${pCnt})">${pCnt}</a></li>
+						</c:forEach>
+						<li class="page-item"><a class="page-link" href="javascript:goPage(${sch.endBlock+1})"  style="width:5rem;">Next</a></li>
+					</ul>
+					<script type="text/javascript">
+						function goPage(pCnt){
+							$("[name=curPage]").val(pCnt) //클릭한 것을 현재 페이지 번호로 전송
+							$("#curPageFrm").submit()
+						}
+					</script>
                </div>
                
 
@@ -193,7 +225,7 @@ function goChat(project_id){
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="ModalLongTitle">Regist Budget</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>     
@@ -204,7 +236,7 @@ function goChat(project_id){
         <div class="row">
          <div class="col">    
          <span>Budget Name</span>              
-           <input type="text" class="form-control" name="budget_name">
+           <input type="text" class="form-control" name="budget_name"> 
          </div>
         </div>
          <div class="row">
@@ -239,7 +271,7 @@ function goChat(project_id){
         </div>
         
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
         <button type="submit" id="regBtn" class="btn btn-primary">regist</button>        
       </div>   
        </form> 
@@ -250,12 +282,12 @@ function goChat(project_id){
 </div>  
 
 <%-- 모달 수정 --%> 
-<div class="modal fade" id="ModalModify" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="ModalModify" tabindex="-1" role="dialog" aria-labelledby="ModalModify" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ModalLongTitle">Modify Budget</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="ModalModiTitle">Modify Budget</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="bodixBtn">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>     
@@ -266,7 +298,7 @@ function goChat(project_id){
         <div class="row">
          <div class="col">    
          <span>Budget Id</span>              
-           <input type="text" class="form-control" name="budget_id" value="${uptlist.budget_id}" readonly >
+           <input type="text" class="form-control" name="budget_id" value="${bud.budget_id}" readonly >
          </div>
         </div>
         <div class="row">
@@ -307,7 +339,7 @@ function goChat(project_id){
         </div>
         
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modiclose">Close</button>
         <button type="button" id="uptBtn" class="btn btn-primary">Update</button>        
         <button type="button" id="delBtn" class="btn btn-primary">Delete</button>        
       </div>   
@@ -315,15 +347,20 @@ function goChat(project_id){
       </div>
       
     </div>
+   
   </div>
+   
 </div> 
+<div>
+     
+    </div>
            
           </div>
 
          
         </div>
         <div class="row align-items-center mb-5">
-          
+         
          
         </div>
   
@@ -334,6 +371,7 @@ function goChat(project_id){
 function BudPage(budget_id) {
 // 수정 모달 열기
 $('#ModalModify').modal('show');
+
 }
 $("#uptBtn").click(function() {
 	if (confirm("수정하시겠습니까?")) {
@@ -346,6 +384,14 @@ $("#delBtn").click(function() {
 		location.href = "delbudget?budget_id="+ $("[name=budget_id]").val()
 	}
 })
+ $("#modiclose").click(function() {
+      $("#ModalModify").modal('hide');
+    });
+
+    // 모달 바디 닫기 버튼 클릭 시 모달 닫기
+    $("#bodixBtn").click(function() {
+      $("#ModalModify").modal('hide');
+    });
 </script>
   
 <script>

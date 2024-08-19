@@ -108,13 +108,13 @@
 						            <h5 class="card-title mb-0"><fmt:message key="profile_details" /></h5>
 						        </div>
 						        <div class="card-body text-center">
-						            <img src="z01_upload/${image}" style="width: 40%; height: auto;" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
+						            <img src="z01_upload/${profile.image}" style="width: 40%; height: auto;" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
 						            <br><br>
 						
 						            <div class="form-group">
 						                <label class="btn btn-outline-primary">
 						                    <fmt:message key="update_image_file" />
-						                    <input type="file" name="image" class="form-control" value="${profile.image}"/>
+						                    <input type="file" name="image" class="form-control" value=""/>
 						                </label>
 						            </div>						
 						        </div>
