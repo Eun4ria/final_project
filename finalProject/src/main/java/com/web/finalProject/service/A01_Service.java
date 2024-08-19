@@ -15,6 +15,7 @@ import com.web.finalProject.util.Util;
 import com.web.finalProject.vo.Calendar;
 import com.web.finalProject.vo.GanttTask;
 import com.web.finalProject.vo.Project;
+import com.web.finalProject.vo.UserSch;
 import com.web.finalProject.vo.Users;
 
 import jakarta.mail.MessagingException;
@@ -61,9 +62,60 @@ public class A01_Service {
         return dao.insertProjectPM(project_id, user_id);
     }
     
+    // 프로젝트 생성 후 팀원 추가 위한 전체 user정보 (페이징)
+    public List<Users> getUserList(UserSch sch){
+    	if(sch.getUser_id()==null) sch.setUser_id("");
+    	if(sch.getUser_name()==null) sch.setUser_name("");
+    	if(sch.getDname()==null) sch.setDname("");
+    	if(sch.getCompany_id()==null) sch.setCompany_id("");
+		// 1. 총데이터 수(DB)
+    	sch.setCount(dao.getUserCount(sch));
+		
+		// 2. 현재 클릭한 번호 
+		if(sch.getCurPage()==0) {
+			sch.setCurPage(1); // 초기값 1
+		}
+		
+		// 3. 한페이지에 보일 데이터 건수(화면단 선택으로 요청값)
+		if(sch.getPageSize()==0) {
+			sch.setPageSize(5); // 초기값 5
+		}
+		
+		// 4. 총페이지수(수치연산/알고리즘 - 총데이터건수/한페이지에 보일 데이터 수)
+		sch.setPageCount( (int)(Math.ceil(sch.getCount()/(double)sch.getPageSize())) );
+		
+		// 마지막 page block에서 next를 클릭하더라도, 더 이상 페이지번호가 증가되지 않게 처리..
+		if(sch.getCurPage()>sch.getPageCount()) {
+			sch.setCurPage(sch.getPageCount());
+		}
+		
+		// 5. 시작번호/마지막번호 -  마지막번호( 한페이지에 보일 데이터 건수*현재 클릭한 번호)
+		//    마지막번호는 마지막데이터건수보다 클 수 없다		
+		sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
+		
+		int imEnd = sch.getPageSize()*sch.getCurPage();
+		sch.setEnd(imEnd > sch.getCount()?sch.getCount():imEnd);
+		
+		
+		// 6. 페이징 블럭 처리..
+		// 	1) 블럭 크기 설정.-일반적으로 홀수로 정함..
+		sch.setBlockSize(5);
+		//  2) 블럭 번호 지정
+		int blockNum = (int) Math.ceil(sch.getCurPage()/(double)sch.getBlockSize());
+		//  3) 시작블럭
+		sch.setStartBlock((blockNum-1)*sch.getBlockSize()+1);
+		//  4) 마지막블럭
+		int endBlock = blockNum*sch.getBlockSize();
+		sch.setEndBlock( (endBlock>sch.getPageCount())?sch.getPageCount():endBlock );
+		
+		return dao.getUserList(sch);
+	}
     
-    public List<Users> getUsers(){
-		return dao.getUsers();
+    
+    
+    // 팀원 상세 정보
+    public List<Users> getUser(String user_id){
+		return dao.getUser(user_id);
 	}
     
     public List<Project> getProjectList(String user_id){
