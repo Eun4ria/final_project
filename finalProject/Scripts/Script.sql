@@ -58,12 +58,12 @@ VALUES
 ('TSK_0005', '디자인', TO_DATE('2024-07-17', 'YYYY-MM-DD'), TO_DATE('2024-07-24', 'YYYY-MM-DD'), '중', NULL, '디자인 작업', 30, 'purple', 'white', '진행중', 'M_0026', 'PRO_0001');
 
 -- chat_seq 시퀀스 생성
-CREATE SEQUENCE chat_name_seq
+CREATE SEQUENCE chat_seq
 START WITH 1
 INCREMENT BY 1;
 
 -- chat_seq2 시퀀스 생성
-CREATE SEQUENCE chat_name_seq1
+CREATE SEQUENCE chatname_seq1
 START WITH 1
 INCREMENT BY 1;
 
@@ -239,3 +239,59 @@ WHERE table_name = 'CHAT'
   AND constraint_type = 'P';
 
 ALTER TABLE CHAT DROP CONSTRAINT SYS_C007359;
+
+
+CREATE TABLE chat (
+    chatroom_id char(8) ,
+    chatroom_name VARCHAR2(50) NOT NULL,
+    owner_id char(8) NOT NULL,
+    user_id char(8) NOT NULL,
+    ban_status VARCHAR2(1),
+    ban_date DATE,
+    uptdate DATE DEFAULT SYSDATE,
+    project_id char(8)
+  
+);
+SELECT * FROM chat;
+
+SELECT COUNT(*) FROM chat c 
+WHERE owner_id = 'B_0047'
+AND user_id = 'P_0001'
+AND project_id = 'PRO_0003';
+
+SELECT * FROM CHAT 
+WHERE project_id = 'PRO_0003'
+AND  owner_id= 'B_0047';
+AND owner_id != 'B_0047';
+
+select chatroom_id, chatroom_name from chat 
+where owner_id='B_0047' 
+and user_id='P_0001';
+
+// B_0047
+// PRO_0003
+// P_0001
+
+/*
+		@Select("SELECT COUNT(*) FROM chat c \r\n"
+				+ "WHERE owner_id = #{owner_id}\r\n"
+				+ "AND user_id = #{user_id}\r\n"
+				+ "AND project_id = #{project_id}")
+				
+ * */
+
+SELECT * FROM chat;
+COMMIT;
+SELECT COUNT(*) FROM chat c
+				WHERE owner_id = 'B_0047'
+				AND user_id = 'P_0001' 
+				AND project_id = 'PRO_0003';
+CREATE TABLE chat2
+AS SELECT * FROM chat;
+SELECT * FROM chat2;
+COMMIT;
+			
+			
+PRO_0003
+P_0001
+B_0047
