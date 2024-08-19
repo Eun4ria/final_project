@@ -1,6 +1,10 @@
 package com.web.finalProject.controller;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -557,6 +561,38 @@ public class A02_Controller {
 	}
 		
 	
+	
+	
+	
+//	//다운로드 
+//	@Value("${user.upload2}")
+//	private String downloadPath; // 다운로드 경로
+//
+//	@RequestMapping("/download")
+//	public void downloadFile(HttpServletResponse response, @RequestParam("fname") String filename) {
+//	    try {
+//	        File file = new File(downloadPath, filename);
+//	        if (file.exists()) {
+//	            response.setContentType("application/octet-stream");
+//	            response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+//	            FileInputStream inStream = new FileInputStream(file);
+//	            OutputStream outStream = response.getOutputStream();
+//	            byte[] buffer = new byte[4096];
+//	            int bytesRead;
+//	            while ((bytesRead = inStream.read(buffer)) != -1) {
+//	                outStream.write(buffer, 0, bytesRead);
+//	            }
+//	            inStream.close();
+//	            outStream.close();
+//	        } else {
+//	            response.sendError(HttpServletResponse.SC_NOT_FOUND, "File not found");
+//	        }
+//	    } catch (IOException e) {
+//	        e.printStackTrace();
+//	    }
+//	}
+//
+//	
 	
 	
 //board

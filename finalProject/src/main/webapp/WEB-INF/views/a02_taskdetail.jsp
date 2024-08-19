@@ -391,8 +391,21 @@ var proc = "${proc}"
 				    <!-- 파일 이름 리스트가 비어 있지 않은 경우 -->
 				    <ul>
 				        <c:forEach var="fileinfo" items="${fileinfo}">
-				            <li><p style="margin:0"> File name: ${fileinfo.fname}</p>  <p>-> upload time: ${fileinfo.regdate }</p> </li>
-				        </c:forEach>
+				            <li><p style="margin:0"> 
+				            File name: <a href="javascript:download('${fileinfo.fname }')">${fileinfo.fname}</a>,&nbsp;&nbsp;</p>  
+				            <p>-> upload time: ${fileinfo.regdate }</p> </li>
+				         </c:forEach>
+				         <script>
+							function download(fname){
+								if (fname.trim() === "") {
+							        alert("파일 이름이 유효하지 않습니다.");
+							        return "todoFrm";
+							    }
+								if(confirm(fname+"다운로드하시겠습니까?")){
+									location.href="downLoad.do?fname="+fname
+								}
+							}
+						</script>
 				    </ul>
 				</c:when>
 				 <c:otherwise>

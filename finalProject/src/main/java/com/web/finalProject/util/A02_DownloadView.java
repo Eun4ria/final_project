@@ -17,7 +17,7 @@ import org.springframework.web.servlet.view.AbstractView;
 @Component("downloadView") // downloadView 자동 등록 처리.
 public class A02_DownloadView extends AbstractView{
 	// 다운로드할 특정한 폴드 공통 위치 
-	@Value("${user.upload}")
+	@Value("${user.upload2}")
 	private String upload;
 
 	@Override
