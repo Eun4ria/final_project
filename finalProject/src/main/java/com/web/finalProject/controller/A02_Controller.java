@@ -538,6 +538,11 @@ public class A02_Controller {
 		return "redirect:/budgetFrm";
 	}
 	
+	// 예산 상세
+	@PostMapping("getBudgetID")
+	public List<Budget> getBudget(@RequestParam("budget_id") String budget_id){
+		return service.getBudgetById(budget_id);
+	}
 	// 예산 - 수정
 	@RequestMapping("uptbudget")
 	public String budgetUpdate(@ModelAttribute Budget upt, Model d) {

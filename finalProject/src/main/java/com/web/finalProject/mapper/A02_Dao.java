@@ -165,6 +165,10 @@ int insertUser(Users ins);
 	
 	
 //예산관리 - 검색
+	//  예산 budget_id 찾기
+	@Select("SELECT * FROM budget WHERE budget_id = #{budget_id}")
+    List<Budget> findBudgetId(String budget_id);
+	
 	//전체 데이터 수
 	@Select("SELECT count(*)\r\n"
 			+ "FROM BUDGET\r\n"

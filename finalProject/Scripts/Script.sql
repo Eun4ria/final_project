@@ -318,3 +318,6 @@ SELECT count(*)
 FROM BUDGET
 WHERE project_id = 'PRO_0003';
 
+SELECT * FROM BUDGET b 
+WHERE project_id='PRO_0003';
+
