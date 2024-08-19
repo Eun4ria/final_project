@@ -465,7 +465,7 @@ where u.user_id='P_0001' or d.dname='P_0001' or u.company_id ='P_0001' OR u.user
 
 SELECT *
 FROM (
-    SELECT rownum cnt, LEVEL
+    SELECT rownum cnt,
         u.*, 
         d.dname, 
         CASE
@@ -484,7 +484,7 @@ FROM (
     JOIN
         department d ON u.deptno = d.deptno
     WHERE
-        u.user_id = '' 
+        u.user_id = 'P_0001' 
         OR d.dname = '' 
         OR u.company_id = '' 
         OR u.user_name = ''

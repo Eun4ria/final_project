@@ -135,11 +135,9 @@ $(document).ready(function() {
             <div class="card-header pb-0">
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>SEARCH</h6>
                   <form action="HR" id="schFrm" method="post">
-                    <input type="text" name="sch" placeholder="검색어를 입력하세요" />
-                    <button class="btn btn-info" type="submit">Search</button>
-                    <input type="hidden" name="curPage" value="${sch.curPage}"/>
+                    <input type="text" class="form-control" name="sch" placeholder="Search..." />
+                    <input type="hidden" name="curPage" value="${sch.curPage}"/>               
                    </form>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">

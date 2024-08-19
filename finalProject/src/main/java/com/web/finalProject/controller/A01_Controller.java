@@ -183,9 +183,7 @@ public class A01_Controller {
     public String HR(@ModelAttribute("sch") UserSch sch, 
     		HttpServletRequest request, Model d) {
 		d.addAttribute("currentUrl", request.getRequestURI());
-		d.addAttribute("user", service.getUserList(sch));	
-		System.out.println("시작");
-		System.out.println(sch.getUser_name());
+		d.addAttribute("user", service.getUserList(sch));
 		return "WEB-INF\\views\\a01_human_resource.jsp";
     }
     // http://localhost:4040/getUser?user_id=P_0001
