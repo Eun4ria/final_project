@@ -46,13 +46,7 @@
   <!-- CSS Files -->
   
   <link id="pagestyle" href="${path}/material-dashboard-2/assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
-   
-<%--다시 adminkit --%>
 
-   <link rel="preconnect" href="https://fonts.gstatic.com">
-   <link rel="shortcut icon" href="${path}/adminkit-3.1.0/img/icons/icon-48x48.png" />
-
-   <link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
    <title>HPM-Project Manager System</title>
 

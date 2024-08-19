@@ -51,10 +51,10 @@
    <title>HPM-Project Manager System</title>
 
    <link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
-<%--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
---%>
+
+
 <style>
-.project-item:hover{
+.userList:hover{
 	cursor:pointer;
 	background-color:lightgray;
 	border-radius:10px;
@@ -86,9 +86,31 @@
  }
 
 
-function goChat(user_id){
-	location.href="message?user_id="+user_id
+
+function getUser(user_id){
+	$.ajax({
+		type:"post",
+		url:"getUser",
+		data:{user_id:user_id},
+		success:function(data){
+			var userId = data[0].user_id;
+			console.log(userId+"의 정보"); 
+			console.log(data)
+			
+            $("[name=user_id]").val(userId);
+            $("[name=user_name]").val(data[0].user_name);
+            $("[name=email]").val(data[0].email);	        
+            $("[name=company_id]").val(data[0].company_id);	        
+            $("[name=deptno]").val(data[0].deptno);	        
+		},
+		error:function(err){
+			console.log(err)
+		}
+	})
 }
+$(document).ready(function() {
+	
+})
 </script>
 </head>
 
@@ -98,184 +120,30 @@ function goChat(user_id){
 <jsp:include page="a00_main_side.jsp"/>   
    
       <div class="main">
-         <nav class="navbar navbar-expand navbar-light navbar-bg">
-            <a class="sidebar-toggle js-sidebar-toggle">
-          <i class="hamburger align-self-center"></i>
-        </a>
-
-            <div class="navbar-collapse collapse">
-               <ul class="navbar-nav navbar-align">
-                  <li class="nav-item dropdown">
-                     <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
-                        <div class="position-relative">
-                           <i class="align-middle" data-feather="bell"></i>
-                           <span class="indicator">4</span>
-                        </div>
-                     </a>
-                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
-                        <div class="dropdown-menu-header">
-                           4 New Notifications
-                        </div>
-                        <div class="list-group">
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-danger" data-feather="alert-circle"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Update completed</div>
-                                    <div class="text-muted small mt-1">Restart server 12 to complete the update.</div>
-                                    <div class="text-muted small mt-1">30m ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-warning" data-feather="bell"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Lorem ipsum</div>
-                                    <div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate hendrerit et.</div>
-                                    <div class="text-muted small mt-1">2h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-primary" data-feather="home"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Login from 192.186.1.8</div>
-                                    <div class="text-muted small mt-1">5h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-success" data-feather="user-plus"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">New connection</div>
-                                    <div class="text-muted small mt-1">Christina accepted your request.</div>
-                                    <div class="text-muted small mt-1">14h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                        </div>
-                        <div class="dropdown-menu-footer">
-                           <a href="#" class="text-muted">Show all notifications</a>
-                        </div>
-                     </div>
-                  </li>
-                                
-     
-<li class="nav-item dropdown">   
-                     <a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <img src="z01_upload/${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
-				<c:choose>
-				    <c:when test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
-				        <span class="text-dark">Welcome, PM_${user_name}</span>
-				    </c:when>
-				    <c:otherwise>
-				        <span class="text-dark">Welcome, MEM_${user_name}</span>
-				    </c:otherwise>
-				</c:choose>
-              </a>
-                     <!-- <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
-                        <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
-                        <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
-                        <div class="dropdown-divider"></div>
-                        <form method="post" action="/logout">
-                        <input type="submit" class="dropdown-item" value="Log out" >
-                        </form>
-                     </div> -->
-                  </li>
-               </ul>
-            </div>
-         </nav>
+         <jsp:include page="a00_top.jsp"/>  
 
          <main class="content">
-          <div class="row">
-           <div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
-							<div class="card flex-fill">
-								<div class="card-header">
 
-									<h5 class="card-title mb-0">진행중인 프로젝트</h5>
-								</div>
-								<div class="card-body d-flex">
-									<div class="align-self-center w-100">
-										ㅎㅎ
-									</div>
-								</div>
-							</div>
-						</div>
-			<div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
-							<div class="card flex-fill">
-								<div class="card-header">
-
-									<h5 class="card-title mb-0">완료된 프로젝트</h5>
-								</div>
-								<div class="card-body d-flex">
-									<div class="align-self-center w-100">
-										호호
-									</div>
-								</div>
-							</div>
-						</div>
-			<div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
-							<div class="card flex-fill">
-								<div class="card-header">
-
-									<h5 class="card-title mb-0">진행예정 프로젝트</h5>
-								</div>
-								<div class="card-body d-flex">
-									<div class="align-self-center w-100">
-										후후
-									</div>
-								</div>
-							</div>
-						</div>
-          </div>
             <div class="container-fluid p-0">
 
                <h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
                
-         <!-- 프로젝트 생성 버튼 -->
-         <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
-	         <button class="btn btn-success" data-toggle="modal" data-target="#ModalCenter"
-           type="button">CREATE PROJECT</button>
-	    </c:if>
-           
-               
-            <div class="row mb-4">
+     
+     <div class="row mb-4">
         <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
           <div class="card">
             <div class="card-header pb-0">
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Projects</h6>
-                  <p class="text-sm mb-0">
-                    <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    <span class="font-weight-bold ms-1">30 done</span> this month
-                  </p>
+                  <h6>SEARCH</h6>
+                  <form action="HR" id="schFrm" method="post">
+                    <input type="text" name="sch" placeholder="검색어를 입력하세요" />
+                    <button class="btn btn-info" type="submit">Search</button>
+                    <input type="hidden" name="curPage" value="${sch.curPage}"/>
+                   </form>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
-                  <div class="dropdown float-lg-end pe-4">
-                    <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-v text-secondary"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
+                  
                 </div>
               </div>
             </div>
@@ -284,57 +152,48 @@ function goChat(user_id){
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Companies</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Members</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Budget</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Completion</th>
+                      <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7 px-2">add</th>
+                      <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">user</th>
+                      <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">ID</th>
+                      <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">email</th>
+                      <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">department</th>
+                      <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">company ID</th>
+                      <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">is Active</th>
                     </tr>
                   </thead>
                   <tbody>
-                  <c:forEach var="pro" items="${pro}">
-                    <tr onclick="projectPage('${pro.project_id}')" class="project-item">
-                      <td>
+                  <c:forEach var="user" items="${user}">
+                    <tr class="userList" data-toggle="modal" data-target="#ModalCenter" onclick="getUser('${user.user_id}')">
+                     <td class="align-middle text-center text-sm">
+			            <input type="checkbox" name="selectedUsers" onclick="event.stopPropagation()"
+			            	style="transform: scale(1.5); margin: 0; padding: 0;" value="${user.user_id}">
+			        </td>
+                      <td>                      
                         <div class="d-flex px-2 py-1">
                           <div>
-                           <img src="${pro.logo}" class="avatar avatar-sm me-3" alt="${pro.project_name}">
+                           <img src="z01_upload/${user.image}" class="avatar avatar-sm me-3" alt="${user.user_name}'s image">
                           
                           </div>
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">${pro.project_name}</h6>
+                            <h6 class="mb-0 text-sm font-weight-bold">${user.user_name}</h6>
                           </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="avatar-group mt-2">
-                         <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="user1">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                            <img src="${path}/material-dashboard-2/assets/img/team-3.jpg" alt="user2">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alexander Smith">
-                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="user3">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="${path}/material-dashboard-2/assets/img/team-1.jpg" alt="user4">
-                          </a>
                         </div>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="amount text-xs font-weight-bold" >${pro.amount}</span>
+                        <span class="amount text-s" >${user.user_id}</span>
                       </td>
-                      <td class="align-middle">
-                        <div class="progress-wrapper w-75 mx-auto">
-                          <div class="progress-info">
-                            <div class="progress-percentage">
-                              <span class="text-xs font-weight-bold">${pro.progress}%</span>
-                            </div>
-                          </div>
-                          <div class="progress">
-                          <div class="progress-bar bg-gradient-info" style="width: ${pro.progress}%;" role="progressbar" aria-valuenow="${pro.progress}" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
+                      <td class="align-middle text-center text-sm">
+                        <span class="amount text-s" >${user.email}</span>
                       </td>
+                      <td class="align-middle text-center text-sm">
+                        <span class="amount text-s" >${user.dname}</span>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <span class="amount text-s" >${user.company_id}</span>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <span class="amount text-s" >${user.project_status ? 'Active' : 'Inactive'}</span>                      
+                      </td>                                            
                     </tr>
                     </c:forEach>
                   </tbody>
@@ -343,6 +202,22 @@ function goChat(user_id){
             </div>
           </div>
         </div>
+<ul class="pagination justify-content-center">
+	  <li class="page-item"><a class="page-link" href="javascript:goPage(${sch.startBlock-1})" style="width:5rem">Previous</a></li>
+	  <c:forEach var="pCnt" begin="${sch.startBlock}" 
+	  						end="${sch.endBlock}">
+	  <li class="page-item ${sch.curPage==pCnt?'active':''}">
+	  	<a class="page-link" href="javascript:goPage(${pCnt})">${pCnt}</a></li>
+	  </c:forEach>
+	  <li class="page-item"><a class="page-link" href="javascript:goPage(${sch.endBlock+1})" style="width:5rem">Next</a></li>
+	</ul>	
+	<script type="text/javascript">
+		function goPage(pCnt){
+			$("[name=curPage]").val(pCnt)  // 클릭한 것을 현제 페이지 번호로 전송.. 페이지가 이동 처리.
+			$("#schFrm").submit()
+			
+		}
+	</script>
         </div>
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
@@ -358,43 +233,56 @@ function goChat(user_id){
 
             </div>
          </main>
-
-         <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ModalLongTitle">Create Project</h5>
+        <h5 class="modal-title" id="ModalLongTitle">User Info</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-      <form id="modalFrm" class="form"  method="post" action="insertProject">
-      <input type="hidden" name="company_id" value="COM_0001"/>
+      <form id="modalFrm" class="form"  method="post" action="updateUser">
+      <div class="row">
+         <div class="col">
+         <span>ID</span>
+           <input type="text" class="form-control" name="user_id" readonly/>
+         </div>
+        </div>
         <div class="row">
          <div class="col">    
-         <span>Project Name</span>              
-           <input type="text" class="form-control" name="project_name">
+         <span>Name</span>              
+           <input type="text" class="form-control" name="user_name" readonly/>
          </div>
         </div>
         <div class="row">
          <div class="col">
-         <span>Extra Comment</span>
-            <textarea name="etc" rows="3" cols="10" class="form-control"></textarea>
+         <span>email</span>
+            <input type="text" class="form-control" name="email" readonly/>
          </div>
         </div>
         <div class="row">
          <div class="col">
-         <span>Start Date</span>
-           <input type="date" class="form-control" placeholder="직책명 입력" name="start_date">
+         <span>Company ID</span>
+           <input type="text" class="form-control" name="company_id"/>
          </div>
         </div>
         <div class="row">
          <div class="col">
-         <span>End Date</span>
-           <input type="date" class="form-control" placeholder="직책명 입력" name="end_date">
+         <span>Department</span>
+           <select class="form-control" name="deptno">
+           	<option value="0">N/A</option>
+           	<option value="10">PM</option>
+           	<option value="20">인사</option>
+           	<option value="30">재무</option>
+           	<option value="40">마케팅</option>
+           	<option value="50">개발</option>
+           	<option value="60">유지보수</option>
+           	<option value="70">품질보증</option>
+           </select>
          </div>
-        </div>   
+        </div>            
         
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -405,7 +293,7 @@ function goChat(user_id){
       
     </div>
   </div>
-</div>
+</div>     
       </div>
    </div>
 
