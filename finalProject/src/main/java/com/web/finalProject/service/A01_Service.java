@@ -52,16 +52,33 @@ public class A01_Service {
     	return dao.deleteGantt(task_id)>0?"삭제 완료":"삭제 실패";
     }   
     
+    
+    // 프로젝트 생성
     public String insertProject(Project ins) {
         dao.insertProject(ins);
         // 생성된 project_id를 조회
         String projectId = dao.getLastInsertedProjectId();
         ins.setProject_id(projectId);
-        return "프로젝트 생성";
+        return dao.insertProject(ins)>0?"프로젝트 생성":"프로젝트 생성 실패";
     }
-    public int insertProjectPM(String project_id, String user_id) {
-        return dao.insertProjectPM(project_id, user_id);
+    // 프로젝트 팀원 추가하기 위한 user리스트(드롭박스)
+    public List<Users> getUserProIns(){
+    	return dao.getUserProIns();
+    }    
+    // 프로젝트 PM할당
+    public int addProjectPM(String project_id, String user_id) {
+        return dao.addProjectUser(project_id, user_id);
+    }  
+    // 프로젝트에 팀원 추가(team테이블)
+    public void addProjectMem(String projectId, List<String> userIds) {
+        for (String userId : userIds) {
+            dao.addProjectUser(projectId, userId);
+        }
     }
+    
+    
+    
+    
     
     // 프로젝트 생성 후 팀원 추가 위한 전체 user정보 (페이징)
     public List<Users> getUserList(UserSch sch){
@@ -130,10 +147,7 @@ public class A01_Service {
 	}
     
     
-    // 프로젝트 팀원 추가하기 위한 user리스트
-    public List<Users> getUserProIns(){
-    	return dao.getUserProIns();
-    }
+    
     
     
     

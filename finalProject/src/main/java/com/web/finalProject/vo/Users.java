@@ -27,7 +27,6 @@ public class Users {
 	private boolean project_status;
 	private int cnt;
 	
-	
 	private MultipartFile[] reports;
 	private List<String> images;
 	

@@ -79,38 +79,33 @@
    }
 
 </style>
- <script>
- var msg="${msg}"
- if(msg != "") {
-     alert(msg); // 알림 메시지 표시
+<script>
+var msg="${msg}"
+if(msg != "") {
+    alert(msg); // 알림 메시지 표시
 
-     if (msg=="생성 완료") {
-        $(".close").click();
-        window.location.href = 'main';
+    if (msg=="생성 완료") {
+       $(".close").click();
+       window.location.href = 'main';
+    }
+}
+// 세션에 저장되어 있는 롤 코드
+var role_code="${sessionScope.role_code}"
+function projectPage(project_id){ // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
+  if(role_code!="" && role_code!=null){
+     if(role_code=="P"){
+        location.href="dashpmFrm?project_id="+project_id
+     }else{
+        location.href="dashmemFrm?project_id="+project_id
      }
- }
- // 세션에 저장되어 있는 롤 코드
- var role_code="${sessionScope.role_code}"
- function projectPage(project_id){ // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
-   if(role_code!="" && role_code!=null){
-      if(role_code=="P"){
-         location.href="dashpmFrm?project_id="+project_id
-      }else{
-         location.href="dashmemFrm?project_id="+project_id
-      }
-   }else{
-      alert("비정상적인 접근! 관리자에게 문의해주세요")
-   }    
- }
-
-
-function goChat(user_id){
-	location.href="message?user_id="+user_id
+  }else{
+     alert("비정상적인 접근! 관리자에게 문의해주세요")
+  }    
 }
-function handleButtonClick(event) {
-    event.stopPropagation();
-    location.href="HR"
+function projectDetail(){
+	location.href="projectDetail"
 }
+
 </script>
 </head>
 
@@ -168,7 +163,7 @@ function handleButtonClick(event) {
 
                <h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
                
-         <!-- 프로젝트 생성 버튼 -->
+         <!-- 프로젝트 생성 버튼 (PM만 보이게)-->
          <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
 	         <button class="btn btn-success" data-toggle="modal" data-target="#ModalCenter"
            type="button">CREATE PROJECT</button>
@@ -261,7 +256,7 @@ function handleButtonClick(event) {
                         </div>
                       </td>
                       <td class="align-middle">
-                      <button class="btn btn-primary" onclick="handleButtonClick(event)">member</button>
+                      <button class="btn btn-primary" onclick="projectDetail('${pro.project_id}')">member</button>
                       </td>
                     </tr>
                     </c:forEach>
@@ -331,9 +326,9 @@ function handleButtonClick(event) {
         <div class="row">
          <div class="col">
          <span>Users</span>
-	         <select class="form-control" name="user_id" multiple>
+	         <select class="form-control" name="userIds" multiple>
 	           	<c:forEach var="user" items="${user}">
-					<option value="${user.user_id}" style="width:10rem">${user.user_name}(${user.dname})</option>					
+					<option value="${user.user_id}" style="height:1.5rem;">${user.user_name}(${user.dname})</option>					
 				</c:forEach>
 	         </select>
 		<%-- <input list="user_list" id="combobox" name="user_id"

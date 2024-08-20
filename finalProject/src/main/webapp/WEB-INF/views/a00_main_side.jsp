@@ -44,9 +44,13 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
+$(document).ready(function(){
+	$("#HR").hide()
 	
-	});
+	if("${sessionScope.role_code}"=="P"){
+		$("#HR").show()
+	}
+});
 </script>
 </head>
 
@@ -76,7 +80,7 @@
             </li>
             --%>
             
-             <li class="sidebar-item ${currentUrl == '/HR' ? 'active' : ''}">
+             <li id="HR" class="sidebar-item ${currentUrl == '/HR' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('HR')">
                     <i class="align-middle" data-feather="command"></i> <span class="align-middle"><strong>H</strong><small>uman</small> <strong>R</strong><small>esources</small></span>
                 </a>                

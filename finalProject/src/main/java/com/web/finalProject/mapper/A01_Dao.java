@@ -100,10 +100,10 @@ public interface A01_Dao {
 	@Select("SELECT project_id FROM project \r\n"
 			+ "WHERE ROWNUM = 1 ORDER BY project_id DESC")
     String getLastInsertedProjectId();
-	// 프로젝트 생성 시 team에 PM(프로젝트 생성자) 추가
+	// 프로젝트 생성 시 team에 인원 추가
 	@Insert("INSERT INTO team values(#{project_id},#{user_id})")
-	int insertProjectPM(@Param("project_id") String project_id,
-			@Param("user_id") String user_id);
+	int addProjectUser(@Param("project_id") String project_id, @Param("user_id") String user_id);
+	
 	
 	// user리스트
 	@Select("SELECT *\r\n"

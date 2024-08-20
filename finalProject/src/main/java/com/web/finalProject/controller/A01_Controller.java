@@ -160,42 +160,52 @@ public class A01_Controller {
 	}
 	
 	
-	
-	
-	// 프로젝트 생성
+	// 프로젝트 생성 및 팀원추가
 	@PostMapping("insertProject")
-	public String insertProject(HttpServletRequest request, Project ins,
-			Model d) {
-	    HttpSession session = request.getSession(false); 
-	    String user_id = (String) session.getAttribute("user_id"); 
-	    ins.setUser_id(user_id);
+	public String insertProject(HttpServletRequest request, Project ins, Model d) {
+	    HttpSession session = request.getSession(false);
+	    String user_id = (String) session.getAttribute("user_id");
 	    
+	    ins.setUserIds(ins.getUserIds());
+
+	    // Project를 데이터베이스에 저장
 	    String isIns = service.insertProject(ins);
-	    if("프로젝트 생성".equals(isIns)) {
-	        d.addAttribute("msg",
-	        		service.insertProjectPM(ins.getProject_id(), user_id));
+	    // 프로젝트 생성 성공 시
+	    if ("프로젝트 생성".equals(isIns)) {
+	    	// pm할당
+	        service.addProjectPM(ins.getProject_id(), user_id);
+	        if (ins.getUserIds() != null && !ins.getUserIds().isEmpty()) {
+	            service.addProjectMem(ins.getProject_id(), ins.getUserIds());
+	        }
 	    }
+
 	    System.out.println("생성된 프로젝트 아이디:" + ins.getProject_id());
+	    System.out.println("추가된 팀원 아이디:"+ins.getUserIds());
 	    return "redirect:main";
 	}
 	/*
-	// http://localhost:4040/HR
-    // 자원관리-인적자원 관리 페이지
-    @RequestMapping("HR")
-    public String HR(@ModelAttribute("sch") UserSch sch, 
-    		HttpServletRequest request, Model d) {
-		d.addAttribute("currentUrl", request.getRequestURI());
-		d.addAttribute("user", service.getUserList(sch));
-		return "WEB-INF\\views\\a01_human_resource.jsp";
-    }
-    */
+	@GetMapping("projectDetail")
+	public String projectDetail(){
+		
+	}
+	*/
+	
+	// 인적자원관리 페이지
     @GetMapping("HR")
     public String HR(HttpServletRequest request, Model d) {
     	d.addAttribute("currentUrl", request.getRequestURI());
 		return "WEB-INF\\views\\a01_human_resource.jsp";
     }
+    // 페이징 처리, 전체 사용자 리스트
+    @PostMapping("HR")
+    public ResponseEntity<pageUserList> HR(@RequestBody UserSch sch) {
+        List<Users> userList = service.getUserList(sch);
+        pageUserList response = new pageUserList(userList, sch);
+        System.out.println("검색어:" + sch.getSch());
+        System.out.println("검색결과 출력 갯수:" + sch.getCount());
+        return ResponseEntity.ok(response);
+    }
     // 사용자 디테일
-    // http://localhost:4040/getUser?user_id=P_0001
     @PostMapping("getUser")
     public ResponseEntity<Users> getUser(@RequestParam("user_id") String user_id) {
     	System.out.println("사용자 디테일:"+user_id);
@@ -213,15 +223,9 @@ public class A01_Controller {
     	System.out.println(user_id+"의 삭제 결과:"+service.deleteUser(user_id));
     	return ResponseEntity.ok(service.deleteUser(user_id));
     }
-    @PostMapping("HR")
-    public ResponseEntity<pageUserList> HR(@RequestBody UserSch sch) {
-        List<Users> userList = service.getUserList(sch);
-        pageUserList response = new pageUserList(userList, sch);
-        System.out.println("검색어:" + sch.getSch());
-        System.out.println("검색결과 출력 갯수:" + sch.getCount());
-        return ResponseEntity.ok(response);
-    }
+    
 	
+    
     
     // 캘린더 페이지
     // http://localhost:4040/fullcalendar
@@ -291,7 +295,7 @@ public class A01_Controller {
         return ResponseEntity.ok(new CalList(
         		service.insertCalendar(ins), calendarList));
     }
-
+  	// 캘린더 수정
     @PostMapping("updateCalendar")
     public ResponseEntity<?> updateCalendar(@RequestParam(name ="sel", defaultValue="P") List<String> sel,
     		Calendar upt, HttpServletRequest request) {
@@ -312,7 +316,7 @@ public class A01_Controller {
         return ResponseEntity.ok(new CalList(
         		service.updateCalendar(upt), calendarList));
     }
-
+    // 캘린더 삭제
     @PostMapping("deleteCalendar")
     public ResponseEntity<?> deleteCalendar(@RequestParam(name ="sel", defaultValue="P") List<String> sel,
     		@RequestParam("id") String id, HttpServletRequest request) {
@@ -334,37 +338,12 @@ public class A01_Controller {
     }
 
  	
-    
+    // 다국어 처리
     private final LocaleResolver localeResolver;
 
     public A01_Controller(LocaleResolver localeResolver) {
         this.localeResolver = localeResolver;
     }
-    /*
-     *다국어 처리
-    // http://localhost:4040/changeLang
-    @GetMapping("changeLang")
-    public String changeLang(@RequestParam(value = "lang", required = false) String lang, HttpServletRequest request, HttpServletResponse response) {
-        if (lang != null) {
-            Locale locale;
-            switch (lang) {
-                case "ko":
-                    locale = new Locale("ko");
-                    break;
-                case "en":
-                    locale = new Locale("en");
-                    break;
-                case "fa":
-                    locale = new Locale("fa");
-                    break;
-                default:
-                    locale = Locale.ENGLISH;
-            }
-            localeResolver.setLocale(request, response, locale);
-        }
-        return "redirect:profile";
-    }
-    */
     // http://localhost:4040/profile
     @GetMapping("profile")
     public String profile(@RequestParam(value = "lang", defaultValue="en", required = false) String lang, HttpServletRequest request, Model d, HttpServletResponse response) {    
@@ -399,7 +378,7 @@ public class A01_Controller {
         d.addAttribute("cpro", service.getComProjectList(user_id));        
         return "WEB-INF\\views\\a01_profile.jsp";
     }
-    
+    // 프로필 수정
     @PostMapping("updateProfile")
     public String updateProfileWithFile(HttpServletRequest request, MultipartFile file, Users user, Model model) {
     	HttpSession session = request.getSession(false); 
