@@ -2,6 +2,7 @@ package com.web.finalProject.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +70,8 @@ public class A01_Service {
     	if(sch.getDname()==null) sch.setDname("");
     	if(sch.getCompany_id()==null) sch.setCompany_id("");
 		// 1. 총데이터 수(DB)
-    	sch.setCount(dao.getUserCount(sch));
+    	int totalCount = dao.getUserCount(sch);
+    	sch.setCount(totalCount);
 		
 		// 2. 현재 클릭한 번호 
 		if(sch.getCurPage()==0) {
@@ -96,6 +98,10 @@ public class A01_Service {
 		int imEnd = sch.getPageSize()*sch.getCurPage();
 		sch.setEnd(imEnd > sch.getCount()?sch.getCount():imEnd);
 		
+		// 데이터가 없을 경우 빈 리스트 반환
+	    if (totalCount == 0) {
+	        return Collections.emptyList();
+	    }
 		
 		// 6. 페이징 블럭 처리..
 		// 	1) 블럭 크기 설정.-일반적으로 홀수로 정함..
@@ -110,14 +116,28 @@ public class A01_Service {
 		
 		return dao.getUserList(sch);
 	}
-    
+    public String updateUser(Users upt) {
+    	return dao.updateUser(upt)>0?"수정 완료":"수정 실패";
+    }
+    public String deleteUser(String user_id) {
+    	return dao.deleteUser(user_id)>0?"삭제 완료":"삭제 실패";
+    }
     
     
     // 팀원 상세 정보
-    public List<Users> getUser(String user_id){
+    public Users getUser(String user_id){
 		return dao.getUser(user_id);
 	}
     
+    
+    // 프로젝트 팀원 추가하기 위한 user리스트
+    public List<Users> getUserProIns(){
+    	return dao.getUserProIns();
+    }
+    
+    
+    
+    // main과 profile에서 보일 프로젝트 리스트
     public List<Project> getProjectList(String user_id){
     	return dao.getProjectList(user_id);
     }
@@ -188,17 +208,17 @@ public class A01_Service {
     
     // 캘린더 등록
     public String insertCalendar(Calendar ins) {
-        return dao.insertCalendar(ins)>0?"등록 성공":"등록 실패";
+        return dao.insertCalendar(ins)>0?"등록 완료":"등록 실패";
     }
 
     // 캘린더 수정
     public String updateCalendar(Calendar upt) {
-        return dao.updateCalendar(upt)>0?"수정 성공":"수정 실패";
+        return dao.updateCalendar(upt)>0?"수정 완료":"수정 실패";
     }
 
     // 캘린더 삭제
     public String deleteCalendar(String id, String user_id) {
-        return dao.deleteCalendar(id,user_id)>0?"삭제 성공":"삭제 실패";
+        return dao.deleteCalendar(id,user_id)>0?"삭제 완료":"삭제 실패";
     }
     
     

@@ -20,7 +20,7 @@
 	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
 	<meta name="author" content="AdminKit">
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
-
+  	<link rel="icon" sizes="85x85" type="image/png" href="${path}/material-dashboard-2/assets/img/HPM-icon.png">
 
 <!-- jquery -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -343,13 +343,12 @@ function goChat(user_id){
                <li class="nav-item dropdown">
 					<a class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.project_id}')" id="messagesDropdown">
 							<i class="align-middle" data-feather="message-square"></i>
-					</a>
-					
+					</a>					
 				</li>                  
      
 <li class="nav-item dropdown">   
                      <a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <img src="/z01_upload/${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
+                 <img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
 				<c:choose>
 				    <c:when test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
 				        <span class="text-dark">Welcome, PM_${user_name}</span>
@@ -397,49 +396,49 @@ function goChat(user_id){
 								<form id="frm02" class="form" method="post">
 								<input type="hidden" name="id"/>
 									<div class="input-group mb-3">	
-										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center">작성자</span>
+										<div class="input-group-prepend">
+											<span class="input-group-text justify-content-center" style="width:6rem">작성자</span>
 										</div>
 										<input name="writer"  class="form-control" readonly/>	
 									</div>
 									<div class="input-group mb-3">	
 										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center">프로젝트 ID</span>
+											<span class="input-group-text  justify-content-center" style="width:6rem">프로젝트 ID</span>
 										</div>
 										<input name="project_id"  class="form-control" readonly/>	
 									</div>
 									<div class="input-group mb-3">	
 										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center">일정명</span>
+											<span class="input-group-text  justify-content-center" style="width:6rem">일정명</span>
 										</div>
 										<input name="title" placeholder="일정 입력"  class="form-control" />	
 									</div>								
 									<div class="input-group mb-3">	
 										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center">시 작(일/시)</span>
+											<span class="input-group-text  justify-content-center" style="width:6rem">시 작(일/시)</span>
 										</div>
 										<input id="start" class="form-control" /><!-- 화면에 보일 날짜/시간.. -->	
 										<input name="start" type="hidden"   />	<!-- 실제 저장할 날짜/시간 -->
 									</div>	
 									<div class="input-group mb-3">	
 										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center">종 료(일/시)</span>
+											<span class="input-group-text  justify-content-center" style="width:6rem">종 료(일/시)</span>
 										</div>
 										<input id="end"  class="form-control" />	
 										<input name="end" type="hidden"   />	
 									</div>
-									<div class="input-group mb-3">
-										
-											<span class="input-group-text justify-content-center">종일여부</span>
-										
+									<div class="input-group mb-3">										
+										<div class="input-group-prepend ">
+											<span class="input-group-text  justify-content-center" style="width:6rem">종일여부</span>
+										</div>								
 										<select name="allDay" class="form-control">
 											<option value="1">종일</option>
 											<option value="0">시간</option>
 										</select>
 									</div>
 									<div class="input-group mb-3">	
-										<div class="input-group-prepend w-25 ">
-											<span class="input-group-text justify-content-center">팀/개인</span>
+										<div class="input-group-prepend">
+											<span class="input-group-text justify-content-center" style="width:6rem">팀/개인</span>
 										</div>
 										<select name="entity_type" class="form-control">
 											<option value="P">개인</option>
@@ -448,7 +447,7 @@ function goChat(user_id){
 									</div>			
 									<div class="input-group mb-3">	
 										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center">내용</span>
+											<span class="input-group-text  justify-content-center" style="width:6rem">내용</span>
 										</div>
 										<textarea name="content" rows="5" cols="10" class="form-control"></textarea>			
 									</div>

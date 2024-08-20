@@ -53,6 +53,16 @@
    <link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 <%--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
+<%-- taskcss --%>
+<link rel="stylesheet" href="${path}/jobboard-master/css/custom-bs.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/fonts/line-icons/style.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/animate.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/quill.snow.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <style>
 .project-item:hover{
 	cursor:pointer;
@@ -60,6 +70,14 @@
 	border-radius:10px;
 	transition: background-color 0.3s ease;
 }
+.dropdown-menu {
+    max-height: 200px; /* 필요에 따라 높이 조절 */
+    overflow-y: auto;
+}
+.dropdown-item {
+       cursor: pointer; /* 클릭 가능한 커서 */
+   }
+
 </style>
  <script>
  var msg="${msg}"
@@ -92,7 +110,7 @@ function goChat(user_id){
 function handleButtonClick(event) {
     event.stopPropagation();
     location.href="HR"
-  }
+}
 </script>
 </head>
 
@@ -102,107 +120,7 @@ function handleButtonClick(event) {
 <jsp:include page="a00_main_side.jsp"/>   
    
       <div class="main">
-         <nav class="navbar navbar-expand navbar-light navbar-bg">
-            <a class="sidebar-toggle js-sidebar-toggle">
-          <i class="hamburger align-self-center"></i>
-        </a>
-
-            <div class="navbar-collapse collapse">
-               <ul class="navbar-nav navbar-align">
-                  <li class="nav-item dropdown">
-                     <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
-                        <div class="position-relative">
-                           <i class="align-middle" data-feather="bell"></i>
-                           <span class="indicator">4</span>
-                        </div>
-                     </a>
-                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
-                        <div class="dropdown-menu-header">
-                           4 New Notifications
-                        </div>
-                        <div class="list-group">
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-danger" data-feather="alert-circle"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Update completed</div>
-                                    <div class="text-muted small mt-1">Restart server 12 to complete the update.</div>
-                                    <div class="text-muted small mt-1">30m ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-warning" data-feather="bell"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Lorem ipsum</div>
-                                    <div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate hendrerit et.</div>
-                                    <div class="text-muted small mt-1">2h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-primary" data-feather="home"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Login from 192.186.1.8</div>
-                                    <div class="text-muted small mt-1">5h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-success" data-feather="user-plus"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">New connection</div>
-                                    <div class="text-muted small mt-1">Christina accepted your request.</div>
-                                    <div class="text-muted small mt-1">14h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                        </div>
-                        <div class="dropdown-menu-footer">
-                           <a href="#" class="text-muted">Show all notifications</a>
-                        </div>
-                     </div>
-                  </li>
-                                
-     
-<li class="nav-item dropdown">   
-                     <a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <img src="/z01_upload/${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
-				<c:choose>
-				    <c:when test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
-				        <span class="text-dark">Welcome, PM_${user_name}</span>
-				    </c:when>
-				    <c:otherwise>
-				        <span class="text-dark">Welcome, MEM_${user_name}</span>
-				    </c:otherwise>
-				</c:choose>
-              </a>
-                     <!-- <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
-                        <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
-                        <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
-                        <div class="dropdown-divider"></div>
-                        <form method="post" action="/logout">
-                        <input type="submit" class="dropdown-item" value="Log out" >
-                        </form>
-                     </div> -->
-                  </li>
-               </ul>
-            </div>
-         </nav>
+         <jsp:include page="a00_top.jsp"/>
 
          <main class="content">
           <div class="row">
@@ -409,21 +327,48 @@ function handleButtonClick(event) {
          <span>End Date</span>
            <input type="date" class="form-control" name="end_date"/>
          </div>
-        </div>            
+        </div>  
+        <div class="row">
+         <div class="col">
+         <span>Users</span>
+	         <select class="form-control" name="user_id" multiple>
+	           	<c:forEach var="user" items="${user}">
+					<option value="${user.user_id}" style="width:10rem">${user.user_name}(${user.dname})</option>					
+				</c:forEach>
+	         </select>
+		<%-- <input list="user_list" id="combobox" name="user_id"
+					class="form-control" placeholder="Select Member">
+			<datalist class="dropdown-menu" id="user_list" >
+				<c:forEach var="user" items="${user}">
+					<option value="${user.user_id}" style="width:10rem">${user.user_name}(${user.dname})</option>
+				</c:forEach>
+			</datalist> --%>
+        </div>        
+       </div>
+     </div>           
         
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" id="regBtn" class="btn btn-success">regist</button>        
-      </div>   
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="submit" id="regBtn" class="btn btn-success">regist</button>        
+     	</div>   
        </form> 
       </div>
       
     </div>
   </div>
 </div>
-      </div>
-   </div>
-
+</div>
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+	    const form = document.querySelector('form'); // 폼 선택
+	    form.addEventListener('submit', (event) => {
+	        const selectedUsers = Array.from(document.querySelectorAll('input[name="user_ids"]:checked'))
+	                                   .map(checkbox => checkbox.value);
+	        console.log('Selected Users:', selectedUsers);
+	        // 예: 서버로 제출하거나 다른 작업을 수행
+	    });
+	});
+</script>
    <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
 
 

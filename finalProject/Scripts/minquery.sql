@@ -492,3 +492,52 @@ FROM (
         u.user_id
 )
 WHERE ROWNUM BETWEEN 1 AND 5;
+
+
+
+INSERT INTO users (user_id, user_name, email, password, DEPTNO, company_id, role_code, image) VALUES 
+('B_' || TO_CHAR(users_seq.nextval, 'FM0000'), '이지은', 'jieun@gmail.com', 'jieun11!!', 30, 'COM_0001', 'B', 'defaultImage.png');
+
+INSERT INTO users (user_id, user_name, email, password, DEPTNO, company_id, role_code, image) VALUES 
+('P_' || TO_CHAR(users_seq.nextval, 'FM0000'), '최준혁', 'junhyeok@gmail.com', 'junhyuk11!!', 10, 'COM_0002', 'P', 'defaultImage.png');
+
+INSERT INTO users (user_id, user_name, email, password, DEPTNO, company_id, role_code, image) VALUES 
+('P_' || TO_CHAR(users_seq.nextval, 'FM0000'), '김철수', 'chulsoo@gmail.com', 'chulsoo11!!', 10, 'COM_0003', 'P', 'defaultImage.png');
+
+INSERT INTO users (user_id, user_name, email, password, DEPTNO, company_id, role_code, image) VALUES 
+('M_' || TO_CHAR(users_seq.nextval, 'FM0000'), '제임스', 'james@gmail.com', 'james11!!', 20, 'COM_0004', 'M', 'defaultImage.png');
+
+INSERT INTO users (user_id, user_name, email, password, DEPTNO, company_id, role_code, image) VALUES 
+('B_' || TO_CHAR(users_seq.nextval, 'FM0000'), '이소라', 'sora@gmail.com', 'sora11!!', 30, 'COM_0003', 'B', 'defaultImage.png');
+
+INSERT INTO users (user_id, user_name, email, password, DEPTNO, company_id, role_code, image) VALUES 
+('M_' || TO_CHAR(users_seq.nextval, 'FM0000'), '강지민', 'jimin@gmail.com', 'jimin11!!', 50, 'COM_0002', 'M', 'defaultImage.png');
+
+INSERT INTO users (user_id, user_name, email, password, DEPTNO, company_id, role_code, image) VALUES 
+('M_' || TO_CHAR(users_seq.nextval, 'FM0000'), '로라', 'laura@gmail.com', 'laura11!!', 40, 'COM_0002', 'M', 'defaultImage.png');
+
+INSERT INTO users (user_id, user_name, email, password, DEPTNO, company_id, role_code, image) VALUES 
+('M_' || TO_CHAR(users_seq.nextval, 'FM0000'), '장성준', 'sungjun@gmail.com', 'sungjun11!!', 60, 'COM_0003', 'M', 'defaultImage.png');
+
+INSERT INTO users (user_id, user_name, email, password, DEPTNO, company_id, role_code, image) VALUES 
+('M_' || TO_CHAR(users_seq.nextval, 'FM0000'), '박성우', 'sungwoo@gmail.com', 'sungwoo11!!', 50, 'COM_0004', 'M', 'defaultImage.png');
+
+INSERT INTO users (user_id, user_name, email, password, DEPTNO, company_id, role_code, image) VALUES 
+('M_' || TO_CHAR(users_seq.nextval, 'FM0000'), '제니퍼', 'jennifer@gmail.com', 'jennifer11!!', 70, 'COM_0001', 'M', 'defaultImage.png');
+
+SELECT * FROM users;
+INSERT INTO users (user_id, user_name, email, password, DEPTNO, company_id, role_code) VALUES 
+('M_' || TO_CHAR(users_seq.nextval, 'FM0000'), 'dd', 'jenddnifer@d.com', 'jennifer11!!', 70, 'COM_0001', 'M');
+
+
+SELECT 
+    u.user_id,
+    u.user_name,
+    d.DNAME,
+    u.DEPTNO
+FROM 
+    users u
+JOIN 
+    department d 
+ON 
+    u.DEPTNO = d.DEPTNO;

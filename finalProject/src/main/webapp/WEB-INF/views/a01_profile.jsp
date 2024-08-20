@@ -80,7 +80,7 @@
 
 <body>
 	<div class="wrapper">
-	<jsp:include page="a00_sideBar.jsp"/> 
+	<jsp:include page="a00_main_side.jsp"/> 
 	
 		<div class="main">			
         <jsp:include page="a00_top.jsp"/>
@@ -108,7 +108,7 @@
 						            <h5 class="card-title mb-0"><fmt:message key="profile_details" /></h5>
 						        </div>
 						        <div class="card-body text-center">
-						            <img src="z01_upload/${profile.image}" style="width: 40%; height: auto;" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
+						            <img src="${profile.image}" style="width: 40%; height: auto;" class="avatar img-fluid rounded me-1" alt="Profile Picture" />
 						            <br><br>
 						
 						            <div class="form-group">

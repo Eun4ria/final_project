@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,6 +52,7 @@ public class A01_Controller {
 	    HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
         String user_id = (String) session.getAttribute("user_id");  
             d.addAttribute("pro", service.getProjectList(user_id));
+            d.addAttribute("user", service.getUserProIns());
             d.addAttribute("currentUrl", request.getRequestURI());
             return "WEB-INF\\views\\a00_main.jsp";
 	}
@@ -176,7 +178,7 @@ public class A01_Controller {
 	    System.out.println("생성된 프로젝트 아이디:" + ins.getProject_id());
 	    return "redirect:main";
 	}
-	
+	/*
 	// http://localhost:4040/HR
     // 자원관리-인적자원 관리 페이지
     @RequestMapping("HR")
@@ -186,13 +188,39 @@ public class A01_Controller {
 		d.addAttribute("user", service.getUserList(sch));
 		return "WEB-INF\\views\\a01_human_resource.jsp";
     }
+    */
+    @GetMapping("HR")
+    public String HR(HttpServletRequest request, Model d) {
+    	d.addAttribute("currentUrl", request.getRequestURI());
+		return "WEB-INF\\views\\a01_human_resource.jsp";
+    }
+    // 사용자 디테일
     // http://localhost:4040/getUser?user_id=P_0001
     @PostMapping("getUser")
-    public ResponseEntity<List<Users>> getUser(@RequestParam("user_id") String user_id, Model d) {
+    public ResponseEntity<Users> getUser(@RequestParam("user_id") String user_id) {
     	System.out.println("사용자 디테일:"+user_id);
 		return ResponseEntity.ok(service.getUser(user_id));
     }
-    
+    // 사용자 정보 수정
+    @PostMapping("updateUser")
+    public ResponseEntity<String> updateUser(@RequestBody Users upt) {
+    	System.out.println(upt.getUser_id()+"의 수정 결과:"+service.updateUser(upt));
+    	return ResponseEntity.ok(service.updateUser(upt));
+    }
+    // 사용자 삭제
+    @PostMapping("deleteUser")
+    public ResponseEntity<String> deleteUser(@RequestParam("user_id") String user_id) {
+    	System.out.println(user_id+"의 삭제 결과:"+service.deleteUser(user_id));
+    	return ResponseEntity.ok(service.deleteUser(user_id));
+    }
+    @PostMapping("HR")
+    public ResponseEntity<pageUserList> HR(@RequestBody UserSch sch) {
+        List<Users> userList = service.getUserList(sch);
+        pageUserList response = new pageUserList(userList, sch);
+        System.out.println("검색어:" + sch.getSch());
+        System.out.println("검색결과 출력 갯수:" + sch.getCount());
+        return ResponseEntity.ok(response);
+    }
 	
     
     // 캘린더 페이지
@@ -409,11 +437,31 @@ public class A01_Controller {
     }
     
    
-    
-    
-    
-    
-	
+}
+
+
+
+
+class pageUserList{
+	private List<Users> userList;
+	private UserSch sch;
+	public pageUserList(List<Users> userList, UserSch sch) {
+		super();
+		this.userList = userList;
+		this.sch = sch;
+	}
+	public List<Users> getUserList() {
+		return userList;
+	}
+	public void setUserList(List<Users> userList) {
+		this.userList = userList;
+	}
+	public UserSch getSch() {
+		return sch;
+	}
+	public void setSch(UserSch sch) {
+		this.sch = sch;
+	}
 }
 class TaskList{
 	private String msg;

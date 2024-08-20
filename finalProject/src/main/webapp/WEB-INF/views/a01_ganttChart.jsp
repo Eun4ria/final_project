@@ -317,9 +317,7 @@ function goChat(user_id){
 		// 등록/수정/삭제는 PM권한
 		if(sessionRole=="P"){
 	        // 일정 등록
-	        gantt.attachEvent("onAfterTaskAdd", function(id, task) {
-	        	console.log("등록할 데이터(url 호출 전):", id, task);
-	        	
+	        gantt.attachEvent("onAfterTaskAdd", function(id, task) {	        	
 	        	// 등록 컨펌창
 	        	gantt.confirm({
 	    	    	text: "Are you sure you want to save this?",
