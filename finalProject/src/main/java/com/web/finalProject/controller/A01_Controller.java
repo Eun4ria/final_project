@@ -188,10 +188,8 @@ public class A01_Controller {
     }
     // http://localhost:4040/getUser?user_id=P_0001
     @PostMapping("getUser")
-    public ResponseEntity<List<Users>> getUser(@RequestParam("user_id") String user_id, 
-    		HttpServletRequest request, Model d) {
-    	//d.addAttribute("currentUrl", request.getRequestURI());
-    	System.out.println(user_id);
+    public ResponseEntity<List<Users>> getUser(@RequestParam("user_id") String user_id, Model d) {
+    	System.out.println("사용자 디테일:"+user_id);
 		return ResponseEntity.ok(service.getUser(user_id));
     }
     
