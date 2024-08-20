@@ -319,11 +319,11 @@
                 
 				    
 				<select  class="form-control"  v-model="aff.role_code" name="role_code">
-		        	<option value="N">N/A</option>
+		        	<option value="N">N/A</option> <%-- 프로젝트 할당 안된 사람 --%>
 		        	<option value="C">회사</option>
 		        	<option value="P">프로젝트 관리자</option>
-		        	<option value="M">팀원</option>
-		        	<option value="40">마케팅</option>
+		        	<option value="M">팀원</option> <%-- 프로젝트 할당된 사람 --%>
+		        	<option value="B">예산관리자</option>
 		        	
 		        </select>
 		      </div>  

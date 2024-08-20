@@ -57,17 +57,11 @@ public class A01_Controller {
 	
 	// http://localhost:4040/mainSide
 	@GetMapping("mainSide")
-    public String chart() {
+    public String mainSide() {
         return "WEB-INF\\views\\a00_main_side.jsp";
     }
 	
-	// http://localhost:4040/chart
-	@GetMapping("chart")
-    public String chart(HttpServletRequest request, Model d) {
-		d.addAttribute("currentUrl", request.getRequestURI());
-        return "WEB-INF\\views\\a02_chart.jsp";
-    }
-   
+	
 	
 	
 	

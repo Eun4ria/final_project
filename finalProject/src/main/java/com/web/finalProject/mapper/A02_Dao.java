@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.finalProject.vo.Budget;
 import com.web.finalProject.vo.BudgetSch;
@@ -165,10 +166,6 @@ int insertUser(Users ins);
 	
 	
 //예산관리 - 검색
-	//  예산 budget_id 찾기
-	@Select("SELECT * FROM budget WHERE budget_id = #{budget_id}")
-    List<Budget> findBudgetId(String budget_id);
-	
 	//전체 데이터 수
 	@Select("SELECT count(*)\r\n"
 			+ "FROM BUDGET\r\n"
@@ -193,34 +190,79 @@ int insertUser(Users ins);
 			+ "START WITH parent_id IS NULL\r\n"
 			+ "CONNECT BY PRIOR budget_id = parent_id\r\n"
 			+ "ORDER siblings BY budget_id DESC)\r\n"
-			+ "WHERE lvl= 2")
+			+ "WHERE lvl= 2 or lvl=1")
 	List<Budget> getparentList(BudgetSch sch);
 	
 	
 	// Budget 등록
-	@Insert("INSERT INTO budget (budget_id, budget_name, amount, regdate, usedate, project_id, parent_id, user_id)\r\n"
-			+ "VALUES ('BUG_'||TO_CHAR(budget_seq.nextval, 'FM0000'), #{budget_name}, #{amount}, sysdate, #{usedate}, #{project_id},#{parent_id} ,#{user_id} ) ")
+	@Insert("INSERT INTO budget (budget_id, budget_name, amount, regdate, usedate, project_id, parent_id, user_id, etc)\r\n"
+			+ "VALUES ('BUG_'||TO_CHAR(budget_seq.nextval, 'FM0000'), #{budget_name}, #{amount}, sysdate,  TO_TIMESTAMP(#{usedate}, 'YYYY-MM-DD\"T\"HH24:MI'), #{project_id},#{parent_id} ,#{user_id}, #{etc})")
 	int budgetInsert(Budget ins);
+	
+	//  예산 budget_id 찾기 => 수정에 넣을 데이터 위해
+	@Select("SELECT * FROM budget WHERE budget_id = #{budget_id}")
+    List<Budget> findBudgetId(String budget_id);
 	
 	// Budget 수정
 	@Insert("UPDATE budget\r\n"
 			+ "SET \r\n"
 			+ "    budget_name = #{budget_name},\r\n"
 			+ "    amount = #{amount},\r\n"
-			+ "    regdate = #{regdate},\r\n"
-			+ "    usedate = #{usedate},\r\n"
+			+ "    usedate = TO_TIMESTAMP(#{usedate}, 'YYYY-MM-DD\"T\"HH24:MI'),\r\n"
+			+ "    uptdate = sysdate,\r\n"
 			+ "    project_id = #{project_id},\r\n"
-			+ "    parent_id = #{parent_id},\r\n"
+			+ "    parent_id = NULL,\r\n"
+			+ "    etc = #{etc},\r\n"
 			+ "    user_id = #{user_id}\r\n"
 			+ "WHERE  budget_id = #{budget_id}\r\n")
 	int budgetUpdate(Budget upt);
 	
 	// Budget 삭제
-	@Delete("delete from budget \r\n"
+	@Delete("delete budget \r\n"
 			+ "where budget_id = #{budget_id}")
-	int deleteBudget(@Param("budget_id") String budget_id);
+	int deleteBudget(Budget del);
+	//자식 budget 삭제
+	@Delete("delete budget \r\n"
+			+ "where parent_id = #{budget_id}")
+	int deleteChild(Budget del);
+	// 자식 여부 확인
+	@Select("Select count(parent_id) from budget\r\n"
+			+ "where parent_id=#{budget_id}")
+	int countchild(@Param("budget_id") String budget_id);
 	
 	
+// 차트	
+	// 차트 - BUDGET 부분
+	@Select("   SELECT * from(\r\n"
+			+ "	SELECT rownum cnt, LEVEL AS lvl, b.*\r\n"
+			+ "			FROM budget b\r\n"
+			+ "			WHERE project_id = #{project_id}\r\n"
+			+ "		START WITH parent_id IS NULL\r\n"
+			+ "			CONNECT BY PRIOR budget_id = parent_id\r\n"
+			+ "			ORDER siblings BY budget_id DESC)\r\n"
+			+ "			WHERE lvl= 2 ")
+	List<Budget> getBudgetparentchartList(@Param("project_id") String project_id);
+//	
+//  차트 budget_id 찾기 => 하위요소 차트에 넣기 위해
+	@Select("SELECT\r\n"
+			+ "    child.budget_id,\r\n"
+			+ "    child.budget_name AS child_budget_name,\r\n"
+			+ "    parent.budget_name AS parent_budget_name,\r\n"
+			+ "    parent.budget_id AS parent_budget_id,\r\n"
+			+ "    child.amount AS amount,\r\n"
+			+ "    parent.amount AS amount\r\n"
+			+ "FROM\r\n"
+			+ "    (SELECT LEVEL AS lvl, b.budget_id, b.budget_name, b.amount, b.parent_id\r\n"
+			+ "     FROM budget b\r\n"
+			+ "     WHERE b.project_id = #{project_id}\r\n"
+			+ "       START WITH b.parent_id IS NULL\r\n"
+			+ "     CONNECT BY PRIOR b.budget_id = b.parent_id\r\n"
+			+ "     ORDER SIBLINGS BY b.budget_id DESC\r\n"
+			+ "    ) child\r\n"
+			+ "JOIN budget parent\r\n"
+			+ "    ON child.parent_id = parent.budget_id\r\n"
+			+ "WHERE child.lvl != 1")
+    List<Budget> getchartAmount(Budget sch);
 	
 	
 	

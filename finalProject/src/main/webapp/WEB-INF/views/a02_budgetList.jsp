@@ -33,6 +33,7 @@
   <link href="${path}/material-dashboard-2/assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons   -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
 
   <!-- Material Icons 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
@@ -57,25 +58,96 @@
 
  <script>
  $('#ModalModify').modal('hide');
- var msg="${msg}"
- if(msg != "") {
-     alert(msg); // 알림 메시지 표시
 
-     if (msg=="등록 완료") {
-    	
-        window.location.href = 'budgetFrm';
-     }
- }
- 
- if(proc == 'del'){
-		alert(msg)
-		
-		location.href="budgetFrm"
+function ajaxFun(url){
+	   $.ajax({
+	      type:"post",
+	      url:url,
+	      data:$("#modaluptFrm").serialize(),
+	      success:function(msg){
+	    	  alert(msg)
+	         
+		            location.href = 'budgetFrm';
+		         
+	      },
+	      error:function(err){
+	         console.log(err)
+	      }
+	   })
 	}
+
  
 function goChat(project_id){
 	location.href="chatmemListstart?project_id="+project_id
 }
+
+function BudPage(budget_id){
+	$.ajax({
+		type:"post",
+		url:"getBudgetID",
+		data:{budget_id:budget_id},
+		success:function(data){
+			var BudgetId = data[0].budget_id;
+			console.log(BudgetId+"의 정보"); 
+			console.log(data)
+			console.log(data[0].budget_id)
+            $("[name=budget_id]").val(BudgetId);
+            $("[name=budget_name]").val(data[0].budget_name);
+            $("[name=amount]").val(data[0].amount);	        
+            $("[name=parent_id]").val(data[0].parent_id);	        
+            $("[name=etc]").val(data[0].etc);	        
+          //  $("[name=usedate]").val(data[0].usedate);	  
+          //  $("[name=uptdate]").val(data[0].uptdate);	  
+         //   $("#childparent").text(BudgetId);
+        // Convert the date-time to YYYY-MM-DDTHH:mm format
+// Convert the date-time to YYYY-MM-DD format
+/*function formatDateToYYYYMMDD(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Months are zero-based
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+}
+
+// Set values in the input fields
+$("[name=usedate]").val(formatDateToYYYYMMDD(data[0].usedate));
+$("[name=uptdate]").val(formatDateToYYYYMMDD(data[0].uptdate));
+
+*/
+//Convert the date-time to YYYY-MM-DDTHH:mm format
+function formatDateTimeToYYYYMMDDTHHMM(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Months are zero-based
+    const day = ('0' + date.getDate()).slice(-2);
+    const hours = ('0' + date.getHours()).slice(-2);
+    const minutes = ('0' + date.getMinutes()).slice(-2);
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
+// Set values in the input fields
+$("[name=usedate]").val(formatDateTimeToYYYYMMDDTHHMM(data[0].usedate));
+
+
+
+            
+            //모달 띄우기
+            $('#ModalModify').modal('show');
+
+		},
+		error:function(err){
+			console.log(err)
+		}
+	})
+}
+function FormReset(){
+	$("#modalFrm")[0].reset()
+	// 팝업창 content 비움
+	//$("[name=content]").val("");
+}
+
 </script>
 </head>
 
@@ -127,19 +199,18 @@ function goChat(project_id){
            <%-- 찐본문 --%>
             <div class="card-body px-0 pb-2" id="mainDiv" >
         
-              <button class="btn btn-primary" data-toggle="modal" data-target="#ModalCenter" style="margin-left:1rem;"
-           type="button">Regist Budget</button>
+              <button class="btn btn-primary" data-toggle="modal" data-target="#ModalCenter" style="margin-left:1rem;" type="button" onclick="FormReset()">Regist Budget</button>
               <div class="table-responsive">
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
                       <th ></th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 " >Budget Id</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Budget Name</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Amount</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">User Id</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" >parent Id</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" hidden>Regist Date</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" >Regist Date</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" >Update Date</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" >Use Date</th>
                     </tr>
                   </thead>
                     <c:forEach var="bud" items="${BudList}">
@@ -150,19 +221,22 @@ function goChat(project_id){
                         </div>                   
                       </td>
                       <td style="text-align: left" >
-                      <c:forEach begin="3" end="${bud.level}">  &nbsp;&nbsp; ->
-						 </c:forEach> 
-                      <div class="align-middle text-center" style="border:none">                      
-                            <h6 class="ml-5 text-center">${bud.budget_id }</h6>
+                      <div class="align-middle text-left" style="border:none">   
+                     <c:forEach begin="2" end="${bud.level}">
+	                    <span>&nbsp;&nbsp;</span> <!-- 들여쓰기 간격 -->
+	                </c:forEach>
+	                   
+	                   <c:if test="${bud.level == 2}">
+	                    &nbsp;- <!-- FontAwesome 화살표 -->
+	               	 </c:if> 
+	                   <c:if test="${bud.level > 2}">
+	                    &nbsp;<i data-feather="corner-down-right" style="padding-bottom:0.3rem"></i> <!-- FontAwesome 화살표 -->
+	               	 </c:if> 
+						                  
+                            <span class="ml-5 text-center">${bud.budget_name }</span>
                         </div>                   
                       </td>
                       
-                      <td >
-                       
-                      <div class="align-middle text-center" style="border:none">
-                            <h6 class="ml-5 text-center">${bud.budget_name }</h6>
-                          </div>                      
-                      </td>
                       <td >
                       <div class="align-middle text-center" style="border:none">
                             <h6 class="ml-5 text-center"><fmt:formatNumber value="${bud.amount}" type="number"/></h6>
@@ -173,14 +247,19 @@ function goChat(project_id){
                             <h6 class="ml-5 text-center">${bud.user_id }</h6>
                           </div>                      
                       </td>
-                      <td >
-                      <div class="align-middle text-center" style="border:none" >
-                            <h6 class="ml-5 text-center">${bud.parent_id }</h6>
+                       <td >
+                      <div class="align-middle text-center" style="border:none">
+                            <h6 class="ml-5 text-center">${bud.regdate }</h6>
                           </div>                      
                       </td>
-                       <td >
-                      <div class="align-middle text-center" style="border:none" hidden>
-                            <h6 class="ml-5 text-center">${bud.regdate }</h6>
+                      <td >
+                      <div class="align-middle text-center" style="border:none">
+                            <h6 class="ml-5 text-center">${bud.uptdate }</h6>
+                          </div>                      
+                      </td>
+                      <td >
+                      <div class="align-middle text-center" style="border:none">
+                            <h6 class="ml-5 text-center">${bud.usedate }</h6>
                           </div>                      
                       </td>
                     </tr>
@@ -200,26 +279,29 @@ function goChat(project_id){
                         
                     </div>
                     
-                    <ul class="pagination justify-content-center" style="margin:0">
-						<li class="page-item" ><a class="page-link" href="javascript:goPage(${sch.startBlock-1})" style="width:5rem;">Previous</a></li>
-						<c:forEach var="pCnt" begin="${sch.startBlock }" end="${sch.endBlock }">
-						<li class="page-item ${sch.curPage==pCnt?'active':'' }">
-							<a class="page-link" href="javascript:goPage(${pCnt})">${pCnt}</a></li>
-						</c:forEach>
-						<li class="page-item"><a class="page-link" href="javascript:goPage(${sch.endBlock+1})"  style="width:5rem;">Next</a></li>
-					</ul>
-					<script type="text/javascript">
-						function goPage(pCnt){
-							$("[name=curPage]").val(pCnt) //클릭한 것을 현재 페이지 번호로 전송
-							$("#curPageFrm").submit()
-						}
-					</script>
+                    
                </div>
                
 
             </div>
          </main>
-  <%-- modal --%>       
+         
+         <ul class="pagination justify-content-center mb-5" >
+						<li class="page-item" ><a class="page-link" href="javascript:goPageCnt(${sch.startBlock-1})" style="width:5rem;">Previous</a></li>
+						<c:forEach var="pCnt" begin="${sch.startBlock }" end="${sch.endBlock }">
+						<li class="page-item ${sch.curPage==pCnt?'active':'' }">
+							<a class="page-link" href="javascript:goPageCnt(${pCnt})">${pCnt}</a></li>
+						</c:forEach>
+						<li class="page-item"><a class="page-link" href="javascript:goPageCnt(${sch.endBlock+1})"  style="width:5rem;">Next</a></li>
+					</ul>
+					<script type="text/javascript">
+						function goPageCnt(pCnt){
+							$("[name=curPage]").val(pCnt) //클릭한 것을 현재 페이지 번호로 전송
+							$("#curPageFrm").submit()
+						}
+					</script>
+         
+  <%-- modal 등록--%>       
   <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -253,26 +335,27 @@ function goChat(project_id){
             <c:forEach var="parent" items="${BudParent}">
                 <option value="${parent.budget_id}">${parent.budget_name}</option>
             </c:forEach>
-        </select>
+       	 </select>
            
+         </div>
+        </div>
+        
+        <div class="row">
+         <div class="col">
+         <span>Use Date</span>
+           <input type="datetime-local" class="form-control" name="usedate" value="">
          </div>
         </div>
         <div class="row">
          <div class="col">
          <span>Extra Comment</span>
-            <textarea name="etc" rows="3" cols="10" class="form-control"></textarea>
-         </div>
-        </div>
-        <div class="row">
-         <div class="col">
-         <span>Use Date</span>
-           <input type="date" class="form-control" name="usedate">
+            <input name="etc" class="form-control">
          </div>
         </div>
         
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-        <button type="submit" id="regBtn" class="btn btn-primary">regist</button>        
+        <button type="button" id="regBtn" class="btn btn-primary">regist</button>        
       </div>   
        </form> 
       </div>
@@ -292,34 +375,33 @@ function goChat(project_id){
         </button>
       </div>     
       <div class="modal-body">
-      <form id="modaluptFrm" class="form"  method="post" action="uptbudget">
+      <form id="modaluptFrm" class="form"  method="post" >
       <input type="text" name="user_id" value="${sessionScope.user_id }" readonly/>
       <input type="text" name="project_id" value="${sessionScope.project_id }" readonly/>
         <div class="row">
          <div class="col">    
          <span>Budget Id</span>              
-           <input type="text" class="form-control" name="budget_id" value="${bud.budget_id}" readonly >
+           <input type="text" class="form-control" name="budget_id" value="" readonly >
          </div>
         </div>
         <div class="row">
          <div class="col">    
          <span>Budget Name</span>              
-           <input type="text" class="form-control" name="budget_name" value="${uptlist.budget_name}" >
+           <input type="text" class="form-control" name="budget_name" value="" >
          </div>
         </div>
          <div class="row">
          <div class="col">    
          <span>Amount</span>              
-           <input type="number" class="form-control" name="amount" value="${uptlist.amount}">
+           <input type="number" class="form-control" name="amount" value="">
          </div>
         </div>
          <div class="row">
          <div class="col">    
          <span>Parent Id</span>              
           <select class="form-control" name="parent_id">
-            <option value="">Select Parent Id</option>
             <c:forEach var="parent" items="${BudParent}">
-                <option value="${parent.budget_id}">${uptlist.budget_name}</option>
+                <option value="${parent.budget_id}">${parent.budget_name}</option>
             </c:forEach>
         </select>
            
@@ -328,22 +410,43 @@ function goChat(project_id){
         <div class="row">
          <div class="col">
          <span>Extra Comment</span>
-            <textarea name="etc" rows="3" cols="10" class="form-control"></textarea>
+            <input name="etc" class="form-control">
          </div>
         </div>
         <div class="row">
          <div class="col">
          <span>Use Date</span>
-           <input type="date" class="form-control" name="usedate">
+         <input type="datetime-local" class="form-control" name="usedate" value="">
          </div>
         </div>
+        
+         
+     
         
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modiclose">Close</button>
         <button type="button" id="uptBtn" class="btn btn-primary">Update</button>        
-        <button type="button" id="delBtn" class="btn btn-primary">Delete</button>        
+        <button type="button" id="delBtn" class="btn btn-danger">Delete</button>        
       </div>   
        </form> 
+       <script>
+       $("#regBtn").click(function() {
+    		if (confirm("등록하시겠습니까?")) {
+				$("#modalFrm").submit();
+    		}
+    	})
+       $("#uptBtn").click(function() {
+    		if (confirm("수정하시겠습니까?")) {
+    			ajaxFun("uptbudget")
+    		}
+    	})
+    	$("#delBtn").click(function() {
+    		if (confirm("삭제하시겠습니까?")) { 
+    			
+    			ajaxFun("delbudget")
+    		}
+    	})
+       </script>
       </div>
       
     </div>
@@ -368,22 +471,7 @@ function goChat(project_id){
    <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
 
 <script type="text/javascript">
-function BudPage(budget_id) {
-// 수정 모달 열기
-$('#ModalModify').modal('show');
 
-}
-$("#uptBtn").click(function() {
-	if (confirm("수정하시겠습니까?")) {
-		$("#modaluptFrm").attr("action", "uptbudget");
-		$("#modaluptFrm").submit();
-	}
-})
-$("#delBtn").click(function() {
-	if (confirm("삭제하시겠습니까?")) { 
-		location.href = "delbudget?budget_id="+ $("[name=budget_id]").val()
-	}
-})
  $("#modiclose").click(function() {
       $("#ModalModify").modal('hide');
     });
@@ -406,28 +494,6 @@ var vm = Vue.createApp({
 	};
 });
 
-function BudPage(budget_id){
-	$.ajax({
-		type:"post",
-		url:"getBudgetID",
-		data:{budget_id:budget_id},
-		success:function(data){
-			var BudgetId = data[0].budget_id;
-			console.log(BudgetId+"의 정보"); 
-			console.log(data)
-			
-            $("[name=budget_id]").val(BudgetId);
-            $("[name=budget_name]").val(data[0].budget_name);
-            $("[name=amount]").val(data[0].amount);	        
-            $("[name=parent_id]").val(data[0].parent_id);	        
-            $("[name=etc]").val(data[0].etc);	        
-            $("[name=usedate]").val(data[0].usedate);	        
-		},
-		error:function(err){
-			console.log(err)
-		}
-	})
-}
 </script>
 
    

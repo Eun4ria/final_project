@@ -205,46 +205,45 @@ function handleButtonClick(event) {
          </nav>
 
          <main class="content">
-          <div class="row">
-           <div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
+           <div class="row">
+           <div class="col-3 col-xxl-3 d-flex order-1 order-xxl-1  flex-fill w-2"  style="height: 20%">
 							<div class="card flex-fill">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">진행중인 프로젝트</h5>
+									<h5 class="card-title text-center mb-0">진행중인 업무</h5>
 								</div>
 								<div class="card-body d-flex">
 									<div class="align-self-center w-100">
-										ㅎㅎ
+										50
+									</div>
+								</div>
+								<div class="card-header">
+
+									<h5 class="card-title text-center mt-1 ">예정된 업무</h5>
+								</div>
+								<div class="card-body d-flex mb-1">
+									<div class="align-self-center w-100">
+										70
 									</div>
 								</div>
 							</div>
 						</div>
-			<div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
-							<div class="card flex-fill">
-								<div class="card-header">
-
-									<h5 class="card-title mb-0">완료된 프로젝트</h5>
-								</div>
-								<div class="card-body d-flex">
-									<div class="align-self-center w-100">
-										호호
-									</div>
-								</div>
-							</div>
+			<div class="col-3  col-xxl-3 d-flex order-1 order-xxl-1 flex-fill w-30" style="height: 20%">
+							
+                     <div class="card flex-fill w-100">
+                        <div class="card-header">
+                           <h5 class="card-title">Progress Chart</h5>
+                           <h6 class="card-subtitle text-muted">A line chart is a way of plotting data points on a line.</h6>
+                        </div>
+                        <div class="card-body" >
+                           <div >
+                              <canvas id="chartjs-line"></canvas>
+                           </div>
+                      
+                     </div>
+                  </div> 
 						</div>
-			<div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
-							<div class="card flex-fill">
-								<div class="card-header">
-
-									<h5 class="card-title mb-0">진행예정 프로젝트</h5>
-								</div>
-								<div class="card-body d-flex">
-									<div class="align-self-center w-100">
-										후후
-									</div>
-								</div>
-							</div>
-						</div>
+			
           </div>
             <div class="container-fluid p-0">
 
@@ -425,7 +424,67 @@ function handleButtonClick(event) {
    </div>
 
    <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
-
+<script>
+      document.addEventListener("DOMContentLoaded", function() {
+         // Line chart
+         new Chart(document.getElementById("chartjs-line"), {
+            type: "line",
+            data: {
+               labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+               datasets: [{
+                  label: "Sales ($)",
+                  fill: true,
+                  backgroundColor: "transparent",
+                  borderColor: window.theme.primary,
+                  data: [2115, 1562, 1584, 1892, 1487, 2223, 2966, 2448, 2905, 3838, 2917, 3327]
+               }, {
+                  label: "Orders",
+                  fill: true,
+                  backgroundColor: "transparent",
+                  borderColor: "#adb5bd",
+                  borderDash: [4, 4],
+                  data: [958, 724, 629, 883, 915, 1214, 1476, 1212, 1554, 2128, 1466, 1827]
+               }]
+            },
+            options: {
+               maintainAspectRatio: false,
+               legend: {
+                  display: false
+               },
+               tooltips: {
+                  intersect: false
+               },
+               hover: {
+                  intersect: true
+               },
+               plugins: {
+                  filler: {
+                     propagate: false
+                  }
+               },
+               scales: {
+                  xAxes: [{
+                     reverse: true,
+                     gridLines: {
+                        color: "rgba(0,0,0,0.05)"
+                     }
+                  }],
+                  yAxes: [{
+                     ticks: {
+                        stepSize: 500
+                     },
+                     display: true,
+                     borderDash: [5, 5],
+                     gridLines: {
+                        color: "rgba(0,0,0,0)",
+                        fontColor: "#fff"
+                     }
+                  }]
+               }
+            }
+         });
+      });
+   </script>
 
    
 

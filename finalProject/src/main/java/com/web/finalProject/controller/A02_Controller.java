@@ -1,12 +1,9 @@
 package com.web.finalProject.controller;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.finalProject.service.A02_Service;
 import com.web.finalProject.vo.Budget;
 import com.web.finalProject.vo.BudgetSch;
@@ -522,7 +521,9 @@ public class A02_Controller {
 	    List<Budget> Budget = service.getBudgetList(sch);
 	    List<Budget> BudParent = service.getparentList(sch);
 	    
+	  
 	    
+	    d.addAttribute("currentUrl", request.getRequestURI());
 	    d.addAttribute("BudList", Budget);
 	    d.addAttribute("BudParent", BudParent);
 		
@@ -531,7 +532,7 @@ public class A02_Controller {
 	
 	// 예산 입력
 	@RequestMapping("budgetinsert")
-	public String boardInsert(Budget ins, RedirectAttributes redirectAttributes) {
+	public String budgetInsert(Budget ins, RedirectAttributes redirectAttributes) {
 		 String result = service.budgetInsert(ins); // Assuming it returns a message or status
 	      redirectAttributes.addFlashAttribute("msg", result);
 		 
@@ -539,33 +540,81 @@ public class A02_Controller {
 	}
 	
 	// 예산 상세
+	// http://localhost:4040/getBudgetID?budget_id=BUG_0001
 	@PostMapping("getBudgetID")
-	public List<Budget> getBudget(@RequestParam("budget_id") String budget_id){
-		return service.getBudgetById(budget_id);
-	}
-	// 예산 - 수정
-	@RequestMapping("uptbudget")
-	public String budgetUpdate(@ModelAttribute Budget upt, Model d) {
-		d.addAttribute("msg", service.budgetUpdate(upt));
-		d.addAttribute("uptlist", service.getTaskDetail(upt.getBudget_id()));
-		return "redirect:budgetFrm";
+	public ResponseEntity<List<Budget>> getBudget(@RequestParam("budget_id") String budget_id, Model d){
+		return ResponseEntity.ok(service.getBudgetById(budget_id));
 	}
 	
+	  // 예산 - 수정
+    @PostMapping("/uptbudget")
+    public ResponseEntity<String> budgetUpdate( Budget del) {
+        // 서비스 호출하여 업데이트 수행
+        String msg = service.budgetUpdate(del);
+        
+        // 상태 코드와 메시지를 반환
+        return ResponseEntity.ok(msg);
+    }
+	// 예산 delete - 삭제
+    @PostMapping("/delbudget")
+    public ResponseEntity<String> delbudget( Budget del) {
+        // 예산 ID 확인 (디버깅 용도로 남겨둠)
+        System.out.println("예산 아이디:" + del.getBudget_id());
+        
+        // 자식 예산이 있는지 확인
+        boolean hasChildren = service.countchild(del);
+        
+        // 자식 예산이 있으면 먼저 삭제
+        if (hasChildren) {
+            String childDeleteMsg = service.deleteChild(del);
+            if ("삭제 실패".equals(childDeleteMsg)) {
+                return ResponseEntity.ok(childDeleteMsg);
+            }
+        }
+        
+        // 예산 삭제 수행
+        String deleteMsg = service.deleteBudget(del);
+        System.out.println("삭제 메세지:" + deleteMsg);
+        
+        // 상태 코드와 메시지를 반환
+        return ResponseEntity.ok(deleteMsg);
+    }
+	
+  //차트
+ // http://localhost:4040/chart
+ 	@GetMapping("chart")
+ 	public String chart(HttpServletRequest request, Model d) {
+        HttpSession session = request.getSession();
+        String project_id = (String) session.getAttribute("project_id");
 
-	
-	// to do delete - 삭제
-	@RequestMapping("delbudget")
-	public String delbudget(HttpServletRequest request, Model d) {
-		HttpSession session = request.getSession(); 
-		String budget_id = (String) session.getAttribute("budget_id");
-		session.setAttribute("budget_id", budget_id);
-		
-		d.addAttribute("msg", service.deleteBudget(budget_id));
-		d.addAttribute("proc", "del");
-		return "WEB-INF\\views\\a02_budgetList.jsp";
-	}
-		
-	
+        // 서비스에서 데이터 가져오기
+        List<Budget> chartParent = service.getBudgetparentchartList(project_id);
+        List<String> budgetNames = new ArrayList<>();
+        List<Integer> amounts = new ArrayList<>();
+
+        for (Budget budget : chartParent) {
+            budgetNames.add(budget.getBudget_name());
+            amounts.add(budget.getAmount()/1000000);
+        }
+
+        // 차트 데이터를 JSON으로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String budgetNamesJson = objectMapper.writeValueAsString(budgetNames);
+            String amountsJson = objectMapper.writeValueAsString(amounts);
+            d.addAttribute("budgetNames", budgetNamesJson);
+            d.addAttribute("amounts", amountsJson);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            // JSON 처리 중 예외 발생 시 처리
+            d.addAttribute("errorMessage", "데이터 처리 중 오류가 발생했습니다.");
+        }
+
+        System.out.println("budget_name: " + budgetNames);
+        System.out.println("amounts: " + amounts);
+
+        return "WEB-INF/views/a02_chart.jsp";
+    }
 	
 	
 	

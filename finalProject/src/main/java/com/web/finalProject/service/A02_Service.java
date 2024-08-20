@@ -237,7 +237,7 @@ public class A02_Service {
 			}
 		// 3. 한 페이지에 보일 데이터 건수(화면단 선택으로 요청값) - 초기값5(첫번째 페이지)
 		if(sch.getPageSize()==0) {
-			sch.setPageSize(5);
+			sch.setPageSize(7);
 		}	
 		// 4. 총페이지수(수치 연산/알고리즘 - 총데이터 건수/한페이지에 보일 데이터 수)
 		sch.setPageCount((int)( Math.ceil(sch.getCount()/(double)sch.getPageSize())));	
@@ -271,7 +271,8 @@ public class A02_Service {
 	// budget 등록 
 	public String budgetInsert(Budget ins) {
 		
-		return dao.budgetInsert(ins)>0?"등록 완료":"등록 실패";
+			return dao.budgetInsert(ins)>0?"등록 완료":"등록 실패";
+		
 	}
 	// 예산 상세 
 	public List<Budget> getBudgetById(String budget_id) {
@@ -284,9 +285,33 @@ public class A02_Service {
 		return dao.budgetUpdate(upt)>0?"수정 완료":"수정 실패";
 	}
 	// budget 삭제
-	public String deleteBudget(String budget_id) {
-		return dao.deleteBudget(budget_id)>0? "삭제 성공":"삭제 실패";
+	public String deleteBudget(Budget del) {
+		return dao.deleteBudget(del)>0? "삭제 성공":"삭제 실패";
 	}
+	// 자식 확인
+	public boolean countchild(Budget del) {
+		return dao.countchild(del.getBudget_id()) > 0;
+	}
+	// budget 자식 삭제
+	public String deleteChild(Budget del) {
+		return dao.deleteChild(del)>0? "삭제 성공":"삭제 실패";
+	}
+	
+	
+//차트 
+	//level=2 선택
+	public List<Budget> getBudgetparentchartList(String project_id){
+		return dao.getBudgetparentchartList(project_id);
+	}
+	//level=2 선택
+	public List<Budget> getchartAmount(Budget sch){
+		return dao.getchartAmount(sch);
+	}
+	
+	
+	
+	
+	
 
 	    
 }
