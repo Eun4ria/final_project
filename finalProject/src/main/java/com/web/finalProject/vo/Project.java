@@ -1,6 +1,7 @@
 package com.web.finalProject.vo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Project {
 	private String project_name;
@@ -17,6 +18,15 @@ public class Project {
 	private String logo;
 	private int progress;
 	private int amount;
+	private List<String> userIds;
+	
+	
+	public List<String> getUserIds() {
+		return userIds;
+	}
+	public void setUserIds(List<String> userIds) {
+		this.userIds = userIds;
+	}
 	
 	public int getAmount() {
 		return amount;

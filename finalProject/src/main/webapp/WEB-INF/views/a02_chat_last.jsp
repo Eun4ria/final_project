@@ -387,7 +387,7 @@ $(document).ready(function(){
                      <div  class="d-flex bd-highlight ${status.index % 2 == 0 ? 'even' : 'odd'}" ondblclick="goDetail('${mem.user_id}')" 
                      style="padding-top:0.5rem;height:4rem" >
                         <div class="img_cont" style="padding-left:1rem">
-                           <img src="z01_upload/${mem.image }" class="rounded-circle user_img" style="width:3rem; height:3rem; ">   
+                           <img src="${mem.image }" class="rounded-circle user_img" style="width:3rem; height:3rem; ">   
                         </div>
                         <div class="user_info">
                            <span>${mem.user_name}</span>
@@ -429,7 +429,7 @@ $(document).ready(function(){
                   <div class="card-header msg_head">
                      <div class="d-flex bd-highlight">
                         <div class="img_cont">
-                           <%--<img src="z01_upload/${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> --%>
+                           <%--<img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> --%>
                            <img src="${path}/material-dashboard-2/assets/img/HPM-icon.png" class="avatar img-fluid rounded me-1" alt="Profile Picture"  style="width:4rem; height:4rem; "/>
                            <div style="font-size:0.6rem;padding-left:0.5rem;"> ${project_id } </div>
                         </div>

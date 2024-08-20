@@ -20,7 +20,8 @@
 	<meta name="author" content="AdminKit">
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link rel="shortcut icon" href="${path}/adminkit-3.1.0/img/icons/icon-48x48.png" />
+	<link rel="apple-touch-icon" sizes="85x85" href="${path}/material-dashboard-2/assets/img/HPM-icon.png">
+  	<link rel="icon" sizes="85x85" type="image/png" href="${path}/material-dashboard-2/assets/img/HPM-icon.png">
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
@@ -43,9 +44,13 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
+$(document).ready(function(){
+	$("#HR").hide()
 	
-	});
+	if("${sessionScope.role_code}"=="P"){
+		$("#HR").show()
+	}
+});
 </script>
 </head>
 
@@ -73,16 +78,11 @@
                     <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Calendar</span>
                 </a>
             </li>
-            --%>	
-            <li class="sidebar-item ${currentUrl == '/signinFrm' ? 'active' : ''}">
-                <a class="sidebar-link" onclick="goPage('board')">
-                    <i class="align-middle" data-feather="command"></i> <span class="align-middle">Board</span>
-                </a>                
-            </li>
+            --%>
             
-             <li class="sidebar-item ${currentUrl == '/resource' ? 'active' : ''}">
-                <a class="sidebar-link" onclick="goPage('resource')">
-                    <i class="align-middle" data-feather="command"></i> <span class="align-middle">resource</span>
+             <li id="HR" class="sidebar-item ${currentUrl == '/HR' ? 'active' : ''}">
+                <a class="sidebar-link" onclick="goPage('HR')">
+                    <i class="align-middle" data-feather="command"></i> <span class="align-middle"><strong>H</strong><small>uman</small> <strong>R</strong><small>esources</small></span>
                 </a>                
             </li>
 

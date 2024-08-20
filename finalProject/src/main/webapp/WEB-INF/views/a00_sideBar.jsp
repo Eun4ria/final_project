@@ -23,7 +23,7 @@
 	<link rel="shortcut icon" href="${path}/adminkit-3.1.0/img/icons/icon-48x48.png" />
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
-
+  	
 	<title>HPM-Project Manager System</title>
 
 	<link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
