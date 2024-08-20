@@ -149,6 +149,9 @@
                   <p class="mt-4 text-sm text-center">
                     Forgot your password?
                     <a href="find_pwd" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Find pwd</a>
+                  <br>
+                    Are you ready to log in?
+                    <a href="signinFrm" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Login</a>
                   </p>
               </div>
               <div>

@@ -47,10 +47,12 @@
 		$("#Output").hide()
 		$("#todo").show()
 		$("#Budget").hide()
+		$("#pmGantt").hide()
 		
 		
 		if("${sessionScope.role_code}"=="P"){
 			$("#Output").show()
+			$("#pmGantt").show()
 		}
 		if("${sessionScope.role_code}"=="B"){
 			$("#Budget").show()

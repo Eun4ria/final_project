@@ -153,6 +153,9 @@ function goChat(project_id){
 				    <c:when test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
 				        <span class="text-dark">Welcome, PM_${user_name}</span>
 				    </c:when>
+				    <c:when test="${sessionScope.role_code != null && sessionScope.role_code == 'B'}">
+				        <span class="text-dark">Welcome, BM_${user_name}</span>
+				    </c:when>
 				    <c:otherwise>
 				        <span class="text-dark">Welcome, MEM_${user_name}</span>
 				    </c:otherwise>
