@@ -102,10 +102,11 @@ function projectPage(project_id){ // 프로젝트 리스트에서 해당 프로�
      alert("비정상적인 접근! 관리자에게 문의해주세요")
   }    
 }
+/*
 function projectDetail(){
 	location.href="projectDetail"
 }
-
+*/
 </script>
 </head>
 
