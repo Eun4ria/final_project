@@ -405,6 +405,29 @@ var vm = Vue.createApp({
 		};
 	};
 });
+
+function BudPage(budget_id){
+	$.ajax({
+		type:"post",
+		url:"getBudgetID",
+		data:{budget_id:budget_id},
+		success:function(data){
+			var BudgetId = data[0].budget_id;
+			console.log(BudgetId+"의 정보"); 
+			console.log(data)
+			
+            $("[name=budget_id]").val(BudgetId);
+            $("[name=budget_name]").val(data[0].budget_name);
+            $("[name=amount]").val(data[0].amount);	        
+            $("[name=parent_id]").val(data[0].parent_id);	        
+            $("[name=etc]").val(data[0].etc);	        
+            $("[name=usedate]").val(data[0].usedate);	        
+		},
+		error:function(err){
+			console.log(err)
+		}
+	})
+}
 </script>
 
    

@@ -273,6 +273,11 @@ public class A02_Service {
 		
 		return dao.budgetInsert(ins)>0?"등록 완료":"등록 실패";
 	}
+	// 예산 상세 
+	public List<Budget> getBudgetById(String budget_id) {
+        return dao.findBudgetId(budget_id);
+    }
+	
 	// budget 수정
 	public String budgetUpdate(Budget upt) {
 		
