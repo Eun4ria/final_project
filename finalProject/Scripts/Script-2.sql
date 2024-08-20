@@ -67,8 +67,7 @@ FROM
     ) child
 JOIN budget parent
     ON child.parent_id = parent.budget_id
-WHERE child.lvl != 1
-  AND parent.budget_id = 'BUG_0023';
+WHERE child.lvl != 1;
 
           
 
