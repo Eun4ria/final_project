@@ -100,6 +100,7 @@ function goChat(user_id){
 					$("[name=writer]").val("프로젝트 일정")
 					$("#writer").text("종류")
 					
+					
 				}
 				
 			},
