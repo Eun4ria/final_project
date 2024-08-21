@@ -98,7 +98,7 @@ function goChat(user_id){
 					$("#uptBtn").hide()
 					$("#delBtn").hide()
 					$("[name=writer]").val("프로젝트 일정")
-					$(".writer").text("종류")
+					$("#writer").text("종류")
 					
 				}
 				
@@ -397,7 +397,7 @@ function goChat(user_id){
 								<input type="hidden" name="id"/>
 									<div class="input-group mb-3">	
 										<div class="input-group-prepend">
-											<span class="input-group-text justify-content-center" style="width:6rem">작성자</span>
+											<span class="input-group-text justify-content-center" style="width:6rem" id="writer">작성자</span>
 										</div>
 										<input name="writer"  class="form-control" readonly/>	
 									</div>

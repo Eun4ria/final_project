@@ -171,13 +171,13 @@
                             <span>Department</span>
                             <select v-model="currentUser.deptno" class="form-control">
                                 <option value="0">N/A</option>
-                                <option value="10">PM</option>
-                                <option value="20">HR</option>
-                                <option value="30">Finance</option>
-                                <option value="40">Marketing</option>
-                                <option value="50">Development</option>
-                                <option value="60">Maintenance</option>
-                                <option value="70">Quality Assurance</option>
+                                <option value="10">관리</option>
+                                <option value="20">인사</option>
+                                <option value="30">재무</option>
+                                <option value="40">마케팅</option>
+                                <option value="50">개발</option>
+                                <option value="60">유지보수</option>
+                                <option value="70">품질보증</option>
                             </select>
                         </div>
                     </div>
