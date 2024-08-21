@@ -128,6 +128,7 @@ function projectDetail(){
 
          <main class="content">
            <div class="row">
+           <h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
            <div class="col-3 col-xxl-3 d-flex order-1 order-xxl-1  flex-fill w-2"  style="height: 20%">
 							<div class="card flex-fill">
 								<div class="card-header">
@@ -168,15 +169,6 @@ function projectDetail(){
 			
           </div>
             <div class="container-fluid p-0">
-
-               <h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
-               
-         <!-- 프로젝트 생성 버튼 (PM만 보이게)-->
-         <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
-	         <button class="btn btn-success" data-toggle="modal" data-target="#ModalCenter"
-           type="button">CREATE PROJECT</button>
-	    </c:if>
-           
                
             <div class="row mb-4">
         <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
@@ -184,11 +176,13 @@ function projectDetail(){
             <div class="card-header pb-0">
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Projects</h6>
-                  <p class="text-sm mb-0">
-                    <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    <span class="font-weight-bold ms-1">30 done</span> this month
-                  </p>
+                  <h4><strong>Active</strong> Projects</h4>
+                  <!-- 프로젝트 생성 버튼 (PM만 보이게)-->
+                  
+         <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
+	         <button class="btn btn-success" data-toggle="modal" data-target="#ModalCenter"
+           type="button">CREATE PROJECT</button>
+	    </c:if>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
                   <div class="dropdown float-lg-end pe-4">
@@ -212,7 +206,7 @@ function projectDetail(){
                       <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7">Project name</th>                      
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Budget</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Completion</th>
-                      <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7 ps-2">Members</th>
+                      <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7 ps-2">Info</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -264,7 +258,7 @@ function projectDetail(){
                         </div>
                       </td>
                       <td class="align-middle">
-                      <button class="btn btn-primary" onclick="projectDetail('${pro.project_id}')">member</button>
+                      <button class="btn btn-primary" onclick="projectDetail('${pro.project_id}')">INFO</button>
                       </td>
                     </tr>
                     </c:forEach>

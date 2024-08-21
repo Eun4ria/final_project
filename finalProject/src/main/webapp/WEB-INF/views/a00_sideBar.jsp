@@ -88,11 +88,11 @@
             </li>
             
 			
-            <li class="sidebar-item ${currentUrl == '/profile' ? 'active' : ''}">
+            <%-- <li class="sidebar-item ${currentUrl == '/profile' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('profile')" >
                     <i class="align-middle" data-feather="user"></i> <span class="align-middle">profile</span>
                 </a>
-            </li>
+            </li> --%>
             <li id="todo" class="sidebar-item ${currentUrl == '/todoFrm' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('todoFrm')" >
                     <i class="align-middle" data-feather="list"></i> <span class="align-middle">To Do List</span>

@@ -134,7 +134,7 @@ $(document).ready(function() {
     </script>
 </c:if>
 	<div class="wrapper">
-	<jsp:include page="a00_sideBar.jsp"/> 
+	<jsp:include page="a00_main_side.jsp"/> 
 	
 		<div class="main">
 			
