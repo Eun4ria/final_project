@@ -160,7 +160,7 @@ function goChat(user_id){
 		
 		
 		$("#regBtn").click(function(){
-			if(confirm("등록하시겠니까?")){
+			if(confirm("등록하시겠습니까?")){
 				 ajaxFun("insertCalendar")
 			}		
 		})
@@ -261,12 +261,12 @@ function goChat(user_id){
 		
 	});
 </script>
-<c:if test="${not empty alertMessage}">
+<%-- <c:if test="${not empty alertMessage}">
     <script>
         alert("${alertMessage}");
         location.href = '${path}/signinFrm';
     </script>
-</c:if>
+</c:if> --%>
 </head>
 
 <body>
