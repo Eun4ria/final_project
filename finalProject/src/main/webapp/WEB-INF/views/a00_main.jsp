@@ -93,11 +93,12 @@ if(msg != "") {
 var role_code="${sessionScope.role_code}"
 function projectPage(project_id){ // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
   if(role_code!="" && role_code!=null){
-     if(role_code=="P"){
+  /*   if(role_code=="P"){
         location.href="dashpmFrm?project_id="+project_id
      }else{
         location.href="dashmemFrm?project_id="+project_id
-     }
+     }*/
+	  location.href="dashmemFrm?project_id="+project_id
   }else{
      alert("비정상적인 접근! 관리자에게 문의해주세요")
   }    

@@ -46,13 +46,13 @@ public class A02_Controller {
 	//로그인
    // 로그인 처음 폼 
    // http://192.168.0.42:4040/signinFrm
-// http://192.168.45.181:4040/signinFrm  //노트북
 // http://localhost:4040/signinFrm  //노트북
 	  @GetMapping("signinFrm")
 	   public String sign_in() {
 	      return "WEB-INF\\views\\a02_sign_in.jsp";
 	   }
-	   // http://localhost:4040/signin
+	   // http://223.26.198.130:4040/signin
+	  // http://localhost:4040/signin
 	   @PostMapping("signin")
 	      public String login(Users login, Model d, HttpServletRequest request) {
 	          int loginCk = service.loginCk(login);
@@ -133,7 +133,7 @@ public class A02_Controller {
 		}
 
 		// 메인 -> 대시보드 
-		// http://localhost:4040/dashpmFrm
+		// http://localhost:4040/dashmemFrm
 		// 이것이 기준입니다. 프로젝트 리스트에서 해당 프로젝트 클릭 시 세션 세팅
 		@GetMapping("dashpmFrm")
 		public String dashpmFrm(@RequestParam(value="project_id",required = false) String project_id,

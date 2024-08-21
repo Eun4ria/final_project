@@ -144,6 +144,9 @@
                   <p class="mt-4 text-sm text-center">
                     Are you ready to log in?
                     <a href="signinFrm" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Login</a>
+                  <br>
+                   	Forgot your ID? 
+					<a href="find_id" class="text-primary text-gradient font-weight-bold" style="color: #3f2b96;">Find ID</a> 
                   </p>
                 </form>
               </div>
