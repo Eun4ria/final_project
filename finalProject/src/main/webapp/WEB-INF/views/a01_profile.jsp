@@ -76,11 +76,19 @@
 		transition: background-color 0.3s ease;
 	}
 </style>
+<%-- 세션 예외처리  --%>
+  <c:if test="${not empty alertMessage}">
+    <script>
+        alert("${alertMessage}");
+        location.href = '${path}/signinFrm';
+    </script>
+</c:if>
 </head>
 
 <body>
+
 	<div class="wrapper">
-	<jsp:include page="a00_main_side.jsp"/> 
+	<jsp:include page="a00_sideBar.jsp"/> 
 	
 		<div class="main">			
         <jsp:include page="a00_top.jsp"/>

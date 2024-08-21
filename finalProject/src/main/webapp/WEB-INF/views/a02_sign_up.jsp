@@ -199,9 +199,9 @@
             	empcnt++;
             }
             
-            if (CompanyId === '') {
+          /*  if (CompanyId === '') {
             	empcnt++;
-            }
+            } */
    //모든 정보가 입력되어있는 경우 유효성 체크        
             if(empcnt === 0){
             	if (emailMessage.textContent === '이미 사용중인 이메일입니다'){
@@ -230,11 +230,11 @@
                     alert('비밀번호를 입력해 주세요.');
                     event.preventDefault(); // 폼 제출 방지
                 }
-                
+               /* 
                 if (CompanyId === '') {
                     alert('회사아이디를 입력해 주세요.');
                     event.preventDefault(); // 폼 제출 방지
-                }
+                }*/
             
             }else { // 2개 이상
 				alert('정보를 확인해주세요');
@@ -319,11 +319,11 @@
                 
 				    
 				<select  class="form-control"  v-model="aff.role_code" name="role_code">
-		        	<option value="N">N/A</option> <%-- 프로젝트 할당 안된 사람 --%>
-		        	<option value="C">회사</option>
-		        	<option value="P">프로젝트 관리자</option>
-		        	<option value="M">팀원</option> <%-- 프로젝트 할당된 사람 --%>
-		        	<option value="B">예산관리자</option>
+		        	<option value="N">권한은 회사에서 할당받으세요</option> <%-- 프로젝트 할당 안된 사람 --%>
+		     <%--  	<option value="C">회사</option> 
+		        <%-- 	<option value="P">프로젝트 관리자</option>--%> 
+		      <%--  <option value="M">팀원</option>  프로젝트 할당된 사람 --%>
+		         <%--		<option value="B">예산관리자</option>--%>
 		        	
 		        </select>
 		      </div>  
@@ -347,7 +347,7 @@
                   </div>--%>
 				    
 				<select  class="form-control"  v-model="dept.deptno" name="deptno">
-		        	<option value="0">N/A</option>
+		        	<option value="0">회사 아이디가 있는 경우 선택</option>
 		        	<option value="10">관리</option>
 		        	<option value="20">인사</option>
 		        	<option value="30">재무</option>

@@ -38,9 +38,18 @@
    <script src="${path}/a00_com/bootstrap.min.js"></script>
    <script src="${path}/a00_com/jquery-ui.js"></script>
    <script src="${path}/a00_com/dist/index.global.js"></script>
+
+  <c:if test="${not empty alertMessage}">
+    <script>
+        alert("${alertMessage}");
+        location.href = '${path}/signinFrm';
+    </script>
+</c:if>   
+ 
 </head>
    
 <body>
+
    <div class="wrapper">
    <jsp:include page="a00_sideBar.jsp"/> 
 
@@ -65,7 +74,7 @@
                            <h5 class="card-title">Main Category</h5>
                            <h6 class="card-subtitle text-muted">Major Category Budget Allocation Status</h6>
                         </div>
-                        <div class="card-body" >
+                        <div class="card-body" ><span>[ Unit : 1 million(M) ]</span>
                            <div class="chart ">
                               <canvas id="chartjs-pie"></canvas>
                            </div>

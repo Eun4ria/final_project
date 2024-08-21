@@ -135,22 +135,35 @@ public class A02_Controller {
 		// 메인 -> 대시보드 
 		// http://localhost:4040/dashmemFrm
 		// 이것이 기준입니다. 프로젝트 리스트에서 해당 프로젝트 클릭 시 세션 세팅
-		@GetMapping("dashpmFrm")
-		public String dashpmFrm(@RequestParam(value="project_id",required = false) String project_id,
-				HttpServletRequest request,  Model d) {
-			
-		    HttpSession session = request.getSession(); 
-		    // 세션에 프로젝트 아이디 생성
-	        session.setAttribute("project_id", project_id);
-	      
-	        return "WEB-INF\\views\\a00_dash_pm.jsp";
-		}
+//		@GetMapping("dashpmFrm")
+//		public String dashpmFrm(@RequestParam(value="project_id",required = false) String project_id,
+//				HttpServletRequest request,  Model d) {
+//			
+//		    HttpSession session = request.getSession(); 
+//		    // 세션에 프로젝트 아이디 생성
+//		    // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+//		       if (session == null || session.getAttribute("user_id") == null) {
+//		           // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+//		           d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+//		         
+//		       }
+//		    
+//	        session.setAttribute("project_id", project_id);
+//	      
+//	        return "WEB-INF\\views\\a00_dash_pm.jsp";
+//		}
 		@GetMapping("dashmemFrm")
 		public String dashmemFrm(@RequestParam(value="project_id",required = false) String project_id, 
 				HttpServletRequest request,  Model d) {
 			
 		    HttpSession session = request.getSession(); 
 		    // 세션에 프로젝트 아이디 생성
+		    // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+		       if (session == null || session.getAttribute("user_id") == null) {
+		           // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+		           d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+		         
+		       }
 	        session.setAttribute("project_id", project_id);
 	        
 	        // 업무 리스트를 가져온다.
@@ -164,6 +177,12 @@ public class A02_Controller {
 			
 			HttpSession session = request.getSession(); 
 			// 세션에 프로젝트 아이디 생성
+			 // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+		       if (session == null || session.getAttribute("user_id") == null) {
+		           // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+		           d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+		         
+		       }
 			session.setAttribute("project_id", project_id);
 			
 			return "WEB-INF\\views\\a00_deliverables.jsp";
@@ -179,7 +198,13 @@ public class A02_Controller {
 			public String memList(Users sch, Model d, HttpServletRequest request , Chat chsch) {
 			    // 세션에서 project_id를 가져온다.
 				
-			    HttpSession session = request.getSession();
+			    HttpSession session = request.getSession(false);
+			    // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+			       if (session == null || session.getAttribute("user_id") == null) {
+			           // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+			           d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+			           return "WEB-INF\\views\\a02_chat_last.jsp";
+			       }
 			    String project_id = (String) session.getAttribute("project_id");
 			    String user_id = (String) session.getAttribute("user_id");
 			    System.out.println("PROJECT_ID:" + project_id);
@@ -371,67 +396,76 @@ public class A02_Controller {
 	    }
 
 		
-		// todo list - 조회
-			// http://localhost:4040/todoFrm
-				@GetMapping("todoFrm")
-				public String getTasksList(Tasks sch, Model d, HttpServletRequest request) {
-					HttpSession session = request.getSession(); 
-					String project_id = (String) session.getAttribute("project_id");
-					String user_id = (String) session.getAttribute("user_id");
-					
-					session.setAttribute("project_id", project_id);
-					session.setAttribute("user_id", user_id);
-					
-					System.out.println("list project_id"+project_id);
-					System.out.println("list user__id"+user_id);
-					
-					// Task 객체에 project_id와 user_id를 설정
-					sch.setProject_id(project_id);
-					sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
-					    
-				    // 업무 리스트를 가져온다.
-				    List<Tasks> tasks = service.getTaskList(sch);
-				    
-				    List<Tasks> taskall = service.getAllTaskList(sch);
-				    
-				   
-				    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				    // 날짜를 문자열로 변환
-				    for (Tasks task : tasks) {
-				    	 if (task.getEnd_date() != null || task.getStart_date() != null) {
-				             String endDateFormatted = dateFormat.format(task.getEnd_date());
-				             task.setEndDateFormatted(endDateFormatted);
-				             String startDateFormatted = dateFormat.format(task.getStart_date());
-				             task.setStartDateFormatted(startDateFormatted);
-				            // System.out.println(endDateFormatted);
-				         }
-			          
-				    }
-				    // 날짜를 문자열로 변환
-				    for (Tasks task : taskall) {
-				    	if (task.getEnd_date() != null || task.getStart_date() != null) {
-				    		String endDateFormatted = dateFormat.format(task.getEnd_date());
-				    		task.setEndDateFormatted(endDateFormatted);
-				    		String startDateFormatted = dateFormat.format(task.getStart_date());
-				    		task.setStartDateFormatted(startDateFormatted);
-				    		// System.out.println(endDateFormatted);
-				    	}
-				    	
-				    }
-				    
-				    if(user_id != null && user_id.startsWith("P")) {
-				    // 모델에 데이터 추가
-				    d.addAttribute("tasklist", taskall);
-				    System.out.println("tasklist:" + taskall);
-				    }else {			   
-				    // 모델에 데이터 추가
-				    d.addAttribute("tasklist", tasks);
-				    System.out.println("tasklist:" + tasks);
-				    }    
-				   
-				 // return "WEB-INF\\views\\a02_todo.jsp"; //원래
-				    return "WEB-INF\\views\\a02_taskdoList.jsp"; //지금
-					
+// todo list - 조회
+	// http://localhost:4040/todoFrm
+		@GetMapping("todoFrm")
+		public String getTasksList(Tasks sch, Model d, HttpServletRequest request) {
+			HttpSession session = request.getSession(); 
+			   
+		    // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+		       if (session == null || session.getAttribute("user_id") == null) {
+		           // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+		           d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+		           return "WEB-INF\\views\\a02_taskdoList.jsp";
+		       }
+	    	
+			
+			String project_id = (String) session.getAttribute("project_id");
+			String user_id = (String) session.getAttribute("user_id");
+			
+			session.setAttribute("project_id", project_id);
+			session.setAttribute("user_id", user_id);
+			
+			System.out.println("list project_id"+project_id);
+			System.out.println("list user__id"+user_id);
+			
+			// Task 객체에 project_id와 user_id를 설정
+			sch.setProject_id(project_id);
+			sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
+			    
+		    // 업무 리스트를 가져온다.
+		    List<Tasks> tasks = service.getTaskList(sch);
+		    
+		    List<Tasks> taskall = service.getAllTaskList(sch);
+		    
+		   
+		    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		    // 날짜를 문자열로 변환
+		    for (Tasks task : tasks) {
+		    	 if (task.getEnd_date() != null || task.getStart_date() != null) {
+		             String endDateFormatted = dateFormat.format(task.getEnd_date());
+		             task.setEndDateFormatted(endDateFormatted);
+		             String startDateFormatted = dateFormat.format(task.getStart_date());
+		             task.setStartDateFormatted(startDateFormatted);
+		            // System.out.println(endDateFormatted);
+		         }
+	          
+		    }
+		    // 날짜를 문자열로 변환
+		    for (Tasks task : taskall) {
+		    	if (task.getEnd_date() != null || task.getStart_date() != null) {
+		    		String endDateFormatted = dateFormat.format(task.getEnd_date());
+		    		task.setEndDateFormatted(endDateFormatted);
+		    		String startDateFormatted = dateFormat.format(task.getStart_date());
+		    		task.setStartDateFormatted(startDateFormatted);
+		    		// System.out.println(endDateFormatted);
+		    	}
+		    	
+		    }
+		    
+		    if(user_id != null && user_id.startsWith("P")) {
+		    // 모델에 데이터 추가
+		    d.addAttribute("tasklist", taskall);
+		    System.out.println("tasklist:" + taskall);
+		    }else {			   
+		    // 모델에 데이터 추가
+		    d.addAttribute("tasklist", tasks);
+		    System.out.println("tasklist:" + tasks);
+		    }    
+		   
+		 // return "WEB-INF\\views\\a02_todo.jsp"; //원래
+		    return "WEB-INF\\views\\a02_taskdoList.jsp"; //지금
+			
 					
 				    
 				}
@@ -511,7 +545,13 @@ public class A02_Controller {
 	// http://localhost:4040/budgetFrm
 	@RequestMapping("budgetFrm")
 	public String budgetFrm(@ModelAttribute("sch") BudgetSch sch, HttpServletRequest request, Model d) {
-		HttpSession session = request.getSession(); 
+		 HttpSession session = request.getSession(false);
+         // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+            if (session == null || session.getAttribute("user_id") == null) {
+                // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+                d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+                return "WEB-INF\\views\\a02_budgetList.jsp";
+            }
 		String project_id = (String) session.getAttribute("project_id");
 		
 		// Budget 객체에 project_id와 role_code를 설정
@@ -585,6 +625,12 @@ public class A02_Controller {
  	@GetMapping("chart")
  	public String chart(HttpServletRequest request, Model d) {
         HttpSession session = request.getSession();
+        // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+        if (session == null || session.getAttribute("user_id") == null) {
+            // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+            d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+            return "WEB-INF\\views\\a02_chart.jsp";
+        }
         String project_id = (String) session.getAttribute("project_id");
 
         // 서비스에서 데이터 가져오기

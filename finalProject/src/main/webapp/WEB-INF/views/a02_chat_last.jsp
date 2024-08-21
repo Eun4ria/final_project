@@ -341,20 +341,20 @@ $(document).ready(function(){
  
 
  </script>
-
-   </head>
-
-   <!--Coded With Love By Mutiullah Samim
-   
-   <c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
+<c:if test="${not empty alertMessage}">
     <script>
-        alert("로그인이 필요한 서비스입니다");
-        location.href = 'signinFrm';
+        alert("${alertMessage}");
+        location.href = '${path}/signinFrm';
     </script>
 </c:if>
+   </head>
 
--->
+
+
+
 <body> 
+ <%--  --%>
+
 <input type="hidden" name="project_id" value="${sessionScope.project_id }"/>
 <input type="hidden" name="user_id" value="${sessionScope.user_id }"/>
 
@@ -455,7 +455,7 @@ $(document).ready(function(){
                            <button type="submit" id="mainBtn" style="background-color:transparent; border:none; color:white" >
                            <i class="fas fa-user-circle"></i> main page</button>
                         </form>
-                        <form method="post" action="mainpmFrm">
+                      <%--   <form method="post" action="mainpmFrm">
                            <input type="submit" id="exitBtn" hidden >
                            <i class="fas fa-users"></i> Add to close friends
                         </form>
@@ -468,7 +468,7 @@ $(document).ready(function(){
                            <input type="submit" id="exitBtn" hidden >
                            <i class="fas fa-ban"></i> Block
                         </form>
-                        
+                        --%>
                           <button onclick="goBack()"style="background-color:transparent; border:none; color:white">
                            <i class="fas fa-sign-out-alt">
                            </i> Go Back</button>

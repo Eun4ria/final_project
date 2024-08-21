@@ -213,6 +213,7 @@ int insertUser(Users ins);
 			+ "    project_id = #{project_id},\r\n"
 			+ "    parent_id = NULL,\r\n"
 			+ "    etc = #{etc},\r\n"
+			+ "    uptuser = #{uptuser},\r\n"
 			+ "    user_id = #{user_id}\r\n"
 			+ "WHERE  budget_id = #{budget_id}\r\n")
 	int budgetUpdate(Budget upt);

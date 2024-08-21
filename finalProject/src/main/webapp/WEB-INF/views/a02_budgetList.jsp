@@ -92,6 +92,7 @@ function BudPage(budget_id){
 			console.log(data)
 			console.log(data[0].budget_id)
             $("[name=budget_id]").val(BudgetId);
+            $("[name=user_id]").val(data[0].user_id);
             $("[name=budget_name]").val(data[0].budget_name);
             $("[name=amount]").val(data[0].amount);	        
             $("[name=parent_id]").val(data[0].parent_id);	        
@@ -149,15 +150,17 @@ function FormReset(){
 }
 
 </script>
+<%-- 세션 예외처리  --%>
+  <c:if test="${not empty alertMessage}">
+    <script>
+        alert("${alertMessage}");
+        location.href = '${path}/signinFrm';
+    </script>
+</c:if>
 </head>
 
 <body>
-<c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
-    <script>
-        alert("로그인이 필요한 서비스입니다");
-        location.href = 'signinFrm';
-    </script>
-</c:if>
+
 
    <div class="wrapper">
 <jsp:include page="a00_sideBar.jsp"/>   
@@ -182,7 +185,7 @@ function FormReset(){
                   <h6>Projects ${project_id}</h6>
                   <p class="text-sm mb-0">
                     <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    프로젝트 이름이나 기간 넣기?
+                     <%-- 프로젝트 이름이나 기간 넣기?--%>
                   </p>
                 </div>
                 <form id="curPageFrm" class="form" method="post">
@@ -258,6 +261,7 @@ function FormReset(){
                           </div>                      
                       </td>
                       <td >
+                      
                       <div class="align-middle text-center" style="border:none">
                             <h6 class="ml-5 text-center">${bud.usedate }</h6>
                           </div>                      
@@ -330,7 +334,7 @@ function FormReset(){
          <div class="row">
          <div class="col">    
          <span>Parent Id</span>              
-          <select class="form-control" name="parent_id">
+          <select class="form-control" name="parent_id" id="parent_id">
             <option value="">Select Parent Id</option>
             <c:forEach var="parent" items="${BudParent}">
                 <option value="${parent.budget_id}">${parent.budget_name}</option>
@@ -340,9 +344,9 @@ function FormReset(){
          </div>
         </div>
         
-        <div class="row">
+        <div class="row" id="usedate_row" style="display: none;">
          <div class="col">
-         <span>Use Date</span>
+         <span>Used Date</span>
            <input type="datetime-local" class="form-control" name="usedate" value="">
          </div>
         </div>
@@ -358,6 +362,7 @@ function FormReset(){
         <button type="button" id="regBtn" class="btn btn-primary">regist</button>        
       </div>   
        </form> 
+  
       </div>
       
     </div>
@@ -376,9 +381,11 @@ function FormReset(){
       </div>     
       <div class="modal-body">
       <form id="modaluptFrm" class="form"  method="post" >
-      <input type="text" name="user_id" value="${sessionScope.user_id }" readonly/>
-      <input type="text" name="project_id" value="${sessionScope.project_id }" readonly/>
-        <div class="row">
+      등록자 - <input type="text" name="user_id" value=""  style="width:5rem" readonly/>&nbsp;&nbsp;
+      프로젝트 - <input type="text" name="project_id" value="${sessionScope.project_id }"  style="width:5rem" readonly/>&nbsp;&nbsp;
+      수정자 - <input type="text" name="uptuser" value="${sessionScope.user_id }"  style="width:5rem" readonly/>
+      
+        <div class="row" style="padding-top:1rem;">
          <div class="col">    
          <span>Budget Id</span>              
            <input type="text" class="form-control" name="budget_id" value="" readonly >
@@ -495,7 +502,30 @@ var vm = Vue.createApp({
 });
 
 </script>
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var parentSelect = document.getElementById('parent_id');
+        var usedateRow = document.getElementById('usedate_row');
+        var modal = document.getElementById('ModalCenter'); // 모달의 ID에 맞게 수정
 
+        parentSelect.addEventListener('change', function() {
+            var selectedValue = this.value;
+
+            if (selectedValue) { // 값이 있을 때
+                usedateRow.style.display = 'block';
+            } else { // 값이 null이거나 빈 문자열일 때
+                usedateRow.style.display = 'none';
+            }
+        });
+
+        // 모달이 닫힐 때 선택 상태와 display 리셋
+        modal.addEventListener('hidden.bs.modal', function () {
+            parentSelect.value = ''; // 선택 상태 초기화
+            usedateRow.style.display = 'none'; // Used Date 숨김
+        });
+    });
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
    
  <!-- SCRIPTS -->
     <script src="${path}/jobboard-master/js/jquery.min.js"></script>

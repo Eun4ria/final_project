@@ -112,7 +112,14 @@ function projectDetail(){
 </head>
 
 <body>
-
+ <%--  --%>
+ <c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
+    <script>
+        alert("로그인이 필요한 서비스입니다");
+        location.href = 'signinFrm';
+    </script>
+</c:if>
+  
    <div class="wrapper">
 <jsp:include page="a00_main_side.jsp"/>   
    

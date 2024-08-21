@@ -54,6 +54,13 @@
 </head>
 
 <body id="top">
+<%--  --%>
+ <c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
+    <script>
+        alert("로그인이 필요한 서비스입니다");
+        location.href = 'signinFrm';
+    </script>
+</c:if>
  <div class="wrapper">
         <div class="sidebar">
             <jsp:include page="a00_sideBar.jsp"/>

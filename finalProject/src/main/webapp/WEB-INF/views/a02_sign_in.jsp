@@ -114,6 +114,7 @@ $(document).ready(function() {
    }
    });
 </script>
+
 </head>
 
 <body class="bg-gray-200">

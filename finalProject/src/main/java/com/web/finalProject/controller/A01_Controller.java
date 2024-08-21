@@ -50,11 +50,21 @@ public class A01_Controller {
 	public String main(HttpServletRequest request, Model d) {
 	    // 세션에서 user_id 값을 가져옵니다.
 	    HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
-        String user_id = (String) session.getAttribute("user_id");  
-            d.addAttribute("pro", service.getProjectList(user_id));
-            d.addAttribute("user", service.getUserProIns());
-            d.addAttribute("currentUrl", request.getRequestURI());
-            return "WEB-INF\\views\\a00_main.jsp";
+        
+	 // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+        if (session == null || session.getAttribute("user_id") == null) {
+            // 로그인 폼으로 리다이렉트
+            return "redirect:/signinFrm";  // /signinFrm으로 리다이렉트
+        }
+        
+	    String user_id = (String) session.getAttribute("user_id");
+	      
+        d.addAttribute("pro", service.getProjectList(user_id));
+        d.addAttribute("user", service.getUserProIns());
+        d.addAttribute("currentUrl", request.getRequestURI());
+  
+        
+        return "WEB-INF\\views\\a00_main.jsp";
 	}
 	
 	// http://localhost:4040/mainSide
@@ -62,9 +72,6 @@ public class A01_Controller {
     public String mainSide() {
         return "WEB-INF\\views\\a00_main_side.jsp";
     }
-	
-	
-	
 	
 	
 	// 로그인 아이디 찾기 폼 
@@ -108,7 +115,15 @@ public class A01_Controller {
 	// 간트 페이지
 	// http://localhost:4040/gantt
 	@GetMapping("gantt")
-	public String gantt(HttpServletRequest request, Model d, Users user) {	
+	public String gantt(HttpServletRequest request, Model d, Users user) {
+	 HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다
+	 // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+	  if (session == null || session.getAttribute("user_id") == null) {
+          // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+          d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+          return "WEB-INF\\views\\a01_ganttChart.jsp";
+      }
+		
 		d.addAttribute("currentUrl", request.getRequestURI());
 		return "WEB-INF\\views\\a01_ganttChart.jsp";
 	}
@@ -187,6 +202,15 @@ public class A01_Controller {
 	// 인적자원관리 페이지
     @GetMapping("HR")
     public String HR(HttpServletRequest request, Model d) {
+    	 HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
+         
+   	 // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+         if (session == null || session.getAttribute("user_id") == null) {
+             // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+             d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+             return "WEB-INF\\views\\a01_human_resource.jsp";
+         }
+    	
     	d.addAttribute("currentUrl", request.getRequestURI());
 		return "WEB-INF\\views\\a01_human_resource.jsp";
     }
@@ -224,7 +248,15 @@ public class A01_Controller {
     // 캘린더 페이지
     // http://localhost:4040/fullcalendar
  	@GetMapping("fullcalendar")
-	public String fullcalendar( HttpServletRequest request, Model d) {	        
+	public String fullcalendar( HttpServletRequest request, Model d) {	
+	 HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다
+	 // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+     if (session == null || session.getAttribute("user_id") == null) {
+         // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+         d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+         return "WEB-INF\\views\\a01_fullcalendar.jsp";
+     }
+ 		    
 		d.addAttribute("currentUrl", request.getRequestURI());
 	    return "WEB-INF\\views\\a01_fullcalendar.jsp";
 	}
@@ -342,9 +374,19 @@ public class A01_Controller {
     @GetMapping("profile")
     public String profile(@RequestParam(value = "lang", defaultValue="en", required = false) String lang, HttpServletRequest request, Model d, HttpServletResponse response) {    
 	    HttpSession session = request.getSession(false); 
+	    
+        // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+           if (session == null || session.getAttribute("user_id") == null) {
+               // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+               d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+               return "WEB-INF\\views\\a01_profile.jsp";
+           }
+        
         String user_id = (String) session.getAttribute("user_id");        
         System.out.println("프로필 user_id:"+user_id);        
         d.addAttribute("currentUrl", request.getRequestURI());
+       
+        
         // 다국어 처리
         if (lang != null) {
             Locale locale;
@@ -375,7 +417,8 @@ public class A01_Controller {
     // 프로필 수정
     @PostMapping("updateProfile")
     public String updateProfileWithFile(HttpServletRequest request, MultipartFile file, Users user, Model model) {
-    	HttpSession session = request.getSession(false); 
+    	HttpSession session = request.getSession(false);
+    	
     	String user_id = (String) session.getAttribute("user_id"); 
     	// 프로필 업데이트 및 파일 저장
     	user.setUser_id(user_id);
@@ -385,7 +428,7 @@ public class A01_Controller {
         model.addAttribute("msg", msg);
         model.addAttribute("profile", service.getProfile(user.getUser_id()));
 
-        return "WEB-INF/views/profile.jsp"; // 결과를 보여줄 JSP 페이지
+        return "WEB-INF\\views\\a01_profile.jsp";// 결과를 보여줄 JSP 페이지
     }
     
     

@@ -341,9 +341,8 @@ $(document).ready(function(){
 
    </head>
 
-   <!--Coded With Love By Mutiullah Samim
-   
-   <c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
+<%--  --%>
+ <c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
     <script>
         alert("로그인이 필요한 서비스입니다");
         location.href = 'signinFrm';

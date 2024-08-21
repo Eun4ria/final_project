@@ -39,8 +39,17 @@
             transition: background-color 0.3s ease;
         }
     </style>
+    
+ <c:if test="${not empty alertMessage}">
+    <script>
+        alert("${alertMessage}");
+        location.href = '${path}/signinFrm';
+    </script>
+</c:if>   
 </head>
 <body>
+
+
     <div id="app" class="wrapper">
         <jsp:include page="a00_main_side.jsp"/>
 

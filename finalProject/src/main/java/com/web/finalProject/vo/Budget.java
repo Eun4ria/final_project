@@ -17,6 +17,7 @@ public class Budget {
     private String parent_id;    
     private int levels;
     private String etc;
+    private String uptuser;
     private String user_id;
 	public Budget() {
 		super();
@@ -141,6 +142,14 @@ public class Budget {
 
 	public void setUptdate(String uptdate) {
 		this.uptdate = uptdate;
+	}
+
+	public String getUptuser() {
+		return uptuser;
+	}
+
+	public void setUptuser(String uptuser) {
+		this.uptuser = uptuser;
 	}
 	
 	

@@ -3,7 +3,7 @@ SELECT * FROM team;
 SELECT * FROM task;
 SELECT * FROM taskfile;
 SELECT * FROM BUDGET b;
-
+SELECT * FROM USERS;
 ALTER TABLE task
 MODIFY parent_id DEFAULT '0';
 

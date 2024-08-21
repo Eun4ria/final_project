@@ -86,6 +86,12 @@ function goChat(user_id){
 	location.href="message?user_id="+user_id
 }
 </script>
+  <c:if test="${not empty alertMessage}">
+    <script>
+        alert("${alertMessage}");
+        location.href = '${path}/signinFrm';
+    </script>
+</c:if> 
 </head>
 
 <body>

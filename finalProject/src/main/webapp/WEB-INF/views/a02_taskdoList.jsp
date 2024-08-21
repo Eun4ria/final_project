@@ -158,6 +158,14 @@ document.addEventListener('DOMContentLoaded', function() {
             overflow-x: hidden; /* 가로 스크롤 숨기기 */
         }
     </style>
+ 
+ <c:if test="${not empty alertMessage}">
+    <script>
+        alert("${alertMessage}");
+        location.href = '${path}/signinFrm';
+    </script>
+</c:if>
+  
 </head>
 
 <body>
@@ -182,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <h6>Projects ${project_id}</h6>
                   <p class="text-sm mb-0">
                     <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    프로젝트 이름이나 기간 넣기?
+                    <%-- 프로젝트 이름이나 기간 넣기?--%>
                   </p>
                 </div>
                 

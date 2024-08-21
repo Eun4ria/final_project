@@ -93,7 +93,19 @@ function goChat(project_id){
 </head>
 
 <body>
-
+<%--  --%>
+ <c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
+    <script>
+        alert("로그인이 필요한 서비스입니다");
+        location.href = 'signinFrm';
+    </script>
+</c:if>
+ <c:if test="${session == null || session == ''}">
+    <script>
+        alert("로그인이 필요한 서비스입니다");
+        location.href = 'signinFrm';
+    </script>
+</c:if>
    <div class="wrapper">
 <jsp:include page="a00_sideBar.jsp"/>   
    
@@ -115,7 +127,7 @@ function goChat(project_id){
                   <h6>Projects ${project_id}</h6>
                   <p class="text-sm mb-0">
                     <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    프로젝트 이름이나 기간 넣기?
+                      <%-- 프로젝트 이름이나 기간 넣기?--%>
                   </p>
                 </div>
                 

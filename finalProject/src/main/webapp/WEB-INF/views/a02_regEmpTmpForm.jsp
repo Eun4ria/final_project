@@ -43,6 +43,13 @@
 </head>
 
 <body>
+<%--  --%>
+ <c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
+    <script>
+        alert("로그인이 필요한 서비스입니다");
+        location.href = 'signinFrm';
+    </script>
+</c:if>
 <div class="jumbotron text-center">
   <h2>사원등록 메일발송</h2>
 

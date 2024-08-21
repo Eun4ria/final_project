@@ -69,7 +69,10 @@ JOIN budget parent
     ON child.parent_id = parent.budget_id
 WHERE child.lvl != 1;
 
+SELECT * FROM budget;
           
+ALTER TABLE budget 
+ADD uptUser VARCHAR2(50);
 
 
 

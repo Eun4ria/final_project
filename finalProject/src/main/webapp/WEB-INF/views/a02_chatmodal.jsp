@@ -356,7 +356,13 @@ $(document).ready(function(){
 
 <body> 
 
-      
+   <%--  --%>
+ <c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
+    <script>
+        alert("로그인이 필요한 서비스입니다");
+        location.href = 'signinFrm';
+    </script>
+</c:if>   
               
 
 <!-- 오른쪽 채팅 창

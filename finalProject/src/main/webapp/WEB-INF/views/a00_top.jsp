@@ -60,6 +60,18 @@
 function goChat(project_id){
 	location.href="chatmemListstart?project_id="+project_id
 }
+
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#chatgo").hide()
+		
+		if("${sessionScope.project_id}"!=="" && "${sessionScope.project_id}"!== null){
+			$("#chatgo").show()
+			
+		}
+		
+	});
 </script>
 </head>
 
@@ -139,7 +151,7 @@ function goChat(project_id){
                         </div>
                      </div>
                   </li>
-               <li class="nav-item dropdown">
+               <li class="nav-item dropdown" id="chatgo">
 					<a class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.project_id}')" id="messagesDropdown">
 							<i class="align-middle" data-feather="message-square"></i>
 					</a>

@@ -55,7 +55,13 @@
 </head>
 
 <body class="bg-gray-200">
-
+<%--  --%>
+ <c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
+    <script>
+        alert("로그인이 필요한 서비스입니다");
+        location.href = 'signinFrm';
+    </script>
+</c:if>
   <div class="container position-sticky z-index-sticky top-0">
     <div class="row">
       <div class="col-12">

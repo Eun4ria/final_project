@@ -260,9 +260,16 @@ function goChat(user_id){
 		
 	});
 </script>
+<c:if test="${not empty alertMessage}">
+    <script>
+        alert("${alertMessage}");
+        location.href = '${path}/signinFrm';
+    </script>
+</c:if>
 </head>
 
 <body>
+
     <div class="wrapper">
 <jsp:include page="a00_sideBar.jsp"/>
 	

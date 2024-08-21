@@ -4,8 +4,11 @@
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:set var="path" value="${pageContext.request.contextPath }"/>
-<fmt:requestEncoding value="utf-8"/>     
+<fmt:requestEncoding value="utf-8"/>  
+
+   
 <!DOCTYPE html>
 <%--
 
@@ -60,9 +63,17 @@ function goChat(user_id){
 	location.href="message?user_id="+user_id
 }
 </script>
+
 </head>
 
 <body>
+<%--  --%>
+ <c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
+    <script>
+        alert("로그인이 필요한 서비스입니다");
+        location.href = 'signinFrm';
+    </script>
+</c:if>
 
 	<div class="wrapper">
 <jsp:include page="a00_sideBar.jsp"/>	
