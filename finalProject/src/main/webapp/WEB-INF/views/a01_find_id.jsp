@@ -145,11 +145,14 @@
                 
                 <div class="text-center">
                     <button type="button" id="idBtn" class="btn bg-gradient-primary w-100 my-4 mb-2" style="background:#B06AB3">Find ID</button>
-                  </div>  
-                  <p class="mt-4 text-sm text-center">
-                    Forgot your password?
-                    <a href="find_pwd" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Find pwd</a>
-                  </p>
+                  </div>                
+                  <div class="mt-4 text-sm text-center" style="margin-bottom: 0">
+						Are you ready to log in? 
+					<a href="signinFrm" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Login here</a>
+					<br> 
+					Forgot your password? 
+					<a href="find_pwd" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Find pwd</a>
+					</div>
               </div>
               <div>
               </div>
