@@ -75,7 +75,7 @@ function goChat(user_id){
 			navLinks : true, // can click day/week names to navigate views
 			selectable : true,
 			selectMirror : true,
-			select : function(arg) {
+			select : function(arg) { // 빈 공간 클릭 시
 				$("#showModel").click()
 				$("#modalTitle").text("일정등록")
 				$("#regBtn").show()
@@ -84,38 +84,52 @@ function goChat(user_id){
 				addForm(arg,"I")
 				
 			},
-			
-			eventClick : function(arg) {
+			/* eventAllow: function (dropInfo, event) {
+		        var view = calendar.view;
+		        var isWeekOrDayView = view.type !== 'timeGridWeek' && view.type !== 'timeGridDay';
+		        
+		        // 주 또는 일 단위 수정 불가능
+		        return isWeekOrDayView;
+		    }, */
+			eventDidMount: function(info) { // 바 두께 설정
+	            info.el.style.height = '25px'; 
+	            info.el.style.lineHeight = '25px'; 
+		    },			
+			eventClick : function(arg) { // 이벤트 클릭 시
 				$("#modalTitle").text("일정상세")
 				$("#showModel").click()
 				$("#regBtn").hide()
 				$("#uptBtn").show()
 				$("#delBtn").show()			
 				addForm(arg.event)
+				
 				// 간트 프로젝트 상세 부분
-				if(isGantt()){
+				if(isGantt()){ // 간트 차트일 때
 					$("#regBtn").hide()
 					$("#uptBtn").hide()
 					$("#delBtn").hide()
 					$("[name=writer]").val("프로젝트 일정")
-					$("#writer").text("종류")
-					
-					
+					$("#writer").text("종류")						
+				}
+				if(!isUserEvent(arg.event)){ // 본인 일정이 아닐 때
+					$("#regBtn").hide()
+					$("#uptBtn").hide()
+					$("#delBtn").hide()
 				}
 				
 			},
-			eventDrop:function(arg){
+			eventDrop:function(arg){ // 이벤트 드랍
 				addForm(arg.event)
-				if (isGantt()) {
-	            alert("프로젝트 일정은 수정이 불가능합니다.");
-				}else{
+				if (isGantt() || !isUserEvent(arg.event)) { // 간트일정이거나 본인일정이 아닐 때 이벤트 방지
+					arg.revert();
+				}else{					
 					ajaxFun("updateCalendar")
 				}	
 			},
-			eventResize:function(arg){
+			eventResize:function(arg){ // 리사이즈
 				addForm(arg.event)
-				if (isGantt()) {
-	            alert("프로젝트 일정은 수정이 불가능합니다.");
+				if (isGantt() || !isUserEvent(arg.event)) {
+					arg.revert();
 				}else{
 					ajaxFun("updateCalendar")
 				}				
@@ -123,13 +137,13 @@ function goChat(user_id){
 			editable : true,
 			dayMaxEvents : true, // allow "more" link when too many events
 			events : function(info, successCallback, failureCallback) {
-				var selectedValues = getSelectboxArray();
+				var selectedValues = getSelectboxArray(); // 체크박스 선택목록 배열형태
 				
 				$.ajax({
 					url : "calList",
 					method:"post",
 					traditional: true, // 배열을 직렬화할 때 사용
-					data: { sel: selectedValues},
+					data: { sel: selectedValues}, // 선택한 보기(checkbox)
 					success : function(data) {
 						console.log(data)
 						calendar.removeAllEvents()
@@ -147,13 +161,9 @@ function goChat(user_id){
 			
 		});
 		calendar.render();
-		function isGantt() {
-		    // writer 필드가 빈 값이거나 존재하지 않는 경우 간트 차트로 간주
-		    var writerVal = $("[name=writer]").val();
-		    return !writerVal
-		}
+				
         
-        // 체크박스 상태에 따라 일정을 새로 고침합니다.
+        // 체크박스 상태에 따라 일정을 새로 고침
         $("#personal, #team, #gantt").change(function() {
             calendar.refetchEvents();
         });
@@ -221,11 +231,9 @@ function goChat(user_id){
 		        }
 		    });
 			
-			
-
-			
 			//calendar.unselect()
 		}
+		
 		function ajaxFun(url){
 			$.ajax({
 				type:"post",
@@ -251,29 +259,31 @@ function goChat(user_id){
 		}
 		// 체크박스 상태에 따라 sel 배열 생성
         function getSelectboxArray() {
-            var sel = [];
-            if ($("#personal").is(":checked")) sel.push("P");
-            if ($("#team").is(":checked")) sel.push("T");
-            if ($("#gantt").is(":checked")) sel.push("G");
-            return sel;
+	        var sel = [];
+	        if ($("#personal").is(":checked")) sel.push("P");
+	        if ($("#team").is(":checked")) sel.push("T");
+	        if ($("#gantt").is(":checked")) sel.push("G");
+	        return sel;
+	    }
+		// event작성자와 현재 사용자가 일치하는지 확인
+        function isUserEvent(event) {
+            return event.extendedProps.user_id === '${sessionScope.user_id}'; // 예시: userId 비교
         }
-		
+		// 프로젝트 일정(간트) 인지 확인
+        function isGantt() {
+		    // writer 필드가 빈 값이거나 존재하지 않는 경우 간트 차트로 간주
+		    var writerVal = $("[name=writer]").val();
+		    return !writerVal
+		}
 		
 	});
 </script>
-<%-- <c:if test="${not empty alertMessage}">
-    <script>
-        alert("${alertMessage}");
-        location.href = '${path}/signinFrm';
-    </script>
-</c:if> --%>
 </head>
 
 <body>
 
     <div class="wrapper">
 <jsp:include page="a00_sideBar.jsp"/>
-	
 		<div class="main">
         
         <nav class="navbar navbar-expand navbar-light navbar-bg">
@@ -374,16 +384,23 @@ function goChat(user_id){
          
         <div class="content">
             <div class="container">
-            
+         <%-- <c:choose>
+           <c:when test="${sessionScope.project_id != null && sessionScope.project_id != ''}"> --%>
             <label for="personal" class="p-1" style="background:#85eee2;color:black; border-radius:5px;">
                 <input type="checkbox" id="personal" checked> 개인
-            </label>
+            </label>           
             <label for="team" class="p-1" style="background:#c266f4;color:white; border-radius:5px;">
                 <input type="checkbox" id="team"> 팀
             </label>
-            <label for="gantt" class="p-1" style="background:#d8ee95;color:black; border-radius:5px;">
-                <input type="checkbox" id="gantt"> 간트
-            </label>
+		    <label for="gantt" class="p-1" style="background:#d8ee95;color:black; border-radius:5px;">
+              	<input type="checkbox" id="gantt"> 간트
+          	</label><%-- 
+			</c:when>
+			 <c:otherwise>
+                	<input type="checkbox" id="personal" checked hidden>
+		    </c:otherwise>
+		</c:choose> --%>
+            
             
                 <div id='calendar'></div>
 
@@ -422,28 +439,22 @@ function goChat(user_id){
 										<input name="title" placeholder="일정 입력"  class="form-control" />	
 									</div>								
 									<div class="input-group mb-3">	
-										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center" style="width:6rem">시 작(일/시)</span>
+										<div class="input-group-prepend">
+											<span class="input-group-text justify-content-center" style="width:6rem">시 작(일/시)</span>
 										</div>
-										<input id="start" class="form-control" /><!-- 화면에 보일 날짜/시간.. -->	
-										<input name="start" type="hidden"   />	<!-- 실제 저장할 날짜/시간 -->
+										<input id="start" class="form-control" readonly style="background-color: white; color: gray;" /><!-- 화면에 보일 날짜/시간.. -->	
+										<input name="start" type="hidden" />	<!-- 실제 저장할 날짜/시간 -->
 									</div>	
 									<div class="input-group mb-3">	
-										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center" style="width:6rem">종 료(일/시)</span>
+										<div class="input-group-prepend">
+											<span class="input-group-text justify-content-center" style="width:6rem">종 료(일/시)</span>
 										</div>
-										<input id="end"  class="form-control" />	
-										<input name="end" type="hidden"   />	
+										<input id="end" class="form-control" readonly style="background-color: white; color: gray;" />	
+										<input name="end" type="hidden" />	
 									</div>
-									<div class="input-group mb-3">										
-										<div class="input-group-prepend ">
-											<span class="input-group-text  justify-content-center" style="width:6rem">종일여부</span>
-										</div>								
-										<select name="allDay" class="form-control">
-											<option value="1">종일</option>
-											<option value="0">시간</option>
-										</select>
-									</div>
+													
+										<input type="hidden" name="allDay" value="1" class="form-control">
+									
 									<div class="input-group mb-3">	
 										<div class="input-group-prepend">
 											<span class="input-group-text justify-content-center" style="width:6rem">팀/개인</span>

@@ -63,8 +63,8 @@ public interface A01_Dao {
 	List<Users> getTeam(@Param("project_id") String project_id);
 	
 	// 간트에서 task 등록
-	@Insert("INSERT INTO task (task_id, task_name, start_date, end_date, parent_id, priority, progress, backgroundcolor, textcolor, user_id, project_id)\r\n"
-			+ "VALUES ('TSK_' || TO_CHAR(task_seq.nextval, 'FM0000'),#{text},#{start_date},(#{start_date} + INTERVAL '1' DAY * #{duration}),#{parent},#{priority},#{progress},#{color},#{textcolor},#{user},#{project_id})")
+	@Insert("INSERT INTO task (task_id, task_name, start_date, end_date, parent_id, priority, progress, backgroundcolor, user_id, project_id)\r\n"
+			+ "VALUES ('TSK_' || TO_CHAR(task_seq.nextval, 'FM0000'),#{text},#{start_date},(#{start_date} + INTERVAL '1' DAY * #{duration}),#{parent},#{priority},#{progress},#{color},#{user},#{project_id})")
 	int insertGantt(GanttTask ins);
 	
 	// 간트에서 task 수정
@@ -76,7 +76,6 @@ public interface A01_Dao {
 	        "    priority = #{priority, jdbcType=VARCHAR}, " +
 	        "    progress = #{progress, jdbcType=INTEGER}, " +
 	        "    backgroundcolor = #{color, jdbcType=VARCHAR}, " +
-	        "    textcolor = #{textcolor, jdbcType=VARCHAR}, " +
 	        "    user_id = #{user, jdbcType=CHAR}, " +
 	        "    project_id = #{project_id, jdbcType=CHAR} " +
 	        "WHERE task_id = #{id, jdbcType=CHAR}")
@@ -150,7 +149,8 @@ public interface A01_Dao {
 	Users getUser(@Param("user_id") String user_id);
 	@Update("update users set\r\n"
 			+ "company_id=#{company_id},\r\n"
-			+ "deptno=#{deptno}\r\n"
+			+ "deptno=#{deptno},\r\n"
+			+ "role_code=#{role_code}\r\n"
 			+ "where user_id=#{user_id}")
 	int updateUser(Users upt);
 	@Delete("delete from users\r\n"

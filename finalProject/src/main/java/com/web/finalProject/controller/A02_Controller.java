@@ -204,7 +204,10 @@ public class A02_Controller {
 			       if (session == null || session.getAttribute("user_id") == null) {
 			           // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
 			           d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
-			           return "WEB-INF\\views\\a02_chat_last.jsp";
+			           return "WEB-INF\\views\\a02_chat_last.jsp";	
+			       }else if(session.getAttribute("project_id") == null){
+			    	   d.addAttribute("alertMessage", "프로젝트를 선택하세요.");
+			    	   return "WEB-INF\\views\\a02_taskdoList.jsp";
 			       }
 			    String project_id = (String) session.getAttribute("project_id");
 			    String user_id = (String) session.getAttribute("user_id");
@@ -402,12 +405,15 @@ public class A02_Controller {
 		@GetMapping("todoFrm")
 		public String getTasksList(Tasks sch, Model d, HttpServletRequest request) {
 			HttpSession session = request.getSession(); 
-			   
+			 d.addAttribute("currentUrl", request.getRequestURI());
 		    // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
 		       if (session == null || session.getAttribute("user_id") == null) {
 		           // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
-		           d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+		           d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");		           
 		           return "WEB-INF\\views\\a02_taskdoList.jsp";
+		       }else if(session.getAttribute("project_id") == null){
+		    	   d.addAttribute("alertMessage", "프로젝트를 선택하세요.");
+		    	   return "WEB-INF\\views\\a02_taskdoList.jsp";
 		       }
 	    	
 			
@@ -552,7 +558,10 @@ public class A02_Controller {
                 // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
                 d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
                 return "WEB-INF\\views\\a02_budgetList.jsp";
-            }
+            }else if(session.getAttribute("project_id") == null){
+ 	    	   d.addAttribute("alertMessage", "프로젝트를 선택하세요.");
+ 	    	   return "WEB-INF\\views\\a02_budgetList.jsp";
+ 	      }
 		String project_id = (String) session.getAttribute("project_id");
 		
 		// Budget 객체에 project_id와 role_code를 설정
@@ -625,13 +634,17 @@ public class A02_Controller {
  // http://localhost:4040/chart
  	@GetMapping("chart")
  	public String chart(HttpServletRequest request, Model d) {
+ 		 d.addAttribute("currentUrl", request.getRequestURI());
         HttpSession session = request.getSession();
         // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
         if (session == null || session.getAttribute("user_id") == null) {
             // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
             d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
-            return "WEB-INF\\views\\a02_chart.jsp";
-        }
+            return "WEB-INF/views/a02_chart.jsp";
+        }else if(session.getAttribute("project_id") == null){
+	    	   d.addAttribute("alertMessage", "프로젝트를 선택하세요.");
+	    	   return "WEB-INF\\views\\a02_chart.jsp";
+	      }
         String project_id = (String) session.getAttribute("project_id");
 
         // 서비스에서 데이터 가져오기

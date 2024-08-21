@@ -39,20 +39,18 @@
    <script src="${path}/a00_com/jquery-ui.js"></script>
    <script src="${path}/a00_com/dist/index.global.js"></script>
 
-  <c:if test="${not empty alertMessage}">
-    <script>
-        alert("${alertMessage}");
-        location.href = '${path}/signinFrm';
-    </script>
-</c:if>   
- 
 </head>
    
 <body>
 
    <div class="wrapper">
    <jsp:include page="a00_sideBar.jsp"/> 
-
+ <c:if test="${sessionScope.project_id == null || sessionScope.project_id == ''}">
+    <script>
+        alert("프로젝트를 선택하세요.");
+        location.href = 'main';
+    </script>
+</c:if>
 
       <div class="main">         
         <jsp:include page="a00_top.jsp"/>

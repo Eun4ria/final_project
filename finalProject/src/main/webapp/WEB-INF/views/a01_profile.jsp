@@ -76,13 +76,6 @@
 		transition: background-color 0.3s ease;
 	}
 </style>
-<%-- 세션 예외처리  --%>
-  <c:if test="${not empty alertMessage}">
-    <script>
-        alert("${alertMessage}");
-        location.href = '${path}/signinFrm';
-    </script>
-</c:if>
 </head>
 
 <body>

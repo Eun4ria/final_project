@@ -150,13 +150,6 @@ function FormReset(){
 }
 
 </script>
-<%-- 세션 예외처리  --%>
-  <c:if test="${not empty alertMessage}">
-    <script>
-        alert("${alertMessage}");
-        location.href = '${path}/signinFrm';
-    </script>
-</c:if>
 </head>
 
 <body>
@@ -164,7 +157,19 @@ function FormReset(){
 
    <div class="wrapper">
 <jsp:include page="a00_sideBar.jsp"/>   
-   
+<c:if test="${sessionScope.role_code != 'B'}">
+    <script>
+        alert("권한이 없습니다.");
+        location.href = 'main';
+    </script>
+</c:if>
+<c:if test="${sessionScope.project_id == null || sessionScope.project_id == ''}">
+    <script>
+        alert("프로젝트를 선택하세요.");
+        location.href = 'main';
+    </script>
+</c:if>
+
       <div class="main">
       <jsp:include page="a00_top.jsp"/>   
   <%--       <iframe src="a00_top.jsp">

@@ -121,7 +121,7 @@ function projectDetail(){
 </c:if>
   
    <div class="wrapper">
-<jsp:include page="a00_main_side.jsp"/>   
+<jsp:include page="a00_sideBar.jsp"/>   
    
       <div class="main">
          <jsp:include page="a00_top.jsp"/>

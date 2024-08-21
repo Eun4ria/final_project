@@ -93,22 +93,14 @@ function goChat(project_id){
 </head>
 
 <body>
-<%--  --%>
- <c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
-    <script>
-        alert("로그인이 필요한 서비스입니다");
-        location.href = 'signinFrm';
-    </script>
-</c:if>
- <c:if test="${session == null || session == ''}">
-    <script>
-        alert("로그인이 필요한 서비스입니다");
-        location.href = 'signinFrm';
-    </script>
-</c:if>
    <div class="wrapper">
 <jsp:include page="a00_sideBar.jsp"/>   
-   
+ <c:if test="${sessionScope.project_id == null || sessionScope.project_id == ''}">
+    <script>
+        alert("프로젝트를 선택하세요");
+        location.href = 'main';
+    </script>
+</c:if>   
       <div class="main">
          
         <jsp:include page="a00_top.jsp"/>

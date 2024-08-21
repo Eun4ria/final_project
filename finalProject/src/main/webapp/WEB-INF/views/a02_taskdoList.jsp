@@ -124,14 +124,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </script>
   <style>
-       #main {
+       /* #main {
             position: relative;
             width: 100%;
             height: 100%;
             background-color: lightblue;
             padding: 20px;
             box-sizing: border-box;
-        }
+        } */
 
         /* Style for the toggled div */
         #toggleDiv {
@@ -158,13 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
             overflow-x: hidden; /* 가로 스크롤 숨기기 */
         }
     </style>
- 
- <c:if test="${not empty alertMessage}">
-    <script>
-        alert("${alertMessage}");
-        location.href = '${path}/signinFrm';
-    </script>
-</c:if>
   
 </head>
 
@@ -172,6 +165,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
    <div class="wrapper">
 <jsp:include page="a00_sideBar.jsp"/>   
+<c:if test="${sessionScope.project_id == null || sessionScope.project_id == ''}">
+    <script>
+        alert("프로젝트를 선택하세요");
+        location.href = 'main';
+    </script>
+</c:if>
     <div class="main">
       <jsp:include page="a00_top.jsp"/>   
 

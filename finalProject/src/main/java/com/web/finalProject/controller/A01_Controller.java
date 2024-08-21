@@ -52,27 +52,26 @@ public class A01_Controller {
 	    HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
         
 	 // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
-        if (session == null || session.getAttribute("user_id") == null) {
-            // 로그인 폼으로 리다이렉트
-            return "redirect:/signinFrm";  // /signinFrm으로 리다이렉트
-        }
+	    if (session == null || session.getAttribute("user_id") == null) {
+	         // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+	         d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+	     }
         
 	    String user_id = (String) session.getAttribute("user_id");
 	      
         d.addAttribute("pro", service.getProjectList(user_id));
         d.addAttribute("user", service.getUserProIns());
         d.addAttribute("currentUrl", request.getRequestURI());
+        
+        // 메인으로 이동 시 project 세션 종료
+        String project_id = (String) session.getAttribute("project_id");
+        if (project_id != null) {
+        	session.removeAttribute("project_id");
+        }
   
         
         return "WEB-INF\\views\\a00_main.jsp";
 	}
-	
-	// http://localhost:4040/mainSide
-	@GetMapping("mainSide")
-    public String mainSide() {
-        return "WEB-INF\\views\\a00_main_side.jsp";
-    }
-	
 	
 	// 로그인 아이디 찾기 폼 
 	// http://localhost:4040/find_id
@@ -121,7 +120,6 @@ public class A01_Controller {
 	  if (session == null || session.getAttribute("user_id") == null) {
           // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
           d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
-          return "WEB-INF\\views\\a01_ganttChart.jsp";
       }
 		
 		d.addAttribute("currentUrl", request.getRequestURI());
@@ -152,7 +150,7 @@ public class A01_Controller {
 	public ResponseEntity<?> updateGantt(GanttTask upt) {
 		System.out.println("수정할 task_id: " + upt.getId());
 	    System.out.println("수정할 task명: " + upt.getText());
-	    System.out.println("수정할 글자색상: " + upt.getTextcolor());
+	    //System.out.println("수정할 글자색상: " + upt.getTextcolor());
 	    System.out.println("수정할 배경색상: " + upt.getColor());
 	    return ResponseEntity.ok(new TaskList(
 	            service.updateGantt(upt), 
@@ -208,7 +206,6 @@ public class A01_Controller {
          if (session == null || session.getAttribute("user_id") == null) {
              // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
              d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
-             return "WEB-INF\\views\\a01_human_resource.jsp";
          }
     	
     	d.addAttribute("currentUrl", request.getRequestURI());
@@ -254,7 +251,6 @@ public class A01_Controller {
      if (session == null || session.getAttribute("user_id") == null) {
          // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
          d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
-         return "WEB-INF\\views\\a01_fullcalendar.jsp";
      }
  		    
 		d.addAttribute("currentUrl", request.getRequestURI());
@@ -280,7 +276,7 @@ public class A01_Controller {
  	*/
  	// http://localhost:4040/calList 
   	@PostMapping("calList")
-  	public ResponseEntity<List<Calendar>> getCalList(@RequestParam(name ="sel") List<String> sel,
+  	public ResponseEntity<List<Calendar>> getCalList(@RequestParam(name ="sel", defaultValue="") List<String> sel,
   			HttpServletRequest request){
   		HttpSession session = request.getSession(false); 
         String user_id = (String) session.getAttribute("user_id");  
@@ -309,13 +305,17 @@ public class A01_Controller {
         // 세션에 저장되어 있는 user_id와 project_id를 세팅
         ins.setUser_id(user_id);
         ins.setProject_id(project_id);
-
+        
         List<Calendar> calendarList = new ArrayList<>();        
         if (sel != null && !sel.isEmpty()) {
             for (String s : sel) {
                 calendarList.addAll(service.getCalendarList(s, 
                 		user_id, project_id));
             }
+        }
+        
+        if (project_id == null || project_id=="") {
+            ins.setProject_id("");
         }
 
         return ResponseEntity.ok(new CalList(
@@ -375,12 +375,11 @@ public class A01_Controller {
     public String profile(@RequestParam(value = "lang", defaultValue="en", required = false) String lang, HttpServletRequest request, Model d, HttpServletResponse response) {    
 	    HttpSession session = request.getSession(false); 
 	    
-        // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
-           if (session == null || session.getAttribute("user_id") == null) {
-               // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
-               d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
-               return "WEB-INF\\views\\a01_profile.jsp";
-           }
+	    if (session == null || session.getAttribute("user_id") == null) {
+	         // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+	         d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+	         return "WEB-INF\\views\\a01_profile.jsp";
+	     }
         
         String user_id = (String) session.getAttribute("user_id");        
         System.out.println("프로필 user_id:"+user_id);        
@@ -435,7 +434,13 @@ public class A01_Controller {
     // 비밀번호 변경 페이지
     // http://localhost:4040/changePassword
     @GetMapping("changePassword")
-    public String changePasswordFrm(Model d) {
+    public String changePasswordFrm(HttpServletRequest request, Model d) {
+    	HttpSession session = request.getSession(false);
+    	// 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+    	if (session == null || session.getAttribute("user_id") == null) {
+            // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+            d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+        }
     	d.addAttribute("currentUrl", "/profile");
     	return "WEB-INF\\views\\a01_changePwd.jsp";
     }

@@ -86,30 +86,29 @@ function goChat(user_id){
 	location.href="message?user_id="+user_id
 }
 </script>
-  <c:if test="${not empty alertMessage}">
-    <script>
-        alert("${alertMessage}");
-        location.href = '${path}/signinFrm';
-    </script>
-</c:if> 
 </head>
 
 <body>
 
 	<div class="wrapper">
 <jsp:include page="a00_sideBar.jsp"/>	
-	
+<c:if test="${sessionScope.project_id == null || sessionScope.project_id == ''}">
+    <script>
+        alert("프로젝트를 선택하세요.");
+        location.href = 'main';
+    </script>
+</c:if>
 		<div class="main">
          
         <jsp:include page="a00_top.jsp"/>
 			
-			<!-- gantt -->
+			<!-- gantt 
 	<div class="gantt_control">
 	<input type='button' id='default' onclick="showGroups()" value="Tree">
 	<input type='button' id='priority' onclick="showGroups('priority')" value="Group by priority">
 	<input type='button' id='user' onclick="showGroups('user')" value="Group by owner">
 	<input type='button' id='stage' onclick="showGroups('stage')" value="Group by stage">
-	</div>
+	</div>-->
 	 <div id="gantt_here" style="width: 100%; height: calc(100vh - 14vh);"></div>
 	</div>
 	</div>
@@ -126,7 +125,27 @@ function goChat(user_id){
 		gantt.plugins({
 			grouping: true
 		});
-		
+		 var sessionRole = "${sessionScope.role_code}";
+
+	    if (sessionRole !== "P") {
+	        gantt.config.drag_move = false;  // 드랍 비활성화
+	        gantt.config.drag_resize = false; // 리사이즈 비활성화
+	        console.log("didi")
+	        console.log(document.querySelector('[column_id="add"]'));
+	    }
+        gantt.attachEvent("onTaskClick", function(id) {
+            if (sessionRole !== "P") {
+                return false; // 클릭 이벤트 비활성화
+            }
+            return true;
+        });
+
+        gantt.attachEvent("onTaskDblClick", function(id) {
+            if (sessionRole !== "P") {
+                return false; // 더블 클릭 이벤트 비활성화
+            }
+            return true;
+        });
 		// 날짜 변환 함수
 		function parseDate(dateString) {
 			// 날짜 형식: dd-MM-yyyy
@@ -162,7 +181,7 @@ function goChat(user_id){
 		                parent: task.parent,
 		                progress: task.progress || 0,
 		                color: task.color,
-		                textColor: task.textcolor
+		                //textcolor: task.textColor
 		            };
 		        });
 				var sortedTasks = sortTasksByStartDate(tasks);
@@ -192,8 +211,8 @@ function goChat(user_id){
            			{name: "priority", height: 22, map_to: "priority", type: "select", options: gantt.serverList("priority")},
            			{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},
            			{name: "progress", height: 22, map_to: "progress", type: "select", options: gantt.serverList("progress")},
-           			{name: "background", height: 22, map_to: "background", type: "select", options: gantt.serverList("background")},
-           			{name: "textcolor", height: 22, map_to: "textcolor", type: "select", options: gantt.serverList("textcolor")},
+           			{name: "background", height: 22, map_to: "color", type: "select", options: gantt.serverList("background")},
+           			//{name: "textcolor", height: 22, map_to: "textColor", type: "select", options: gantt.serverList("textcolor")},
            			{name: "time", type: "duration", map_to: "auto"}
            		];
                	
@@ -270,8 +289,8 @@ function goChat(user_id){
     		        parent:task.parent,
     		        priority: task.priority,
     		        progress: task.progress || 0,
-    		        color: task.background,
-    		        textcolor: task.textcolor,
+	                color: task.color,
+	               //textcolor: task.textColor,
     		        user: task.user,
     		        project_id: "${sessionScope.project_id}"
     		    },
@@ -289,7 +308,7 @@ function goChat(user_id){
     		                parent: task.parent,
     		                progress: task.progress || 0,
     		                color: task.color,
-    		                textColor: task.textcolor
+    		                //textcolor: task.textColor
     		            };
     		        });
     				var sortedTasks = sortTasksByStartDate(tasks);
@@ -318,8 +337,7 @@ function goChat(user_id){
     		});
         }
 		
-		
-		var sessionRole="${sessionScope.role_code}"
+
 		// 등록/수정/삭제는 PM권한
 		if(sessionRole=="P"){
 	        // 일정 등록
@@ -364,11 +382,20 @@ function goChat(user_id){
 	            console.log(task)
 	            ajaxFun("updateGantt", task); // 드래그 후 서버에 데이터 전송
 	        });
-		}
-
+		
+		
 		gantt.config.drag_move = true;  // 드래그 이동 활성화
 		gantt.config.drag_resize = true; // 드래그 크기 조정 활성화
+		}
+		// 팝업 클릭 비활성화
+        gantt.attachEvent("onLightbox", function(id) {
+            if (sessionRole !== "P") {
+                return false; // PM이 아닐 때 팝업 차단
+            }
+            return true;
+        });
 
+		
 		/*
 		// 일정 추가			
 		gantt.attachEvent("onAfterTaskDelete", function(id, task) {
@@ -459,11 +486,12 @@ function goChat(user_id){
 		    {key: "#afc9f3", label: "navy"},
 		    {key: "#c0aff3", label: "Purple"}
 		]);
+		/*
 		gantt.serverList("textcolor", [
 		    {key: "black", label: "Black"},
 		    {key: "white", label: "White"}
 		]);
-		
+		*/
 	
 		// end text data	
 		gantt.config.order_branch = true;
@@ -481,7 +509,7 @@ function goChat(user_id){
 				column_progress: 'Progress',
 				section_progress: 'Progress',
 				section_background: 'Background',
-				section_textcolor: 'Text color',
+				//section_textcolor: 'Text color',
 				section_resources: 'Resources'
 			}
 		});
@@ -509,8 +537,8 @@ function goChat(user_id){
 			{name: "priority", height: 22, map_to: "priority", type: "select", options: gantt.serverList("priority")},
 			{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},
 			{name: "progress", height: 22, map_to: "progress", type: "select", options: gantt.serverList("progress")},
-			{name: "background", height: 22, map_to: "background", type: "select", options: gantt.serverList("background")},
-			{name: "textcolor", height: 22, map_to: "textcolor", type: "select", options: gantt.serverList("textcolor")},
+			{name: "background", height: 22, map_to: "color", type: "select", options: gantt.serverList("background")},
+			//{name: "textcolor", height: 22, map_to: "textColor", type: "select", options: gantt.serverList("textcolor")},
 			{name: "time", type: "duration", map_to: "auto"}
 		]; 
 		/*
@@ -529,8 +557,8 @@ function goChat(user_id){
 		];	
 		*/
 		gantt.config.row_height = 30; // 높이를 40픽셀로 설정
-	
-		
+		// 연결관계 비활성화
+		gantt.config.links = false;
 		
 		
 		
@@ -550,7 +578,7 @@ function goChat(user_id){
 		gantt.sort("start_date");
 		//gantt.parse(tasks);
 		gantt.init("gantt_here");
-		
+		/*
 		// 작업그룹화 함수
 		function showGroups(listname) {
 			if (listname) {
@@ -566,6 +594,7 @@ function goChat(user_id){
 	
 			}
 		}
+		*/
 	});
 	
 	

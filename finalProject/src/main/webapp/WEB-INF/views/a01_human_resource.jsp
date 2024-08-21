@@ -40,19 +40,16 @@
         }
     </style>
     
- <c:if test="${not empty alertMessage}">
-    <script>
-        alert("${alertMessage}");
-        location.href = '${path}/signinFrm';
-    </script>
-</c:if>   
 </head>
 <body>
-
-
-    <div id="app" class="wrapper">
-        <jsp:include page="a00_main_side.jsp"/>
-
+   <div id="app" class="wrapper">
+        <jsp:include page="a00_sideBar.jsp"/>
+<c:if test="${sessionScope.role_code != 'P'}">
+    <script>
+        alert("권한이 없습니다.");
+        location.href = 'main';
+    </script>
+</c:if>
         <div class="main">
             <jsp:include page="a00_top.jsp"/>
 
@@ -85,6 +82,7 @@
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">ID</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">email</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">department</th>
+                                                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">role code</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">company ID</th>
                                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">is Active</th>
                                             </tr>
@@ -112,6 +110,9 @@
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
                                                     <span class="text-center text-s">{{ user.dname }}</span>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <span class="text-center text-s">{{ user.role_code }}</span>
                                                 </td>
                                                 <td class="text-center text-sm">
                                                     <span class="text-center text-s">{{ user.company_id }}</span>
@@ -187,6 +188,17 @@
                                 <option value="50">개발</option>
                                 <option value="60">유지보수</option>
                                 <option value="70">품질보증</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span>Role</span>
+                            <select v-model="currentUser.role_code" class="form-control">
+                                <option value="N">N/A</option>
+                                <option value="P">프로젝트 관리자</option>
+                                <option value="B">에산 관리자</option>
+                                <option value="M">팀원</option>
                             </select>
                         </div>
                     </div>
