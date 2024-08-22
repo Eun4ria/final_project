@@ -47,7 +47,7 @@ public class A01_Controller {
 	         // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
 	         d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
 	         return "WEB-INF\\views\\a00_main.jsp";
-	     }
+	    }
 	    // 메인으로 이동 시 project 세션 종료
         String project_id = (String) session.getAttribute("project_id");
         if (project_id != null) {
