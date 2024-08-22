@@ -43,11 +43,11 @@ public class A02_Controller {
 	@Autowired(required=false)
 	private A02_Service service;
 	
-	//로그인
-   // 로그인 처음 폼 
-	// http://223.26.198.130:4040/signinFrm
-   // http://192.168.0.42:4040/signinFrm
-// http://localhost:4040/signinFrm  //노트북
+	// 로그인
+    // 로그인 처음 폼 
+ 	// http://223.26.198.130:4040/signinFrm
+    // http://192.168.0.42:4040/signinFrm
+	// http://localhost:4040/signinFrm  //노트북
 	  @GetMapping("signinFrm")
 	   public String sign_in() {
 	      return "WEB-INF\\views\\a02_sign_in.jsp";

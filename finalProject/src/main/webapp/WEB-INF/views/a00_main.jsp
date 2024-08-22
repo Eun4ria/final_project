@@ -99,23 +99,22 @@ function projectPage(project_id){ // 프로젝트 리스트에서 해당 프로�
      alert("비정상적인 접근! 관리자에게 문의해주세요")
   }    
 }
-/*
-function projectDetail(){
-	location.href="projectDetail"
+function projectPage(projectId, event) {
+  if (event.target.tagName !== 'BUTTON') {
+  }
 }
-*/
+
+function projectDetail(){
+	location.href="main"
+}
+$("[name=status]").change(function){
+	var st = $("[name=status]").value()
+}
 </script>
 </head>
 
 <body>
- <%--  --%>
- <c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
-    <script>
-        alert("로그인이 필요한 서비스입니다");
-        location.href = 'signinFrm';
-    </script>
-</c:if>
-  
+
    <div class="wrapper">
 <jsp:include page="a00_sideBar.jsp"/>   
    
@@ -210,7 +209,7 @@ function projectDetail(){
                   <form id="proPage" method="post" action="dashmemFrm">
                   	<input type="hidden" name="project_id"/>
                   </form>
-                    <tr onclick="projectPage('${pro.project_id}')" class="project-item">
+                    <tr onclick="projectPage('${pro.project_id}', event)" class="project-item">
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
@@ -257,7 +256,7 @@ function projectDetail(){
                         </div>
                       </td>
                       <td class="align-middle">
-                      <button class="btn btn-primary" onclick="projectDetail('${pro.project_id}')">INFO</button>
+                      	<button class="btn btn-primary" onclick="projectDetail('${pro.project_id}'); event.stopPropagation();">INFO</button>
                       </td>
                     </tr>
                     </c:forEach>
@@ -426,6 +425,7 @@ function projectDetail(){
             }
          });
       });
+      
    </script>
 
    

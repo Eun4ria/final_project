@@ -80,15 +80,15 @@ var proc = "${proc}"
 
      if (msg=="수정성공"){
 
-    	 // 부모 페이지를 새로 고침하는 함수
-    	 parent.window.location.href = parent.window.location.href;
+        // 부모 페이지를 새로 고침하는 함수
+        parent.window.location.href = parent.window.location.href;
      }
     
-	if(proc == 'del'){
-		alert(msg)
-		
-		location.href="todoFrm"
-	}
+   if(proc == 'del'){
+      alert(msg)
+      
+      location.href="todoFrm"
+   }
  }
  
  let isExpanded = false;
@@ -170,11 +170,11 @@ var proc = "${proc}"
               
       
 <%-- task id --%> <%-- parent id --%>
-        	 <div class="form-group">
+            <div class="form-group">
                 <label for="taskid" style="padding-right:12rem;">Task ID</label>  <label for="parent_id">Parent ID</label><br>
                 <input type="text" class="form-control" id="task_id" style="width:15rem;display:inline-block" name="task_id" value="${taskdetail.task_id }" readonly>
           
- 				<input type="text" class="form-control" id="parent_id" style="width:15rem;display:inline-block" name="parent_id" value="${taskdetail.parent_id}" readonly>
+             <input type="text" class="form-control" id="parent_id" style="width:15rem;display:inline-block" name="parent_id" value="${taskdetail.parent_id}" readonly>
               </div>
   <%-- user Id --%>               
               <div class="form-group">
@@ -190,7 +190,7 @@ var proc = "${proc}"
               </div>
               
    <%-- Day --%>           
-   			  <div class="form-group">
+              <div class="form-group">
                 <label for="start"  style="padding-right:11rem;">Start Date</label> <label for="end">End Date</label><br>
                 <input type="Date" class="form-control" id="start" style="width:15rem;display:inline-block" name="start_date" value="${taskdetail.startDateFormatted}" >
              
@@ -204,21 +204,21 @@ var proc = "${proc}"
                 <label for="tstatus" style="padding-right:11rem;">Status</label>   <label for="priority">priority</label><br> 
          
                 <select class="selectpicker border rounded" data-live-search="true" name="tstatus" style="width:15rem" > 
-		        	<option class="text-center"  value="${taskdetail.tstatus}" hidden>${taskdetail.tstatus}</option>
-		        	<option class="text-center"  value="진행중">진행중</option>
-		        	<option class="text-center"  value="중단">중단</option>
-		        	<option class="text-center"  value="막힘">막힘</option>
-		        	<option class="text-center"  value="보완">보완</option>
+                 <option class="text-center"  value="${taskdetail.tstatus}" hidden>${taskdetail.tstatus}</option>
+                 <option class="text-center"  value="진행중">진행중</option>
+                 <option class="text-center"  value="중단">중단</option>
+                 <option class="text-center"  value="막힘">막힘</option>
+                 <option class="text-center"  value="보완">보완</option>
                   </select>
               
               
   <%-- priority --%>   
               
                  <select class="selectpicker border rounded" id="priority" data-style="btn-black" data-live-search="true" style="width:15rem" :title="${taskdetail.priority}" name="priority">
-		        	<option class="text-center"  value="${taskdetail.priority}" hidden>${taskdetail.priority}</option>
-		        	<option class="text-center"  value="상">상</option>
-		        	<option class="text-center"  value="중">중</option>
-		        	<option class="text-center"  value="하">하</option>
+                 <option class="text-center"  value="${taskdetail.priority}" hidden>${taskdetail.priority}</option>
+                 <option class="text-center"  value="상">상</option>
+                 <option class="text-center"  value="중">중</option>
+                 <option class="text-center"  value="하">하</option>
                  </select>
               </div>
               
@@ -259,30 +259,30 @@ var proc = "${proc}"
                   Browse File<input type="file" >
                 </label>
               </div>
- 		
- 		
- 		  <div class="form-group">
+       
+       
+         <div class="form-group">
                 <label for="company-website-tw d-block">Upload File</label> <br>
-                <input type="file" name="reports" multiple="multiple" class="form-control" value="" />	
+                <input type="file" name="reports" multiple="multiple" class="form-control" value="" />   
                 
                 <br>
                 <label for="noti">Uploaded File</label> 
                 <c:choose>
                  <c:when test="${not empty fileinfo}" >
-				    <!-- 파일 이름 리스트가 비어 있지 않은 경우 -->
-				    <ul>
-				        <c:forEach var="fileinfo" items="${fileinfo}">
-				            <li><p style="margin:0"> File name: ${fileinfo.fname}</p>  <p>-> upload time: ${fileinfo.regdate }</p> </li>
-				        </c:forEach>
-				    </ul>
-				</c:when>
-				 <c:otherwise>
-				   <p>  <!-- 파일 이름 리스트가 비어 있는 경우 --> </p>
-				 </c:otherwise>
-				
-				 </c:choose>
-				
-				
+                <!-- 파일 이름 리스트가 비어 있지 않은 경우 -->
+                <ul>
+                    <c:forEach var="fileinfo" items="${fileinfo}">
+                        <li><p style="margin:0"> File name: ${fileinfo.fname}</p>  <p>-> upload time: ${fileinfo.regdate }</p> </li>
+                    </c:forEach>
+                </ul>
+            </c:when>
+             <c:otherwise>
+               <p>  <!-- 파일 이름 리스트가 비어 있는 경우 --> </p>
+             </c:otherwise>
+            
+             </c:choose>
+            
+            
                 
               </div>
 </div>
@@ -304,11 +304,11 @@ var proc = "${proc}"
               
       
 <%-- task id --%> <%-- parent id --%>
-        	 <div class="form-group">
+            <div class="form-group">
                 <label for="taskid" style="padding-right:12rem;">Task ID</label>  <label for="parent_id">Parent ID</label><br>
                 <input type="text" class="form-control" id="task_id" style="width:15rem;display:inline-block" name="task_id" value="${taskdetail.task_id }" readonly>
           
- 				<input type="text" class="form-control" id="parent_id" style="width:15rem;display:inline-block" name="parent_id" value="${taskdetail.parent_id}" readonly>
+             <input type="text" class="form-control" id="parent_id" style="width:15rem;display:inline-block" name="parent_id" value="${taskdetail.parent_id}" readonly>
                 <input type="text" class="form-control" id="user_id" style="width:14rem;display:inline-block" name="user_id" value="${taskdetail.user_id}" hidden>
              
               
@@ -322,7 +322,7 @@ var proc = "${proc}"
               </div>
               
    <%-- Day --%>           
-   			  <div class="form-group">
+              <div class="form-group">
                 <label for="start"  style="padding-right:11rem;">Start Date</label> <label for="end">End Date</label><br>
                 <input type="Date" class="form-control" id="start" style="width:15rem;display:inline-block" name="start_date" value="${taskdetail.startDateFormatted}" readonly>
              
@@ -336,21 +336,21 @@ var proc = "${proc}"
                 <label for="tstatus" style="padding-right:11rem;">Status</label>   <label for="priority">priority</label><br> 
          
                 <select class="selectpicker border rounded" data-live-search="true" name="tstatus" > 
-		        	<option class="text-center"  value="${taskdetail.tstatus}" hidden>${taskdetail.tstatus}</option>
-		        	<option class="text-center"  value="진행중">진행중</option>
-		        	<option class="text-center"  value="중단">중단</option>
-		        	<option class="text-center"  value="막힘">막힘</option>
-		        	<option class="text-center"  value="보완">보완</option>
+                 <option class="text-center"  value="${taskdetail.tstatus}" hidden>${taskdetail.tstatus}</option>
+                 <option class="text-center"  value="진행중">진행중</option>
+                 <option class="text-center"  value="중단">중단</option>
+                 <option class="text-center"  value="막힘">막힘</option>
+                 <option class="text-center"  value="보완">보완</option>
                   </select>
               
               
   <%-- priority --%>   
               
                  <select class="selectpicker border rounded" id="priority" data-style="btn-black" data-live-search="true"  :title="${taskdetail.priority}" name="priority">
-		        	<option class="text-center"  value="${taskdetail.priority}" hidden>${taskdetail.priority}</option>
-		        	<option class="text-center"  value="상">상</option>
-		        	<option class="text-center"  value="중">중</option>
-		        	<option class="text-center"  value="하">하</option>
+                 <option class="text-center"  value="${taskdetail.priority}" hidden>${taskdetail.priority}</option>
+                 <option class="text-center"  value="상">상</option>
+                 <option class="text-center"  value="중">중</option>
+                 <option class="text-center"  value="하">하</option>
                  </select>
               </div>
 
@@ -388,50 +388,50 @@ var proc = "${proc}"
  <%-- Upload File --%> 
               <div class="form-group">
                 <label for="company-website-tw d-block">Upload File</label> <br>
-                <input type="file" name="reports" multiple="multiple" class="form-control" value="" />	
+                <input type="file" name="reports" multiple="multiple" class="form-control" value="" />   
                 
                 <br>
                 <label for="noti">Uploaded File</label> 
                 <c:choose>
                  <c:when test="${not empty fileinfo}" >
-				    <!-- 파일 이름 리스트가 비어 있지 않은 경우 -->
-				    <ul>
-				        <c:forEach var="fileinfo" items="${fileinfo}">
-				            <li><p style="margin:0"> 
-				            File name: <a href="javascript:download('${fileinfo.fname }')">${fileinfo.fname}</a>,&nbsp;&nbsp;</p>  
-				            <p>-> upload time: ${fileinfo.regdate }</p> </li>
-				         </c:forEach>
-				         <script>
-							function download(fname){
-								if (fname.trim() === "") {
-							        alert("파일 이름이 유효하지 않습니다.");
-							        return "todoFrm";
-							    }
-								if(confirm(fname+"다운로드하시겠습니까?")){
-									location.href="downLoad.do?fname="+fname
-								}
-							}
-						</script>
-				    </ul>
-				</c:when>
-				 <c:otherwise>
-				   <p>  <!-- 파일 이름 리스트가 비어 있는 경우 --> </p>
-				 </c:otherwise>
-				
-				 </c:choose>
-				
-				
+                <!-- 파일 이름 리스트가 비어 있지 않은 경우 -->
+                <ul>
+                    <c:forEach var="fileinfo" items="${fileinfo}">
+                        <li><p style="margin:0"> 
+                        File name: <a href="javascript:download('${fileinfo.fname }')">${fileinfo.fname}</a>,&nbsp;&nbsp;</p>  
+                        <p>-> upload time: ${fileinfo.regdate }</p> </li>
+                     </c:forEach>
+                     <script>
+                     function download(fname){
+                        if (fname.trim() === "") {
+                             alert("파일 이름이 유효하지 않습니다.");
+                             return "todoFrm";
+                         }
+                        if(confirm(fname+"다운로드하시겠습니까?")){
+                           location.href="downLoad.do?fname="+fname
+                        }
+                     }
+                  </script>
+                </ul>
+            </c:when>
+             <c:otherwise>
+               <p>  <!-- 파일 이름 리스트가 비어 있는 경우 --> </p>
+             </c:otherwise>
+            
+             </c:choose>
+            
+            
                 
               </div>
- 		
- 		
- 		<div class="col-lg-4 ml-auto " style="margin-bottom:20rem">
+       
+       
+       <div class="col-lg-4 ml-auto " style="margin-bottom:20rem">
             <div class="row">
               <div class="col-6">
                 <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Go Up</a>
               </div>
               <div class="col-6" style="margin-bottom:3rem;">
-             	 <input type="button" value="수정" class="btn btn-block btn-primary btn-md" id="uptBtn"> 
+                 <input type="button" value="수정" class="btn btn-block btn-primary btn-md" id="uptBtn"> 
               </div>
             </div>
           </div>
@@ -472,39 +472,39 @@ var proc = "${proc}"
     
     <script>
     var vm = Vue.createApp({
-    	name:"App",
-    	data(){
-    		return {pr:{priority:"${taskdetail.priority}"},
-    				st:{tstatus:"${taskdetail.tstatus}"}
-    				
-    		};
-    	};
+       name:"App",
+       data(){
+          return {pr:{priority:"${taskdetail.priority}"},
+                st:{tstatus:"${taskdetail.tstatus}"}
+                
+          };
+       };
     }).mount('#app');
 </script>
     <script src="${path}/jobboard-master/js/custom.js"></script>
   <!-- End General Form Elements -->
-		<script type="text/javascript">
-			$("#uptBtn").click(function() {
-				if (confirm("수정하시겠습니까?")) {
-					$("#MEMrole").attr("action", "upttask");
-					$("#MEMrole").submit();
-					
-				}
-			})
-			$("#uptPMBtn").click(function() {
-				if (confirm("pm: 수정하시겠습니까?")) {
-					$("#PMrole").attr("action", "upttask");
-					$("#PMrole").submit();
-				}
-			})
-			
-			$("#delBtn").click(function() {
-				if (confirm("삭제하시겠습니까?")) { 
-					location.href = "deltask?task_id="+ $("[name=task_id]").val()
-				}
-			})
-			
-	</script>      
+      <script type="text/javascript">
+         $("#uptBtn").click(function() {
+            if (confirm("수정하시겠습니까?")) {
+               $("#MEMrole").attr("action", "upttask");
+               $("#MEMrole").submit();
+               
+            }
+         })
+         $("#uptPMBtn").click(function() {
+            if (confirm("pm: 수정하시겠습니까?")) {
+               $("#PMrole").attr("action", "upttask");
+               $("#PMrole").submit();
+            }
+         })
+         
+         $("#delBtn").click(function() {
+            if (confirm("삭제하시겠습니까?")) { 
+               location.href = "deltask?task_id="+ $("[name=task_id]").val()
+            }
+         })
+         
+   </script>      
  
  
    

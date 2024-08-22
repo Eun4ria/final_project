@@ -86,7 +86,7 @@
  }
  
 function goChat(project_id){
-	location.href="chatmemListstart?project_id="+project_id
+   location.href="chatmemListstart?project_id="+project_id
 }
 
 <%--토글 관련 --%>
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">parent ID</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task Name</th>
                    
-				    <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
+                <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 " >Responsibility</th>
                      </c:if>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 "> End Date</th>
@@ -222,11 +222,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     <tr ondblclick="taskPage('${task.task_id}')">
                
                     <td>
-	                    <div>
+                       <div>
                             <input type="checkbox" id="task1" >
                             <c:forEach begin="1"
-								end="${task.level}">  &nbsp;&nbsp;&nbsp;  //들여쓰기
-						 </c:forEach>${task.task_id}
+                        end="${task.level}">  &nbsp;&nbsp;&nbsp;  //들여쓰기
+                   </c:forEach>${task.task_id}
                           </div>
                     </td>
                     <td>
@@ -267,21 +267,21 @@ document.addEventListener('DOMContentLoaded', function() {
                       <form>
                       <td class="align-middle text-center">
                         <select  class="form-control text-center"  v-model="tstatus" name="tstatus">
-				        	<option class="text-center"  value="N">${task.tstatus}</option>
-				        	<option class="text-center"  value="진행중">진행중</option>
-				        	<option class="text-center"  value="중단">중단</option>
-				        	<option class="text-center"  value="막힘">막힘</option>
-			       		</select>
+                       <option class="text-center"  value="N">${task.tstatus}</option>
+                       <option class="text-center"  value="진행중">진행중</option>
+                       <option class="text-center"  value="중단">중단</option>
+                       <option class="text-center"  value="막힘">막힘</option>
+                      </select>
                       </td>
                       </form>
                       <form>
                        <td class="align-middle text-center">
                         <select  class="form-control text-center"  v-model="priority" name="priority">
-				        	<option class="text-center"  value="N">${task.priority}</option>
-				        	<option class="text-center"  value="상">상</option>
-				        	<option class="text-center"  value="중">중</option>
-				        	<option class="text-center"  value="하">하</option>
-			       		</select>
+                       <option class="text-center"  value="N">${task.priority}</option>
+                       <option class="text-center"  value="상">상</option>
+                       <option class="text-center"  value="중">중</option>
+                       <option class="text-center"  value="하">하</option>
+                      </select>
                       </td>
                       </form>
                       <td class="align-middle">
@@ -315,13 +315,13 @@ document.addEventListener('DOMContentLoaded', function() {
  <script>
 
  function taskPage(task_id) {
-	  //var sessionTaskId = '${sessionScope.task_id}'; // 로그인한 사용자 데이터
+     //var sessionTaskId = '${sessionScope.task_id}'; // 로그인한 사용자 데이터
      // var sessionProId = '${sessionScope.project_id}'; // 로그인한 사용자 데이터
      $.ajax({
          url: '/setTaskId',
          type: 'POST',
          data: { 
-				task_id: task_id
+            task_id: task_id
                // project_id: sessionProId // 서버로 전송할 데이터
                 },
          success: function(response) {

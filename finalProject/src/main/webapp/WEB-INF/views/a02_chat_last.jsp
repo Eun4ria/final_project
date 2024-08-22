@@ -577,7 +577,9 @@ $(document).ready(function(){
       }
    </script>  
 
-    <script type="text/javascript">
+  <script type="text/javascript">
+    
+    
 // 메세지 보내는 소켓  
 var socket = new SockJS('/ws');
 var stompClient = Stomp.over(socket);
@@ -619,7 +621,7 @@ function displayMessage(name, msg, alignment) {
     //화면에 보이는 부분
     messageDiv.innerHTML =  msg + "<br>";
     document.querySelector("#show").appendChild(messageDiv);
-    document.getElementById('msg').value = '';
+  //  document.getElementById('msg').value = ''; 이 부분이 있어서 다른사용자의 send도 같이 없어짐
 
     // 메시지를 localStorage에 저장
    // storeMessage(name, msg);

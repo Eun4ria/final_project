@@ -34,6 +34,7 @@ public class A01_Controller {
 	
 	@Autowired(required=false)
 	private A01_Service service;
+
 	
 	// http://localhost:4040/main	
 	@GetMapping("main")
@@ -45,16 +46,17 @@ public class A01_Controller {
 	    if (session == null || session.getAttribute("user_id") == null) {
 	         // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
 	         d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+	         return "WEB-INF\\views\\a00_main.jsp";
 	     }
 	    // 메인으로 이동 시 project 세션 종료
         String project_id = (String) session.getAttribute("project_id");
         if (project_id != null) {
         	session.removeAttribute("project_id");
-        	System.out.println("세션 삭제");
+        	System.out.println("project 세션 삭제");
         }
         
 	    String user_id = (String) session.getAttribute("user_id");
-	      
+	    
         d.addAttribute("pro", service.getProjectList(user_id));
         d.addAttribute("user", service.getUserProIns(user_id)); // 프로젝트 생성 시 사용되는 userList(PM인 본인 빼고 조회)
         d.addAttribute("currentUrl", request.getRequestURI());
