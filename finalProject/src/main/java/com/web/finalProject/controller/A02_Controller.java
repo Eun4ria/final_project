@@ -153,8 +153,8 @@ public class A02_Controller {
 //	      
 //	        return "WEB-INF\\views\\a00_dash_pm.jsp";
 //		}
-		@GetMapping("dashmemFrm")
-		public String dashmemFrm(@RequestParam(value="project_id",required = false) String project_id, 
+		@RequestMapping("dashmemFrm")
+		public String dashmemFrm(@RequestParam("project_id") String project_id, 
 				HttpServletRequest request,  Model d) {
 			
 		    HttpSession session = request.getSession(); 

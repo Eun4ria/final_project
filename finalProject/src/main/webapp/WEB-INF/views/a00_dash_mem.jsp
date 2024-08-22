@@ -58,11 +58,7 @@
 --%>
 <!-- jquery -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-function goChat(user_id){
-	location.href="message?user_id="+user_id
-}
-</script>
+
 
 </head>
 
@@ -340,13 +336,6 @@ function goChat(user_id){
 	</div>
 
 	<script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
-
-<script>
-
-function goChat(project_id){
-location.href="chatmemListstart?project_id="+project_id
-}
-</script>
 
 	
 	<script>

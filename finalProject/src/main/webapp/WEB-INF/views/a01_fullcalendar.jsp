@@ -54,7 +54,7 @@
 <script src="${path}/a00_com/dist/index.global.js"></script>
 <script>
 function goChat(user_id){
-	location.href="message?user_id="+user_id
+	location.href="chatmemListstart
 }
 </script>
 <script type="text/javascript">
@@ -139,6 +139,9 @@ function goChat(user_id){
 			events : function(info, successCallback, failureCallback) {
 				var selectedValues = getSelectboxArray(); // 체크박스 선택목록 배열형태
 				
+				console.log("# 조회 직전 #")
+				console.log(selectedValues)
+				
 				$.ajax({
 					url : "calList",
 					method:"post",
@@ -164,7 +167,7 @@ function goChat(user_id){
 				
         
         // 체크박스 상태에 따라 일정을 새로 고침
-        $("#personal, #team, #gantt").change(function() {
+        $("#personal, #team, #gantt1").change(function() {
             calendar.refetchEvents();
         });
 		
@@ -262,7 +265,9 @@ function goChat(user_id){
 	        var sel = [];
 	        if ($("#personal").is(":checked")) sel.push("P");
 	        if ($("#team").is(":checked")) sel.push("T");
-	        if ($("#gantt").is(":checked")) sel.push("G");
+	        if ($("#gantt1").is(":checked")) sel.push("G");
+	        console.log("## 선택 ##")
+	        console.log(sel)
 	        return sel;
 	    }
 		// event작성자와 현재 사용자가 일치하는지 확인
@@ -384,22 +389,22 @@ function goChat(user_id){
          
         <div class="content">
             <div class="container">
-         <%-- <c:choose>
-           <c:when test="${sessionScope.project_id != null && sessionScope.project_id != ''}"> --%>
+         <c:choose>
+           <c:when test="${sessionScope.project_id != null && sessionScope.project_id != ''}">
             <label for="personal" class="p-1" style="background:#85eee2;color:black; border-radius:5px;">
                 <input type="checkbox" id="personal" checked> 개인
             </label>           
             <label for="team" class="p-1" style="background:#c266f4;color:white; border-radius:5px;">
                 <input type="checkbox" id="team"> 팀
             </label>
-		    <label for="gantt" class="p-1" style="background:#d8ee95;color:black; border-radius:5px;">
-              	<input type="checkbox" id="gantt"> 간트
-          	</label><%-- 
+		    <label for="gantt1" class="p-1" style="background:#d8ee95;color:black; border-radius:5px;">
+              	<input type="checkbox" id="gantt1"> 간트
+          	</label> 
 			</c:when>
 			 <c:otherwise>
                 	<input type="checkbox" id="personal" checked hidden>
 		    </c:otherwise>
-		</c:choose> --%>
+		</c:choose>
             
             
                 <div id='calendar'></div>

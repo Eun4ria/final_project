@@ -54,7 +54,7 @@
             <jsp:include page="a00_top.jsp"/>
 
             <main class="content">
-                <h1 class="h3 mb-3"><strong>Human Resources</strong> Management</h1>
+                <h1 class="h3 mb-3"><strong>Team</strong> Management</h1>
 
                 <div class="row mb-4">
                     <div class="col-lg-12 col-md-6 mb-md-0 mb-4">

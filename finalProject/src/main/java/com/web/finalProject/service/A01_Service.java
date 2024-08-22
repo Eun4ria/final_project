@@ -62,8 +62,8 @@ public class A01_Service {
         return dao.insertProject(ins)>0?"프로젝트 생성":"프로젝트 생성 실패";
     }
     // 프로젝트 팀원 추가하기 위한 user리스트(드롭박스)
-    public List<Users> getUserProIns(){
-    	return dao.getUserProIns();
+    public List<Users> getUserProIns(String my_id){
+    	return dao.getUserProIns(my_id);
     }    
     // 프로젝트 PM할당
     public int addProjectPM(String project_id, String user_id) {
@@ -269,30 +269,24 @@ public class A01_Service {
 	String path;
 	
 	public String updateProfileWithFile(MultipartFile file, Users user) {
-	    String msg = "수정 실패";
+	    String msg = null;
 
-	    try {
+	    try {	    	
 	        if (file != null && !file.isEmpty()) {
-	            String fileName = file.getOriginalFilename();
-	            if (fileName == null || fileName.isEmpty()) {
-	                throw new IllegalArgumentException("파일 이름이 유효하지 않습니다.");
-	            }
-
-	            File uploadDir = new File(path);
-	            if (!uploadDir.exists()) {
-	                uploadDir.mkdirs(); // 디렉토리 생성
-	            }
-	            File serverFile = new File(uploadDir, fileName);
-
-	            file.transferTo(serverFile);
-
-	            user.setImage(fileName);
+	        	String fname = file.getOriginalFilename();
+	        	if( fname!=null && !fname.equals("") ) {
+					File fup = new File(path,fname);
+					file.transferTo(fup);
+					user.setFname("/z01_upload/"+fname);
+					int result = dao.updateProfile( user);
+			        if (result > 0) {
+			            msg = "수정 성공";
+			        }
+				}
+	            
+	            
 	        }
-
-	        int result = dao.updateProfile(user);
-	        if (result > 0) {
-	            msg = "수정 성공";
-	        }
+	        
 	    } catch (IOException e) {
 	        msg = "파일 등록 중 에러 발생: " + e.getMessage();
 	    } catch (IllegalArgumentException e) {

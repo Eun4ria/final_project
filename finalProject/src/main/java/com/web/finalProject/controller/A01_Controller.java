@@ -35,39 +35,31 @@ public class A01_Controller {
 	@Autowired(required=false)
 	private A01_Service service;
 	
-	/*	
-	// http://localhost:4040/main
-	@GetMapping("main")
-    public String main(@RequestParam(name="user_id", defaultValue="P_0012") String user_id,
-    		HttpServletRequest request, Model d) {
-		d.addAttribute("pro", service.getProjectList(user_id));
-        d.addAttribute("currentUrl", request.getRequestURI());
-        return "WEB-INF\\views\\a00_main_pm.jsp";
-    }
-	*/
 	// http://localhost:4040/main	
 	@GetMapping("main")
 	public String main(HttpServletRequest request, Model d) {
 	    // 세션에서 user_id 값을 가져옵니다.
 	    HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
         
-	 // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+	    // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
 	    if (session == null || session.getAttribute("user_id") == null) {
 	         // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
 	         d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
 	     }
+	    // 메인으로 이동 시 project 세션 종료
+        String project_id = (String) session.getAttribute("project_id");
+        if (project_id != null) {
+        	session.removeAttribute("project_id");
+        	System.out.println("세션 삭제");
+        }
         
 	    String user_id = (String) session.getAttribute("user_id");
 	      
         d.addAttribute("pro", service.getProjectList(user_id));
-        d.addAttribute("user", service.getUserProIns());
+        d.addAttribute("user", service.getUserProIns(user_id)); // 프로젝트 생성 시 사용되는 userList(PM인 본인 빼고 조회)
         d.addAttribute("currentUrl", request.getRequestURI());
         
-        // 메인으로 이동 시 project 세션 종료
-        String project_id = (String) session.getAttribute("project_id");
-        if (project_id != null) {
-        	session.removeAttribute("project_id");
-        }
+        
   
         
         return "WEB-INF\\views\\a00_main.jsp";
@@ -239,6 +231,12 @@ public class A01_Controller {
     	return ResponseEntity.ok(service.deleteUser(user_id));
     }
     
+    
+    // 팀원 수정 및 삭제
+    
+    
+    
+    
 	
     
     
@@ -372,7 +370,8 @@ public class A01_Controller {
     }
     // http://localhost:4040/profile
     @GetMapping("profile")
-    public String profile(@RequestParam(value = "lang", defaultValue="en", required = false) String lang, HttpServletRequest request, Model d, HttpServletResponse response) {    
+    public String profile(@RequestParam(value = "lang", defaultValue="en", required = false)
+    	String lang, HttpServletRequest request, Model d, HttpServletResponse response 	) {    
 	    HttpSession session = request.getSession(false); 
 	    
 	    if (session == null || session.getAttribute("user_id") == null) {
@@ -414,20 +413,13 @@ public class A01_Controller {
         return "WEB-INF\\views\\a01_profile.jsp";
     }
     // 프로필 수정
-    @PostMapping("updateProfile")
-    public String updateProfileWithFile(HttpServletRequest request, MultipartFile file, Users user, Model model) {
-    	HttpSession session = request.getSession(false);
-    	
-    	String user_id = (String) session.getAttribute("user_id"); 
-    	// 프로필 업데이트 및 파일 저장
-    	user.setUser_id(user_id);
-        String msg = service.updateProfileWithFile(file, user);
+    @PostMapping("profile")
+    public String updateProfileWithFile(Users user, Model d) {    	
+        String msg = service.updateProfileWithFile(user.getImageFname(), user);
+        d.addAttribute("msg", msg);
+        d.addAttribute("profile", service.getProfile(user.getUser_id()));
 
-        // 결과 메시지와 프로필 정보를 모델에 추가
-        model.addAttribute("msg", msg);
-        model.addAttribute("profile", service.getProfile(user.getUser_id()));
-
-        return "WEB-INF\\views\\a01_profile.jsp";// 결과를 보여줄 JSP 페이지
+        return "redirect:profile";
     }
     
     

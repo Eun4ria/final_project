@@ -154,14 +154,7 @@
 					</div>
 
                   </div>  
-                  <p class="mt-4 text-sm text-center">
-                    Forgot your password?
-                    <a href="find_pwd" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Find pwd</a>
-                  <br>
-                    Are you ready to log in?
-                    <a href="signinFrm" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Login</a>
-                  </p>
->>>>>>> branch 'main-middle' of https://github.com/Eun4ria/final_project.git
+                  
               </div>
               <div>
               </div>
@@ -169,7 +162,6 @@
           </div>
         </div>
       </div>
-    </div>
   </main>
   <!--   Core JS Files   -->
   <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
