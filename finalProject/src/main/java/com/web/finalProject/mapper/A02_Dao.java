@@ -86,8 +86,9 @@ int insertUser(Users ins);
 		int insertchatroom1(Chat ins1);
 		
 		@Select("select chatroom_id, chatroom_name from chat \r\n"
-				+ "where owner_id=#{owner_id} \r\n"
-				+ "and user_id=#{user_id}")
+				+ "where (owner_id=#{owner_id} \r\n"
+				+ "and user_id=#{user_id}) \r\n"
+				+ "AND project_id = #{project_id}")
 		Chat getchatRoomId(Chat get);
 	//	
 /*
@@ -127,6 +128,14 @@ int insertUser(Users ins);
 			+ "WHERE project_id = #{project_id}")
 	List<Tasks> getAllTaskList(Tasks sch);
 
+	//List단 s/p 변경
+	@Update("UPDATE task " +
+	        "SET priority = #{priority}, " +
+	        "    tstatus = #{tstatus} " +
+	        "WHERE task_id = #{task_id}")
+	int uptSP(Tasks upt);
+
+	
 	
 	// ToDo detail - 상세
 	@Select("SELECT * FROM TASK t \r\n"
@@ -149,6 +158,9 @@ int insertUser(Users ins);
 			+ "    project_id = #{project_id}\r\n"
 			+ "WHERE task_id = #{task_id}")
 	int updatetask(Tasks upt);
+	
+	
+
 	
 	//파일 업로드
 	@Insert("INSERT INTO TASKFILE (TASK_ID , FNAME  ,ETC ,REGDATE ,UPTDATE)\r\n"

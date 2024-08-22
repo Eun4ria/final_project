@@ -577,19 +577,17 @@ $(document).ready(function(){
       }
    </script>  
 
-  <script type="text/javascript">
-    
-    
+    <script type="text/javascript">
 // 메세지 보내는 소켓  
 var socket = new SockJS('/ws');
 var stompClient = Stomp.over(socket);
 
 stompClient.connect({}, function(frame) {
     console.log('Connected: ' + frame);
-    
+
     // 채팅방 ID를 가져와서 구독
     var chatroom_id = document.getElementById('chatroom_id').value;
-    stompClient.subscribe('/topic/greetings', function(greeting){
+    stompClient.subscribe('/topic/' + chatroom_id, function(greeting) {
         var obj = JSON.parse(greeting.body);
         var curName = document.getElementById('curName').value;
 
@@ -598,20 +596,17 @@ stompClient.connect({}, function(frame) {
         console.log("## 받은 이름 ##");
         console.log(obj.name);
 
-        if(curName != obj.name){ //어제 지운거
-            displayMessage(obj.name, obj.msg, 'left'); //어제 지운거 :없으면 바로 화면에 안나옴
+        if(curName != obj.name) { 
+            displayMessage(obj.name, obj.msg, 'left');
             // 받은 메시지를 localStorage에 저장
             storeMessage(obj.name, obj.msg);
-       }
-      
+        }
     });
 });
 
 // 메시지를 localStorage에 저장하는 함수
 function storeMessage(name, msg) {
     var chatroom_id = document.getElementById('chatroom_id').value;
-   // var chatroom_id = document.getElementById('chatroom_id').value;
-   // var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
     var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
     messages.push({name: name, msg: msg});
     localStorage.setItem(chatroom_id, JSON.stringify(messages));
@@ -621,18 +616,14 @@ function storeMessage(name, msg) {
 function displayMessage(name, msg, alignment) {
     var messageDiv = document.createElement('div');
     messageDiv.classList.add(alignment);
-    //화면에 보이는 부분
-    messageDiv.innerHTML =  msg + "<br>";
+    messageDiv.innerHTML = msg + "<br>";
     document.querySelector("#show").appendChild(messageDiv);
-  //  document.getElementById('msg').value = ''; 이 부분이 있어서 다른사용자의 send도 같이 없어짐
-
-    // 메시지를 localStorage에 저장
-   // storeMessage(name, msg);
 }
 
 function sendName() {
     var name = document.getElementById('curName').value;
     var msg = document.getElementById('msg').value;
+    var chatroom_id = document.getElementById('chatroom_id').value;
     var sendname = '${sessionScope.user_name}';
     var alignmentClass = name === sendname ? 'right' : 'left';
 
@@ -641,36 +632,24 @@ function sendName() {
 
     // 메시지를 localStorage에 저장
     storeMessage(name, msg);
-    
-    var group = document.getElementById('chatroom_id').value;
-    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg': msg, 'group':group}));
+
+    // 서버로 메시지 전송
+    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg': msg, 'chatroom_id': chatroom_id}));
 
     scrollToBottom();
     document.getElementById('msg').value = '';
 }
-function scrollToBottom() {
-    var chatArea = document.getElementById('chatArea');
-       chatArea.scrollTop = chatArea.scrollHeight;
-}
+
 // 페이지 로드 시 localStorage에서 메시지 불러오기
 window.onload = function() {
     var chatroom_id = document.getElementById('chatroom_id').value;
     var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
-   messages.forEach(function(message) {
+    messages.forEach(function(message) {
         var alignmentClass = message.name === '${sessionScope.user_name}' ? 'right' : 'left';
         displayMessage(message.name, message.msg, alignmentClass);
     });
-   scrollToBottom(); // 페이지 로드 후 스크롤을 아래로 이동
+    scrollToBottom(); // 페이지 로드 후 스크롤을 아래로 이동
 }
-
-// localStorage 내용 삭제
-function clearLocalStorage() {
-    var chatroom_id = document.getElementById('chatroom_id').value;
-   // localStorage.clear(); // 모든 채팅방에 대해 
-    localStorage.removeItem(chatroom_id) //현재 채팅
-    document.querySelector("#show").innerHTML = '';
-}
-
 
 </script>     
  

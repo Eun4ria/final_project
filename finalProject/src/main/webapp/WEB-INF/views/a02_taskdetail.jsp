@@ -252,8 +252,8 @@ var proc = "${proc}"
               </div>
 
 
- <%-- Upload File --%> 
-              <div class="form-group">
+ <%-- Upload File --%>      
+ 		 	 <div class="form-group">
                 <label for="company-website-tw d-block">Upload File</label> <br>
                 <label class="btn btn-primary btn-md btn-file">
                   Browse File<input type="file" >
@@ -285,6 +285,16 @@ var proc = "${proc}"
             
                 
               </div>
+              <div class="col-lg-4 ml-auto " style="margin-bottom:20rem">
+            <div class="row">
+              <div class="col-6">
+                <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Go Up</a>
+              </div>
+              <div class="col-6" style="margin-bottom:3rem;">
+             	 <input type="button" value="수정" class="btn btn-block btn-primary btn-md" id="uptPMBtn"> 
+              </div>
+            </div>
+          </div>
 </div>
             </form>
     <%--  pm 권한 끝--%> 
