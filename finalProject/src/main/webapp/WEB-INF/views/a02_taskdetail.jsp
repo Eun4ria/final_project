@@ -160,7 +160,7 @@ var proc = "${proc}"
   <%-- form --%>  
 <c:choose>  
  <c:when test="${fn:startsWith(sessionScope.user_id, 'P_')}"> 
-          <form class="p-4  rounded" method="post" id="PMrole" >  
+          <form class="p-4  rounded" method="post" id="PMrole"  enctype="multipart/form-data">  
           <div>
              <a class="sidebar-toggle js-sidebar-toggle">
           <i class="hamburger align-self-center"></i>  <i class="bi bi-x"></i>
@@ -253,14 +253,7 @@ var proc = "${proc}"
 
 
  <%-- Upload File --%> 
-              <div class="form-group">
-                <label for="company-website-tw d-block">Upload File</label> <br>
-                <label class="btn btn-primary btn-md btn-file">
-                  Browse File<input type="file" >
-                </label>
-              </div>
- 		
- 		
+             
  		  <div class="form-group">
                 <label for="company-website-tw d-block">Upload File</label> <br>
                 <input type="file" name="reports" multiple="multiple" class="form-control" value="" />	
@@ -285,6 +278,16 @@ var proc = "${proc}"
 				
                 
               </div>
+              <div class="col-lg-4 ml-auto " style="margin-bottom:20rem">
+            <div class="row">
+              <div class="col-6">
+                <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Go Up</a>
+              </div>
+              <div class="col-6" style="margin-bottom:3rem;">
+             	 <input type="button" value="수정" class="btn btn-block btn-primary btn-md" id="uptPMBtn"> 
+              </div>
+            </div>
+          </div>
 </div>
             </form>
     <%--  pm 권한 끝--%> 

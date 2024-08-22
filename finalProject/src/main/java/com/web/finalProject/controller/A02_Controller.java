@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +46,7 @@ public class A02_Controller {
 	
 	//로그인
    // 로그인 처음 폼 
-	// http://223.26.198.130:4040/signinFrm
+	// http://223.26.198.130:4040/signinFrm // 고정IP 주소
    // http://192.168.0.42:4040/signinFrm
 // http://localhost:4040/signinFrm  //노트북
 	  @GetMapping("signinFrm")
@@ -472,10 +473,10 @@ public class A02_Controller {
 		   
 		 // return "WEB-INF\\views\\a02_todo.jsp"; //원래
 		    return "WEB-INF\\views\\a02_taskdoList.jsp"; //지금
-			
-					
-				    
-				}
+							    
+		}
+		
+		
 		//task detail - task id 체크
 			  @PostMapping("/setTaskId")
 			    public ResponseEntity<Void> setTaskId(@RequestParam String task_id, HttpServletRequest request) { 
@@ -526,6 +527,33 @@ public class A02_Controller {
 			
 			return "WEB-INF\\views\\a02_taskdetail.jsp";
 		}
+		
+		//todo SP 변경
+//		@PostMapping("uptSP")
+//		public ResponseEntity<String> uptSP(Tasks upt){
+//			
+//			return ResponseEntity.ok(service.uptSP(upt));
+//		}
+		
+		@PostMapping("uptSP")
+		public ResponseEntity<String> uptSP(Tasks task) {
+		    // Tasks 객체를 생성하고 필드를 설정합니다.
+//		    Tasks task = new Tasks();
+//		    task.setTask_id(taskId);
+//
+//		    if ("tstatus".equals(field)) {
+//		        task.setTstatus(value);;
+//		    } else if ("priority".equals(field)) {
+//		        task.setPriority(value);
+//		    }
+			System.out.println("변경할 task_id:"+task.getTask_id());
+
+		    return ResponseEntity.ok(service.uptSP(task));
+		}
+
+		
+		
+		
 		// to do uptdate - 수정
 		@PostMapping("upttask")
 		public String updatetask(@ModelAttribute Tasks upt, Model d) {

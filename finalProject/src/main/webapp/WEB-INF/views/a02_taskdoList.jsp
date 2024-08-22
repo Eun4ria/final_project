@@ -118,11 +118,48 @@ document.addEventListener('DOMContentLoaded', function() {
     taskRows.forEach(function(row) {
         row.addEventListener('dblclick', handleDblClick);
     });
+    $("[name=priority]").change(function(){
+    	//var st = $("[name=tstatus]").value()
+    	$.ajax({
+            type: "POST",
+            url: "uptSP",
+            data: $("#replaceFrm").serialize(),
+            success: function(data) {
+                //alert(data)
+            },
+            error: function(err) {
+            }
+        });
+
+    });
 });
 
 
 
+   
+   
+   
+function updateTask(task_id, field, value) {
+
+    $.ajax({
+        type: "POST",
+        url: "uptSP",
+        data: {
+            task_id: task_id,
+            field: field,
+            value: value
+        },
+        success: function(data) {
+            console.log(task_id + "의 " + field + "가 변경되었습니다.");
+            console.log(data);
+        },
+        error: function(err) {
+            console.log("변경 중 오류 발생:", err);
+        }
+    });
+}
 </script>
+
   <style>
        /* #main {
             position: relative;
@@ -198,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
             </div>
   <%-- 토글 전 본문 --%>
-           <div class="card-body px-0 pb-0" >
+           <div class="card-body px-0 pb-0" id="app">
             <div class="table-responsive">
             <table class="table align-items-center mb-0" id="taskTable">
                   <thead>
@@ -264,19 +301,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         
                       </td>
-                      <form>
+             <form id="replaceFrm">
                       <td class="align-middle text-center">
-                        <select  class="form-control text-center"  v-model="tstatus" name="tstatus">
-				        	<option class="text-center"  value="N">${task.tstatus}</option>
-				        	<option class="text-center"  value="진행중">진행중</option>
-				        	<option class="text-center"  value="중단">중단</option>
-				        	<option class="text-center"  value="막힘">막힘</option>
-			       		</select>
+                      <input type="hidden" name="task_id" value="${task.task_id}"/>
+                      <input type="text" class="form-control text-center" style="width:5rem;"name="tstatus" value="${task.tstatus }" />
                       </td>
-                      </form>
-                      <form>
                        <td class="align-middle text-center">
-                        <select  class="form-control text-center"  v-model="priority" name="priority">
+                        <select  class="form-control text-center" name="priority">
 				        	<option class="text-center"  value="N">${task.priority}</option>
 				        	<option class="text-center"  value="상">상</option>
 				        	<option class="text-center"  value="중">중</option>
@@ -284,6 +315,25 @@ document.addEventListener('DOMContentLoaded', function() {
 			       		</select>
                       </td>
                       </form>
+         
+            <!-- 테이블 안에 -->                                         
+<%-- <td class="align-middle text-center">
+    <select class="form-control text-center" name="tstatus" onchange="updateTask('${task.task_id}', 'tstatus', this.value)">
+        <option value="${task.tstatus}" selected>${task.tstatus}</option>
+        <option value="진행중">진행중</option>
+        <option value="중단">중단</option>
+        <option value="막힘">막힘</option>
+    </select>
+</td>
+<td class="align-middle text-center">
+    <select class="form-control text-center" name="priority" onchange="updateTask('${task.task_id}', 'priority', this.value)">
+        <option value="${task.priority}" selected>${task.priority}</option>
+        <option value="상">상</option>
+        <option value="중">중</option>
+        <option value="하">하</option>
+    </select>
+</td> --%>
+            
                       <td class="align-middle">
                         <div class="progress-wrapper  mx-auto">
                           <div class="progress-info">

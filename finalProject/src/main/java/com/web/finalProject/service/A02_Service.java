@@ -171,6 +171,15 @@ public class A02_Service {
 			return dao.getAllTaskList(sch);
 		}	
 			
+// 업무 SP 변경
+//		public String uptSP(Tasks upt){
+//			return dao.uptSP(upt)>0?"수정성공":"수정실패" ;
+//		}	
+		public String uptSP(Tasks upt) {
+		    return dao.uptSP(upt) > 0 ? "수정성공" : "수정실패";
+		}
+
+		
 // ToDo detail -상세
 		public Tasks getTaskDetail(String task_id){
 			return dao.getTaskDetail(task_id);

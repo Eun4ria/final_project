@@ -74,9 +74,14 @@ SELECT * FROM budget;
 ALTER TABLE budget 
 ADD uptUser VARCHAR2(50);
 
+SELECT * FROM task;
 
+SELECT * FROM USERS;
+SELECT * FROM team;
+SELECT * FROM project;
+SELECT * FROM chat;
 
-
-
-
-
+select chatroom_id, chatroom_name, PROJECT_ID from chat 
+where (owner_id='B_0047'
+and user_id='M_0025') AND
+project_id = 'PRO_0001';
