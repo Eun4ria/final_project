@@ -139,9 +139,6 @@ function goChat(user_id){
 			events : function(info, successCallback, failureCallback) {
 				var selectedValues = getSelectboxArray(); // 체크박스 선택목록 배열형태
 				
-				console.log("# 조회 직전 #")
-				console.log(selectedValues)
-				
 				$.ajax({
 					url : "calList",
 					method:"post",
@@ -246,11 +243,10 @@ function goChat(user_id){
 				success:function(data){
 					if (data.msg.indexOf("실패") === -1) {
 						alert(data.msg)						
-                    }else{
-                    	alert(data.msg+"\n본인 일정이 아닙니다.")
                     }
 					calendar.refetchEvents();
-					if (data.msg.indexOf("수정") === -1) { // data.msg에 수정이 포함되어 있지 않을 때
+					// data.msg에 수정이 포함되어 있지 않을 때
+					if (data.msg.indexOf("수정") === -1) { 
 						$("#clsBtn").click()
                     }
 					
