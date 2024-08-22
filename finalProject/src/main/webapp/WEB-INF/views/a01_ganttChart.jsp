@@ -290,7 +290,6 @@ function goChat(user_id){
     		        priority: task.priority,
     		        progress: task.progress || 0,
 	                color: task.color,
-	               //textcolor: task.textColor,
     		        user: task.user,
     		        project_id: "${sessionScope.project_id}"
     		    },
