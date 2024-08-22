@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,11 +43,11 @@ public class A02_Controller {
 	@Autowired(required=false)
 	private A02_Service service;
 	
-	//로그인
-   // 로그인 처음 폼 
-	// http://223.26.198.130:4040/signinFrm // 고정IP 주소
-   // http://192.168.0.42:4040/signinFrm
-// http://localhost:4040/signinFrm  //노트북
+	// 로그인
+    // 로그인 처음 폼 
+ 	// http://223.26.198.130:4040/signinFrm
+    // http://192.168.0.42:4040/signinFrm
+	// http://localhost:4040/signinFrm  //노트북
 	  @GetMapping("signinFrm")
 	   public String sign_in() {
 	      return "WEB-INF\\views\\a02_sign_in.jsp";
@@ -154,8 +153,8 @@ public class A02_Controller {
 //	      
 //	        return "WEB-INF\\views\\a00_dash_pm.jsp";
 //		}
-		@GetMapping("dashmemFrm")
-		public String dashmemFrm(@RequestParam(value="project_id",required = false) String project_id, 
+		@RequestMapping("dashmemFrm")
+		public String dashmemFrm(@RequestParam("project_id") String project_id, 
 				HttpServletRequest request,  Model d) {
 			
 		    HttpSession session = request.getSession(); 

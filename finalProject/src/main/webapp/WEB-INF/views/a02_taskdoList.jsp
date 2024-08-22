@@ -86,7 +86,7 @@
  }
  
 function goChat(project_id){
-	location.href="chatmemListstart?project_id="+project_id
+   location.href="chatmemListstart?project_id="+project_id
 }
 
 <%--토글 관련 --%>
@@ -245,7 +245,7 @@ function updateTask(task_id, field, value) {
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">parent ID</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Task Name</th>
                    
-				    <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
+                <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 " >Responsibility</th>
                      </c:if>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 "> End Date</th>
@@ -259,11 +259,11 @@ function updateTask(task_id, field, value) {
                     <tr ondblclick="taskPage('${task.task_id}')">
                
                     <td>
-	                    <div>
+                       <div>
                             <input type="checkbox" id="task1" >
                             <c:forEach begin="1"
-								end="${task.level}">  &nbsp;&nbsp;&nbsp;  //들여쓰기
-						 </c:forEach>${task.task_id}
+                        end="${task.level}">  &nbsp;&nbsp;&nbsp;  //들여쓰기
+                   </c:forEach>${task.task_id}
                           </div>
                     </td>
                     <td>
@@ -301,10 +301,14 @@ function updateTask(task_id, field, value) {
                         </div>
                         
                       </td>
-             <form id="replaceFrm">
+                      <form>
                       <td class="align-middle text-center">
-                      <input type="hidden" name="task_id" value="${task.task_id}"/>
-                      <input type="text" class="form-control text-center" style="width:5rem;"name="tstatus" value="${task.tstatus }" />
+                        <select  class="form-control text-center"  v-model="tstatus" name="tstatus">
+                       <option class="text-center"  value="N">${task.tstatus}</option>
+                       <option class="text-center"  value="진행중">진행중</option>
+                       <option class="text-center"  value="중단">중단</option>
+                       <option class="text-center"  value="막힘">막힘</option>
+                      </select>
                       </td>
                        <td class="align-middle text-center">
                         <select  class="form-control text-center" name="priority">
@@ -365,13 +369,13 @@ function updateTask(task_id, field, value) {
  <script>
 
  function taskPage(task_id) {
-	  //var sessionTaskId = '${sessionScope.task_id}'; // 로그인한 사용자 데이터
+     //var sessionTaskId = '${sessionScope.task_id}'; // 로그인한 사용자 데이터
      // var sessionProId = '${sessionScope.project_id}'; // 로그인한 사용자 데이터
      $.ajax({
          url: '/setTaskId',
          type: 'POST',
          data: { 
-				task_id: task_id
+            task_id: task_id
                // project_id: sessionProId // 서버로 전송할 데이터
                 },
          success: function(response) {

@@ -557,6 +557,7 @@ function goChat(user_id){
 		];	
 		*/
 		gantt.config.row_height = 30; // 높이를 40픽셀로 설정
+		
 		// 연결관계 비활성화
 		gantt.config.links = false;
 		

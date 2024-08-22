@@ -55,18 +55,13 @@
 	if(msg!=""){
 		alert(msg)
 	}
-	var role_code = "${sessionScope.role_code}"
+	var sessionRole = "${sessionScope.role_code}"
 	function projectPage(project_id){ // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
-	   if(role_code!="" && role_code!=null){
-	      if(role_code=="P"){
-	         location.href="dashpmFrm?project_id="+project_id
-	      }else{
-	         location.href="dashmemFrm?project_id="+project_id
-	      }
-	   }else{
-	      alert("비정상적인 접근! 관리자에게 문의해주세요")
-	   }    
-	 }
+		if(sessionRole!="" && sessionRole!=null){
+			$("[name=project_id]").val(project_id)
+			$("#proPage").submit()
+			}
+	}
 </script>
 <style>
 	.project-item:hover{
@@ -104,7 +99,7 @@
 					
 					<div class="row">
 						<div class="col-md-4 col-xl-5">
-						    <form class="card mb-3" method="post" action="updateProfile" enctype="multipart/form-data">
+						    <form class="card mb-3" method="post" action="profile" enctype="multipart/form-data">
 						        <div class="card-header">
 						            <h5 class="card-title mb-0"><fmt:message key="profile_details" /></h5>
 						        </div>
@@ -115,7 +110,7 @@
 						            <div class="form-group">
 						                <label class="btn btn-outline-primary">
 						                    <fmt:message key="update_image_file" />
-						                    <input type="file" name="image" class="form-control" value=""/>
+						                   <input type="file"  name="imageFname" class="form-control" value="" />	
 						                </label>
 						            </div>						
 						        </div>
@@ -160,6 +155,9 @@
 								</div>
 								<div class="card-body">
 									<c:forEach var="pro" items="${pro}">
+									<form id="proPage" method="post" action="dashmemFrm">
+					                  	<input type="hidden" name="project_id"/>
+					                  </form>
 									<div class="d-flex align-items-start project-item" onclick="projectPage('${pro.project_id}')" style="padding:10px;">
 										<img src="${pro.logo}" width="30" height="30" class="rounded-circle me-2" alt="${pro.project_name} }">
 										<div class="flex-grow-1">

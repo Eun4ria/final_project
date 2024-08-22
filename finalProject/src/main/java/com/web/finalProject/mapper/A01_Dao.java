@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.finalProject.vo.Calendar;
 import com.web.finalProject.vo.GanttTask;
@@ -157,7 +158,7 @@ public interface A01_Dao {
 			+ "where user_id=#{user_id}")
 	int deleteUser(@Param("user_id") String user_id);
 	
-	
+	// 프로젝트 생성 시 필요한 사용자 리스트
 	@Select("SELECT \n"
 			+ "    u.user_id,\n"
 			+ "    u.user_name,\n"
@@ -168,11 +169,13 @@ public interface A01_Dao {
 			+ "JOIN \n"
 			+ "    department d \n"
 			+ "ON \n"
-			+ "    u.deptno = d.deptno")
-	List<Users> getUserProIns();
+			+ "    u.deptno = d.deptno\r\n"
+			+ "WHERE \r\n"
+	        + "    u.user_id <> #{userId}")
+	List<Users> getUserProIns(@RequestParam("userId") String my_id);
 	
 	
-	// 로그인한 유저의 활동중인 프로젝트 리스트
+	// 로그인한 유저의 활동중인 프로젝트 리스트(메인)
 	@Select("SELECT\r\n"
 			+ "    p.project_id,\r\n"
 			+ "    c.logo,\r\n"
@@ -201,7 +204,7 @@ public interface A01_Dao {
 			+ "ORDER BY\r\n"
 			+ "    p.project_name")
 	List<Project> getProjectList(@Param("user_id") String user_id);
-	// 로그인한 유저의 완료된 프로젝트
+	// 로그인한 유저의 완료된 프로젝트(프로필)
 	@Select("SELECT\r\n"
 			+ "    p.project_id,\r\n"
 			+ "    c.logo,\r\n"
@@ -331,7 +334,7 @@ public interface A01_Dao {
 			+ "user_name=#{user_name},\r\n"
 			+ "email=#{email},\r\n"
 			+ "company_id=#{company_id},\r\n"
-			+ "image=#{image}\r\n"
+			+ "image=#{fname}\r\n"
 			+ "WHERE user_id=#{user_id}")
 	int updateProfile(Users upt);
 	

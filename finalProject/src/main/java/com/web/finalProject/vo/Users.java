@@ -26,10 +26,16 @@ public class Users {
 	private String dname;
 	private boolean project_status;
 	private int cnt;
+	private String fname;
 	
-	private MultipartFile[] reports;
-	private List<String> images;
+	private MultipartFile imageFname;
 	
+	public MultipartFile getImageFname() {
+		return imageFname;
+	}
+	public void setImageFname(MultipartFile imageFname) {
+		this.imageFname = imageFname;
+	}
 	public String getProject_id() {
 		return project_id;
 	}
@@ -144,17 +150,11 @@ public class Users {
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
-	public MultipartFile[] getReports() {
-		return reports;
+	public String getFname() {
+		return fname;
 	}
-	public void setReports(MultipartFile[] reports) {
-		this.reports = reports;
-	}
-	public List<String> getImages() {
-		return images;
-	}
-	public void setImages(List<String> images) {
-		this.images = images;
+	public void setFname(String fname) {
+		this.fname = fname;
 	}
 
 

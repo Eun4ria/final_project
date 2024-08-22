@@ -58,7 +58,7 @@
  <script>
  
 function goChat(project_id){
-	location.href="chatmemListstart?project_id="+project_id
+	location.href="chatmemListstart"
 }
 
 </script>
@@ -152,7 +152,7 @@ function goChat(project_id){
                      </div>
                   </li>
                <li class="nav-item dropdown" id="chatgo">
-					<a class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.project_id}')" id="messagesDropdown">
+					<a class="nav-icon dropdown-toggle" onclick="goChat()" id="messagesDropdown">
 							<i class="align-middle" data-feather="message-square"></i>
 					</a>
 					

@@ -577,7 +577,9 @@ $(document).ready(function(){
       }
    </script>  
 
-    <script type="text/javascript">
+  <script type="text/javascript">
+    
+    
 // 메세지 보내는 소켓  
 var socket = new SockJS('/ws');
 var stompClient = Stomp.over(socket);
