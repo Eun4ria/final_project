@@ -180,7 +180,6 @@
 
     	  var labels = JSON.parse('${budgetNames}');
           var data = JSON.parse('${amounts}');
-
           
           console.log("labels =>"+labels)
           console.log("data => "+data)
@@ -193,8 +192,7 @@
               "lightpink",
               "lightgrey",
               "purple",
-              "coral"
-              
+              "coral"          
           ];
 
           // labels 배열 길이만큼 색상을 반복하여 할당

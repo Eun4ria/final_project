@@ -154,7 +154,7 @@ public class A02_Controller {
 //	      
 //	        return "WEB-INF\\views\\a00_dash_pm.jsp";
 //		}
-		@GetMapping("dashmemFrm")
+		@PostMapping("dashmemFrm")
 		public String dashmemFrm(@RequestParam(value="project_id",required = false) String project_id, 
 				HttpServletRequest request,  Model d) {
 			
@@ -660,7 +660,7 @@ public class A02_Controller {
 	
   //차트
  // http://localhost:4040/chart
- 	@GetMapping("chart")
+ 	@RequestMapping("chart")
  	public String chart(HttpServletRequest request, Model d) {
  		 d.addAttribute("currentUrl", request.getRequestURI());
         HttpSession session = request.getSession();

@@ -132,10 +132,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
     });
+    $("[name=tstatus]").change(function(){
+    	//var st = $("[name=tstatus]").value()
+    	$.ajax({
+            type: "POST",
+            url: "uptSP",
+            data: $("#replaceFrm").serialize(),
+            success: function(data) {
+                //alert(data)
+            },
+            error: function(err) {
+            }
+        });
+
+    });
 });
 
 
-
+<!-- 
    
    
    
@@ -157,7 +171,7 @@ function updateTask(task_id, field, value) {
             console.log("변경 중 오류 발생:", err);
         }
     });
-}
+} -->
 </script>
 
   <style>
@@ -304,7 +318,20 @@ function updateTask(task_id, field, value) {
              <form id="replaceFrm">
                       <td class="align-middle text-center">
                       <input type="hidden" name="task_id" value="${task.task_id}"/>
-                      <input type="text" class="form-control text-center" style="width:5rem;"name="tstatus" value="${task.tstatus }" />
+                     
+                        <select  class="form-control text-center" name="tstatus">
+				        	<option class="text-center"  value="N">${task.tstatus}</option>
+				        	<option class="text-center"  value="진행예정">진행예정</option>
+				        	<option class="text-center"  value="진행중">진행중</option>
+				        	<option class="text-center"  value="중단">중단</option>
+				        	<option class="text-center"  value="막힘">막힘</option>
+				        	<c:choose>
+						      <c:when test="${sessionScope.role_code == 'P'}">
+						        <option class="text-center" value="완료">완료</option>
+						      </c:when>
+						    </c:choose>
+			       		</select>
+                      </td>
                       </td>
                        <td class="align-middle text-center">
                         <select  class="form-control text-center" name="priority">
@@ -314,26 +341,10 @@ function updateTask(task_id, field, value) {
 				        	<option class="text-center"  value="하">하</option>
 			       		</select>
                       </td>
+                       
                       </form>
          
-            <!-- 테이블 안에 -->                                         
-<%-- <td class="align-middle text-center">
-    <select class="form-control text-center" name="tstatus" onchange="updateTask('${task.task_id}', 'tstatus', this.value)">
-        <option value="${task.tstatus}" selected>${task.tstatus}</option>
-        <option value="진행중">진행중</option>
-        <option value="중단">중단</option>
-        <option value="막힘">막힘</option>
-    </select>
-</td>
-<td class="align-middle text-center">
-    <select class="form-control text-center" name="priority" onchange="updateTask('${task.task_id}', 'priority', this.value)">
-        <option value="${task.priority}" selected>${task.priority}</option>
-        <option value="상">상</option>
-        <option value="중">중</option>
-        <option value="하">하</option>
-    </select>
-</td> --%>
-            
+
                       <td class="align-middle">
                         <div class="progress-wrapper  mx-auto">
                           <div class="progress-info">

@@ -342,10 +342,12 @@ SELECT * from(
 			SELECT rownum cnt, LEVEL AS lvl, b.*
 			FROM budget b
 			WHERE project_id = 'PRO_0003'
-			START WITH parent_id IS NULL
+			START WITH parent_id ='N'
 			CONNECT BY PRIOR budget_id = parent_id
 			ORDER siblings BY budget_id DESC)
 			WHERE lvl= 2 OR lvl =1;
+		
+		SELECT * FROM BUDGET b ;
 
 INSERT INTO BUDGET (BUDGET_ID, BUDGET_NAME, AMOUNT, REGDATE, USEDATE, PROJECT_ID, PARENT_ID, USER_ID, ETC, UPTDATE) VALUES
 ('BUG_0102', '기술 지원 예산', 15000000, TO_DATE('2024-09-02 10:15:00', 'YYYY-MM-DD HH24:MI:SS'), NULL, 'PRO_0011', 'BUG_0101', 'U_0002', '기술 관련 비용', NULL);

@@ -156,6 +156,15 @@ START WITH parent_id IS NULL
 CONNECT BY PRIOR budget_id = parent_id
 ORDER siblings BY budget_id DESC);
 
+SELECT * from(
+			SELECT rownum cnt, LEVEL AS lvl, b.*
+			FROM budget b
+			WHERE project_id = 'PRO_0003'
+			START WITH parent_id = 'N'
+			CONNECT BY PRIOR budget_id = parent_id
+		ORDER siblings BY budget_id DESC)
+			WHERE lvl= 2 or lvl=1;
+;SELECT * FROM BUDGET b ;
 INSERT INTO budget (budget_id, budget_name, amount, regdate, usedate, project_id, parent_id, user_id)
 VALUES ('BUG_'||TO_CHAR(budget_seq.nextval, 'FM0000'), '운영 및 유지보수', 200000000, sysdate, NULL, 'PRO_0003','BUG_0023' ,'B_0047' );
 

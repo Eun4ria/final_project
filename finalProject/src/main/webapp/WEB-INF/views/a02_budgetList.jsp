@@ -333,14 +333,14 @@ function FormReset(){
          <div class="row">
          <div class="col">    
          <span>Amount</span>              
-           <input type="number" class="form-control" name="amount">
+           <input type="number" class="form-control" name="amount" required>
          </div>
         </div>
          <div class="row">
          <div class="col">    
          <span>Parent Id</span>              
           <select class="form-control" name="parent_id" id="parent_id">
-            <option value="">Select Parent Id</option>
+            <option value="N">Select Parent Id</option>
             <c:forEach var="parent" items="${BudParent}">
                 <option value="${parent.budget_id}">${parent.budget_name}</option>
             </c:forEach>

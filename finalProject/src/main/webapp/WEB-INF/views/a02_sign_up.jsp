@@ -83,8 +83,7 @@
 			alert(msg + "\n아이디가 이메일로 발송되었습니다.");
 			if (msg === "등록 성공") {
 				location.href = "signinFrm";
-				//location.href = "regEmpTmp";
-			}
+				}
 		}
 		
 		   // 비밀번호 확인 로직
@@ -198,10 +197,6 @@
             if (email === '') {
             	empcnt++;
             }
-            
-          /*  if (CompanyId === '') {
-            	empcnt++;
-            } */
    //모든 정보가 입력되어있는 경우 유효성 체크        
             if(empcnt === 0){
             	if (emailMessage.textContent === '이미 사용중인 이메일입니다'){

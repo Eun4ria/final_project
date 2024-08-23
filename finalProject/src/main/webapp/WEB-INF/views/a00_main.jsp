@@ -65,10 +65,10 @@
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <style>
 .project-item:hover{
-	cursor:pointer;
-	background-color:lightgray;
-	border-radius:10px;
-	transition: background-color 0.3s ease;
+   cursor:pointer;
+   background-color:lightgray;
+   border-radius:10px;
+   transition: background-color 0.3s ease;
 }
 .dropdown-menu {
     max-height: 200px; /* 필요에 따라 높이 조절 */
@@ -93,8 +93,8 @@ if(msg != "") {
 var role_code="${sessionScope.role_code}"
 function projectPage(project_id){ // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
   if(role_code!="" && role_code!=null){
-	$("[name=project_id]").val(project_id)
-	$("#proPage").submit()
+   $("[name=project_id]").val(project_id)
+   $("#proPage").submit()
   }else{
      alert("비정상적인 접근! 관리자에게 문의해주세요")
   }    
@@ -102,7 +102,7 @@ function projectPage(project_id){ // 프로젝트 리스트에서 해당 프로�
 
 
 function projectDetail(){
-	//location.href="main"
+   //location.href="main"
 }
 
 </script>
@@ -120,29 +120,29 @@ function projectDetail(){
            <div class="row">
            <h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
            <div class="col-3 col-xxl-3 d-flex order-1 order-xxl-1  flex-fill w-2"  style="height: 20%">
-							<div class="card flex-fill">
-								<div class="card-header">
+                     <div class="card flex-fill">
+                        <div class="card-header">
 
-									<h5 class="card-title text-center mb-0">진행중인 업무</h5>
-								</div>
-								<div class="card-body d-flex">
-									<div class="align-self-center w-100">
-										50
-									</div>
-								</div>
-								<div class="card-header">
+                           <h5 class="card-title text-center mb-0">진행중인 업무</h5>
+                        </div>
+                        <div class="card-body d-flex">
+                           <div class="align-self-center w-100">
+                              50
+                           </div>
+                        </div>
+                        <div class="card-header">
 
-									<h5 class="card-title text-center mt-1 ">예정된 업무</h5>
-								</div>
-								<div class="card-body d-flex mb-1">
-									<div class="align-self-center w-100">
-										70
-									</div>
-								</div>
-							</div>
-						</div>
-			<div class="col-3  col-xxl-3 d-flex order-1 order-xxl-1 flex-fill w-30" style="height: 20%">
-							
+                           <h5 class="card-title text-center mt-1 ">예정된 업무</h5>
+                        </div>
+                        <div class="card-body d-flex mb-1">
+                           <div class="align-self-center w-100">
+                              70
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+         <div class="col-3  col-xxl-3 d-flex order-1 order-xxl-1 flex-fill w-30" style="height: 20%">
+                     
                      <div class="card flex-fill w-100">
                         <div class="card-header">
                            <h5 class="card-title">Progress Chart</h5>
@@ -155,8 +155,8 @@ function projectDetail(){
                       
                      </div>
                   </div> 
-						</div>
-			
+                  </div>
+         
           </div>
             <div class="container-fluid p-0">
                
@@ -170,9 +170,9 @@ function projectDetail(){
                   <!-- 프로젝트 생성 버튼 (PM만 보이게)-->
                   
          <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
-	         <button class="btn btn-success" data-toggle="modal" data-target="#ModalCenter"
+            <button class="btn btn-success" data-toggle="modal" data-target="#ModalCenter"
            type="button">CREATE PROJECT</button>
-	    </c:if>
+       </c:if>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
                   <div class="dropdown float-lg-end pe-4">
@@ -202,7 +202,7 @@ function projectDetail(){
                   <tbody>
                   <c:forEach var="pro" items="${pro}">
                   <form id="proPage" method="post" action="dashmemFrm">
-                  	<input type="hidden" name="project_id"/>
+                     <input type="hidden" name="project_id"/>
                   </form>
                     <tr onclick="projectPage('${pro.project_id}')" class="project-item">
                       <td>
@@ -234,9 +234,9 @@ function projectDetail(){
                       </td>
                        --%>
                        <td class="align-middle">
-	                      <div style="text-align: right;">
-	                        <span class="amount text-xs font-weight-bold" >${pro.amount}</span>
-	                      </div>
+                         <div style="text-align: right;">
+                           <span class="amount text-xs font-weight-bold" >${pro.amount}</span>
+                         </div>
                       </td>
                       <td class="align-middle">
                         <div class="progress-wrapper w-75 mx-auto text-center">
@@ -251,7 +251,7 @@ function projectDetail(){
                         </div>
                       </td>
                       <td class="align-middle">
-                      	<button class="btn btn-primary" onclick="projectDetail('${pro.project_id}'); event.stopPropagation();">INFO</button>
+                         <button class="btn btn-primary" onclick="projectDetail('${pro.project_id}'); event.stopPropagation();">INFO</button>
                       </td>
                     </tr>
                     </c:forEach>
@@ -291,7 +291,11 @@ function projectDetail(){
       <div class="row">
          <div class="col">
          <span>Company ID</span>
-           <input type="text" class="form-control" name="company_id"/>
+           <select class="form-control" name="company_id">
+                 <c:forEach var="com" items="${com}">
+               <option value="${com.company_id}" style="height:1.5rem;">${com.company_name}</option>               
+            </c:forEach>
+            </select>
          </div>
         </div>
         <div class="row">
@@ -321,26 +325,26 @@ function projectDetail(){
         <div class="row">
          <div class="col">
          <span>Users</span>
-	         <select class="form-control" name="userIds" multiple>
-	           	<c:forEach var="user" items="${user}">
-					<option value="${user.user_id}" style="height:1.5rem;">${user.user_name}(${user.dname})</option>					
-				</c:forEach>
-	         </select>
-		<%-- <input list="user_list" id="combobox" name="user_id"
-					class="form-control" placeholder="Select Member">
-			<datalist class="dropdown-menu" id="user_list" >
-				<c:forEach var="user" items="${user}">
-					<option value="${user.user_id}" style="width:10rem">${user.user_name}(${user.dname})</option>
-				</c:forEach>
-			</datalist> --%>
+            <select class="form-control" name="userIds" multiple>
+                 <c:forEach var="user" items="${user}">
+               <option value="${user.user_id}" style="height:1.5rem;">${user.user_name}(${user.dname})</option>               
+            </c:forEach>
+            </select>
+      <%-- <input list="user_list" id="combobox" name="user_id"
+               class="form-control" placeholder="Select Member">
+         <datalist class="dropdown-menu" id="user_list" >
+            <c:forEach var="user" items="${user}">
+               <option value="${user.user_id}" style="width:10rem">${user.user_name}(${user.dname})</option>
+            </c:forEach>
+         </datalist> --%>
         </div>        
        </div>
      </div>           
         
         <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="submit" id="regBtn" class="btn btn-success">regist</button>        
-     	</div>   
+           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+           <button type="submit" id="regBtn" class="btn btn-success">regist</button>        
+        </div>   
        </form> 
       </div>
       
@@ -349,15 +353,15 @@ function projectDetail(){
 </div>
 </div>
 <script>
-	document.addEventListener('DOMContentLoaded', () => {
-	    const form = document.querySelector('form'); // 폼 선택
-	    form.addEventListener('submit', (event) => {
-	        const selectedUsers = Array.from(document.querySelectorAll('input[name="user_ids"]:checked'))
-	                                   .map(checkbox => checkbox.value);
-	        console.log('Selected Users:', selectedUsers);
-	        // 예: 서버로 제출하거나 다른 작업을 수행
-	    });
-	});
+   document.addEventListener('DOMContentLoaded', () => {
+       const form = document.querySelector('form'); // 폼 선택
+       form.addEventListener('submit', (event) => {
+           const selectedUsers = Array.from(document.querySelectorAll('input[name="user_ids"]:checked'))
+                                      .map(checkbox => checkbox.value);
+           console.log('Selected Users:', selectedUsers);
+           // 예: 서버로 제출하거나 다른 작업을 수행
+       });
+   });
 </script>
    <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
 <script>

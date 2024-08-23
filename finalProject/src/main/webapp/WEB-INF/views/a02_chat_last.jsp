@@ -642,8 +642,8 @@ function sendName() {
     // 메시지를 localStorage에 저장
     storeMessage(name, msg);
     
-    var group = document.getElementById('chatroom_id').value;
-    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg': msg, 'group':group}));
+    //var group = document.getElementById('chatroom_id').value;                    , 'group':group
+    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg': msg}));
 
     scrollToBottom();
     document.getElementById('msg').value = '';
