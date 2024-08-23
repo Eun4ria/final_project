@@ -281,12 +281,17 @@ public class A01_Service {
 					File fup = new File(path,fname);
 					file.transferTo(fup);
 					user.setFname("/z01_upload/"+fname);
-					int result = dao.updateProfile( user);
+					int result = dao.updateImageProfile(user);
 			        if (result > 0) {
-			            msg = "수정 성공";
-			        }
-				}            
-	        }	        
+			            msg = "이미지 포함 수정 성공";
+			        } 
+				}else {
+					msg="이미지 수정 중 파일명으로 변경 실패";
+				}
+	        }else {
+	        	dao.updateProfile(user);
+	        	msg="이미지 없이 수정 성공";
+	        }
 	    } catch (IOException e) {
 	        msg = "파일 등록 중 에러 발생: " + e.getMessage();
 	    } catch (IllegalArgumentException e) {

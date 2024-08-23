@@ -341,6 +341,13 @@ public interface A01_Dao {
 			+ "company_id=#{company_id},\r\n"
 			+ "image=#{fname}\r\n"
 			+ "WHERE user_id=#{user_id}")
+	int updateImageProfile(Users upt);
+	@Update("UPDATE users \r\n"
+			+ "SET\r\n"
+			+ "user_name=#{user_name},\r\n"
+			+ "email=#{email},\r\n"
+			+ "company_id=#{company_id}\r\n"
+			+ "WHERE user_id=#{user_id}")
 	int updateProfile(Users upt);
 	
 	@Select("	select count(*) \r\n"
