@@ -9,12 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.LocaleResolver;
 
 import com.web.finalProject.service.A01_Service;
@@ -40,11 +38,9 @@ public class A01_Controller {
 	@GetMapping("main")
 	public String main(HttpServletRequest request, Model d) {
 	    // 세션에서 user_id 값을 가져옵니다.
-	    HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다.
-        
-	    // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+	    HttpSession session = request.getSession(false);
+	    d.addAttribute("currentUrl", request.getRequestURI());
 	    if (session == null || session.getAttribute("user_id") == null) {
-	         // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
 	         d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
 	         return "WEB-INF\\views\\a00_main.jsp";
 	     }
@@ -56,11 +52,12 @@ public class A01_Controller {
         }
         
 	    String user_id = (String) session.getAttribute("user_id");
-	    
+	    // 프로젝트 리스트
         d.addAttribute("pro", service.getProjectList(user_id));
-        d.addAttribute("user", service.getUserProIns(user_id)); // 프로젝트 생성 시 사용되는 userList(PM인 본인 빼고 조회)
-        d.addAttribute("currentUrl", request.getRequestURI());
-        
+        // 프로젝트 생성 시 사용되는 userList(PM인 본인 빼고 조회)
+        d.addAttribute("user", service.getUserProIns(user_id)); 
+        // 프로젝트 생성 시 사용되는 companyList
+        d.addAttribute("com", service.getComId());
         
   
         
@@ -114,20 +111,16 @@ public class A01_Controller {
 	  if (session == null || session.getAttribute("user_id") == null) {
           // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
           d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
-      }
-		
+      }		
 		d.addAttribute("currentUrl", request.getRequestURI());
 		return "WEB-INF\\views\\a01_ganttChart.jsp";
 	}
 	// 간트 조회
-	// http://localhost:4040/ganttList?project_id=PRO_0003
-	@RequestMapping("ganttList")
-	public ResponseEntity<?> getGantt(HttpServletRequest request, Model d) {
-		
+	@PostMapping("ganttList")
+	public ResponseEntity<?> getGantt(HttpServletRequest request, Model d) {		
 		HttpSession session = request.getSession(false); 
-        String project_id = (String) session.getAttribute("project_id");  
-        
-		System.out.println("project_id:"+project_id);
+        String project_id = (String) session.getAttribute("project_id");         
+		System.out.println("간트 차트 조회 project_id:"+project_id);
 		return ResponseEntity.ok(new Gantt(
 					service.getGantt(project_id),
 					service.getTeam(project_id)));
@@ -144,7 +137,6 @@ public class A01_Controller {
 	public ResponseEntity<?> updateGantt(GanttTask upt) {
 		System.out.println("수정할 task_id: " + upt.getId());
 	    System.out.println("수정할 task명: " + upt.getText());
-	    //System.out.println("수정할 글자색상: " + upt.getTextcolor());
 	    System.out.println("수정할 배경색상: " + upt.getColor());
 	    return ResponseEntity.ok(new TaskList(
 	            service.updateGantt(upt), 
@@ -167,7 +159,7 @@ public class A01_Controller {
 	    HttpSession session = request.getSession(false);
 	    String user_id = (String) session.getAttribute("user_id");
 	    
-	    ins.setUserIds(ins.getUserIds());
+	    //ins.setUserIds(ins.getUserIds());
 
 	    // Project를 데이터베이스에 저장
 	    String isIns = service.insertProject(ins);
@@ -176,6 +168,7 @@ public class A01_Controller {
 	    	// pm할당
 	        service.addProjectPM(ins.getProject_id(), user_id);
 	        if (ins.getUserIds() != null && !ins.getUserIds().isEmpty()) {
+	        	// member할당
 	            service.addProjectMem(ins.getProject_id(), ins.getUserIds());
 	        }
 	    }
@@ -246,12 +239,12 @@ public class A01_Controller {
     // http://localhost:4040/fullcalendar
  	@GetMapping("fullcalendar")
 	public String fullcalendar( HttpServletRequest request, Model d) {	
-	 HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다
-	 // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
-     if (session == null || session.getAttribute("user_id") == null) {
-         // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
-         d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
-     }
+		HttpSession session = request.getSession(false); // false를 사용하여 기존 세션이 없으면 새로 생성하지 않도록 합니다
+		 // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
+	    if (session == null || session.getAttribute("user_id") == null) {
+	         // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+	        d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+	    }
  		    
 		d.addAttribute("currentUrl", request.getRequestURI());
 	    return "WEB-INF\\views\\a01_fullcalendar.jsp";
@@ -276,22 +269,20 @@ public class A01_Controller {
  	*/
  	// http://localhost:4040/calList 
   	@PostMapping("calList")
-  	public ResponseEntity<List<Calendar>> getCalList(@RequestParam(name ="sel", defaultValue="") List<String> sel,
+  	public ResponseEntity<List<Calendar>> getCalList(
+  			@RequestParam(name ="sel", defaultValue="") List<String> sel,
   			HttpServletRequest request){
   		HttpSession session = request.getSession(false); 
         String user_id = (String) session.getAttribute("user_id");  
-        String project_id = (String) session.getAttribute("project_id");  
-        
-        System.out.println("선택한 보기방식:"+sel);
+        String project_id = (String) session.getAttribute("project_id");         
+        System.out.println("calendar 선택보기:"+sel);
          
-        List<Calendar> calendarList = new ArrayList<>();
-        
+        List<Calendar> calendarList = new ArrayList<>();        
         if (sel != null && !sel.isEmpty()) {
             for (String s : sel) {
                 calendarList.addAll(service.getCalendarList(s, user_id, project_id));
             }
         }
-
         return ResponseEntity.ok(calendarList);
   	}
   	
@@ -314,7 +305,7 @@ public class A01_Controller {
             }
         }
         
-        if (project_id == null || project_id=="") {
+        if (project_id == null || project_id =="") {
             ins.setProject_id("");
         }
 
@@ -373,38 +364,39 @@ public class A01_Controller {
     // http://localhost:4040/profile
     @GetMapping("profile")
     public String profile(@RequestParam(value = "lang", defaultValue="en", required = false)
-    	String lang, HttpServletRequest request, Model d, HttpServletResponse response 	) {    
+    	String lang, HttpServletRequest request, Model d,
+    	HttpServletResponse response) {  
+    	
 	    HttpSession session = request.getSession(false); 
 	    
 	    if (session == null || session.getAttribute("user_id") == null) {
-	         // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
 	         d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
 	         return "WEB-INF\\views\\a01_profile.jsp";
-	     }
+	    }
         
         String user_id = (String) session.getAttribute("user_id");        
         System.out.println("프로필 user_id:"+user_id);        
         d.addAttribute("currentUrl", request.getRequestURI());
        
         
-        // 다국어 처리
+     // 다국어 처리
         if (lang != null) {
             Locale locale;
             switch (lang) {
                 case "ko":
-                    locale = new Locale("ko");
+                    locale = new Locale.Builder().setLanguage("ko").build();
                     break;
                 case "en":
-                    locale = new Locale("en");
+                    locale = new Locale.Builder().setLanguage("en").build();
                     break;
                 case "fa":
-                    locale = new Locale("fa");
+                    locale = new Locale.Builder().setLanguage("fa").build();
                     break;
                 default:
                     locale = Locale.ENGLISH;
             }
             localeResolver.setLocale(request, response, locale);
-        }        
+        }       
         
         // 유저의 프로필 정보
         d.addAttribute("profile", service.getProfile(user_id));
@@ -414,18 +406,18 @@ public class A01_Controller {
         d.addAttribute("cpro", service.getComProjectList(user_id));        
         return "WEB-INF\\views\\a01_profile.jsp";
     }
-    // 프로필 수정
+    // 프로필 수정(보완 필요)
     @PostMapping("profile")
-    public String updateProfileWithFile(Users user, Model d) {    	
+    public String updateProfileWithFile(Users user, Model d) {    
         String msg = service.updateProfileWithFile(user.getImageFname(), user);
         d.addAttribute("msg", msg);
         d.addAttribute("profile", service.getProfile(user.getUser_id()));
-
+        System.out.println(msg);
         return "redirect:profile";
     }
     
     
-    // 비밀번호 변경 페이지
+    // 비밀번호 변경 페이지ㄴ
     // http://localhost:4040/changePassword
     @GetMapping("changePassword")
     public String changePasswordFrm(HttpServletRequest request, Model d) {

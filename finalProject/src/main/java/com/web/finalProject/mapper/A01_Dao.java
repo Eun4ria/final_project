@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.finalProject.vo.Calendar;
+import com.web.finalProject.vo.Company;
 import com.web.finalProject.vo.GanttTask;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.UserSch;
@@ -102,7 +103,11 @@ public interface A01_Dao {
     String getLastInsertedProjectId();
 	// 프로젝트 생성 시 team에 인원 추가
 	@Insert("INSERT INTO team values(#{project_id},#{user_id})")
-	int addProjectUser(@Param("project_id") String project_id, @Param("user_id") String user_id);
+	int addProjectUser(@Param("project_id") String project_id,
+			@Param("user_id") String user_id);
+	@Select("select * from company")
+	List<Company> getComId();
+	
 	
 	
 	// user리스트

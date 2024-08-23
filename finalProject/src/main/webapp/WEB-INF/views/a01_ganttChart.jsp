@@ -109,7 +109,7 @@ function goChat(user_id){
 	<input type='button' id='user' onclick="showGroups('user')" value="Group by owner">
 	<input type='button' id='stage' onclick="showGroups('stage')" value="Group by stage">
 	</div>-->
-	 <div id="gantt_here" style="width: 100%; height: calc(100vh - 14vh);"></div>
+	 <div id="gantt_here" style="width: 100%; height: calc(100vh - 8vh);"></div>
 	</div>
 	</div>
 	<script>
@@ -127,25 +127,16 @@ function goChat(user_id){
 		});
 		 var sessionRole = "${sessionScope.role_code}";
 
-	    if (sessionRole !== "P") {
+	    if (sessionRole !== "P") { // PM제외
 	        gantt.config.drag_move = false;  // 드랍 비활성화
 	        gantt.config.drag_resize = false; // 리사이즈 비활성화
-	        console.log("didi")
-	        console.log(document.querySelector('[column_id="add"]'));
+	        gantt.attachEvent("onTaskClick", function(id) {
+	        	return false; // 클릭이벤트 비활성화
+	        });
+	        gantt.attachEvent("onTaskDblClick", function(id) {
+	        	return false; // 더블 클릭 이벤트 비활성화
+	        });
 	    }
-        gantt.attachEvent("onTaskClick", function(id) {
-            if (sessionRole !== "P") {
-                return false; // 클릭 이벤트 비활성화
-            }
-            return true;
-        });
-
-        gantt.attachEvent("onTaskDblClick", function(id) {
-            if (sessionRole !== "P") {
-                return false; // 더블 클릭 이벤트 비활성화
-            }
-            return true;
-        });
 		// 날짜 변환 함수
 		function parseDate(dateString) {
 			// 날짜 형식: dd-MM-yyyy
@@ -162,7 +153,6 @@ function goChat(user_id){
 		$.ajax({
 			type:"post",
 			url:"ganttList",
-			data:{project_id:"${param.project_id}"},
 			dataType:"json",
 			success: function(data) { // data는 이미 배열형태    
 				// 전체 data
@@ -180,11 +170,11 @@ function goChat(user_id){
 		                open: task.open,
 		                parent: task.parent,
 		                progress: task.progress || 0,
-		                color: task.color,
-		                //textcolor: task.textColor
+		                color: task.color
 		            };
 		        });
-				var sortedTasks = sortTasksByStartDate(tasks);
+				// task 시작일 기준 정렬
+				var sortedTasks = sortTasksByStartDate(tasks); 
 
 		        var gdata = { data: sortedTasks };
 		        
@@ -220,7 +210,7 @@ function goChat(user_id){
                	// Gantt 차트 강제 업데이트
                 gantt.render();
                	
-            	// 모든 자식 작업 열기
+            	// 모든 하위 작업 열기(기본)
                 gantt.eachTask(function(task) {
                     if (task.parent) {
                         gantt.open(task.parent);
@@ -354,8 +344,7 @@ function goChat(user_id){
 	    	            	 gantt.deleteTask(id, false);  // 작업을 삭제 (롤백)
 	    	            }
 	    	        }
-	    		});
-	        	
+	    		});	        	
 	        });
 	        
 	        // 일정 수정
@@ -368,23 +357,15 @@ function goChat(user_id){
 	        gantt.attachEvent("onAfterTaskDelete", function(id, task) {
 			    console.log("삭제할 데이터(url 호출 전):", id, task);
 			    ajaxFun("deleteGantt", task);
-			});
-	        
-	        gantt.attachEvent("onTaskDrag", function(id, mode) {
-	            console.log("드래그 시작:", id, mode);
-	            // 추가적인 로직
-	        });
-
+			});	        
+			// 드랍 이벤트
 	        gantt.attachEvent("onTaskDragEnd", function(id, task) {
 	            console.log("드래그 종료:", id);
-	            console.log("드래그")
-	            console.log(task)
 	            ajaxFun("updateGantt", task); // 드래그 후 서버에 데이터 전송
-	        });
-		
-		
+	        });	
+			
 		gantt.config.drag_move = true;  // 드래그 이동 활성화
-		gantt.config.drag_resize = true; // 드래그 크기 조정 활성화
+		gantt.config.drag_resize = true; // 리사이즈 활성화
 		}
 		// 팝업 클릭 비활성화
         gantt.attachEvent("onLightbox", function(id) {
@@ -508,7 +489,6 @@ function goChat(user_id){
 				column_progress: 'Progress',
 				section_progress: 'Progress',
 				section_background: 'Background',
-				//section_textcolor: 'Text color',
 				section_resources: 'Resources'
 			}
 		});

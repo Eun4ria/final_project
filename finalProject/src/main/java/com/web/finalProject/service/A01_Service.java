@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.web.finalProject.mapper.A01_Dao;
 import com.web.finalProject.util.Util;
 import com.web.finalProject.vo.Calendar;
+import com.web.finalProject.vo.Company;
 import com.web.finalProject.vo.GanttTask;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.UserSch;
@@ -74,6 +75,9 @@ public class A01_Service {
         for (String userId : userIds) {
             dao.addProjectUser(projectId, userId);
         }
+    }
+    public List<Company> getComId() {
+    	return dao.getComId();
     }
     
     
@@ -270,7 +274,6 @@ public class A01_Service {
 	
 	public String updateProfileWithFile(MultipartFile file, Users user) {
 	    String msg = null;
-
 	    try {	    	
 	        if (file != null && !file.isEmpty()) {
 	        	String fname = file.getOriginalFilename();
@@ -282,11 +285,8 @@ public class A01_Service {
 			        if (result > 0) {
 			            msg = "수정 성공";
 			        }
-				}
-	            
-	            
-	        }
-	        
+				}            
+	        }	        
 	    } catch (IOException e) {
 	        msg = "파일 등록 중 에러 발생: " + e.getMessage();
 	    } catch (IllegalArgumentException e) {
@@ -294,7 +294,6 @@ public class A01_Service {
 	    } catch (Exception e) {
 	        msg = "기타 에러 발생: " + e.getMessage();
 	    }
-
 	    return msg;
 	}
 

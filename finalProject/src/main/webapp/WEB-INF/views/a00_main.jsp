@@ -91,7 +91,8 @@ if(msg != "") {
 }
 // 세션에 저장되어 있는 롤 코드
 var role_code="${sessionScope.role_code}"
-function projectPage(project_id){ // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
+// 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
+function projectPage(project_id){ 
   if(role_code!="" && role_code!=null){
 	$("[name=project_id]").val(project_id)
 	$("#proPage").submit()
@@ -169,14 +170,14 @@ function projectDetail(){
                   <h4><strong>Active</strong> Projects</h4>
                   <!-- 프로젝트 생성 버튼 (PM만 보이게)-->
                   
-         <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
+         <c:if test="${sessionScope.role_code!=null&&sessionScope.role_code=='P'}">
 	         <button class="btn btn-success" data-toggle="modal" data-target="#ModalCenter"
            type="button">CREATE PROJECT</button>
 	    </c:if>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
                   <div class="dropdown float-lg-end pe-4">
-                    <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="cursor-pointer"s id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
                       <i class="fa fa-ellipsis-v text-secondary"></i>
                     </a>
                     <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
@@ -291,7 +292,11 @@ function projectDetail(){
       <div class="row">
          <div class="col">
          <span>Company ID</span>
-           <input type="text" class="form-control" name="company_id"/>
+           <select class="form-control" name="company_id">
+	           	<c:forEach var="com" items="${com}">
+					<option value="${com.company_id}" style="height:1.5rem;">${com.company_name}</option>					
+				</c:forEach>
+	         </select>
          </div>
         </div>
         <div class="row">
@@ -323,7 +328,8 @@ function projectDetail(){
          <span>Users</span>
 	         <select class="form-control" name="userIds" multiple>
 	           	<c:forEach var="user" items="${user}">
-					<option value="${user.user_id}" style="height:1.5rem;">${user.user_name}(${user.dname})</option>					
+					<option value="${user.user_id}" style="height:1.5rem;">
+						${user.user_name}(${user.dname})</option>					
 				</c:forEach>
 	         </select>
 		<%-- <input list="user_list" id="combobox" name="user_id"

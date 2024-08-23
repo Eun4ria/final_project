@@ -137,13 +137,12 @@ function goChat(user_id){
 			editable : true,
 			dayMaxEvents : true, // allow "more" link when too many events
 			events : function(info, successCallback, failureCallback) {
-				var selectedValues = getSelectboxArray(); // 체크박스 선택목록 배열형태
-				
+				var selectedValues = getSelectboxArray(); // 체크박스 선택목록 배열형태				
 				$.ajax({
 					url : "calList",
 					method:"post",
-					traditional: true, // 배열을 직렬화할 때 사용
-					data: { sel: selectedValues}, // 선택한 보기(checkbox)
+					traditional: true, // 배열 직렬화
+					data: {sel: selectedValues}, // 선택한checkbox
 					success : function(data) {
 						console.log(data)
 						calendar.removeAllEvents()
@@ -262,8 +261,6 @@ function goChat(user_id){
 	        if ($("#personal").is(":checked")) sel.push("P");
 	        if ($("#team").is(":checked")) sel.push("T");
 	        if ($("#gantt1").is(":checked")) sel.push("G");
-	        console.log("## 선택 ##")
-	        console.log(sel)
 	        return sel;
 	    }
 		// event작성자와 현재 사용자가 일치하는지 확인
@@ -388,15 +385,15 @@ function goChat(user_id){
          <c:choose>
            <c:when test="${sessionScope.project_id != null && sessionScope.project_id != ''}">
             <label for="personal" class="p-1" style="background:#85eee2;color:black; border-radius:5px;">
-                <input type="checkbox" id="personal" checked> 개인
+                <input type="checkbox" id="personal" checked> Personal
             </label>           
             <label for="team" class="p-1" style="background:#c266f4;color:white; border-radius:5px;">
-                <input type="checkbox" id="team"> 팀
+                <input type="checkbox" id="team"> Team
             </label>
 		    <label for="gantt1" class="p-1" style="background:#d8ee95;color:black; border-radius:5px;">
-              	<input type="checkbox" id="gantt1"> 간트
+              	<input type="checkbox" id="gantt1"> Gantt(Project)
           	</label> 
-			</c:when>
+			</c:when>			
 			 <c:otherwise>
                 	<input type="checkbox" id="personal" checked hidden>
 		    </c:otherwise>
