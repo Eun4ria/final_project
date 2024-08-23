@@ -234,13 +234,10 @@
             },
             methods: {
             	searchUsers() {
-                    // Ensure searchTerm is not null
                     if (this.searchTerm === null || this.searchTerm.trim() === '') {
                         this.searchTerm = '';
                     }
-                    // Set page to 1 for new searches
                     this.currentPage = 1;
-                    // Fetch users with updated searchTerm
                     this.fetchUsers();
                 },
                 fetchUsers() {

@@ -110,7 +110,7 @@
 						            <div class="form-group">
 						                <label class="btn btn-outline-primary">
 						                    <fmt:message key="update_image_file" />
-						                   <input type="file"  name="imageFname" class="form-control" value="" />	
+						                   <input type="file"  name="imageFname" class="form-control" />	
 						                </label>
 						            </div>						
 						        </div>
