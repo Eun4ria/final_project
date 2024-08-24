@@ -1,5 +1,6 @@
 package com.web.finalProject.mapper;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -9,7 +10,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.finalProject.vo.Budget;
 import com.web.finalProject.vo.BudgetSch;
@@ -113,7 +113,11 @@ int insertUser(Users ins);
 				+ "AND  owner_id=#{owner_id}")
 		List<Chat> getchatList(Chat chsch);
 		
-		
+	
+	// 채팅 나가기
+		@Delete("DELETE from chat \r\n"
+				+ "WHERE chatroom_id = #{chatroom_id}")
+		int delchatroom(@Param("chatroom_id") String chatroom_id);
 	
 
 //todo
@@ -229,6 +233,41 @@ int insertUser(Users ins);
 			+ "    user_id = #{user_id}\r\n"
 			+ "WHERE  budget_id = #{budget_id}\r\n")
 	int budgetUpdate(Budget upt);
+	
+	// budget_날짜 확인
+	@Select("SELECT regdate FROM budget WHERE budget_id = #{parent_id}")
+	Timestamp getparentUsedate(String parent_id);
+	
+	// 하위요소 amount 확인 - 최상위요소
+	@Select("SELECT AMOUNT FROM BUDGET b \r\n"
+			+ "WHERE budget_id = #{budget_id}\r\n"
+			+ "AND project_id = #{project_id}")
+	int getAmount(String parent_id, String project_id);
+	
+	// 상위요소 amount SUM 확인 - 하위요소
+	@Select("SELECT SUM(amount) \r\n"
+			+ "        FROM ( \r\n"
+			+ "           SELECT LEVEL AS lvl, budget_id, amount, parent_id \r\n"
+			+ "           FROM budget \r\n"
+			+ "           WHERE project_id = #{project_id}\r\n"
+			+ "           START WITH budget_id = #{parent_id}\r\n"
+			+ "           CONNECT BY PRIOR budget_id = parent_id\r\n"
+			+ "        ) \r\n"
+			+ "        WHERE lvl = 2 AND parent_id = #{parent_id}")
+	int getParentAmount(String parent_id, String project_id);
+	
+	// 하위요소 amount SUM 확인 - 하위요소
+	@Select("SELECT SUM(amount) \r\n"
+			+ "        FROM ( \r\n"
+			+ "           SELECT LEVEL AS lvl, budget_id, amount, parent_id \r\n"
+			+ "           FROM budget \r\n"
+			+ "           WHERE project_id = #{project_id}\r\n"
+			+ "           START WITH budget_id = #{parent_id}\r\n"
+			+ "           CONNECT BY PRIOR budget_id = parent_id\r\n"
+			+ "        ) \r\n"
+			+ "        WHERE lvl = 3 AND parent_id = #{parent_id}")
+	int getChildAmount(String parent_id, String project_id);
+	
 	
 	// Budget 삭제
 	@Delete("delete budget \r\n"

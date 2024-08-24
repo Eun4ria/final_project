@@ -348,6 +348,34 @@ SELECT * from(
 			WHERE lvl= 2 OR lvl =1;
 		
 		SELECT * FROM BUDGET b ;
+SELECT* FROM BUDGET b;	
+SELECT * from(
+			SELECT rownum cnt, LEVEL AS lvl, b.*
+			FROM budget b
+			WHERE project_id = 'PRO_0003'
+			START WITH parent_id ='N'
+			CONNECT BY PRIOR budget_id = parent_id
+			ORDER siblings BY budget_id DESC)
+		WHERE lvl= 2 or lvl=1;
+	
+	SELECT AMOUNT FROM BUDGET b 
+WHERE BUDGET_ID = 'BUG_0023'
+AND PROJECT_ID = 'PRO_0003';
+
+SELECT * FROM BUDGET WHERE project_id = 'PRO_0003';
+SELECT SUM(amount) 
+        FROM ( 
+           SELECT LEVEL AS lvl, budget_id, amount, parent_id 
+           FROM budget 
+           WHERE project_id = 'PRO_0003'
+           START WITH budget_id = 'BUG_0023'
+           CONNECT BY PRIOR budget_id = parent_id
+        ) 
+        WHERE lvl = 2 AND parent_id ='BUG_0023';
+		
+UPDATE budget
+SET amount = amount - #{subAmount}
+WHERE budget_id = #{parent_id}
 
 INSERT INTO BUDGET (BUDGET_ID, BUDGET_NAME, AMOUNT, REGDATE, USEDATE, PROJECT_ID, PARENT_ID, USER_ID, ETC, UPTDATE) VALUES
 ('BUG_0102', '기술 지원 예산', 15000000, TO_DATE('2024-09-02 10:15:00', 'YYYY-MM-DD HH24:MI:SS'), NULL, 'PRO_0011', 'BUG_0101', 'U_0002', '기술 관련 비용', NULL);
@@ -388,4 +416,11 @@ INSERT INTO BUDGET (BUDGET_ID, BUDGET_NAME, AMOUNT, REGDATE, USEDATE, PROJECT_ID
 
 
 SELECT * FROM USERS;
+SELECT * FROM BUDGET;
+SELECT * FROM chat;
+
+DELETE FROM chat 
+WHERE chatroom_id = 'CHT_0037';
+
+
 		

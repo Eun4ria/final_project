@@ -4,14 +4,15 @@ package com.web.finalProject.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -384,9 +385,8 @@ public class A02_Controller {
 	        return message;
 	    }
 
-
 		
-		// 채팅 나가기
+		// 채팅 뒤로가기
 		@GetMapping("/removeChatroomSession")
 	    public String removeChatroomSession( HttpSession session) {
 //		   HttpSession session = request.getSession();
@@ -399,6 +399,17 @@ public class A02_Controller {
 			session.removeAttribute("chatroom_id");
 	        return "redirect:/chatmemListstart"; // 세션 삭제 후 이동할 페이지
 	    }
+		
+		//채팅 나가기
+		@PostMapping("delchatroom")
+		public String delchatroom(@RequestParam("chatroom_id") String chatroom_id, Model d) {
+			 // 서비스 호출을 통해 chatroom_id를 사용하여 삭제 수행
+		    String result = service.delchatroom(chatroom_id);
+		    
+			d.addAttribute("msg",result);
+			d.addAttribute("proc", "del");
+			return "WEB-INF\\views\\a02_chat_last.jsp";
+		}
 
 		
 // todo list - 조회
@@ -582,14 +593,14 @@ public class A02_Controller {
 	public String budgetFrm(@ModelAttribute("sch") BudgetSch sch, HttpServletRequest request, Model d) {
 		 HttpSession session = request.getSession(false);
          // 세션이 null이거나 세션에서 사용자 ID를 찾을 수 없는 경우
-            if (session == null || session.getAttribute("user_id") == null) {
-                // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
-                d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
-                return "WEB-INF\\views\\a02_budgetList.jsp";
-            }else if(session.getAttribute("project_id") == null){
- 	    	   d.addAttribute("alertMessage", "프로젝트를 선택하세요.");
- 	    	   return "WEB-INF\\views\\a02_budgetList.jsp";
- 	      }
+        if (session == null || session.getAttribute("user_id") == null) {
+            // 세션이 없을 때 알림 메시지를 포함하여 로그인 폼으로 리다이렉트
+            d.addAttribute("alertMessage", "로그인이 필요한 서비스입니다.");
+            return "WEB-INF\\views\\a02_budgetList.jsp";
+        }else if(session.getAttribute("project_id") == null){
+    	   d.addAttribute("alertMessage", "프로젝트를 선택하세요.");
+    	   return "WEB-INF\\views\\a02_budgetList.jsp";
+ 	    }
 		String project_id = (String) session.getAttribute("project_id");
 		
 		// Budget 객체에 project_id와 role_code를 설정
@@ -599,7 +610,37 @@ public class A02_Controller {
 	    List<Budget> Budget = service.getBudgetList(sch);
 	    List<Budget> BudParent = service.getparentList(sch);
 	    
-	  
+	   
+	    // parent_id를 기준으로 예산을 합산할 Map
+	    Map<String, Integer> parentAmountMap = new HashMap<>();
+	    Map<String, Integer> childAmountMap = new HashMap<>();
+	 // 차감 값을 계산
+	    Map<String, Integer> amountDifference = new HashMap<>();
+
+	    // 예산 리스트를 순회하며 parent_id를 기준으로 합산
+	    for (Budget budget : Budget) {
+	        String parent_id = budget.getParent_id();
+	        int amount = budget.getAmount();
+
+	        if (parent_id != null && parent_id!="N") {
+	            if (budget.getLevel() != 1) {
+	                parentAmountMap.put(parent_id, parentAmountMap.getOrDefault(parent_id, 0) + amount);
+	                childAmountMap.put(parent_id, childAmountMap.getOrDefault(parent_id, 0) + amount);
+	            }
+	        }
+	    }
+
+	    for (String parent_id : parentAmountMap.keySet()) {
+	        int parentAmount = parentAmountMap.get(parent_id);
+	        int childAmount = childAmountMap.getOrDefault(parent_id, 0);
+	        amountDifference.put(parent_id, parentAmount - childAmount);
+	    }
+	    
+	    
+
+	    // JSP로 데이터 전달
+	    d.addAttribute("amountDifference", parentAmountMap);
+	    
 	    
 	    d.addAttribute("currentUrl", request.getRequestURI());
 	    d.addAttribute("BudList", Budget);
@@ -626,7 +667,7 @@ public class A02_Controller {
 	
 	  // 예산 - 수정
     @PostMapping("/uptbudget")
-    public ResponseEntity<String> budgetUpdate( Budget del) {
+    public ResponseEntity<String> budgetUpdate(Budget del) {
         // 서비스 호출하여 업데이트 수행
         String msg = service.budgetUpdate(del);
         

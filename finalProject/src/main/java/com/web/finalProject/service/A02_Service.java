@@ -3,6 +3,9 @@ package com.web.finalProject.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,6 +164,11 @@ public class A02_Service {
 				return dao.getchatList(chsch);
 			}
 			
+			//채팅 나가기
+			public String delchatroom(String chatroom_id) {
+				return dao.delchatroom(chatroom_id)>0?"삭제완료":"삭제 실패";
+			}
+			
 		
 // 업무(to do) : 멤버
 		public List<Tasks> getTaskList(Tasks sch){
@@ -277,6 +285,20 @@ public class A02_Service {
 	public List<Budget> getparentList(BudgetSch sch){
 		return dao.getparentList(sch);
 	}
+	
+	//amount
+	public int getAmount(String parent_id, String project_id) {
+		return dao.getAmount(parent_id,project_id);
+	}
+	//amount
+	public int getParentAmount(String parent_id, String project_id) {
+		return dao.getParentAmount(parent_id,project_id);
+	}
+	//amount
+	public int getChildAmount(String parent_id, String project_id) {
+		return dao.getChildAmount(parent_id,project_id);
+	}
+	
 	// budget 등록 
 	public String budgetInsert(Budget ins) {
 		
@@ -289,10 +311,40 @@ public class A02_Service {
     }
 	
 	// budget 수정
+//	public String budgetUpdate(Budget upt) {
+//		
+//		return dao.budgetUpdate(upt)>0?"수정 완료":"수정 실패";
+//	}
+//	
 	public String budgetUpdate(Budget upt) {
-		
+		 // 상위 요소의 usedate 가져오기
+	    if (upt.getParent_id() != null && !upt.getParent_id().equals("N")) {
+	        Timestamp parentRegistDate  = dao.getparentUsedate(upt.getParent_id());
+
+	        // 입력된 usedate가 상위 요소의 usedate보다 이전인지 확인
+	        if (parentRegistDate  != null) {
+	            try {
+	                // 입력된 usedate를 Timestamp로 변환
+	                String usedateStr = upt.getUsedate(); // String 형태로 가져옴
+	                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+	                java.util.Date parsedDate = dateFormat.parse(usedateStr);
+	                Timestamp inputUsedate = new Timestamp(parsedDate.getTime());
+
+	                // 비교 수행
+	                if (inputUsedate.before(parentRegistDate )) {
+	                    return "사용 날짜는 상위 요소의 등록 날짜보다 이를 수 없습니다.";
+	                }
+	            } catch (ParseException e) {
+	                return "날짜 형식이 잘못되었습니다.";
+	            }
+	        }
+	    }
+	    // 실제 업데이트 수행
+	    int result = dao.budgetUpdate(upt);
+	    
 		return dao.budgetUpdate(upt)>0?"수정 완료":"수정 실패";
 	}
+	
 	// budget 삭제
 	public String deleteBudget(Budget del) {
 		return dao.deleteBudget(del)>0? "삭제 성공":"삭제 실패";

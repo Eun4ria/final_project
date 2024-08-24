@@ -2,7 +2,9 @@ package com.web.finalProject.vo;
 
 public class BudgetSch {
 	private String budget_name;
+	private String budget_id;
 	private String user_id;
+	private String parent_id;
 	
 	
 	private String project_id;
@@ -105,6 +107,18 @@ public class BudgetSch {
 	}
 	public void setProject_id(String project_id) {
 		this.project_id = project_id;
+	}
+	public String getBudget_id() {
+		return budget_id;
+	}
+	public void setBudget_id(String budget_id) {
+		this.budget_id = budget_id;
+	}
+	public String getParent_id() {
+		return parent_id;
+	}
+	public void setParent_id(String parent_id) {
+		this.parent_id = parent_id;
 	}
 	
 	
