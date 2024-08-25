@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
             url: "uptSP",
             data: $("#replaceFrm").serialize(),
             success: function(data) {
-               // alert(data)
+                //alert(data)
             },
             error: function(err) {
             }
@@ -146,9 +146,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
     });
-
-
 });
+
+
+<!-- 
+   
    
    
 function updateTask(task_id, field, value) {
@@ -169,7 +171,7 @@ function updateTask(task_id, field, value) {
             console.log("변경 중 오류 발생:", err);
         }
     });
-} 
+} -->
 </script>
 
   <style>
@@ -274,7 +276,7 @@ function updateTask(task_id, field, value) {
 	                    <div>
                             <input type="checkbox" id="task1" >
                             <c:forEach begin="1"
-								end="${task.level}">  &nbsp;&nbsp;&nbsp;  //들여쓰기
+								end="${task.level}">  &nbsp;&nbsp;&nbsp;
 						 </c:forEach>${task.task_id}
                           </div>
                     </td>

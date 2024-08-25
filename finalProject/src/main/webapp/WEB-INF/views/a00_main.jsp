@@ -121,26 +121,24 @@ function projectDetail(project_id, event){
 
          <main class="content">
            <div class="row">
-           <h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
            <div class="col-3 col-xxl-3 d-flex order-1 order-xxl-1  flex-fill w-2"  style="height: 20%">
 							<div class="card flex-fill">
 								<div class="card-header">
 
-									<h5 class="card-title text-center mb-0">Active Project</h5>
+									<h5 class="card-title text-center mb-0">Count Active Project</h5>
 								</div>
-								<div class="card-body d-flex">
-									<div class="align-self-center w-100">
-										
-									</div>
+								<div class="d-flex justify-content-center align-items-center mb-3">
+								    <div class="fw-bold" style="font-size: 1.5rem;">
+								        ${aProCnt}
+								    </div>
 								</div>
-								<div class="card-header">
-
-									<h5 class="card-title text-center mt-1 ">Complete Project</h5>
+								<div class="card-header">										
+									<h5 class="card-title text-center mt-1 ">Count Complete Project</h5>
 								</div>
-								<div class="card-body d-flex mb-1">
-									<div class="align-self-center w-100">
-										
-									</div>
+								<div class="d-flex justify-content-center align-items-center mb-5">
+								    <div class="fw-bold" style="font-size: 1.5rem;">
+								        ${cProCnt}
+								    </div>
 								</div>
 							</div>
 						</div>
@@ -219,23 +217,6 @@ function projectDetail(project_id, event){
                           </div>
                         </div>
                       </td>
-                     <%-- <td>
-                        <div class="avatar-group mt-2">
-                         <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="user1">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                            <img src="${path}/material-dashboard-2/assets/img/team-3.jpg" alt="user2">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alexander Smith">
-                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="user3">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="${path}/material-dashboard-2/assets/img/team-1.jpg" alt="user4">
-                          </a>
-                        </div>                       
-                      </td>
-                       --%>
                        <td class="align-middle">
 	                      <div style="text-align: right;">
 	                        <span class="amount text-xs font-weight-bold" >${pro.amount}</span>

@@ -52,38 +52,49 @@
    <link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 <script>
 $(document).ready(function() {
-    $('form').submit(function(event) {
-        var datePattern = /^\d{4}-\d{2}-\d{2}$/;
-        
-        var startDateValue = $('#start_date').val();
-        var endDateValue = $('#end_date').val();
+	var roleCode = "${sessionScope.role_code}";
+    if(roleCode != "P"){
+        $("#uptBtn").hide();
+        $("#delBtn").hide();
+    }
+	
+
+    var msg = "${msg}";
+    var msg = "${msg}";
+    if(msg != null && msg != ""){
+        alert(msg);
+        if(msg === "삭제 완료"){
+            location.href = "main";
+        }
+    }
+    var datePattern = /^\d{4}-\d{2}-\d{2}$/;
+    
+    var startDateValue = $('#start_date').val();
+    var endDateValue = $('#end_date').val();
+    
+    $("#uptBtn").click(function(event){
+        alert("수정하시겠습니까?");
         
         if (!datePattern.test(startDateValue) || !datePattern.test(endDateValue)) {
             alert('날짜는 yyyy-MM-dd 형식으로 입력해주세요.');
             event.preventDefault(); // 폼 제출 방지
             return false;
         }
-
-        // hidden 필드에 값을 설정합니다.
         $('[name="start_date"]').val(startDateValue);
         $('[name="end_date"]').val(endDateValue);
+
+        // 업데이트 폼 제출
+        $("form").attr("action", "updateProject").submit();
     });
 
-    var msg = "${msg}";
-    if(msg != null && msg != ""){
-        alert(msg);
-        if(msg=="삭제 완료"){
-        	location.href="main"
-        }
-    }
-    $("#uptBtn").click(function(){
-		$("form").attr("action", "updateProject");
-		$("form").submit()
-	})
-	$("#delBtn").click(function(){
-		$("form").attr("action", "deleteProject");
-		$("form").submit()
-	})
+    $("#delBtn").click(function(event){
+    	alert("삭제하시겠습니까?");
+    	
+    	$('[name="start_date"]').val(startDateValue);
+        $('[name="end_date"]').val(endDateValue);
+        // 삭제 폼 제출
+        $("form").attr("action", "deleteProject").submit();
+    });
 });
 </script>
 </head>
@@ -114,7 +125,7 @@ $(document).ready(function() {
 						
 						            <div class="form-group" style="margin:10px 80px;">
 						                <label for="project_id">Project ID</label>
-						                <input class="form-control" id="project_id" name="project_id" value="${pro.project_id}">
+						                <input class="form-control" id="project_id" name="project_id" value="${pro.project_id}" readonly>
 						            </div>
 						
 						            <div class="form-group" style="margin:10px 80px;">
@@ -137,10 +148,8 @@ $(document).ready(function() {
 						           </div>
 						            <hr>
 						            <div class="d-flex justify-content-center">
-						                <button type="button" id="uptBtn" class="btn btn-primary" style="margin:30px auto;">Change</button>
-						            </div>
-						            <div class="d-flex justify-content-center">
-						                <button type="button" id="delBtn" class="btn btn-primary" style="margin:30px auto;">Delete</button>
+						                <button type="button" id="uptBtn" class="btn btn-primary" style="margin:30px;">Update</button>
+						            	<button type="button" id="delBtn" class="btn btn-danger" style="margin:30px;">Delete</button>
 						            </div>
 						        
 						    </form>
