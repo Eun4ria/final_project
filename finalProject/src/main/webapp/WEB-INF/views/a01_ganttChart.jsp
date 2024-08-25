@@ -199,7 +199,6 @@ function goChat(user_id){
            			{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},
            			{name: "progress", height: 22, map_to: "progress", type: "select", options: gantt.serverList("progress")},
            			{name: "background", height: 22, map_to: "color", type: "select", options: gantt.serverList("background")},
-           			//{name: "textcolor", height: 22, map_to: "textColor", type: "select", options: gantt.serverList("textcolor")},
            			{name: "time", type: "duration", map_to: "auto"}
            		];
                	
