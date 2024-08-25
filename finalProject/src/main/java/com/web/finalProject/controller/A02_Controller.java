@@ -155,7 +155,7 @@ public class A02_Controller {
 //	      
 //	        return "WEB-INF\\views\\a00_dash_pm.jsp";
 //		}
-		@PostMapping("dashmemFrm")
+		@RequestMapping("dashmemFrm")
 		public String dashmemFrm(@RequestParam(value="project_id",required = false) String project_id, 
 				HttpServletRequest request,  Model d) {
 			
