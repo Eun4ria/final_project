@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
             url: "uptSP",
             data: $("#replaceFrm").serialize(),
             success: function(data) {
-                //alert(data)
+               // alert(data)
             },
             error: function(err) {
             }
@@ -146,11 +146,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
     });
+
+
 });
-
-
-<!-- 
-   
    
    
 function updateTask(task_id, field, value) {
@@ -171,7 +169,7 @@ function updateTask(task_id, field, value) {
             console.log("변경 중 오류 발생:", err);
         }
     });
-} -->
+} 
 </script>
 
   <style>

@@ -473,9 +473,9 @@ $(document).ready(function(){
                            <i class="fas fa-sign-out-alt">
                            </i> Go Back</button>
                            
-                        <form method="get" action="chatmemListstart">
+                        <form method="Post" action="delchatroom">
                            
-                           <button onclick="clearLocalStorage()" id="exitBtn" style="background-color:transparent; border:none; color:white">
+                           <button type="button" onclick="clearLocalStorage()" id="exitBtn" style="background-color:transparent; border:none; color:white">
                            <i class="fas fa-sign-out-alt">
                            </i> Exit</button>
                            
@@ -636,6 +636,11 @@ function sendName() {
     var sendname = '${sessionScope.user_name}';
     var alignmentClass = name === sendname ? 'right' : 'left';
 
+ // 메시지가 비어있는지 확인
+    if (msg === "") {
+        return; // 메시지가 비어있으면 아무 작업도 하지 않음
+    }
+ 
     // 메시지를 화면에 표시
     displayMessage(name, msg, alignmentClass);
 

@@ -65,9 +65,15 @@ function ajaxFun(url){
 	      url:url,
 	      data:$("#modaluptFrm").serialize(),
 	      success:function(msg){
-	    	  alert(msg)
+	    	  
+	    	  if(msg == '사용 날짜는 상위 요소의 등록 날짜보다 이를 수 없습니다.'){
+	    		  alert(msg)
+	    	  }else{
+	    		  alert(msg)
+	    		  location.href = 'budgetFrm';
+	    	  }
 	         
-		            location.href = 'budgetFrm';
+		            
 		         
 	      },
 	      error:function(err){
@@ -247,7 +253,16 @@ function FormReset(){
                       
                       <td >
                       <div class="align-middle text-center" style="border:none">
-                            <h6 class="ml-5 text-center"><fmt:formatNumber value="${bud.amount}" type="number"/></h6>
+                      <c:choose>
+                      <c:when test="${bud.level == 3}">
+					        <h6 class="ml-5 text-center">
+					           - <fmt:formatNumber value="${bud.amount}" type="number"/>
+					        </h6>
+					    </c:when>
+					    <c:otherwise>
+					        <h6 class="ml-5 text-center"><fmt:formatNumber value="${bud.amount}" type="number"/></h6>
+					    </c:otherwise>
+                      </c:choose>
                           </div>                      
                       </td>
                       <td >
@@ -272,6 +287,19 @@ function FormReset(){
                           </div>                      
                       </td>
                     </tr>
+                    <tr>
+                     <!-- level = 1 항목의 끝나는 부분에 차이값 표시 -->
+				    <c:if test="${bud.level == 2}">
+				      <td></td>   <td></td>   
+				      <td>
+                        <c:if test="${amountDifference[bud.parent_id] != null}">
+                           <fmt:formatNumber value="${amountDifference[bud.parent_id]}" type="number"/>
+                        </c:if>
+                       </td>  
+                     <td></td> <td></td> <td></td> <td></td> <td></td>   
+                    
+				    </c:if>
+				    </tr>
                     </c:forEach>
                   </tbody>
                 </table>
@@ -410,9 +438,10 @@ function FormReset(){
         </div>
          <div class="row">
          <div class="col">    
-         <span>Parent Id</span>              
+         <span>Parent Id</span>             
           <select class="form-control" name="parent_id">
-            <c:forEach var="parent" items="${BudParent}">
+          <option value="N">최상위 요소</option> <!-- 기본값 설정 -->
+            <c:forEach var="parent" items="${BudParent}"> 
                 <option value="${parent.budget_id}">${parent.budget_name}</option>
             </c:forEach>
         </select>
