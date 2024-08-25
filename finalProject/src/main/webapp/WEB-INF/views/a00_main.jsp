@@ -95,6 +95,7 @@ var role_code="${sessionScope.role_code}"
 function projectPage(project_id){ 
   if(role_code!="" && role_code!=null){
 	$("[name=project_id]").val(project_id)
+	$("#proPage").attr("action", "dashmemFrm");
 	$("#proPage").submit()
   }else{
      alert("비정상적인 접근! 관리자에게 문의해주세요")
@@ -102,8 +103,9 @@ function projectPage(project_id){
 }
 
 
-function projectDetail(){
-	//location.href="main"
+function projectDetail(project_id, event){
+	event.stopPropagation();
+	location.href="projectDetail?project_id="+project_id
 }
 
 </script>
@@ -124,20 +126,20 @@ function projectDetail(){
 							<div class="card flex-fill">
 								<div class="card-header">
 
-									<h5 class="card-title text-center mb-0">진행중인 업무</h5>
+									<h5 class="card-title text-center mb-0">Active Project</h5>
 								</div>
 								<div class="card-body d-flex">
 									<div class="align-self-center w-100">
-										50
+										
 									</div>
 								</div>
 								<div class="card-header">
 
-									<h5 class="card-title text-center mt-1 ">예정된 업무</h5>
+									<h5 class="card-title text-center mt-1 ">Complete Project</h5>
 								</div>
 								<div class="card-body d-flex mb-1">
 									<div class="align-self-center w-100">
-										70
+										
 									</div>
 								</div>
 							</div>
@@ -202,7 +204,7 @@ function projectDetail(){
                   </thead>
                   <tbody>
                   <c:forEach var="pro" items="${pro}">
-                  <form id="proPage" method="post" action="dashmemFrm">
+                  <form id="proPage" method="post">
                   	<input type="hidden" name="project_id"/>
                   </form>
                     <tr onclick="projectPage('${pro.project_id}')" class="project-item">
@@ -252,7 +254,7 @@ function projectDetail(){
                         </div>
                       </td>
                       <td class="align-middle">
-                      	<button class="btn btn-primary" onclick="projectDetail('${pro.project_id}'); event.stopPropagation();">INFO</button>
+                      	<button class="btn btn-primary" onclick="projectDetail('${pro.project_id}',event)">INFO</button>
                       </td>
                     </tr>
                     </c:forEach>

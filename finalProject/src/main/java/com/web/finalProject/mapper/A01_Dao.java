@@ -239,6 +239,27 @@ public interface A01_Dao {
 			+ "    p.project_name")
 	List<Project> getComProjectList(@Param("user_id") String user_id);
 	
+	// 프로젝트 상세정보
+	@Select("SELECT * FROM project p\n"
+			+ "JOIN company c\n"
+			+ "ON p.company_id=c.company_id\n"
+			+ "WHERE project_id = #{project_id}")
+	Project getProject(@Param("project_id") String project_id);
+	// 프로젝트 정보 수정
+	@Update("UPDATE PROJECT SET \n"
+			+ "project_name=#{project_name},\n"
+			+ "etc=#{etc},\n"
+			+ "start_date=#{start_date},\n"
+			+ "end_date=#{end_date}\n"
+			+ "WHERE project_id=#{project_id}")
+	int updateProject(Project upt);
+	// 프로젝트 삭제
+	@Delete("DELETE FROM PROJECT\n"
+			+ "WHERE project_id=#{project_id}")
+	int deleteProject(@Param("project_id") String project_id);
+	
+	
+	
 	
 	// 간트(task)캘린더
 	@Select("SELECT\r\n"
@@ -360,6 +381,26 @@ public interface A01_Dao {
 			+ "	SET PASSWORD = #{new_password}\r\n"
 			+ "	WHERE user_id = #{user_id}")
 	int changePassword(Users cpw);
+	
+	
+	
+	// 메인 활동중인 프로젝트 수
+	@Select("SELECT COUNT(*) AS active_project_count -- 활동 중인 프로젝트 수\n"
+			+ "   FROM users u\n"
+			+ "   JOIN team tm ON u.user_id = tm.user_id\n"
+			+ "   JOIN project p ON tm.project_id = p.project_id\n"
+			+ "   WHERE u.user_id = #{user_id}\n"
+			+ "   AND p.end_date >= SYSDATE")
+	int activeProjectCnt(@RequestParam("user_id") String user_id);
+	// 메인 완료된 프로젝트 수
+	@Select("SELECT COUNT(*) AS completed_project_count -- 완료된 프로젝트 수\n"
+			+ "	FROM users u\n"
+			+ "	JOIN team tm ON u.user_id = tm.user_id\n"
+			+ "	JOIN project p ON tm.project_id = p.project_id\n"
+			+ "	WHERE u.user_id = #{user_id}\n"
+			+ "	AND p.end_date < SYSDATE")
+	int completeProjectCnt(@RequestParam("user_id") String user_id);
+	
 	
 	
 	

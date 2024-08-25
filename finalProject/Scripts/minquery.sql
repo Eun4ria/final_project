@@ -541,3 +541,18 @@ JOIN
     department d 
 ON 
     u.DEPTNO = d.DEPTNO;
+    
+SELECT * FROM project p
+JOIN company c
+ON p.company_id=c.company_id
+WHERE project_id = 'PRO_0001';
+
+UPDATE PROJECT SET 
+project_name='dd',
+etc='',
+start_date='2024-05-06',
+end_date='2024-05-06'
+WHERE project_id='PRO_0001';
+
+DELETE FROM PROJECT
+WHERE project_id='';

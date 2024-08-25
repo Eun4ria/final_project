@@ -416,8 +416,27 @@ public class A01_Controller {
         return "redirect:profile";
     }
     
+    // 프로젝트 상세
+    @GetMapping("projectDetail")
+    public String projectDetail(@RequestParam("project_id") String project_id, Model d) {
+    	d.addAttribute("pro", service.getProject(project_id));
+    	return "WEB-INF\\views\\a01_project_detail.jsp";
+    }
+    // 프로젝트 정보 수정
+    @PostMapping("updateProject")
+    public String updateProject(Project upt, Model d) {
+    	d.addAttribute("msg", service.updateProject(upt));
+    	return "redirect:projectDetail?project_id="+upt.getProject_id();
+    }
+    // 프로젝트 삭제
+    @PostMapping("deleteProject")
+    public String deleteProject(@RequestParam("project_id") String project_id, Model d) {
+    	d.addAttribute("msg", service.deleteProject(project_id));
+    	return "WEB-INF\\views\\a01_project_detail.jsp";
+    }
     
-    // 비밀번호 변경 페이지ㄴ
+    
+    // 비밀번호 변경 페이지
     // http://localhost:4040/changePassword
     @GetMapping("changePassword")
     public String changePasswordFrm(HttpServletRequest request, Model d) {
@@ -442,6 +461,14 @@ public class A01_Controller {
     	}
     	return "WEB-INF\\views\\a01_changePwd.jsp";
     }
+    
+    
+    
+    // 메인 활동중인 프로젝트 수
+    
+    
+    
+    
     
    
 }
