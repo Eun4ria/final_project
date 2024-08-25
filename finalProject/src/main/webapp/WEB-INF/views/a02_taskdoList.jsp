@@ -118,8 +118,17 @@ document.addEventListener('DOMContentLoaded', function() {
     taskRows.forEach(function(row) {
         row.addEventListener('dblclick', handleDblClick);
     });
+    
+    
+    
     $("[name=priority]").change(function(){
     	//var st = $("[name=tstatus]").value()
+    	 var selectElement = event.target;
+        var row = selectElement.closest('tr'); // Find the closest row
+     var task_id = row.getAttribute('data-task-id'); // Get the task_id from the row
+     alert("task_id 확인:"+task_id);
+     // Update the hidden input field with the correct task_id
+     document.getElementById('task_id').value = task_id;
     	$.ajax({
             type: "POST",
             url: "uptSP",
@@ -147,10 +156,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     });
 
-
 });
-   
-   
+  
+  
 function updateTask(task_id, field, value) {
 
     $.ajax({
@@ -170,6 +178,8 @@ function updateTask(task_id, field, value) {
         }
     });
 } 
+
+
 </script>
 
   <style>
@@ -184,11 +194,11 @@ function updateTask(task_id, field, value) {
 
         /* Style for the toggled div */
         #toggleDiv {
-            position: absolute;
-            top: -3rem;
+            position: fixed;
+            top: 4rem;
             right: -130%; /* Start off-screen to the right */
-            width: 70%; /* Adjust width as needed */
-            height: 230%;
+            width: 50%; /* Adjust width as needed */
+            height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             color: white;
             display: flex;
@@ -268,13 +278,13 @@ function updateTask(task_id, field, value) {
                   </thead>
                   <tbody>
                   <c:forEach var="task" items="${tasklist}">
-                    <tr ondblclick="taskPage('${task.task_id}')">
+                    <tr ondblclick="taskPage('${task.task_id}')" >
                
                     <td>
 	                    <div>
                             <input type="checkbox" id="task1" >
                             <c:forEach begin="1"
-								end="${task.level}">  &nbsp;&nbsp;&nbsp;  //들여쓰기
+								end="${task.level}">  &nbsp;&nbsp;&nbsp;  
 						 </c:forEach>${task.task_id}
                           </div>
                     </td>
@@ -313,34 +323,17 @@ function updateTask(task_id, field, value) {
                         </div>
                         
                       </td>
-             <form id="replaceFrm">
-                      <td class="align-middle text-center">
-                      <input type="hidden" name="task_id" value="${task.task_id}"/>
+            <%--	 <form id="replaceFrm"> --%>
+                      <td class="align-middle text-center" >
+                  <%--  <input type="text" id="task_id" name="task_id" value="${task.task_id}"/>  --%> 
+                      <h6 class="mb-0 text-center">${task.tstatus }</h6>
+                     </td>
+                      <td class="align-middle text-center" >
+                      <h6 class="mb-0 text-center">${task.priority }</h6>
+                     </td>
                      
-                        <select  class="form-control text-center" name="tstatus">
-				        	<option class="text-center"  value="N">${task.tstatus}</option>
-				        	<option class="text-center"  value="진행예정">진행예정</option>
-				        	<option class="text-center"  value="진행중">진행중</option>
-				        	<option class="text-center"  value="중단">중단</option>
-				        	<option class="text-center"  value="막힘">막힘</option>
-				        	<c:choose>
-						      <c:when test="${sessionScope.role_code == 'P'}">
-						        <option class="text-center" value="완료">완료</option>
-						      </c:when>
-						    </c:choose>
-			       		</select>
-                      </td>
-                      </td>
-                       <td class="align-middle text-center">
-                        <select  class="form-control text-center" name="priority">
-				        	<option class="text-center"  value="N">${task.priority}</option>
-				        	<option class="text-center"  value="상">상</option>
-				        	<option class="text-center"  value="중">중</option>
-				        	<option class="text-center"  value="하">하</option>
-			       		</select>
-                      </td>
                        
-                      </form>
+                 </form>
          
 
                       <td class="align-middle">

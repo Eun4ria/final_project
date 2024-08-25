@@ -209,7 +209,7 @@ public class A02_Controller {
 			           return "WEB-INF\\views\\a02_chat_last.jsp";	
 			       }else if(session.getAttribute("project_id") == null){
 			    	   d.addAttribute("alertMessage", "프로젝트를 선택하세요.");
-			    	   return "WEB-INF\\views\\a02_taskdoList.jsp";
+			    	   return "WEB-INF\\views\\a02_chat_last";
 			       }
 			    String project_id = (String) session.getAttribute("project_id");
 			    String user_id = (String) session.getAttribute("user_id");
@@ -319,15 +319,23 @@ public class A02_Controller {
 		    sch.setProject_id(project_id);
 		    sch.setUser_id(user_id); // user_id는 요청 파라미터로 전달된 값
 		    
+		    // 사용자 이름을 가져온다.
+	        String userName = service.getUserName(project_id, chatroom_Id, user_id);
+		    
 		    // 회원 리스트를 가져온다.
 		    List<Users> members = service.getmemList(sch);
 		    
+		   
+		    
 		    // 모델에 데이터 추가
 		    d.addAttribute("memList", members);
+		    d.addAttribute("userName", userName);
+		    
+		    
 		    System.out.println("memlist:" + members);
+		    System.out.println("userName 확인:" + userName);
 			
-		    d.addAttribute("chatroom_id", chatroom_Id);
-		  
+		    	d.addAttribute("chatroom_id", chatroom_Id);
 			    d.addAttribute("chatroom_name", chatroom_Name);
 			    d.addAttribute("socketServer", socketServer);
 			    System.out.println("넘겨받은 채팅창 아이디:"+chatroom_Id);
@@ -634,13 +642,9 @@ public class A02_Controller {
 	        int childAmount = childAmountMap.getOrDefault(parent_id, 0);
 	        amountDifference.put(parent_id, parentAmount - childAmount);
 	    }
-	    
-	    
 
 	    // JSP로 데이터 전달
 	    d.addAttribute("amountDifference", parentAmountMap);
-	    
-	    
 	    d.addAttribute("currentUrl", request.getRequestURI());
 	    d.addAttribute("BudList", Budget);
 	    d.addAttribute("BudParent", BudParent);

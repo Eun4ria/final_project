@@ -391,7 +391,7 @@ $(document).ready(function(){
                         </div>
                         <div class="user_info">
                            <span>${mem.user_name}</span>
-                           <p >${mem.user_id}</p>
+                           <p > with: ${mem.user_id}</p>
                            
                         </div>
                      </div>
@@ -411,8 +411,8 @@ $(document).ready(function(){
                         </div>
                         <div class="user_info">
                            <span>${chat.chatroom_name}</span>
-                            
-                                      <p>with: ${chat.user_id}</p>
+                                 <p>with: ${chat.user_id}</p>
+                                 
                                
                         </div>
                      </div>
@@ -500,11 +500,11 @@ $(document).ready(function(){
    </c:when>   
    <c:otherwise>
    <div class="input-group">   
-   <input id="chatroom_id" value="${chatroom_id}" />
-   <input id="chatroom_name" value="${chatroom_name}" hidden/>
+   <input id="chatroom_id" value="${chatroom_id}" hidden />
+   <input id="chatroom_name" value="${chatroom_name}" hidden />
    <input id="curName" value="${sessionScope.user_name}" hidden />
    
-    <input id="name" value="${param.user_id}" style="background:lightgray;width:4rem;" class="border rounded" /> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
+   <div style="background:lightgrey;width:7rem;font-weight:bold;padding-left:5px"  class="border rounded"> with : ${userName} <input id="name" value="${param.user_id}"  hidden /></div> <!-- 팀원 더블클릭해서 들어올때 여기로 이름 받기 -->
     </div>
     
    <div class="card-body input-group-append scrollbar" id="chatArea" >
@@ -600,17 +600,17 @@ stompClient.connect({}, function(frame) {
         
        //채팅아이디에 따른 보낼 수 있는 조건
 
-         // 현재 채팅방 ID와 수신된 메시지의 채팅방 ID가 일치하는 경우에만 메시지를 표시
-        if (chatroom_id === obj.chatroom_id) {
-            var alignmentClass = curName === obj.name ? 'right' : 'left';
-            displayMessage(obj.name, obj.msg, alignmentClass); //상대방 화면 -없으면 상대방 화면에 안보임
+        // 현재 채팅방 ID와 수신된 메시지의 채팅방 ID가 일치하는 경우에만 메시지를 표시
+       if (chatroom_id === obj.chatroom_id) {
+           var alignmentClass = curName === obj.name ? 'right' : 'left';
+           displayMessage(obj.name, obj.msg, alignmentClass); //상대방 화면 -없으면 상대방 화면에 안보임
 
-            // 받은 메시지를 localStorage에 저장
-            storeMessage(obj.name, obj.msg, obj.chatroom_id); // 없으면 localstorage 저장 안됨-꼭필요
-          if(curName === obj.name) {
-            scrollToBottom(); //메세지 보내면 아래로
-          }
-        }
+           // 받은 메시지를 localStorage에 저장
+           storeMessage(obj.name, obj.msg, obj.chatroom_id); // 없으면 localstorage 저장 안됨-꼭필요
+         if(curName === obj.name) {
+           scrollToBottom(); //메세지 보내면 아래로
+         }
+       }
       
     });
 });

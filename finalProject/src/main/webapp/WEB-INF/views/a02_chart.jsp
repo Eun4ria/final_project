@@ -90,7 +90,7 @@
                         </div>
                         <div class="card-body">
                          <span>[ Unit : 1 million(M) ]</span>
-                           <div class="chart "">
+                           <div class="chart ">
                               <canvas id="chartjs-bar"></canvas>
                            </div>
                         </div>
@@ -138,7 +138,7 @@
                   borderColor: "#dee2e6",
                   hoverBackgroundColor: "#dee2e6",
                   hoverBorderColor: "#dee2e6",
-                  data: [90, 75, 100, 50, 120],
+                  data: [2.5, 130,3,20,50 ],
                   barPercentage: .75,
                   categoryPercentage: .7
                }]

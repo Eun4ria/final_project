@@ -100,9 +100,9 @@ var proc = "${proc}"
  function toggleResize() {
      // 현재 상태에 따라 너비 설정
      if (isExpanded) {
-         sendResizeMessage('70%');  // 기본 너비
+         sendResizeMessage('50%');  // 기본 너비
      } else {
-         sendResizeMessage('100%'); // 확장된 너비
+         sendResizeMessage('79%'); // 확장된 너비
      }
      // 상태 토글
      isExpanded = !isExpanded;
@@ -117,7 +117,7 @@ var proc = "${proc}"
 
  window.addEventListener('message', function(event) {
      if (event.data.type === 'reset') {
-         sendResizeMessage('70%');  // 기본 너비로 설정
+         sendResizeMessage('50%');  // 기본 너비로 설정
          isExpanded = false;  // 상태 리셋
      }
  });
@@ -160,7 +160,7 @@ var proc = "${proc}"
   <%-- form --%>  
 <c:choose>  
  <c:when test="${fn:startsWith(sessionScope.user_id, 'P_')}"> 
-          <form class="p-4  rounded" method="post" id="PMrole" >  
+          <form class="p-4  rounded" method="post" id="PMrole"  enctype="multipart/form-data">  
           <div>
              <a class="sidebar-toggle js-sidebar-toggle">
           <i class="hamburger align-self-center"></i>  <i class="bi bi-x"></i>
@@ -209,6 +209,7 @@ var proc = "${proc}"
                  <option class="text-center"  value="중단">중단</option>
                  <option class="text-center"  value="막힘">막힘</option>
                  <option class="text-center"  value="보완">보완</option>
+                 <option class="text-center"  value="완료">완료</option>
                   </select>
               
               
@@ -255,14 +256,6 @@ var proc = "${proc}"
  <%-- Upload File --%>      
  		 	 <div class="form-group">
                 <label for="company-website-tw d-block">Upload File</label> <br>
-                <label class="btn btn-primary btn-md btn-file">
-                  Browse File<input type="file" >
-                </label>
-              </div>
-       
-       
-         <div class="form-group">
-                <label for="company-website-tw d-block">Upload File</label> <br>
                 <input type="file" name="reports" multiple="multiple" class="form-control" value="" />   
                 
                 <br>
@@ -272,8 +265,21 @@ var proc = "${proc}"
                 <!-- 파일 이름 리스트가 비어 있지 않은 경우 -->
                 <ul>
                     <c:forEach var="fileinfo" items="${fileinfo}">
-                        <li><p style="margin:0"> File name: ${fileinfo.fname}</p>  <p>-> upload time: ${fileinfo.regdate }</p> </li>
-                    </c:forEach>
+                        <li><p style="margin:0"> 
+                        File name: <a href="javascript:download('${fileinfo.fname }')">${fileinfo.fname}</a>,&nbsp;&nbsp;</p>  
+                        <p>-> upload time: ${fileinfo.regdate }</p> </li>
+                     </c:forEach>
+                     <script>
+                     function download(fname){
+                        if (fname.trim() === "") {
+                             alert("파일 이름이 유효하지 않습니다.");
+                             return "todoFrm";
+                         }
+                        if(confirm(fname+"다운로드하시겠습니까?")){
+                           location.href="downLoad.do?fname="+fname
+                        }
+                     }
+                  </script>
                 </ul>
             </c:when>
              <c:otherwise>
@@ -281,6 +287,10 @@ var proc = "${proc}"
              </c:otherwise>
             
              </c:choose>
+            
+            
+                
+              </div>
             
             
                 

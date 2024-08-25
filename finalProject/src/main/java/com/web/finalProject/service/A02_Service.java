@@ -147,6 +147,10 @@ public class A02_Service {
 			 public Chat getchatRoomId(Chat get) {
 				 return dao.getchatRoomId(get); 
 			 } 
+			 
+			 public String getUserName(String project_id, String chatroom_id, String user_id) {
+				 return dao.getUserName(project_id, chatroom_id, user_id);
+			 }
 			
 		//채팅 등록
 			public String insertchatroom(Chat ins) {
@@ -340,7 +344,7 @@ public class A02_Service {
 	        }
 	    }
 	    // 실제 업데이트 수행
-	    int result = dao.budgetUpdate(upt);
+	   // int result = dao.budgetUpdate(upt);
 	    
 		return dao.budgetUpdate(upt)>0?"수정 완료":"수정 실패";
 	}
