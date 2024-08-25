@@ -210,7 +210,7 @@ ORDER siblings BY budget_id DESC)
 WHERE lvl=2;
 
 SELECT * FROM CHAT;
-
+SELECT * FROM users;
 
 INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id)
 VALUES ('CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '채팅'||TO_CHAR(chatname_seq.nextval), 'P_0001', 'B_0047', 'N', NULL, sysdate, 'PRO_0003')
