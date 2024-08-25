@@ -556,3 +556,18 @@ WHERE project_id='PRO_0001';
 
 DELETE FROM PROJECT
 WHERE project_id='';
+
+
+SELECT COUNT(*) AS active_project_count -- 활동 중인 프로젝트 수
+         FROM users u
+         JOIN team tm ON u.user_id = tm.user_id
+         JOIN project p ON tm.project_id = p.project_id
+         WHERE u.user_id = 'P_0001'
+         AND p.end_date >= SYSDATE;
+         
+SELECT COUNT(*) AS completed_project_count -- 완료된 프로젝트 수
+FROM users u
+JOIN team tm ON u.user_id = tm.user_id
+JOIN project p ON tm.project_id = p.project_id
+WHERE u.user_id = 'P_0001'
+AND p.end_date < SYSDATE;
