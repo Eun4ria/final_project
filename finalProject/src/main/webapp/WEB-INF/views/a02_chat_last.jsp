@@ -500,7 +500,7 @@ $(document).ready(function(){
    </c:when>   
    <c:otherwise>
    <div class="input-group">   
-   <input id="chatroom_id" value="${chatroom_id}" hidden/>
+   <input id="chatroom_id" value="${chatroom_id}" />
    <input id="chatroom_name" value="${chatroom_name}" hidden/>
    <input id="curName" value="${sessionScope.user_name}" hidden />
    
@@ -588,32 +588,37 @@ stompClient.connect({}, function(frame) {
     console.log('Connected: ' + frame);
     
     // 채팅방 ID를 가져와서 구독
-    var chatroom_id = document.getElementById('chatroom_id').value;
     stompClient.subscribe('/topic/greetings', function(greeting){
         var obj = JSON.parse(greeting.body);
         var curName = document.getElementById('curName').value;
+        var chatroom_id = document.getElementById('chatroom_id').value;
 
         console.log("## 받은 메시지 ##");
         console.log(obj.msg);
         console.log("## 받은 이름 ##");
         console.log(obj.name);
+        
+       //채팅아이디에 따른 보낼 수 있는 조건
 
-        if(curName != obj.name){ //어제 지운거
-            displayMessage(obj.name, obj.msg, 'left'); //어제 지운거 :없으면 바로 화면에 안나옴
+         // 현재 채팅방 ID와 수신된 메시지의 채팅방 ID가 일치하는 경우에만 메시지를 표시
+        if (chatroom_id === obj.chatroom_id) {
+            var alignmentClass = curName === obj.name ? 'right' : 'left';
+            displayMessage(obj.name, obj.msg, alignmentClass); //상대방 화면 -없으면 상대방 화면에 안보임
+
             // 받은 메시지를 localStorage에 저장
-            storeMessage(obj.name, obj.msg);
-       }
+            storeMessage(obj.name, obj.msg, obj.chatroom_id); // 없으면 localstorage 저장 안됨-꼭필요
+          if(curName === obj.name) {
+            scrollToBottom(); //메세지 보내면 아래로
+          }
+        }
       
     });
 });
 
 // 메시지를 localStorage에 저장하는 함수
-function storeMessage(name, msg) {
-    var chatroom_id = document.getElementById('chatroom_id').value;
-   // var chatroom_id = document.getElementById('chatroom_id').value;
-   // var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
+function storeMessage(name, msg, chatroom_id) {
     var messages = JSON.parse(localStorage.getItem(chatroom_id)) || [];
-    messages.push({name: name, msg: msg});
+    messages.push({name: name, msg: msg, chatroom_id:chatroom_id});
     localStorage.setItem(chatroom_id, JSON.stringify(messages));
 }
 
@@ -622,8 +627,8 @@ function displayMessage(name, msg, alignment) {
     var messageDiv = document.createElement('div');
     messageDiv.classList.add(alignment);
     //화면에 보이는 부분
-    messageDiv.innerHTML =  msg + "<br>";
-    document.querySelector("#show").appendChild(messageDiv);
+    messageDiv.innerHTML =  msg + "<br>"; // 메세지 표현 부분-없으면 동그랗게만 보임
+    document.querySelector("#show").appendChild(messageDiv); //이것도 화면표현-꼭필요 없으면 아예 안나옴
   //  document.getElementById('msg').value = ''; 이 부분이 있어서 다른사용자의 send도 같이 없어짐
 
     // 메시지를 localStorage에 저장
@@ -633,6 +638,7 @@ function displayMessage(name, msg, alignment) {
 function sendName() {
     var name = document.getElementById('curName').value;
     var msg = document.getElementById('msg').value;
+    var chatroom_id = document.getElementById('chatroom_id').value;  // 채팅방 ID 가져오기
     var sendname = '${sessionScope.user_name}';
     var alignmentClass = name === sendname ? 'right' : 'left';
 
@@ -642,14 +648,15 @@ function sendName() {
     }
  
     // 메시지를 화면에 표시
-    displayMessage(name, msg, alignmentClass);
+   // displayMessage(name, msg, alignmentClass);//없으면 스크롤 안내려감
 
     // 메시지를 localStorage에 저장
-    storeMessage(name, msg);
+   // storeMessage(name, msg, chatroom_id);
     
     //var group = document.getElementById('chatroom_id').value;                    , 'group':group
-    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg': msg}));
+    stompClient.send("/app/hello", {}, JSON.stringify({'name': name, 'msg': msg, 'chatroom_id' : chatroom_id}));
 
+   
     scrollToBottom();
     document.getElementById('msg').value = '';
 }

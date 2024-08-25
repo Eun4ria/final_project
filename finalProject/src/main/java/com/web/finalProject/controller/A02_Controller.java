@@ -373,7 +373,6 @@ public class A02_Controller {
 			//	return "WEB-INF\\views\\a02_chat_last.jsp"; //원래
 			return "WEB-INF\\views\\a02_chatmodal.jsp"; //모달
 			
-			
 		}
 		 
 		@MessageMapping("/hello")
