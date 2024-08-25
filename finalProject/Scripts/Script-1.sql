@@ -210,6 +210,12 @@ ORDER siblings BY budget_id DESC)
 WHERE lvl=2;
 
 SELECT * FROM CHAT;
+SELECT * FROM USERS;
+SELECT user_name FROM CHAT c 
+WHERE project_id= 'PRO_0003'
+AND 
+
+SELECT * FROM CHAT;
 SELECT * FROM users;
 
 INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id)
@@ -217,3 +223,21 @@ VALUES ('CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '채팅'||TO_CHAR(chatname_
 
 INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id) 
 VALUES ('CHT_'||TO_CHAR(chat_seq.currval, 'FM0000'), '채팅'||TO_CHAR(chatname_seq.currval), 'B_0047', 'P_0001', 'N', NULL, sysdate, 'PRO_0003');
+
+
+SELECT * FROM CHAT;
+SELECT * FROM USERS;
+
+SELECT
+    u.USER_NAME
+FROM
+    USERS u
+JOIN
+    CHAT c ON u.USER_ID = c.USER_ID
+WHERE
+    c.PROJECT_ID = 'PRO_0003'
+    AND c.CHATROOM_ID = 'CHT_0037'
+    AND c.OWNER_ID = 'P_0001';
+
+
+

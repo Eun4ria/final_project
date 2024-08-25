@@ -105,7 +105,18 @@ int insertUser(Users ins);
 				+ "AND project_id = #{project_id} ")
 		int chatroomCk(Chat ch);
 		
-		// 
+		// 채팅자 이름
+		@Select("SELECT\r\n"
+				+ "    u.USER_NAME\r\n"
+				+ "FROM\r\n"
+				+ "    USERS u\r\n"
+				+ "JOIN\r\n"
+				+ "    CHAT c ON u.USER_ID = c.USER_ID\r\n"
+				+ "WHERE\r\n"
+				+ "    c.PROJECT_ID = #{project_id} \r\n"
+				+ "    AND c.CHATROOM_ID = #{chatroom_id}\r\n"
+				+ "    AND c.OWNER_ID = #{user_id}")
+		String getUserName(@Param("project_id") String project_id, @Param("chatroom_id") String chatroom_id,  @Param("user_id") String user_id);
 		
 	//채팅 리스트
 		@Select("SELECT * FROM CHAT \r\n"
@@ -163,8 +174,6 @@ int insertUser(Users ins);
 			+ "WHERE task_id = #{task_id}")
 	int updatetask(Tasks upt);
 	
-	
-
 	
 	//파일 업로드
 	@Insert("INSERT INTO TASKFILE (TASK_ID , FNAME  ,ETC ,REGDATE ,UPTDATE)\r\n"
