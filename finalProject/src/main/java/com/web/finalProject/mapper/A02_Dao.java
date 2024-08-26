@@ -192,9 +192,18 @@ int insertUser(Users ins);
 	
 //예산관리 - 검색
 	//전체 데이터 수
-	@Select("SELECT count(*)\r\n"
-			+ "FROM BUDGET\r\n"
-			+ "WHERE project_id = #{project_id}")
+//	@Select("SELECT count(*)\r\n"
+//			+ "FROM BUDGET\r\n"
+//			+ "WHERE project_id = #{project_id}")
+//	int getBudgetCount(BudgetSch sch);
+	//전체 데이터 수
+	@Select("SELECT count(*) from(\r\n"
+			+ "	SELECT rownum cnt, LEVEL, b.*\r\n"
+			+ "	FROM budget b\r\n"
+			+ "	WHERE project_id = #{project_id}\r\n"
+			+ "	START WITH parent_id ='N'\r\n"
+			+ "	CONNECT BY PRIOR budget_id = parent_id\r\n"
+			+ "	ORDER siblings BY budget_id DESC)")
 	int getBudgetCount(BudgetSch sch);
 	
 	@Select("SELECT * from(\r\n"

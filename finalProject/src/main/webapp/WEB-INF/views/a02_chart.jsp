@@ -66,13 +66,13 @@
                   
                   
 <%-- pie 차트 --%>
-                  <div class="col-12 col-lg-6">
+                  <div class="col-15 col-lg-12 ">
                      <div class="card">
                         <div class="card-header">
                            <h5 class="card-title">Main Category</h5>
                            <h6 class="card-subtitle text-muted">Major Category Budget Allocation Status</h6>
                         </div>
-                        <div class="card-body" ><span>[ Unit : 1 million(M) ]</span>
+                        <div class="card-body"  ><span>[ Unit : 1 million(M) ]</span>
                            <div class="chart ">
                               <canvas id="chartjs-pie"></canvas>
                            </div>
@@ -81,7 +81,7 @@
                   </div>
                   
                 
-<%-- bar chart --%>
+<%-- bar chart 
                   <div class="col-12 col-lg-6">
                      <div class="card">
                         <div class="card-header">
@@ -96,7 +96,7 @@
                         </div>
                      </div>
                   </div>
-                  
+                  --%>
  
                   
                </div>
