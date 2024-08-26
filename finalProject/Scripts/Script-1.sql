@@ -155,6 +155,18 @@ AND user_id LIKE '%%'
 START WITH parent_id IS NULL
 CONNECT BY PRIOR budget_id = parent_id
 ORDER siblings BY budget_id DESC);
+			SELECT *
+			FROM budget b
+			WHERE project_id = 'PRO_0003';
+
+SELECT count(*) from(
+			SELECT rownum cnt, LEVEL, b.*
+			FROM budget b
+			WHERE project_id = 'PRO_0003'
+			START WITH parent_id ='N'
+			CONNECT BY PRIOR budget_id = parent_id
+			ORDER siblings BY budget_id DESC);
+
 
 SELECT * from(
 			SELECT rownum cnt, LEVEL AS lvl, b.*
@@ -239,5 +251,25 @@ WHERE
     AND c.CHATROOM_ID = 'CHT_0037'
     AND c.OWNER_ID = 'P_0001';
 
+   SELECT * FROM budget;
+-- 데이터 백업
+CREATE TABLE BUDGET_BACKUP AS SELECT * FROM BUDGET;
+
+-- 컬럼을 비웁니다
+UPDATE BUDGET SET AMOUNT = NULL;
+
+-- 정밀도 및 스케일을 수정합니다
+ALTER TABLE BUDGET MODIFY AMOUNT NUMBER(20, 2);
+ALTER TABLE budget MODIFY amount NUMBER(15, 2);
+
+SELECT 
+    COLUMN_NAME,
+    DATA_TYPE,
+    DATA_PRECISION,
+    DATA_SCALE
+FROM 
+    USER_TAB_COLUMNS
+WHERE 
+    TABLE_NAME = 'BUDGET' AND COLUMN_NAME = 'AMOUNT';
 
 
