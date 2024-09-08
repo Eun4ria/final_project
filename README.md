@@ -130,12 +130,16 @@
 ## 📈 프로젝트 계획
 
 ## ✏️ 설계
+### 서버 구축
+
+### ERD
 
 ## 🛠️ 구현
 
 ## ✅ 정리 사항
 
 ## 🎥 시연 영상
+[시연 영상](https://drive.google.com/file/d/1U5q_abC5TCXjVQ06WEvSHLyxrmixOkk1/view?usp=sharing)
 
 ## 📁 추가 자료
 
