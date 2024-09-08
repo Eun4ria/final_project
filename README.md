@@ -47,11 +47,12 @@
   <tr><td>공통 역할</td><td colspan="2"></td></tr>
 </table>
 
- 
+
 ## 🔧 핵심 기술
+
 1. 김은수
     <details>
-      <summary>회원관리-회원가입/로그인 </summary>
+      <summary>회원관리-회원가입/로그인</summary>
       <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
       <ul>
         <li>목록 항목 1</li>
@@ -59,7 +60,7 @@
       </ul>
     </details>
     <details>
-       <summary>채팅</summary>
+      <summary>채팅</summary>
       <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
       <ul>
         <li>목록 항목 1</li>
@@ -67,7 +68,7 @@
       </ul>
     </details>
     <details>
-    <summary>산출물 관리(To Do List)</summary>
+      <summary>산출물 관리(To Do List)</summary>
       <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
       <ul>
         <li>목록 항목 1</li>
@@ -75,19 +76,19 @@
       </ul>
     </details>
     <details>
-    <summary>예산 관리 & 차트</summary>
+      <summary>예산 관리 & 차트</summary>
       <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
       <ul>
         <li>목록 항목 1</li>
         <li>목록 항목 2</li>
       </ul>
     </details>
-    
 
 <br>
+
 2. 박민경
     <details>
-      <summary>회원관리-아이디 찾기/비밀번호 찾기 </summary>
+      <summary>회원관리-아이디 찾기/비밀번호 찾기</summary>
       <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
       <ul>
         <li>목록 항목 1</li>
@@ -95,7 +96,7 @@
       </ul>
     </details>
     <details>
-       <summary>간트 차트</summary>
+      <summary>간트 차트</summary>
       <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
       <ul>
         <li>목록 항목 1</li>
@@ -103,7 +104,7 @@
       </ul>
     </details>
     <details>
-    <summary>캘린더</summary>
+      <summary>캘린더</summary>
       <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
       <ul>
         <li>목록 항목 1</li>
@@ -111,7 +112,7 @@
       </ul>
     </details>
     <details>
-    <summary>다국어 처리</summary>
+      <summary>다국어 처리</summary>
       <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
       <ul>
         <li>목록 항목 1</li>
@@ -119,13 +120,14 @@
       </ul>
     </details>
     <details>
-    <summary>마이페이지</summary>
+      <summary>마이페이지</summary>
       <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
       <ul>
         <li>목록 항목 1</li>
         <li>목록 항목 2</li>
       </ul>
     </details>
+
 
 ## 📈 프로젝트 계획
 
