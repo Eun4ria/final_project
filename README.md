@@ -1,7 +1,6 @@
 # <img src="https://github.com/Eun4ria/final_project/blob/main/HPM_logo.png"/>
 
 ## 🗂️ 목차
----
 1. 📝 개요
 2. 🔧 핵심 기술
 3. 📈 프로젝트 계획
