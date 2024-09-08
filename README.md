@@ -91,8 +91,48 @@
       </ul>
     </details>
 
-
-2. 박민
+<br>
+2. 박민경
+    <details>
+      <summary>회원관리-아이디 찾기/비밀번호 찾기 </summary>
+      <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+      <ul>
+        <li>목록 항목 1</li>
+        <li>목록 항목 2</li>
+      </ul>
+    </details>
+    <details>
+       <summary>간트 차트</summary>
+      <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+      <ul>
+        <li>목록 항목 1</li>
+        <li>목록 항목 2</li>
+      </ul>
+    </details>
+    <details>
+    <summary>캘린더</summary>
+      <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+      <ul>
+        <li>목록 항목 1</li>
+        <li>목록 항목 2</li>
+      </ul>
+    </details>
+    <details>
+    <summary>다국어 처리</summary>
+      <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+      <ul>
+        <li>목록 항목 1</li>
+        <li>목록 항목 2</li>
+      </ul>
+    </details>
+    <details>
+    <summary>마이페이지</summary>
+      <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+      <ul>
+        <li>목록 항목 1</li>
+        <li>목록 항목 2</li>
+      </ul>
+    </details>
 
 ## 📈 프로젝트 계획
 
