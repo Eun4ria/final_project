@@ -139,7 +139,7 @@
 ## ✅ 정리 사항
 
 ## 🎥 시연 영상
-[시연 영상](https://drive.google.com/file/d/1U5q_abC5TCXjVQ06WEvSHLyxrmixOkk1/view?usp=sharing)
+[시연 영상](https://drive.google.com/file/d/1wTjkPlC-iC6x0MTefSSsiEB60frAyYDn/view?usp=sharing)
 
 ## 📁 추가 자료
 
