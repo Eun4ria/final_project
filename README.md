@@ -57,14 +57,19 @@
       <summary>회원관리-회원가입/로그인</summary>
         <ul>
         <li>회원가입</li>
+        ![회원가입](https://github.com/user-attachments/assets/80a6bf6f-b376-41c6-a09f-bb52f45ad720)
+
 
         <strong>주요 기능</strong>
          <ol>
           <li>SMTP</li>
+        ![이메일](https://github.com/user-attachments/assets/182043f9-ffe4-4dbb-b5aa-81c65b9cc408)
           <li>유효성 검사</li>
           </ol>
         
         <li>로그인</li>
+       ![로그인](https://github.com/user-attachments/assets/8d6e7946-b4b8-4a03-a4f9-1c8ec91446c5)
+
    
         
       </ul>
@@ -137,6 +142,8 @@
         <li>목록 항목 2</li>
       </ul>
     </details>
+
+
 
 
 ## 📈 프로젝트 계획
