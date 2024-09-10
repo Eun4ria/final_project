@@ -58,8 +58,6 @@
         <ul>
         <li>회원가입</li>
         ![회원가입](https://github.com/user-attachments/assets/80a6bf6f-b376-41c6-a09f-bb52f45ad720)
-
-
         <strong>주요 기능</strong>
          <ol>
           <li>SMTP</li>
