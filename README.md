@@ -1,4 +1,4 @@
-# <img src="https://github.com/Eun4ria/final_project/blob/main/HPM_logo.png" style="width:300px"/>
+# <img src="https://github.com/Eun4ria/final_project/blob/main/HPM_logo.png" style="width:300px;"/>
 
 ## 🗂️ 목차
 1. 📝 개요
@@ -41,9 +41,12 @@
 ### 팀원 소개
 <table>
   <tr><th>팀원명</th><th>프로필</th><th>역할</th></tr>
-  <tr><td>김은수</td><td></td><td></td></tr>
+  <tr>
+    <td>김은수</td><td></td>
+    <td><strong>조장</strong> 사용자 로그인 / 회원가입(mail) / 채팅 / 예산 관리 / 차트 / 메인 화면(간략/상세) / To Do List / GitHub 환경 구축 / PPT 제작</td>
+  </tr>
   <tr><td>박민경</td><td></td><td></td></tr>
-  <tr><td>공통 역할</td><td colspan="2"></td></tr>
+  <tr><td>공통 역할</td><td colspan="2">PMS 분석 / 요구사항 정의서 / 워크플로우 / 설계(화면, DB)</td></tr>
 </table>
 
 
@@ -52,17 +55,25 @@
 1. 김은수
     <details>
       <summary>회원관리-회원가입/로그인</summary>
-      <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
-      <ul>
-        <li>목록 항목 1</li>
-        <li>목록 항목 2</li>
+        <ul>
+        <li>회원가입</li>
+
+        <strong>주요 기능</strong>
+         <ol>
+          <li>SMTP</li>
+          <li>유효성 검사</li>
+          </ol>
+        
+        <li>로그인</li>
+   
+        
       </ul>
     </details>
     <details>
       <summary>채팅</summary>
       <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
       <ul>
-        <li>목록 항목 1</li>
+        <li>웹소켓</li>
         <li>목록 항목 2</li>
       </ul>
     </details>
