@@ -1,4 +1,4 @@
-# <img src="https://github.com/Eun4ria/final_project/blob/main/HPM_logo.png"/>
+# <img src="https://github.com/Eun4ria/final_project/blob/main/HPM_logo.png" style="width:300px"/>
 
 ## 🗂️ 목차
 1. 📝 개요
