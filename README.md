@@ -70,7 +70,7 @@
     </ol>
 
     <li>로그인</li>
-    <img src="https://github.com/user-attachments/assets/8d6e7946-b4b8-4a03-a4f9-1c8ec91446c5" alt="로그인" style="width:500px">
+    <img src="https://github.com/user-attachments/assets/8d6e7946-b4b8-4a03-a4f9-1c8ec91446c5" alt="로그인" style="width:600px">
   </ul>
     </details>
     <details>
@@ -129,10 +129,15 @@
       <p>전체 사용자 조회, 수정, 삭제</p>
       <ul>
         <li>사용자 검색 및 조회</li>
+        <img src="https://github.com/user-attachments/assets/c4f9a4f0-50d5-4cdd-bdb0-c0868e9a7ad7" alt="사용자 리스트" style="width:500px"/>
         <li>사용자 목록 페이징</li>
+        <img src="https://github.com/user-attachments/assets/e0369f6f-f76a-4a1e-9538-3224503f8804" alt="사용자 페이징" style="width:500px"/>
         <li>사용자 상세정보</li>
+        <img src="https://github.com/user-attachments/assets/d72736f0-53a0-45f3-8c8b-bb1fab6c43d6" alt="사용자 상세" style="width:500px"/>
         <li>사용자 정보 수정</li>
+        <img src="https://github.com/user-attachments/assets/94e5e5ad-3c64-49b0-bbb3-0ba6c427c3cb" alt="사용자 정보 수정" style="width:900px"/>
         <li>사용자 삭제(탈퇴)</li>
+        <img src="https://github.com/user-attachments/assets/5bbd2910-d067-4f63-9f63-5f6e772999ed" alt="사용자 삭제" style="width:700px"/>
       </ul>
     </details>
     <details>
