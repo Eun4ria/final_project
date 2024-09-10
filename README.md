@@ -125,6 +125,17 @@
       </ul>
     </details>
     <details>
+      <summary>사용자 관리</summary>
+      <p>전체 사용자 조회, 수정, 삭제</p>
+      <ul>
+        <li>사용자 검색 및 조회</li>
+        <li>사용자 목록 페이징</li>
+        <li>사용자 상세정보</li>
+        <li>사용자 정보 수정</li>
+        <li>사용자 삭제(탈퇴)</li>
+      </ul>
+    </details>
+    <details>
       <summary>다국어 처리</summary>
       <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
       <ul>
