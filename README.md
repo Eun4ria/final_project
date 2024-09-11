@@ -99,7 +99,7 @@
   <p>• 회원가입에 입력한 비밀번호와 이메일을 통해 받은 아이디를 이용</p>
   <img src="https://github.com/user-attachments/assets/8d6e7946-b4b8-4a03-a4f9-1c8ec91446c5" alt="로그인" style="width:400px">
 <br>
-    <h5>유효성 검사</h5>
+    <h4><유효성 검사></h4>
     <img src="/images/유효성_로그인.png" style="width:400px">
   <br>
   <h4>*로그인 성공*</h4>
