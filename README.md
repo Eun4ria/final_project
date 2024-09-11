@@ -63,7 +63,7 @@
   <h4>◾주요 기능</h4>
   
   <h4>1) SMTP</h4>
-  <p>•회원가입 시 입력한 이메일로 자동 생성된 아이디가 전송</p>
+  <p>• 회원가입 시 입력한 이메일로 자동 생성된 아이디가 전송</p>
   <img src="/images/회원가입_이메일.png" alt="이메일" style="width:500px">
   
   <h4>2) 유효성 검사</h4>
@@ -96,15 +96,13 @@
   </div>
   <br>
 <h3> 2. 로그인</h3>
-  <p>•회원가입에 입력한 비밀번호와 이메일을 통해 받은 아이디를 이용</p>
+  <p>• 회원가입에 입력한 비밀번호와 이메일을 통해 받은 아이디를 이용</p>
   <img src="https://github.com/user-attachments/assets/8d6e7946-b4b8-4a03-a4f9-1c8ec91446c5" alt="로그인" style="width:400px">
 <br>
-   <div>
-    <p>유효성 검사</p>
+    <h5>유효성 검사</h5>
     <img src="/images/유효성_로그인.png" style="width:400px">
-  </div>
-  
-  <h4>로그인 성공</h4>
+  <br>
+  <h4>*로그인 성공*</h4>
     <img src="/images/로그인 성공.png" style="width:400px">
   <br>
 </details>
