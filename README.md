@@ -101,7 +101,7 @@
 <br>
     <h4><유효성 검사></h4>
     (1) 필수 입력 검증<br>
-       <img src="/images/유효성_로그인빈칸.png" style="width:400px">
+       <img src="/images/유효성_코드_로그인빈칸.png" style="width:400px">
     <br>
     (2) 존재 여부 검증<br>
       <img src="/images/유효성_로그인.png" style="width:400px">
