@@ -53,20 +53,20 @@
 
 
 ## 🔧 핵심 기술
-▪️ 김은수
+<h2>◽ 김은수</h2>
 <details>
   <summary>회원관리-회원가입/로그인</summary>
   
-  1. 회원가입
+  <h3>1. 회원가입</h3>
   <img src="https://github.com/user-attachments/assets/80a6bf6f-b376-41c6-a09f-bb52f45ad720" alt="회원가입" style="width:500px">
 
-  <h4>주요 기능</h4>
+  <h4>◾주요 기능</h4>
   
-  1) SMTP
+  <h4>1) SMTP</h4>
   <p>회원가입 시 입력한 이메일로 자동 생성된 아이디가 전송</p>
   <img src="https://github.com/user-attachments/assets/182043f9-ffe4-4dbb-b5aa-81c65b9cc408" alt="이메일" style="width:500px">
   
-  2) 유효성 검사
+  <h4>2) 유효성 검사</h4>
   <div>
     <p>1. 이메일 유효성 검사</p>
     (1)<br>
@@ -122,7 +122,7 @@
 </details>
 <br>
 
-▪️ 박민경
+<h2>◽ 박민경</h2>
     <details>
       <summary>회원관리-아이디 찾기/비밀번호 찾기</summary>
       <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
