@@ -39,7 +39,7 @@
 ### 개발환경 및 도구
 
 ### 팀원 소개
-<table>
+<table style="width:900px">
   <tr><th>팀원명</th><th>프로필</th><th>역할</th></tr>
   <tr>
     <td>김은수</td><td></td>
@@ -60,7 +60,7 @@
 ### 서버 구축
 
 ### ERD
- <img src="/images/ERD.png" alt="회원가입" style="width:800px">
+ <img src="/images/ERD.png" alt="회원가입" style="width:900px">
 
 ## 🛠️ 구현
 <h2>◽ 김은수</h2>
