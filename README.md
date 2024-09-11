@@ -84,15 +84,14 @@
     (2) 형식 검증 및 정규 표현식 검증<br>
      <img src="/images/비번유효성_문자,숫자,특수문자.png" style="width:400px">
       <br>
-    (3) <br>
+    (3) 입력 일치 검증<br>
      <img src="/images/비번유효성_비번일치.png" style="width:400px">
-  </div>
-  <div>
-    <p>빈칸 유효성</p>
+    (4) 빈칸 유효성<br>
     <img src="/images/유효성_회원가입빈칸.png" style="width:400px">
-    <p>최종 유효성 확인</p>
-    <img src="/images/유효성_최종확인.png" style="width:400px">
   </div>
+  <h4>최종 유효성 확인</h4>
+    <img src="/images/유효성_최종확인.png" style="width:400px">
+  
 
   2. 로그인
   <p>회원가입에 입력한 비밀번호와 이메일을 통해 받은 아이디를 이용</p>
