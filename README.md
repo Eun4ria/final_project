@@ -55,20 +55,24 @@
 ## 🔧 핵심 기술
 
 1. 김은수
-    1. 김은수
     <details>
       <summary>회원관리-회원가입/로그인</summary>
        <ul>
-    <li><strong>회원가입</strong></li>
+    <li>회원가입</li>
     <img src="https://github.com/user-attachments/assets/80a6bf6f-b376-41c6-a09f-bb52f45ad720" alt="회원가입" style="width:500px">
-
-    <strong>주요 기능</strong>
+    
+   • 주요 기능
     <ol>
       <li>SMTP</li>
+      <p>회원가입 시 입력한 이메일로 자동생성된 아이디가 전송</p>
       <img src="https://github.com/user-attachments/assets/182043f9-ffe4-4dbb-b5aa-81c65b9cc408" alt="이메일" style="width:500px">
       <li>유효성 검사</li>
-    </ol>
+      1. 이메일 유효성 검사
 
+      2. 비밀번호 유효성 검사
+  
+         
+    </ol>
     <li>로그인</li>
     <img src="https://github.com/user-attachments/assets/8d6e7946-b4b8-4a03-a4f9-1c8ec91446c5" alt="로그인" style="width:600px">
   </ul>
