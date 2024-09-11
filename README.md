@@ -102,9 +102,10 @@
     <p>유효성 검사</p>
     <img src="/images/유효성_로그인.png" style="width:400px">
   </div>
-  <div>로그인 성공</div>
-    <img src="/images/로그인성공.png" style="width:400px">
   
+  <div>로그인 성공
+    <img src="/images/로그인성공.png" style="width:400px">
+  </div>
 </details>
 <details>
   <summary>채팅</summary>
