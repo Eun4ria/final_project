@@ -68,7 +68,7 @@
       <img src="https://github.com/user-attachments/assets/182043f9-ffe4-4dbb-b5aa-81c65b9cc408" alt="이메일" style="width:500px">
       <li>유효성 검사</li>
       1. 이메일 유효성 검사
-
+      <img src="" style="width:500px>
       2. 비밀번호 유효성 검사
   
          
