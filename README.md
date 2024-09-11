@@ -87,7 +87,7 @@
     (3) 입력 일치 검증<br>
      <img src="/images/비번유효성_비번일치.png" style="width:400px">
     <br>
-    (4) 빈칸 유효성<br>
+    (4) 필수 입력 검증<br>
     <img src="/images/유효성_회원가입빈칸.png" style="width:400px">
   </div>
   <div style="border: 1px solid violet;">
@@ -100,8 +100,12 @@
   <img src="https://github.com/user-attachments/assets/8d6e7946-b4b8-4a03-a4f9-1c8ec91446c5" alt="로그인" style="width:400px">
 <br>
     <h4><유효성 검사></h4>
-    <img src="/images/유효성_로그인.png" style="width:400px">
-  <br>
+    (1) 필수 입력 검증<br>
+       <img src="/images/유효성_로그인빈칸.png" style="width:400px">
+    <br>
+    (2) 존재 여부 검증<br>
+      <img src="/images/유효성_로그인.png" style="width:400px">
+      <br>
   <h4>*로그인 성공*</h4>
     <img src="/images/로그인 성공.png" style="width:400px">
   <br>
