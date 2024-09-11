@@ -58,13 +58,13 @@
   <summary>회원관리-회원가입/로그인</summary>
   
   <h3>1. 회원가입</h3>
-  <img src="https://github.com/user-attachments/assets/80a6bf6f-b376-41c6-a09f-bb52f45ad720" alt="회원가입" style="width:500px">
+  <img src="/images/회원가입.png" alt="회원가입" style="width:500px">
 
   <h4>◾주요 기능</h4>
   
   <h4>1) SMTP</h4>
   <p>회원가입 시 입력한 이메일로 자동 생성된 아이디가 전송</p>
-  <img src="https://github.com/user-attachments/assets/182043f9-ffe4-4dbb-b5aa-81c65b9cc408" alt="이메일" style="width:500px">
+  <img src="/images/회원가입_이메일.png" alt="이메일" style="width:500px">
   
   <h4>2) 유효성 검사</h4>
   <div>
@@ -89,14 +89,21 @@
   </div>
   <div>
     <p>빈칸 유효성</p>
-    <img src="/images/유효성 확인.png" style="width:400px">
+    <img src="/images/유효성_회원가입빈칸.png" style="width:400px">
     <p>최종 유효성 확인</p>
-    <img src="/images/유효성 확인.png" style="width:400px">
+    <img src="/images/유효성_최종확인.png" style="width:400px">
   </div>
 
   2. 로그인
   <p>회원가입에 입력한 비밀번호와 이메일을 통해 받은 아이디를 이용</p>
   <img src="https://github.com/user-attachments/assets/8d6e7946-b4b8-4a03-a4f9-1c8ec91446c5" alt="로그인" style="width:400px">
+
+   <div>
+    <p>유효성 검사</p>
+    <img src="/images/유효성_로그인.png" style="width:400px">
+  </div>
+  <div>로그인 성공</div>
+    <img src="/images/로그인성공.png" style="width:400px">
   
 </details>
 <details>
