@@ -70,16 +70,26 @@
   <div>
     <p>1. 이메일 유효성 검사</p>
     (1)<br>
-    <img src="/images/유효성 확인.png" style="width:400px">
+     <img src="/images/유효성_유효하지 않은 이메일.png" style="width:400px">
     <br>
     (2) <br>
-    <img src="/images/유효성_유효하지 않은 이메일.png" style="width:400px">
+     <img src="/images/유효성_이미 사용중.png" style="width:400px">
     <br>
-    (3) <br>
-    <img src="/images/유효성_이미 사용중.png" style="width:400px">
   </div>
   <div>
     <p>2. 비밀번호 유효성 검사</p>
+     (1)<br>
+     <img src="/images/비번유효성_6자 이상.png" style="width:400px">
+    <br>
+    (2) <br>
+     <img src="/images/비번유효성_문자,숫자,특수문자.png" style="width:400px">
+      <br>
+    (2) <br>
+     <img src="/images/비번유효성_비번일치.png" style="width:400px">
+  </div>
+  <div>
+    <p>최종 유효성 확인</p>
+    <img src="/images/유효성 확인.png" style="width:400px">
   </div>
 
   2. 로그인
