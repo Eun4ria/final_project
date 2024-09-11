@@ -69,30 +69,33 @@
   <h4>2) 유효성 검사</h4>
   <div>
     <p>1. 이메일 유효성 검사</p>
-    (1)<br>
+    (1) 형식 검증<br>
      <img src="/images/유효성_유효하지 않은 이메일.png" style="width:400px">
     <br>
-    (2) <br>
+    (2) 중복 검증<br>
      <img src="/images/유효성_이미 사용중.png" style="width:400px">
     <br>
   </div>
   <div>
     <p>2. 비밀번호 유효성 검사</p>
-     (1)<br>
+     (1) 길이 검증<br>
      <img src="/images/비번유효성_6자 이상.png" style="width:400px">
     <br>
-    (2) <br>
+    (2) 형식 검증 및 정규 표현식 검증<br>
      <img src="/images/비번유효성_문자,숫자,특수문자.png" style="width:400px">
       <br>
-    (2) <br>
+    (3) <br>
      <img src="/images/비번유효성_비번일치.png" style="width:400px">
   </div>
   <div>
+    <p>빈칸 유효성</p>
+    <img src="/images/유효성 확인.png" style="width:400px">
     <p>최종 유효성 확인</p>
     <img src="/images/유효성 확인.png" style="width:400px">
   </div>
 
   2. 로그인
+  <p>회원가입에 입력한 비밀번호와 이메일을 통해 받은 아이디를 이용</p>
   <img src="https://github.com/user-attachments/assets/8d6e7946-b4b8-4a03-a4f9-1c8ec91446c5" alt="로그인" style="width:400px">
   
 </details>
