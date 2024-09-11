@@ -39,13 +39,14 @@
 ### 개발환경 및 도구
 
 ### 팀원 소개
-<table style="width:900px">
+<table >
   <tr><th>팀원명</th><th>프로필</th><th>역할</th></tr>
   <tr>
     <td>김은수</td><td></td>
     <td><strong>조장</strong> 
+      사용자 로그인 / 회원가입(mail) / 채팅 / 예산 관리 / 차트 / 
       
-      사용자 로그인 / 회원가입(mail) / 채팅 / 예산 관리 / 차트 / 메인 화면(간략/상세) / To Do List / GitHub 환경 구축 / PPT 제작</td>
+      메인 화면(간략/상세) / To Do List / GitHub 환경 구축 / PPT 제작 </td>
   </tr>
   <tr><td>박민경</td><td></td><td></td></tr>
   <tr><td>공통 역할</td><td colspan="2">PMS 분석 / 요구사항 정의서 / 워크플로우 / 설계(화면, DB)</td></tr>
