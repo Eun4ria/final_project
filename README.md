@@ -53,57 +53,66 @@
 
 
 ## 🔧 핵심 기술
-
-1. 김은수
-    <details>
-      <summary>회원관리-회원가입/로그인</summary>
-       <ul>
-    <li>회원가입</li>
-    <img src="https://github.com/user-attachments/assets/80a6bf6f-b376-41c6-a09f-bb52f45ad720" alt="회원가입" style="width:500px">
-    
-   • 주요 기능
-    <ol>
-      <li>SMTP</li>
-      <p>회원가입 시 입력한 이메일로 자동생성된 아이디가 전송</p>
-      <img src="https://github.com/user-attachments/assets/182043f9-ffe4-4dbb-b5aa-81c65b9cc408" alt="이메일" style="width:500px">
-      <li>유효성 검사</li>
-      1. 이메일 유효성 검사
-      <img src="" style="width:500px>
-      2. 비밀번호 유효성 검사
+▪️ 김은수
+<details>
+  <summary>회원관리-회원가입/로그인</summary>
   
-         
-    </ol>
-    <li>로그인</li>
-    <img src="https://github.com/user-attachments/assets/8d6e7946-b4b8-4a03-a4f9-1c8ec91446c5" alt="로그인" style="width:600px">
+  1. 회원가입
+  <img src="https://github.com/user-attachments/assets/80a6bf6f-b376-41c6-a09f-bb52f45ad720" alt="회원가입" style="width:500px">
+
+  <h4>주요 기능</h4>
+  
+  1) SMTP
+  <p>회원가입 시 입력한 이메일로 자동 생성된 아이디가 전송</p>
+  <img src="https://github.com/user-attachments/assets/182043f9-ffe4-4dbb-b5aa-81c65b9cc408" alt="이메일" style="width:500px">
+  
+  2) 유효성 검사
+  <div>
+    <p>1. 이메일 유효성 검사</p>
+    (1)<br>
+    <img src="/images/유효성 확인.png" style="width:400px">
+    <br>
+    (2) <br>
+    <img src="/images/유효성_유효하지 않은 이메일.png" style="width:400px">
+    <br>
+    (3) <br>
+    <img src="/images/유효성_이미 사용중.png" style="width:400px">
+  </div>
+  <div>
+    <p>2. 비밀번호 유효성 검사</p>
+  </div>
+
+  2. 로그인
+  <img src="https://github.com/user-attachments/assets/8d6e7946-b4b8-4a03-a4f9-1c8ec91446c5" alt="로그인" style="width:400px">
+  
+</details>
+<details>
+  <summary>채팅</summary>
+  <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+  <ul>
+    <li>웹소켓</li>
+    <li>목록 항목 2</li>
   </ul>
-    </details>
-    <details>
-      <summary>채팅</summary>
-      <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
-      <ul>
-        <li>웹소켓</li>
-        <li>목록 항목 2</li>
-      </ul>
-    </details>
-    <details>
-      <summary>산출물 관리(To Do List)</summary>
-      <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
-      <ul>
-        <li>목록 항목 1</li>
-        <li>목록 항목 2</li>
-      </ul>
-    </details>
-    <details>
-      <summary>예산 관리 & 차트</summary>
-      <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
-      <ul>
-        <li>목록 항목 1</li>
-        <li>목록 항목 2</li>
-      </ul>
-    </details>
+</details>
+<details>
+  <summary>산출물 관리(To Do List)</summary>
+  <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+  <ul>
+    <li>목록 항목 1</li>
+    <li>목록 항목 2</li>
+  </ul>
+</details>
+<details>
+  <summary>예산 관리 & 차트</summary>
+  <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+  <ul>
+    <li>목록 항목 1</li>
+    <li>목록 항목 2</li>
+  </ul>
+</details>
 <br>
 
-2. 박민경
+▪️ 박민경
     <details>
       <summary>회원관리-아이디 찾기/비밀번호 찾기</summary>
       <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
