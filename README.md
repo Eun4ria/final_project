@@ -90,8 +90,10 @@
     (4) 빈칸 유효성<br>
     <img src="/images/유효성_회원가입빈칸.png" style="width:400px">
   </div>
-  <h4>*최종 유효성 확인*</h4>
+  <div style="background:rgba(204, 153, 255, 0.5)">
+    <h4>*최종 유효성 확인*</h4>
     <img src="/images/유효성_최종확인.png" style="width:400px">
+  </div>
   <br>
 <h3> 2. 로그인</h3>
   <p>•회원가입에 입력한 비밀번호와 이메일을 통해 받은 아이디를 이용</p>
