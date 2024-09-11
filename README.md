@@ -44,7 +44,8 @@
   <tr>
     <td>김은수</td><td></td>
     <td>
-      <p style="font-weight:bold">조장</p>
+      <strong>조장</strong>
+      <br>
       사용자 로그인 / 회원가입(mail) / 채팅 / 예산 관리 / 차트 / 
       메인 화면(간략/상세) / To Do List / GitHub 환경 구축 / PPT 제작 
     </td>
