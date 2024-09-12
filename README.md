@@ -158,19 +158,22 @@
   </ul>
 </details>
 <details>
-  <summary>예산 관리(계층구조)</summary>
-  <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+  <summary>예산 관리(계층구조&페이징)</summary>
+  • 주요 기능
   <ul>
-    <li>목록 항목 1</li>
-    <li>목록 항목 2</li>
+    <li>계층구조</li>
+    <p>예산 등록 시 상위 또는 하위 요소를 지정하며, 상위 요소에 따라 하위 요소가 들여쓰기로 구분</p>
+    <li>페이징</li>
+    <p>데이터를 7개씩 분할하여 한 화면에 표시하고, 사용자가 쉽게 탐색할 수 있도록 이전/다음 버튼을 제공</p>
   </ul>
 </details>
 <details>
   <summary>차트</summary>
   <p>예산 상위요소 카테고리를 차트에 적용</p>
-  <img src="https://github.com/user-attachments/assets/c64a86c9-b263-4026-a228-d896abc957f6" style="width:700px">
+  <img src="https://github.com/user-attachments/assets/ab8f5c43-d523-40ec-85e9-2e64ef54fa10" style="width:700px">
   <img src="https://github.com/user-attachments/assets/29adb42b-2416-4d37-8a42-053c2bc38e93" style="width:700px"> 
 </details>
+
 <br>
 
 <h2>◽ 박민경</h2>
