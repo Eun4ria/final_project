@@ -125,15 +125,27 @@
 </details>
 <details>
   <summary>채팅</summary>
-  <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+  <strong>주요기능</strong>
+  <div>
+    1. 웹소켓(WebSocket) : 웹 브라우저와 서버 간의 양방향 통신을 실시간으로 가능하게 하는 프로토콜<br>
+    2. 로컬스토리지(localstrorage) : 웹 브라우저에서 데이터를 클라이언트 측에 영구적으로 저장할 수 있게 해주는 저장소
+  </div>
   <ul>
     <li>채팅 화면</li>
-     <img src="https://github.com/user-attachments/assets/d8c0bc1e-8069-4f82-a0b7-c3a8f4aad9b4" style="width:400px">
-
-
-    
+    <p>1) '로그인한 사용자 / 선택한 프로젝트'에 대한 채팅 리스트 화면 확인 가능.</p>
+     <img src="https://github.com/user-attachments/assets/d8c0bc1e-8069-4f82-a0b7-c3a8f4aad9b4" style="width:700px">
+    <p>2) 팀원 선택시 기존 채팅방 존재 여부에 따라 생성 및 선택이 이루어지고 생성 시 채팅 리스트에 추가</p>
+     <img src="https://github.com/user-attachments/assets/414238ba-bb8e-4632-822f-a92b6e67a010" style="width:700px">
     <li>웹소켓</li>
-    <li>목록 항목 2</li>
+     <img src="https://github.com/user-attachments/assets/6c812dea-fe82-4857-aa42-1e79ca874474" style="width:700px">
+    <li>그 외</li>
+    <ol>
+      <li>다른 채팅방 간의 대화 내용 구분</li>
+      <li>채팅 뒤로 가기(로컬 스토리지 유지)</li>
+      <img src="https://github.com/user-attachments/assets/b2a162a9-fd29-4eb6-a2ec-9ea5a6045f85" style="width:700px">
+      <li>채팅 나가기(로컬 스토리지 삭제)</li>
+       <img src="https://github.com/user-attachments/assets/07f0aa6c-ceab-4bc1-8332-0cc273e583b7" style="width:700px">
+    </ol>
   </ul>
 </details>
 <details>
