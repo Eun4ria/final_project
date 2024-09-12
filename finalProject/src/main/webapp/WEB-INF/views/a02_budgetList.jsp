@@ -194,10 +194,7 @@ function FormReset(){
               <div class="row">
                 <div class="col-lg-6 col-7">
                   <h6>Projects ${project_id}</h6>
-                  <p class="text-sm mb-0">
-                    <i class="fa fa-check text-info" aria-hidden="true"></i>
-                     <%-- 프로젝트 이름이나 기간 넣기?--%>
-                  </p>
+                  
                 </div>
                 <form id="curPageFrm" class="form" method="post">
 			
