@@ -52,15 +52,12 @@
    <link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 <script>
 	var msg="${msg}"
-	if(msg!=""){
-		alert(msg)
-	}
-	var sessionRole = "${sessionScope.role_code}"
+	var sessionUser_id = "${sessionScope.user_id}"
 	function projectPage(project_id){ // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
-		if(sessionRole!="" && sessionRole!=null){
+		if(sessionUser_id!="" && sessionUser_id!=null){
 			$("[name=project_id]").val(project_id)
 			$("#proPage").submit()
-			}
+		}
 	}
 </script>
 <style>
@@ -154,10 +151,7 @@
 									<h5 class="card-title mb-0"><fmt:message key="active_project"/></h5>
 								</div>
 								<div class="card-body">
-									<c:forEach var="pro" items="${pro}">
-									<form id="proPage" method="post" action="dashmemFrm">
-					                  	<input type="hidden" name="project_id"/>
-					                  </form>
+									<c:forEach var="pro" items="${pro}">									
 									<div class="d-flex align-items-start project-item" onclick="projectPage('${pro.project_id}')" style="padding:10px;">
 										<img src="${pro.logo}" width="30" height="30" class="rounded-circle me-2" alt="${pro.project_name} }">
 										<div class="flex-grow-1">
@@ -170,10 +164,8 @@
 										</div>
 									</div>
 									</c:forEach>
-								</div>
-
-									<hr>
-									
+								</div>									
+									<hr>									
 									<div class="card-header">
 										<h5 class="card-title mb-0"><fmt:message key="completed_projects"/></h5>
 									</div>
@@ -192,11 +184,12 @@
 									</div>
 									</c:forEach>
 								</div>
-								
+								<form id="proPage" method="post" action="dashmemFrm">
+				                  	<input type="hidden" name="project_id"/>
+				                  </form>
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</main>
 			

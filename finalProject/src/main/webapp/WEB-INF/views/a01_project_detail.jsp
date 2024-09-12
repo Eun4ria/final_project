@@ -89,9 +89,6 @@ $(document).ready(function() {
 
     $("#delBtn").click(function(event){
     	alert("삭제하시겠습니까?");
-    	
-    	$('[name="start_date"]').val(startDateValue);
-        $('[name="end_date"]').val(endDateValue);
         // 삭제 폼 제출
         $("form").attr("action", "deleteProject").submit();
     });
