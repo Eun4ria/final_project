@@ -336,7 +336,6 @@ $(document).ready(function(){
      }
  }
  function goBack() {
-     //window.history.back();
     $.ajax({
         url: '/chatmemListstart',
         type: 'GET', // 또는 필요한 HTTP 메서드
@@ -466,20 +465,7 @@ $(document).ready(function(){
                            <button type="submit" id="mainBtn" style="background-color:transparent; border:none; color:white" >
                            <i class="fas fa-user-circle"></i> main page</button>
                         </form>
-                      <%--   <form method="post" action="mainpmFrm">
-                           <input type="submit" id="exitBtn" hidden >
-                           <i class="fas fa-users"></i> Add to close friends
-                        </form>
-                        <form method="post" action="mainpmFrm">
-                           <input type="submit" id="exitBtn" hidden >
-                           <i class="fas fa-plus"></i> Add to group
-                        </form>
-                       
-                        <form method="post" action="mainpmFrm">
-                           <input type="submit" id="exitBtn" hidden >
-                           <i class="fas fa-ban"></i> Block
-                        </form>
-                        --%>
+                     
                           <button onclick="goBack()"style="background-color:transparent; border:none; color:white">
                            <i class="fas fa-sign-out-alt">
                            </i> Go Back</button>
@@ -690,6 +676,9 @@ window.onload = function() {
 function Exit() {
     var chatroom_id = document.getElementById('chatroom_id').value;
     
+    var isConfirmed = confirm("채팅방을 나가시겠습니까? (채팅방은 삭제됩니다)"); 
+
+    if (isConfirmed) {
  	// localStorage 내용 삭제
   	// localStorage.clear(); // 모든 채팅방에 대해 
     localStorage.removeItem(chatroom_id) //현재 채팅
@@ -709,6 +698,7 @@ function Exit() {
         window.location.href = '/chatmemListstart';
     })
     .catch(error => console.error('Error:', error));
+    }
 }
 </script>     
  
