@@ -336,7 +336,18 @@ $(document).ready(function(){
      }
  }
  function goBack() {
-     window.history.back();
+     //window.history.back();
+    $.ajax({
+        url: '/chatmemListstart',
+        type: 'GET', // 또는 필요한 HTTP 메서드
+        contentType: 'application/json',
+        success: function() {
+            window.location.href = '/chatmemListstart'; // 리다이렉션할 URL
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error); // 에러 처리
+        }
+    });
  }
  
 
