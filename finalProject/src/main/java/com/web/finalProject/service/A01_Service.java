@@ -194,7 +194,7 @@ public class A01_Service {
 	public String makeTempPwd(Users user) {
 		String msg = "임시 비밀번호 메일 발송 성공 \\n"
 				+ "이메일을 확인하세요";
-		// 1. 메일 발송 데이터 전송을 위한 객체 생성
+		// 메일 발송 데이터 전송을 위한 객체 생성
 		MimeMessage mmsg = sender.createMimeMessage();
 		try {
 			String tempPwd = Util.mkTPwd();
