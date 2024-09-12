@@ -56,9 +56,9 @@
 <!-- jquery -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- gantt -->
-<script src="${path}/gantt_trial/codebase/dhtmlxgantt.js?v=8.0.9"></script>
-<link rel="stylesheet" href="${path}/gantt_trial/codebase/dhtmlxgantt.css?v=8.0.9">
-<link rel="stylesheet" href="${path}/gantt_trial/samples/common/controls_styles.css?v=8.0.9">
+<script src="${path}/gantt_trial/codebase/dhtmlxgantt.js?v=8.0.10"></script>
+<link rel="stylesheet" href="${path}/gantt_trial/codebase/dhtmlxgantt.css?v=8.0.10">
+<link rel="stylesheet" href="${path}/gantt_trial/samples/common/controls_styles.css?v=8.0.10">
 
 <style>
 	html, body {
@@ -309,7 +309,7 @@ function goChat(user_id){
     	            gantt.parse(gdata);  // 새로운 데이터를 파싱하여 로드
     	            gantt.render();     // 차트를 다시 렌더링
     	            
-    	         	// 모든 자식 작업 열기
+    	         	// 모든 하위 작업 열기
     	            gantt.eachTask(function(task) {
     	                if (task.parent) {
     	                    gantt.open(task.parent);
