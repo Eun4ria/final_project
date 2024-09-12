@@ -10,13 +10,16 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -248,7 +251,7 @@ public class A02_Controller {
 			System.out.println(get.getOwner_id());
 			
 			int chatroomCk = service.chatroomCk(get);
-			System.out.println("chatroomCk홛인 " +chatroomCk);
+			System.out.println("chatroomCk확인 " +chatroomCk);
 			
 			if( chatroomCk > 0) {
 				System.out.println("채팅방 정보 있음");
@@ -306,7 +309,8 @@ public class A02_Controller {
 		// http://localhost:4040/message
 		@GetMapping("message")
 			public String chatting(@RequestParam("chatroom_id") String chatroom_Id,
-									@RequestParam("chatroom_name") String chatroom_Name, Model d, Users sch,HttpServletRequest request) {
+									@RequestParam("chatroom_name") String chatroom_Name,
+									Model d, Users sch,HttpServletRequest request) {
 			 
 		    HttpSession session = request.getSession();
 		    String project_id = (String) session.getAttribute("project_id");
@@ -325,25 +329,20 @@ public class A02_Controller {
 		    // 회원 리스트를 가져온다.
 		    List<Users> members = service.getmemList(sch);
 		    
-		   
 		    
 		    // 모델에 데이터 추가
 		    d.addAttribute("memList", members);
 		    d.addAttribute("userName", userName);
-		    
-		    
-		    System.out.println("memlist:" + members);
-		    System.out.println("userName 확인:" + userName);
 			
-		    	d.addAttribute("chatroom_id", chatroom_Id);
-			    d.addAttribute("chatroom_name", chatroom_Name);
-			    d.addAttribute("socketServer", socketServer);
-			    System.out.println("넘겨받은 채팅창 아이디:"+chatroom_Id);
-			    System.out.println("넘겨받은 채팅창 이름:"+chatroom_Name);
-			    System.out.println("소켓 확인:"+socketServer);
-			//	return "WEB-INF\\views\\a02_chat2.jsp";
-				return "WEB-INF\\views\\a02_chat_last.jsp"; //원래
-			//return "WEB-INF\\views\\a02_chatmodal.jsp"; //모달
+	    	d.addAttribute("chatroom_id", chatroom_Id);
+		    d.addAttribute("chatroom_name", chatroom_Name);
+		    d.addAttribute("socketServer", socketServer);
+		    System.out.println("넘겨받은 채팅창 아이디:"+chatroom_Id);
+		    System.out.println("넘겨받은 채팅창 이름:"+chatroom_Name);
+		    System.out.println("소켓 확인:"+socketServer);
+		//	return "WEB-INF\\views\\a02_chat2.jsp";
+			return "WEB-INF\\views\\a02_chat_last.jsp"; //원래
+		//return "WEB-INF\\views\\a02_chatmodal.jsp"; //모달
 			    
 
 			}
@@ -407,15 +406,17 @@ public class A02_Controller {
 	        return "redirect:/chatmemListstart"; // 세션 삭제 후 이동할 페이지
 	    }
 		
-		//채팅 나가기
-		@PostMapping("delchatroom")
-		public String delchatroom(@RequestParam("chatroom_id") String chatroom_id, Model d) {
-			 // 서비스 호출을 통해 chatroom_id를 사용하여 삭제 수행
+		// 채팅방 삭제하기
+		@DeleteMapping("/chatrooms/{chatroom_id}")
+		public ResponseEntity<String> deleteChatroom(@PathVariable("chatroom_id") String chatroom_id) {
+		    // 서비스 호출을 통해 chatroom_id를 사용하여 삭제 수행
 		    String result = service.delchatroom(chatroom_id);
 		    
-			d.addAttribute("msg",result);
-			d.addAttribute("proc", "del");
-			return "WEB-INF\\views\\a02_chat_last.jsp";
+		    if ("삭제완료".equals(result)) {
+		        return ResponseEntity.ok(result);
+		    } else {
+		        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+		    }
 		}
 
 		

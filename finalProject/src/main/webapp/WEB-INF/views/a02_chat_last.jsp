@@ -475,7 +475,7 @@ $(document).ready(function(){
                            
                         <form method="Post" action="delchatroom">
                            
-                           <button type="button" onclick="clearLocalStorage()" id="exitBtn" style="background-color:transparent; border:none; color:white">
+                           <button type="button" onclick="Exit()" id="exitBtn" style="background-color:transparent; border:none; color:white">
                            <i class="fas fa-sign-out-alt">
                            </i> Exit</button>
                            
@@ -587,7 +587,7 @@ var stompClient = Stomp.over(socket);
 stompClient.connect({}, function(frame) {
     console.log('Connected: ' + frame);
     
-    // 채팅방 ID를 가져와서 구독
+    // 채팅방 ID를 가져와서 구분
     stompClient.subscribe('/topic/greetings', function(greeting){
         var obj = JSON.parse(greeting.body);
         var curName = document.getElementById('curName').value;
@@ -675,20 +675,33 @@ window.onload = function() {
    scrollToBottom(); // 페이지 로드 후 스크롤을 아래로 이동
 }
 
-// localStorage 내용 삭제
-function clearLocalStorage() {
+
+function Exit() {
     var chatroom_id = document.getElementById('chatroom_id').value;
-   // localStorage.clear(); // 모든 채팅방에 대해 
+    
+ 	// localStorage 내용 삭제
+  	// localStorage.clear(); // 모든 채팅방에 대해 
     localStorage.removeItem(chatroom_id) //현재 채팅
     document.querySelector("#show").innerHTML = '';
+ 
+  	// Fetch API를 사용하여 DELETE 요청 전송
+    fetch(`/chatrooms/${chatroom_id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.text())
+    .then(result => {
+        alert(result);
+        // 필요시 페이지 리다이렉션
+        window.location.href = '/chatmemListstart';
+    })
+    .catch(error => console.error('Error:', error));
 }
-
-
 </script>     
  
 <script style="text/javascript">
-
-
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('memList').classList.add('active');
     $("#mem_list").show();

@@ -133,13 +133,13 @@ $(document).ready(function() {
 					<div class="col-lg-4 col-md-8 col-12 mx-auto">
 						<div class="card z-index-0 fadeIn3 fadeInBottom">
 							<div
-								class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+								class="card-header p-0 position-relative mt-n4 mx-3 z-index-2" style="border-radius:50px">
 								<div
 									class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1"
 									style="background: linear-gradient(#6A82FB, #B06AB3);">
 									<h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Log
 										In</h4>
-									<div class="row mt-3"></div>
+									<div class="row mt-2"></div>
 								</div>
 							</div>
 							<div class="card-body">
