@@ -159,21 +159,22 @@
 </details>
 <details>
   <summary>예산 관리(계층구조&페이징)</summary>
-  • 주요 기능
+  <h3><주요 기능></h3>
   <ul>
-    <li>계층구조</li>
-    <p>예산 등록 시 최상위 or 상위/하위 요소를 지정하며, 상위 요소에 따라 하위 요소가 들여쓰기로 구분</p>
+    <li><h4>계층구조</h4></li>
+    <p>: 예산 등록 시 최상위 or 상위/하위 요소를 지정하며, 상위 요소에 따라 하위 요소가 들여쓰기로 구분</p>
     1) 요소 지정 <br>
     <img src="https://github.com/user-attachments/assets/660d9db7-73eb-434a-9017-99086082738d" style="width:700px"> <br><br>
     2) 들여쓰기 확인 <br>
     <img src="https://github.com/user-attachments/assets/ca72fcd7-a8cd-465e-a7d0-b1f07ab51f5b" style="width:700px"><br><br>
-    <li>페이징</li>
+    <li><h4>페이징</h4></li>
     <p>데이터를 7개씩 분할하여 한 화면에 표시하고, 사용자가 쉽게 탐색할 수 있도록 이전/다음 버튼을 제공</p>
+    <img src="https://github.com/user-attachments/assets/f18746f4-b016-4bf5-a4f7-81b16840b1b9" style="width:700px"><br><br>
   </ul>
 </details>
 <details>
   <summary>차트</summary>
-  <p>예산 상위요소 카테고리를 차트에 적용</p>
+  <p>: 예산 상위요소 카테고리를 차트에 적용</p>
   <img src="https://github.com/user-attachments/assets/ab8f5c43-d523-40ec-85e9-2e64ef54fa10" style="width:700px">
   <img src="https://github.com/user-attachments/assets/29adb42b-2416-4d37-8a42-053c2bc38e93" style="width:700px"> 
 </details>
