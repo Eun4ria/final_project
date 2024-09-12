@@ -141,6 +141,7 @@
     <li>그 외</li>
     <ol>
       <li>다른 채팅방 간의 대화 내용 구분</li>
+      <img src="https://github.com/user-attachments/assets/9d08d01c-8d79-4eab-913b-a5e2986bc068" style="width:700px">
       <li>채팅 뒤로 가기(로컬 스토리지 유지)</li>
       <img src="https://github.com/user-attachments/assets/b2a162a9-fd29-4eb6-a2ec-9ea5a6045f85" style="width:700px">
       <li>채팅 나가기(로컬 스토리지 삭제)</li>
