@@ -158,7 +158,15 @@
   </ul>
 </details>
 <details>
-  <summary>예산 관리 & 차트</summary>
+  <summary>예산 관리(계층구조)</summary>
+  <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+  <ul>
+    <li>목록 항목 1</li>
+    <li>목록 항목 2</li>
+  </ul>
+</details>
+<details>
+  <summary>차트</summary>
   <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
   <ul>
     <li>목록 항목 1</li>
