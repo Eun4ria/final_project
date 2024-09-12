@@ -194,11 +194,9 @@ function FormReset(){
               <div class="row">
                 <div class="col-lg-6 col-7">
                   <h6>Projects ${project_id}</h6>
-                  
                 </div>
                 <form id="curPageFrm" class="form" method="post">
-			
-<%--현재 어느 페이지를 눌렀는지 --%>
+			<%--현재 어느 페이지를 눌렀는지 --%>
 			<input type="hidden" name="curPage" value="${sch.curPage }">
 			
 		</form>
@@ -208,7 +206,7 @@ function FormReset(){
             </div>
             
            <%-- 찐본문 --%>
-            <div class="card-body px-0 pb-2" id="mainDiv" >
+            <div class="px-0 pb-2" id="mainDiv" >
         
               <button class="btn btn-primary" data-toggle="modal" data-target="#ModalCenter" style="margin-left:1rem;" type="button" onclick="FormReset()">Regist Budget</button>
               <div class="table-responsive">
