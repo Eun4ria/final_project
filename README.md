@@ -167,11 +167,9 @@
 </details>
 <details>
   <summary>차트</summary>
-  <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
-  <ul>
-    <li>목록 항목 1</li>
-    <li>목록 항목 2</li>
-  </ul>
+  <p>예산 상위요소 카테고리를 차트에 적용</p>
+  <img src="https://github.com/user-attachments/assets/c64a86c9-b263-4026-a228-d896abc957f6" style="width:700px">
+  <img src="https://github.com/user-attachments/assets/29adb42b-2416-4d37-8a42-053c2bc38e93" style="width:700px"> 
 </details>
 <br>
 
