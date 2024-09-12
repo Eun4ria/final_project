@@ -435,8 +435,7 @@ public class A02_Controller {
 		    	   d.addAttribute("alertMessage", "프로젝트를 선택하세요.");
 		    	   return "WEB-INF\\views\\a02_taskdoList.jsp";
 		       }
-	    	
-			
+		
 			String project_id = (String) session.getAttribute("project_id");
 			String user_id = (String) session.getAttribute("user_id");
 			
