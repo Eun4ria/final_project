@@ -181,60 +181,125 @@
 
 <h2>◽ 박민경</h2>
     <details>
-      <summary>회원관리-아이디 찾기/비밀번호 찾기</summary>
-      <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+      <summary>회원관리-비밀번호 찾기/아이디 찾기</summary>      
+      <h3>1. 비밀번호 찾기</h3>
+      <img src="https://github.com/user-attachments/assets/d8b8fff8-457f-4a5f-b0fd-e30039b6478b" alt="비밀번호 찾기 초기화면" style="width:500px">
       <ul>
-        <li>목록 항목 1</li>
-        <li>목록 항목 2</li>
+        <li>필수 입력 검증</li>
+        <img src="https://github.com/user-attachments/assets/650417ed-50b0-4408-a517-599202157d0e" alt="필수 입력 검증" style="width:500px">
+        <li>이메일 형식 검증</li>
+        <img src="https://github.com/user-attachments/assets/ae73ae5c-c8f6-464b-bba0-8e26bd6623ac" alt="이메일 형식 검증" style="width:500px">
+        <li>데이터 유효성 검증</li>
+        <img src="https://github.com/user-attachments/assets/e4830037-ea5e-4a3a-a7e6-655943819105" alt="데이터 유효성 검증" style="width:500px">
+        <h4>임시 비밀번호 메일 발송</h4>
+        <p>유효한 사용자 정보 입력하였을 경우 임시 비밀번호 생성 및 SMTP를 이용한 임시 비밀번호 메일 발송</p>
+        <img src="https://github.com/user-attachments/assets/541a633a-b34f-4d86-8444-9121fe9ad7fb" alt="임시 비밀번호 확인" style="width:900px">
+      </ul>
+      <h3>2. 아이디 찾기</h3>
+      <img src="https://github.com/user-attachments/assets/542563bd-8881-4e28-9cf3-1acf5c877ab1" alt="아이디 찾기 초기화면" style="width:500px">
+      <ul>
+        <li>필수 입력 검증</li>
+        <img src="https://github.com/user-attachments/assets/2d2576e2-fe27-4206-a49e-4c02e87faf23" alt="필수 입력 검증" style="width:500px">
+        <li>이메일 형식 검증</li>
+        <img src="https://github.com/user-attachments/assets/aaedf903-75c1-4ed0-9c09-aa111a1398eb" alt="이메일 형식 검증" style="width:500px">
+        <li>데이터 유효성 검증</li>
+        <img src="https://github.com/user-attachments/assets/3a2e6f57-531f-4f7c-844e-a545188fecba" alt="데이터 유효성 검증" style="width:500px">
+        <h4>아이디 찾기 결과</h4>
+        <p>유효한 사용자 정보를 입력하였을 경우 ID 확인</p>
+        <img src="https://github.com/user-attachments/assets/b6453a0d-8b50-43c2-b34e-904e84ea49a6" alt="아이디 확인" style="width:500px">
       </ul>
     </details>
     <details>
-      <summary>간트 차트</summary>
-      <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+      <summary>업무 관리-간트 차트</summary>
+      <p>해당 프로젝트의 전체 업무를 관리합니다.</p>
+      <img src="https://github.com/user-attachments/assets/04c67b82-6104-4bdd-9eb2-186a5d36137f" alt="간트 차트" style="width:900px">
+      <img src="https://github.com/user-attachments/assets/e0928897-4556-48b5-afe3-cff683fac100" alt="간트 조회 코드" style="width:500px">
+      <br><br>
       <ul>
-        <li>목록 항목 1</li>
-        <li>목록 항목 2</li>
+        <li>업무 생성(PM권한)</li>
+        <img src="https://github.com/user-attachments/assets/ff750939-6fb2-4ba6-9262-28c6a58350f9" alt="업무 생성 버튼" style="width:500px">
+        <p>➕버튼 클릭 시 생성 팝업창이 열립니다. 업무 정보를 입력/선택 후 저장 버튼 클릭 시 생성됩니다.</p>
+        <p>(업무할당자 selectbox에는 해당 프로젝트의 팀원목록이 출력됩니다.)</p>
+        <img src="https://github.com/user-attachments/assets/97d13416-446c-44d2-b4bc-9b1422350a4a" alt="생성 팝업" style="width:400px">
+        <li>업무 수정(PM권한)</li> 
+        <p>직접 입력하여 업무를 수정합니다.</p>
+        <img src="https://github.com/user-attachments/assets/d499e3bb-f91a-4d83-9a83-058ee0f536a7" alt="간트 입력 수정" style="width:600px">
+        <br><br>
+        <p>드래그 앤 드랍/리사이즈하여 업무 기간을 수정합니다.</p>
+        <img src="https://github.com/user-attachments/assets/07f69606-c393-4539-bd75-90c3007322b7" alt="간트 기간 수정" style="width:500px">
+        <li>업무 삭제(PM권한)</li>
+        <p>삭제 버튼 클릭 시 업무가 삭제됩니다.</p>
+        <img src="https://github.com/user-attachments/assets/cd44f524-2312-40bf-98c9-aed06a787d2c" alt="간트 업무 삭제" style="width:600px">
       </ul>
     </details>
     <details>
-      <summary>캘린더</summary>
-      <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+      <summary>일정 관리-풀캘린더</summary>
+      <p>개인/팀/프로젝트 일정을 관리합니다.</p>
+      <img src="https://github.com/user-attachments/assets/deebe551-b1a8-4dfb-8dfd-16fa4cd37739" alt="풀캘린더 초기화면" style="width:900px">
+      <br><br>
+      <p>선택한 보기방식(상단 체크박스)에 따라 일정 확인이 가능합니다.</p>
+      <img src="https://github.com/user-attachments/assets/630f768f-6550-40ef-84c3-da3540f9191a" alt="풀캘린더 보기방식 체크" style="width:900px">
       <ul>
-        <li>목록 항목 1</li>
-        <li>목록 항목 2</li>
+        <li>일정 등록(개인/팀 일정)</li>
+        <p>개인 일정 : 본인 - 확인/수정/삭제</p>
+        <p>팀 일정 : 팀원 - 확인, 작성자 - 수정/삭제</p>
+        <p>작성자, 팀 아이디(팀 일정 선택 시)는 세션값으로 자동입력됩니다.</p>
+        <img src="https://github.com/user-attachments/assets/1ca06b55-5ad0-4218-9990-8c3af2d2bf45" alt="팀 일정 등록" style="width:900px">
+        <li>일정 상세</li>
+        <p>일정바 클릭 시 팝업창에 표시됩니다.</p>
+        <img src="https://github.com/user-attachments/assets/2938aeae-47fb-4386-93b2-af05f35703ba" alt="일정 상세" style="width:400px">
+        <li>일정 수정</li>
+        <p>수정/삭제 가능한 일정의 경우 아래 버튼이 활성화됩니다.</p>
+        <img src="https://github.com/user-attachments/assets/6060e066-137e-4770-9998-09f9ba457842" alt="수정/삭제 버튼" style="width:600px">
+        <br><br>
+        <p>직접 입력, 드래그 앤 드랍, 리사이즈하여 일정을 수정합니다.</p>
+        <img src="https://github.com/user-attachments/assets/58dc5847-134a-4a60-a474-6387e7427f41" alt="일정 수정" style="width:900px">
+        <li>일정 삭제</li>
+        <p>삭제 버튼 클릭 시 일정이 삭제됩니다.</p>
+        <img src="https://github.com/user-attachments/assets/b8508369-80b6-40e9-b502-6ca1c97c7233" alt="일정 삭제제" style="width:600px">
       </ul>
     </details>
     <details>
       <summary>사용자 관리</summary>
-      <p>전체 사용자 조회, 수정, 삭제</p>
+      <p>전체 사용자를 관리합니다(PM권한한)</p>
       <ul>
         <li>사용자 검색 및 조회</li>
-        <img src="https://github.com/user-attachments/assets/c4f9a4f0-50d5-4cdd-bdb0-c0868e9a7ad7" alt="사용자 리스트" style="width:500px"/>
+        <p>전체 사용자 리스트를 출력합니다.</p>
+        <img src="https://github.com/user-attachments/assets/a427efb7-e4f1-4b91-bbf6-9e5c102a633e" alt="사용자 리스트" style="width:1000px"/>
+        <p>검색어 입력 시, 검색어가 포함된 사용자가 출력됩니다.</p>
+        <img src="https://github.com/user-attachments/assets/bd02d0ca-49a4-492a-944d-d64dc41520b7" alt="사용자 검색" style="width:500px"/>
         <li>사용자 목록 페이징</li>
+        <p>페이지 버튼 클릭 시 해당 페이지의 사용자 리스트가 출력됩니다.</p>
         <img src="https://github.com/user-attachments/assets/e0369f6f-f76a-4a1e-9538-3224503f8804" alt="사용자 페이징" style="width:500px"/>
         <li>사용자 상세정보</li>
+        <p>사용자 클릭 시, 사용자 정보가 팝업창에 표시됩니다.</p>
         <img src="https://github.com/user-attachments/assets/d72736f0-53a0-45f3-8c8b-bb1fab6c43d6" alt="사용자 상세" style="width:500px"/>
         <li>사용자 정보 수정</li>
+        <p>수정할 정보 입력/선택 후 수정버튼 클릭 시 수정됩니다.(활성화된 필드만 수정 가능)</p>
         <img src="https://github.com/user-attachments/assets/94e5e5ad-3c64-49b0-bbb3-0ba6c427c3cb" alt="사용자 정보 수정" style="width:900px"/>
         <li>사용자 삭제(탈퇴)</li>
+        <p>삭제버튼 클릭 시 해당 사용자가 삭제(탈퇴)처리됩니다.</p>
         <img src="https://github.com/user-attachments/assets/5bbd2910-d067-4f63-9f63-5f6e772999ed" alt="사용자 삭제" style="width:700px"/>
       </ul>
     </details>
     <details>
-      <summary>다국어 처리</summary>
-      <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+      <summary>마이페이지</summary>
+      <p>프로필 정보를 관리합니다.</p>
+      <img src="https://github.com/user-attachments/assets/67a09578-5188-4599-91af-8941391f2c33" alt="프로필" style="width:900px"/>
       <ul>
-        <li>목록 항목 1</li>
-        <li>목록 항목 2</li>
+        <li>프로필 수정(이미지 업로드, 정보 수정)</li>
+        <p>업로드할 이미지 파일을 선택하고, 수정할 정보 입력 후 변경버튼 클릭 시 프로필 정보를 변경합니다.(활성화된 필드만 수정 가능)</p>
+        <img src="https://github.com/user-attachments/assets/e50e5229-8aaf-4458-95c4-8cd3a6313b28" alt="프로필" style="width:900px"/>
+        <li>프로젝트 목록</li>
+        <p>진행중인 프로젝트, 완료된 프로젝트를 확인하고, 클릭 시 대시보드로 이동합니다.</p>
+        <img src="https://github.com/user-attachments/assets/c2c63464-9f82-4411-9370-7d04f8866a4e" alt="프로필 프로젝트 목록" style="width:600px"/>
       </ul>
     </details>
     <details>
-      <summary>마이페이지</summary>
-      <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
-      <ul>
-        <li>목록 항목 1</li>
-        <li>목록 항목 2</li>
-      </ul>
+      <summary>다국어 처리</summary>
+      <p>영어, 한국어, 페르시안어로 언어 변경이 가능합니다.</p>
+      <p>기본 언어-영어</p>
+      <img src="https://github.com/user-attachments/assets/d5fd980d-cb02-448d-824d-ccf32b9ab930" alt="프로필 프로젝트 목록" style="width:600px"/>
     </details>
 
 
