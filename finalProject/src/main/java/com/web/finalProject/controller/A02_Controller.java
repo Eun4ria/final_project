@@ -789,10 +789,7 @@ public class A02_Controller {
 		d.addAttribute("currentUrl", request.getRequestURI());
 		return "WEB-INF\\views\\a00_index.jsp";
 	}
-	
 
-		  		   
-			
 			
 
 }

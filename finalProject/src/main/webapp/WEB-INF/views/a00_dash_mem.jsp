@@ -83,7 +83,7 @@
 		
 					
 				<div class="row mb-4">
-     <div style="background-color: #dbd4ec;"  class="card flex-fill w-90">    
+    <!--  <div style="background-color: #dbd4ec;"  class="card flex-fill w-90">    
      <br>
          <div class="row">
            <div class="col-6 col-xxl-3 d-flex order-1 order-xxl-1  flex-fill w-30">
@@ -125,22 +125,22 @@
 								</div>
 							</div>
 						</div>
-          </div>
-          </div>
+          </div> 
+          </div>-->
            <div class="row" style="margin-top:1rem"> 
           <div class="col-sm-11 col-lg-6 col-md-6 col-xl-6 w-100"  >
                         <div class="col-12 bg-white rounded p-5" style="background:white">
                             <div class="d-flex align-items-center justify-content-between mb-4" style="background:white">
-                                <h6 class="mb-0">To Do List - ${project_id} </h6>
+                                <h6 class="mb-0"><strong>DashBoard</strong> - ${project_id} </h6>
                                 <a href="todoFrm">Show All</a>
                             </div>
-                            <div class="d-flex mb-2">
+                            <!-- <div class="d-flex mb-2">
                                 <input class="form-control bg-transparent" type="text" placeholder="Enter task">
                                 <button type="button" class="btn btn-primary ms-2">Add</button>
-                            </div>
+                            </div> -->
    <%-- to do 내용 --%> 
    
-   <div class="container-fluid p-0">
+   <%-- <div class="container-fluid p-0">
 
                
             <div class="row mb-4">
@@ -210,7 +210,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --%>
         
                      
                </div>
