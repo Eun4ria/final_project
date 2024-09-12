@@ -127,6 +127,11 @@
   <summary>채팅</summary>
   <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
   <ul>
+    <li>채팅 화면</li>
+     <img src="https://github.com/user-attachments/assets/d8c0bc1e-8069-4f82-a0b7-c3a8f4aad9b4" style="width:400px">
+
+
+    
     <li>웹소켓</li>
     <li>목록 항목 2</li>
   </ul>
