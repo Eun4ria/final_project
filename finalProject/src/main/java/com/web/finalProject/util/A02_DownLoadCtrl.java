@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 */
 @Controller
 public class A02_DownLoadCtrl {
-	// http://localhost:7080/bord/downLoad.do?fname=a01_spring.txt  
 	// 호출시 특정 파일을 다운로드 처리..
 	@GetMapping("downLoad.do")
 	public String downLoad(@RequestParam("fname") String fname, 

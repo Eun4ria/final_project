@@ -287,8 +287,8 @@ function FormReset(){
                           </div>                      
                       </td>
                     </tr>
-                    <tr>
-                     <!-- level = 1 항목의 끝나는 부분에 차이값 표시 -->
+                   <!--  <tr>
+                     level = 1 항목의 끝나는 부분에 차이값 표시 
 				    <c:if test="${bud.level == 2}">
 				      <td></td>   <td></td>   
 				      <td>
@@ -299,7 +299,7 @@ function FormReset(){
                      <td></td> <td></td> <td></td> <td></td> <td></td>   
                     
 				    </c:if>
-				    </tr>
+				    </tr>-->
                     </c:forEach>
                   </tbody>
                 </table>
@@ -324,19 +324,24 @@ function FormReset(){
          </main>
          
          <ul class="pagination justify-content-center mb-5" >
-						<li class="page-item" ><a class="page-link" href="javascript:goPageCnt(${sch.startBlock-1})" style="width:5rem;">Previous</a></li>
-						<c:forEach var="pCnt" begin="${sch.startBlock }" end="${sch.endBlock }">
-						<li class="page-item ${sch.curPage==pCnt?'active':'' }">
-							<a class="page-link" href="javascript:goPageCnt(${pCnt})">${pCnt}</a></li>
-						</c:forEach>
-						<li class="page-item"><a class="page-link" href="javascript:goPageCnt(${sch.endBlock+1})"  style="width:5rem;">Next</a></li>
-					</ul>
-					<script type="text/javascript">
-						function goPageCnt(pCnt){
-							$("[name=curPage]").val(pCnt) //클릭한 것을 현재 페이지 번호로 전송
-							$("#curPageFrm").submit()
-						}
-					</script>
+			<li class="page-item" >
+			<a class="page-link" href="javascript:goPageCnt(${sch.startBlock-1})" style="width:5rem;">Previous</a>
+			</li>
+			<c:forEach var="pCnt" begin="${sch.startBlock }" end="${sch.endBlock }">
+				<li class="page-item ${sch.curPage==pCnt?'active':'' }">
+					<a class="page-link" href="javascript:goPageCnt(${pCnt})">${pCnt}</a>
+				</li>
+			</c:forEach>
+			<li class="page-item">
+			<a class="page-link" href="javascript:goPageCnt(${sch.endBlock+1})" style="width:5rem;">Next</a>
+			</li>
+		</ul>
+		<script type="text/javascript">
+			function goPageCnt(pCnt){
+				$("[name=curPage]").val(pCnt) //클릭한 것을 현재 페이지 번호로 전송
+				$("#curPageFrm").submit()
+			}
+		</script>
          
   <%-- modal 등록--%>       
   <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">

@@ -60,27 +60,26 @@ public class A02_Service {
 //		
 //		return msg;
 //	}
-	  public String insertUser(Users ins) {
-	        String msg = null;
-
-	        int result = dao.insertUser(ins);
-	        if (result > 0) {
-	            msg = "등록 성공";
-	            sendEmail(ins.getEmail(), ins.getUser_id());
-	        } else {
-	            msg = "등록 실패";
-	        }
-
-	        return msg;
+	public String insertUser(Users ins) {
+	    String msg = null;
+	
+	    int result = dao.insertUser(ins);
+	    if (result > 0) {
+	        msg = "등록 성공";
+	        sendEmail(ins.getEmail(), ins.getUser_id());
+	    } else {
+	    	msg = "등록 실패";
 	    }
-	 private void sendEmail(String email, String userId) {
-	        SimpleMailMessage message = new SimpleMailMessage();
-	        message.setTo(email);
-	        message.setSubject("HPM 회원 가입이 완료되었습니다.");
-	        message.setText("귀하의 사용자 ID는 " + userId + " 입니다.");
-	        sender.send(message);
-	    }
-// 이메일 유효성 체크
+	    return msg;
+	}
+	private void sendEmail(String email, String userId) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(email);
+		message.setSubject("HPM 회원 가입이 완료되었습니다.");
+		message.setText("귀하의 사용자 ID는 " + userId + " 입니다.");
+		sender.send(message);
+	}
+	// 이메일 유효성 체크
 	public int emailCk(String email) {
 		return dao.emailCk(email); 
 	}
@@ -147,6 +146,10 @@ public class A02_Service {
 			 public Chat getchatRoomId(Chat get) {
 				 return dao.getchatRoomId(get); 
 			 } 
+			 
+			 public String getUserName(String project_id, String chatroom_id, String user_id) {
+				 return dao.getUserName(project_id, chatroom_id, user_id);
+			 }
 			
 		//채팅 등록
 			public String insertchatroom(Chat ins) {
@@ -340,7 +343,7 @@ public class A02_Service {
 	        }
 	    }
 	    // 실제 업데이트 수행
-	    int result = dao.budgetUpdate(upt);
+	   // int result = dao.budgetUpdate(upt);
 	    
 		return dao.budgetUpdate(upt)>0?"수정 완료":"수정 실패";
 	}

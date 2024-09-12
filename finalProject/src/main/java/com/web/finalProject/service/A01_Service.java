@@ -159,8 +159,22 @@ public class A01_Service {
     public List<Project> getProjectList(String user_id){
     	return dao.getProjectList(user_id);
     }
+    // (프로필) 프로젝트 리스트
     public List<Project> getComProjectList(String user_id){
     	return dao.getComProjectList(user_id);
+    }
+    
+    // 프로젝트 상세정보
+    public Project getProject(String project_id) {
+    	return dao.getProject(project_id);    
+    }
+    // 프로젝트 정보 수정
+    public String updateProject(Project upt) {
+    	return dao.updateProject(upt)>0?"수정 완료":"수정 실패" ;
+    }
+    // 프로젝트 삭제
+    public String deleteProject(String project_id) {
+    	return dao.deleteProject(project_id)>0?"삭제 완료":"삭제 실패";
     }
     
     
@@ -310,6 +324,15 @@ public class A01_Service {
 		return dao.changePassword(cpw)>0?"수정 성공":"수정 실패";
 	}
 	
+	
+	// 메인 활동중인 프로젝트 수
+	public int activeProjectCnt(String user_id) {
+		return dao.activeProjectCnt(user_id);
+	}
+	// 메인 완료된 프로젝트 수
+	public int completeProjectCnt(String user_id) {
+		return dao.completeProjectCnt(user_id);
+	}
 	
 	
 	

@@ -154,11 +154,10 @@ function goChat(user_id){
 			type:"post",
 			url:"ganttList",
 			dataType:"json",
-			success: function(data) { // data는 이미 배열형태    
+			success: function(data) {   
 				// 전체 data
 				console.log("#로딩 시 전체 데이터 출력(gantt,resource)#")
-				console.log(data)
-              						
+				console.log(data)              						
                 var tasks = data.ganttList.map(function(task) {
 		            return {
 		                id: task.id,
@@ -175,9 +174,7 @@ function goChat(user_id){
 		        });
 				// task 시작일 기준 정렬
 				var sortedTasks = sortTasksByStartDate(tasks); 
-
-		        var gdata = { data: sortedTasks };
-		        
+		        var gdata = { data: sortedTasks };		        
 				console.log("#gantt 데이터 출력#");  
                 console.log(gdata)
                 // gantt적용
@@ -202,7 +199,6 @@ function goChat(user_id){
            			{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},
            			{name: "progress", height: 22, map_to: "progress", type: "select", options: gantt.serverList("progress")},
            			{name: "background", height: 22, map_to: "color", type: "select", options: gantt.serverList("background")},
-           			//{name: "textcolor", height: 22, map_to: "textColor", type: "select", options: gantt.serverList("textcolor")},
            			{name: "time", type: "duration", map_to: "auto"}
            		];
                	

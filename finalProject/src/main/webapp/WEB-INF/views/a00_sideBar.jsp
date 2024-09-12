@@ -69,7 +69,7 @@
 			$("#HR").show()
 		}
 		if(sessionRole=="B"){
-			if(sessionPro!=null){
+			if(sessionPro!=null&&sessionPro!=""){
 				$("#budget").show()
 			}			
 		}
@@ -96,45 +96,39 @@
 		<ul class="sidebar-nav">
             <li id="main" class="sidebar-item ${currentUrl == '/main' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('main')">
-                    <i class="align-middle" data-feather="x"></i> <span class="align-middle">Main</span>
+                    <i class="align-middle" data-feather="x"></i> <span class="align-middle"><fmt:message key="main" /></span>
                 </a>
             </li>
 			<li id="profile" class="sidebar-item ${currentUrl == '/profile' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('profile')">
-                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+                    <i class="align-middle" data-feather="user"></i> <span class="align-middle"><fmt:message key="profile" /></span>
                 </a>
             </li>	
              <li id="HR" class="sidebar-item ${currentUrl == '/HR' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('HR')">
-                    <i class="align-middle" data-feather="command"></i> <span class="align-middle"><strong>H</strong><small>uman</small> <strong>R</strong><small>esources</small></span>
+                    <i class="align-middle" data-feather="command"></i> <span class="align-middle"><fmt:message key="human_resources" /></span>
                 </a>                
             </li>    
-			
-            <%-- <li class="sidebar-item ${currentUrl == '/profile' ? 'active' : ''}">
-                <a class="sidebar-link" onclick="goPage('profile')" >
-                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">profile</span>
-                </a>
-            </li> --%>
             <li id="todo" class="sidebar-item ${currentUrl == '/todoFrm' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('todoFrm')" >
-                    <i class="align-middle" data-feather="list"></i> <span class="align-middle">To Do List</span>
+                    <i class="align-middle" data-feather="list"></i> <span class="align-middle"><fmt:message key="to_do_list" /></span>
                 </a>
             </li>
  			 
 	    		<li id="gantt" class="sidebar-item ${currentUrl == '/gantt' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('gantt')">
-                    <i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Gantt</span>
+                    <i class="align-middle" data-feather="align-left"></i> <span class="align-middle"><fmt:message key="gantt" /></span>
                 </a>
             	</li>			
            <li id="fullcalendar" class="sidebar-item ${currentUrl == '/fullcalendar' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('fullcalendar')">
-                    <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Calendar</span>
+                    <i class="align-middle" data-feather="calendar"></i> <span class="align-middle"><fmt:message key="calendar" /></span>
                 </a>
             </li>
             
             <li id="chart" class="sidebar-item ${currentUrl == '/chart' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('chart')">
-                    <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle">Chart</span>
+                    <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle"><fmt:message key="chart" /></span>
                 </a>
             </li>
 
@@ -145,7 +139,7 @@
             </li> --%>
             <li id="budget" class="sidebar-item ${currentUrl == '/budgetFrm' ? 'active' : ''}">
                 <a class="sidebar-link" onclick="goPage('budgetFrm')">
-                    <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Budget</span>
+                    <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle"><fmt:message key="budget" /></span>
                 </a>
             </li>
             
@@ -153,7 +147,7 @@
 	            <form id="logoutFrm" method="post" action="/logout">
 				</form>			
 	                <a class="sidebar-link" id="logoutBtn">
-	                    <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Log Out</span>
+	                    <i class="align-middle" data-feather="log-out"></i> <span class="align-middle"><fmt:message key="log_out" /></span>
 	                </a>	             
            	 </li>
             

@@ -46,20 +46,21 @@ public class A01_Controller {
 	     }
 	    // 메인으로 이동 시 project 세션 종료
         String project_id = (String) session.getAttribute("project_id");
+        String user_id = (String) session.getAttribute("user_id");
         if (project_id != null) {
         	session.removeAttribute("project_id");
         	System.out.println("project 세션 삭제");
         }
-        
-	    String user_id = (String) session.getAttribute("user_id");
+        // 메인 활동중인 프로젝트 수
+        d.addAttribute("aProCnt", service.activeProjectCnt(user_id));
+    	// 메인 완료된 프로젝트 수
+        d.addAttribute("cProCnt", service.completeProjectCnt(user_id));
 	    // 프로젝트 리스트
         d.addAttribute("pro", service.getProjectList(user_id));
         // 프로젝트 생성 시 사용되는 userList(PM인 본인 빼고 조회)
         d.addAttribute("user", service.getUserProIns(user_id)); 
         // 프로젝트 생성 시 사용되는 companyList
         d.addAttribute("com", service.getComId());
-        
-  
         
         return "WEB-INF\\views\\a00_main.jsp";
 	}
@@ -379,7 +380,7 @@ public class A01_Controller {
         d.addAttribute("currentUrl", request.getRequestURI());
        
         
-     // 다국어 처리
+        // 다국어 처리
         if (lang != null) {
             Locale locale;
             switch (lang) {
@@ -406,7 +407,7 @@ public class A01_Controller {
         d.addAttribute("cpro", service.getComProjectList(user_id));        
         return "WEB-INF\\views\\a01_profile.jsp";
     }
-    // 프로필 수정(보완 필요)
+    // 프로필 수정
     @PostMapping("profile")
     public String updateProfileWithFile(Users user, Model d) {    
         String msg = service.updateProfileWithFile(user.getImageFname(), user);
@@ -416,8 +417,27 @@ public class A01_Controller {
         return "redirect:profile";
     }
     
+    // 프로젝트 상세
+    @GetMapping("projectDetail")
+    public String projectDetail(@RequestParam("project_id") String project_id, Model d) {
+    	d.addAttribute("pro", service.getProject(project_id));
+    	return "WEB-INF\\views\\a01_project_detail.jsp";
+    }
+    // 프로젝트 정보 수정
+    @PostMapping("updateProject")
+    public String updateProject(Project upt, Model d) {
+    	d.addAttribute("msg", service.updateProject(upt));
+    	return "redirect:projectDetail?project_id="+upt.getProject_id();
+    }
+    // 프로젝트 삭제
+    @PostMapping("deleteProject")
+    public String deleteProject(@RequestParam("project_id") String project_id, Model d) {
+    	d.addAttribute("msg", service.deleteProject(project_id));
+    	return "WEB-INF\\views\\a01_project_detail.jsp";
+    }
     
-    // 비밀번호 변경 페이지ㄴ
+    
+    // 비밀번호 변경 페이지
     // http://localhost:4040/changePassword
     @GetMapping("changePassword")
     public String changePasswordFrm(HttpServletRequest request, Model d) {
@@ -442,6 +462,12 @@ public class A01_Controller {
     	}
     	return "WEB-INF\\views\\a01_changePwd.jsp";
     }
+    
+    
+    
+    
+    
+    
     
    
 }

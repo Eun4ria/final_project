@@ -155,6 +155,18 @@ AND user_id LIKE '%%'
 START WITH parent_id IS NULL
 CONNECT BY PRIOR budget_id = parent_id
 ORDER siblings BY budget_id DESC);
+			SELECT *
+			FROM budget b
+			WHERE project_id = 'PRO_0003';
+
+SELECT count(*) from(
+			SELECT rownum cnt, LEVEL, b.*
+			FROM budget b
+			WHERE project_id = 'PRO_0003'
+			START WITH parent_id ='N'
+			CONNECT BY PRIOR budget_id = parent_id
+			ORDER siblings BY budget_id DESC);
+
 
 SELECT * from(
 			SELECT rownum cnt, LEVEL AS lvl, b.*
@@ -210,10 +222,54 @@ ORDER siblings BY budget_id DESC)
 WHERE lvl=2;
 
 SELECT * FROM CHAT;
+SELECT * FROM USERS;
+SELECT user_name FROM CHAT c 
+WHERE project_id= 'PRO_0003'
+AND 
 
+SELECT * FROM CHAT;
+SELECT * FROM users;
 
 INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id)
 VALUES ('CHT_'||TO_CHAR(chat_seq.nextval, 'FM0000'), '채팅'||TO_CHAR(chatname_seq.nextval), 'P_0001', 'B_0047', 'N', NULL, sysdate, 'PRO_0003')
 
 INSERT INTO chat (chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id) 
 VALUES ('CHT_'||TO_CHAR(chat_seq.currval, 'FM0000'), '채팅'||TO_CHAR(chatname_seq.currval), 'B_0047', 'P_0001', 'N', NULL, sysdate, 'PRO_0003');
+
+
+SELECT * FROM CHAT;
+SELECT * FROM USERS;
+
+SELECT
+    u.USER_NAME
+FROM
+    USERS u
+JOIN
+    CHAT c ON u.USER_ID = c.USER_ID
+WHERE
+    c.PROJECT_ID = 'PRO_0003'
+    AND c.CHATROOM_ID = 'CHT_0037'
+    AND c.OWNER_ID = 'P_0001';
+
+   SELECT * FROM budget;
+-- 데이터 백업
+CREATE TABLE BUDGET_BACKUP AS SELECT * FROM BUDGET;
+
+-- 컬럼을 비웁니다
+UPDATE BUDGET SET AMOUNT = NULL;
+
+-- 정밀도 및 스케일을 수정합니다
+ALTER TABLE BUDGET MODIFY AMOUNT NUMBER(20, 2);
+ALTER TABLE budget MODIFY amount NUMBER(15, 2);
+
+SELECT 
+    COLUMN_NAME,
+    DATA_TYPE,
+    DATA_PRECISION,
+    DATA_SCALE
+FROM 
+    USER_TAB_COLUMNS
+WHERE 
+    TABLE_NAME = 'BUDGET' AND COLUMN_NAME = 'AMOUNT';
+
+
