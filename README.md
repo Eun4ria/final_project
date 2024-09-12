@@ -165,10 +165,10 @@
     (1) 요소 지정 <br>
     <img src="https://github.com/user-attachments/assets/660d9db7-73eb-434a-9017-99086082738d" style="width:700px"> <br><br>
     (2) 들여쓰기 확인 <br>
-    <img src="https://github.com/user-attachments/assets/ca72fcd7-a8cd-465e-a7d0-b1f07ab51f5b" style="width:700px"><br><br>
+    <img src="https://github.com/user-attachments/assets/adf1e042-0c75-4c30-873d-282e8a555e04" style="width:700px"><br><br>
     <h3>2) 페이징</h3>
     <p>데이터를 7개씩 분할하여 한 화면에 표시하고, 사용자가 쉽게 탐색할 수 있도록 이전/다음 버튼을 제공</p>
-    <img src="https://github.com/user-attachments/assets/f18746f4-b016-4bf5-a4f7-81b16840b1b9" style="width:700px"><br><br>
+    <img src="https://github.com/user-attachments/assets/59ce7acd-8dc0-44e8-a8f7-44f451ccdf4f" style="width:700px"><br><br>
 </details>
 <details>
   <summary>차트</summary>
