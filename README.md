@@ -68,38 +68,29 @@
 ## 🛠️ 구현
 <h2>◽ 김은수</h2>
 <details>
-  <summary>회원관리-회원가입(STMP)/로그인</summary>
-  
+  <summary>회원관리-회원가입(SMTP)/로그인</summary>
   <h3>1. 회원가입</h3>
-  <img src="/images/회원가입.png" alt="회원가입" style="width:500px">
-
+  <img src="/images/회원가입.png" alt="회원가입" style="width:500px"> <br>
   <h4>◾주요 기능</h4>
-  
   <h4>1) SMTP</h4>
   <p>• 회원가입 시 입력한 이메일로 자동 생성된 아이디가 전송</p>
-  <img src="/images/회원가입_이메일.png" alt="이메일" style="width:500px">
-  
+  <img src="https://github.com/user-attachments/assets/d1eca0bd-e090-41cc-881f-bc182dc328e7" alt="이메일" style="width:700px"> <br>
   <h4>2) 유효성 검사</h4>
   <div>
     <p>1. 이메일 유효성 검사</p>
     (1) 형식 검증<br>
-     <img src="/images/유효성_유효하지 않은 이메일.png" style="width:400px">
-    <br>
+     <img src="/images/유효성_유효하지 않은 이메일.png" style="width:400px"> <br>
     (2) 중복 검증<br>
-     <img src="/images/유효성_이미 사용중.png" style="width:400px">
-    <br>
+     <img src="/images/유효성_이미 사용중.png" style="width:400px"> <br>
   </div>
   <div>
     <p>2. 비밀번호 유효성 검사</p>
      (1) 길이 검증<br>
-     <img src="/images/비번유효성_6자 이상.png" style="width:400px">
-    <br>
+     <img src="/images/비번유효성_6자 이상.png" style="width:400px"> <br>
     (2) 형식 검증 및 정규 표현식 검증<br>
-     <img src="/images/비번유효성_문자,숫자,특수문자.png" style="width:400px">
-      <br>
+     <img src="/images/비번유효성_문자,숫자,특수문자.png" style="width:400px"> <br>
     (3) 입력 일치 검증<br>
-     <img src="/images/비번유효성_비번일치.png" style="width:400px">
-    <br>
+     <img src="/images/비번유효성_비번일치.png" style="width:400px"> <br>
     (4) 필수 입력 검증<br>
     <img src="/images/유효성_회원가입빈칸.png" style="width:400px">
   </div>
