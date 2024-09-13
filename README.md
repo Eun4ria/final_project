@@ -145,17 +145,26 @@
       <li>채팅 뒤로 가기(로컬 스토리지 유지)</li>
       <img src="https://github.com/user-attachments/assets/b2a162a9-fd29-4eb6-a2ec-9ea5a6045f85" style="width:700px">
       <li>채팅 나가기(로컬 스토리지 삭제)</li>
-       <img src="https://github.com/user-attachments/assets/07f0aa6c-ceab-4bc1-8332-0cc273e583b7" style="width:700px">
+      <img src="https://github.com/user-attachments/assets/07f0aa6c-ceab-4bc1-8332-0cc273e583b7" style="width:700px">
     </ol>
   </ul>
 </details>
 <details>
-  <summary>산출물 관리(To Do List)</summary>
-  <p>여기에 토글로 숨길 내용이 들어갑니다. 이 내용은 '섹션 제목'을 클릭하면 표시됩니다.</p>
+  <summary>산출물 관리(To Do List) & 파일 업로드</summary>
+  <h3>To Do List 화면</h3>
+  <p>: PM이 간트차트에서 생성한 업무(TASK) 목록 확인 화면</p>
+  <img src="https://github.com/user-attachments/assets/a94ec7a4-ce07-44da-9c9e-a674272a2b30" style="width:700px">
+  <img src="https://github.com/user-attachments/assets/f5bf03eb-e701-4082-a7aa-2f6b52ea0c5a" style="width:700px">
   <ul>
-    <li>목록 항목 1</li>
-    <li>목록 항목 2</li>
-  </ul>
+    <li>Task 수정</li>
+     <p> <권한에 따른 업무 수정 범위> </p>
+    <img src="https://github.com/user-attachments/assets/2237db9f-9772-44ab-b61a-fc67cf202cd9" style="width:700px"><br>
+    <li><h3><파일업로드></파일업로드></h3></li>
+    <img src="https://github.com/user-attachments/assets/9f7868e8-5a6b-43d5-9a16-f81443083fac" style="width:700px">
+    <p ><h4>+ 코드</h4></p>
+    <img src="https://github.com/user-attachments/assets/0d4d11ab-ce12-47a2-9705-3e7f5fa3d3ec" style="width:500px">
+    <img src="https://github.com/user-attachments/assets/4ebab2a3-bd32-493e-b5cf-4df631e96943" style="width:500px">
+    </ul>
 </details>
 <details>
   <summary>예산 관리(계층구조&페이징)</summary>
@@ -163,11 +172,11 @@
     <h3>1) 계층구조</h3>
     <p>: 예산 등록 시 최상위 or 상위/하위 요소를 지정하며, 상위 요소에 따라 하위 요소가 들여쓰기로 구분</p>
     (1) 요소 지정 <br>
-    <img src="https://github.com/user-attachments/assets/660d9db7-73eb-434a-9017-99086082738d" style="width:700px"> <br><br>
+    <img src="https://github.com/user-attachments/assets/660d9db7-73eb-434a-9017-99086082738d" style="width:700px"><br><br>
     (2) 들여쓰기 확인 <br>
     <img src="https://github.com/user-attachments/assets/adf1e042-0c75-4c30-873d-282e8a555e04" style="width:700px"><br><br>
     <h3>2) 페이징</h3>
-    <p>데이터를 7개씩 분할하여 한 화면에 표시하고, 사용자가 쉽게 탐색할 수 있도록 이전/다음 버튼을 제공</p>
+    <p>: 데이터를 7개씩 분할하여 한 화면에 표시하고, 사용자가 쉽게 탐색할 수 있도록 이전/다음 버튼을 제공</p>
     <img src="https://github.com/user-attachments/assets/59ce7acd-8dc0-44e8-a8f7-44f451ccdf4f" style="width:700px"><br><br>
 </details>
 <details>
@@ -176,9 +185,7 @@
   <img src="https://github.com/user-attachments/assets/ab8f5c43-d523-40ec-85e9-2e64ef54fa10" style="width:700px">
   <img src="https://github.com/user-attachments/assets/29adb42b-2416-4d37-8a42-053c2bc38e93" style="width:700px"> 
 </details>
-
 <br>
-
 <h2>◽ 박민경</h2>
     <details>
       <summary>회원관리-비밀번호 찾기/아이디 찾기</summary>      
@@ -261,7 +268,7 @@
     </details>
     <details>
       <summary>사용자 관리</summary>
-      <p>전체 사용자를 관리합니다(PM권한)</p>
+      <p>전체 사용자를 관리합니다(PM권한한)</p>
       <ul>
         <li>사용자 검색 및 조회</li>
         <p>전체 사용자 리스트를 출력합니다.</p>
@@ -291,7 +298,7 @@
         <p>업로드할 이미지 파일을 선택하고, 수정할 정보 입력 후 변경버튼 클릭 시 프로필 정보를 변경합니다.(활성화된 필드만 수정 가능)</p>
         <img src="https://github.com/user-attachments/assets/e50e5229-8aaf-4458-95c4-8cd3a6313b28" alt="프로필" style="width:900px"/>
         <li>프로젝트 목록</li>
-        <p>진행중인 프로젝트, 완료된 프로젝트를 확인하고, 클릭 시 해당 프로젝트의 대시보드로 이동합니다.</p>
+        <p>진행중인 프로젝트, 완료된 프로젝트를 확인하고, 클릭 시 대시보드로 이동합니다.</p>
         <img src="https://github.com/user-attachments/assets/c2c63464-9f82-4411-9370-7d04f8866a4e" alt="프로필 프로젝트 목록" style="width:600px"/>
       </ul>
     </details>
