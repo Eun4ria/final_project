@@ -60,7 +60,7 @@ public class A02_Service {
 //		
 //		return msg;
 //	}
-   	// 회원가입
+   	// 회원가입 & 메일발송
 	public String insertUser(Users ins) {
 	    String msg = null;
 	
