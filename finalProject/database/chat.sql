@@ -10,7 +10,7 @@ WHERE chatroom_id = 'CH_0002'; -- 기존 값으로 조건 설정
 
 SELECT * FROM CHAT 
 WHERE OWNER_ID ='P_0012';
-
+SELECT * FROM budget;
 SELECT * FROM PROJECT p;
 SELECT * FROM TEAM t;
 SELECT * FROM users; 

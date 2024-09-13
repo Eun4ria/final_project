@@ -244,11 +244,10 @@ function goChat(user_id){
 						alert(data.msg)						
                     }
 					calendar.refetchEvents();
-					// data.msg에 수정이 포함되어 있지 않을 때
+					// data.msg에 수정이 포함되어 있지 않을 때 팝업창 닫힘처리
 					if (data.msg.indexOf("수정") === -1) { 
 						$("#clsBtn").click()
-                    }
-					
+                    }					
 				},
 				error:function(err){
 					console.log(err)

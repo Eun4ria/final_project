@@ -274,14 +274,13 @@ public class A02_Service {
 	// 6. 페이징 블럭 처리 
 			// 1) 블럭 크기 설정 
 			sch.setBlockSize(5);
-			// 2) 블럭 번호 지정  -  1~5 ==> 1,  6~10 ==> 2,  11~15 ==> 3
+			// 2) 블럭 번호 지정  -  1~7 ==> 1,  8~14 ==> 2,  15~21 ==> 3
 			int blockNum = (int) Math.ceil(sch.getCurPage()/(double)sch.getBlockSize());
 			// 3) 시작 블럭
 			sch.setStartBlock((blockNum-1)*sch.getBlockSize()+1);
 			// 4) 마지막 블럭
 			int endBlock = blockNum*sch.getBlockSize();
 			sch.setEndBlock((endBlock)>sch.getPageCount()?sch.getPageCount():endBlock);
-			
 		
 		return dao.getBudgetList(sch);
 	}
