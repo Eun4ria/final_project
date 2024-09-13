@@ -261,7 +261,7 @@
     </details>
     <details>
       <summary>사용자 관리</summary>
-      <p>전체 사용자를 관리합니다(PM권한한)</p>
+      <p>전체 사용자를 관리합니다(PM권한)</p>
       <ul>
         <li>사용자 검색 및 조회</li>
         <p>전체 사용자 리스트를 출력합니다.</p>
@@ -291,7 +291,7 @@
         <p>업로드할 이미지 파일을 선택하고, 수정할 정보 입력 후 변경버튼 클릭 시 프로필 정보를 변경합니다.(활성화된 필드만 수정 가능)</p>
         <img src="https://github.com/user-attachments/assets/e50e5229-8aaf-4458-95c4-8cd3a6313b28" alt="프로필" style="width:900px"/>
         <li>프로젝트 목록</li>
-        <p>진행중인 프로젝트, 완료된 프로젝트를 확인하고, 클릭 시 대시보드로 이동합니다.</p>
+        <p>진행중인 프로젝트, 완료된 프로젝트를 확인하고, 클릭 시 해당 프로젝트의 대시보드로 이동합니다.</p>
         <img src="https://github.com/user-attachments/assets/c2c63464-9f82-4411-9370-7d04f8866a4e" alt="프로필 프로젝트 목록" style="width:600px"/>
       </ul>
     </details>
