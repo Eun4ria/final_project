@@ -390,7 +390,8 @@ function updateTask(task_id, field, value) {
  async function toggleDiv() { //async => promise 반환 & 내부에거 await 사용가능 : 비동기 작업 수행 가능
 	    var toggleDiv = document.getElementById('toggleDiv');
 	    if (toggleDiv.style.right === '0px') {
-	        await slideOutDiv(toggleDiv); // 비동기적으로 닫기 //promise가 종료될 때까지 함수 실행 중지 => 비동기 작업이 완료된 후에 다음 코드 실행 
+	        await slideOutDiv(toggleDiv); // 비동기적으로 닫기 //promise(slideOutDiv())가 종료될 때까지 함수 실행 중지 
+	        												//=> 작업이 완료된 후에 다음 코드 실행 되므로 비동기적 실행이 가능
 	        document.removeEventListener('click', outsideClickListener);
 	    } else {
 	        toggleDiv.style.right = '0'; // Slide in
