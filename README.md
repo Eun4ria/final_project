@@ -163,7 +163,7 @@
     <img src="https://github.com/user-attachments/assets/9f7868e8-5a6b-43d5-9a16-f81443083fac" style="width:700px">
     <p ><h4>+ 코드</h4></p>
     <img src="https://github.com/user-attachments/assets/0d4d11ab-ce12-47a2-9705-3e7f5fa3d3ec" style="width:500px">
-    <img src="https://github.com/user-attachments/assets/4ebab2a3-bd32-493e-b5cf-4df631e96943" style="width:500px">
+    <img src="https://github.com/user-attachments/assets/4ebab2a3-bd32-493e-b5cf-4df631e96943" style="width:700px">
     </ul>
 </details>
 <details>
