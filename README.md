@@ -40,10 +40,10 @@
 
 ### 팀원 소개
 <table >
-  <tr><th width="8%">팀원명</th><th width="15%">프로필</th><th width="77%">역할</th></tr>
+  <tr><th width="8%">팀원명</th><th width="12%">프로필</th><th width="80%">역할</th></tr>
   <tr>
-    <td>김은수</td>
-    <td></td>
+    <td><strong>김은수</strong></td>
+    <td><img src="https://github.com/user-attachments/assets/9fd8561a-b9f2-4a93-a0f0-f4e62ff36ad4" alt="김은수프로필" style="width:90%"></td>
     <td>
       <strong>조장</strong>
       <br>
@@ -52,12 +52,12 @@
     </td>
   </tr>
   <tr>
-    <td>박민경</td>
-    <td></td>
+    <td><strong>박민경</strong></td>
+    <td><img src="https://github.com/user-attachments/assets/eaaaa534-844f-4be0-8017-7a7171522c2c" alt="박민경프로필" style="width:90%"></td>
     <td>비밀번호 찾기(mail) / 아이디 찾기 / 프로젝트 일정 관리(Gantt Chart) / 전체 일정 관리(Calendar) /
       사용자 관리 / 프로젝트 관리 / 마이페이지(file upload) / 다국어 처리 / 고정IP 구축 / DB 환경 구축</td>
   </tr>
-  <tr><td>&nbsp; 공통</td><td colspan="2">PMS 분석 / 요구사항 정의서 / 워크플로우 / 설계(화면, DB) </td></tr>
+  <tr><td><strong>&nbsp; 공통</strong></td><td colspan="2">PMS 분석 / 요구사항 정의서 / 워크플로우 / 설계(화면, DB) </td></tr>
 </table>
 <br><br>
 
