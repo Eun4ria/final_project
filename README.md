@@ -33,12 +33,11 @@
       <li>일정 관리, 산출물 관리, 채팅 기능 등 다양한 기능을 다루기 위해</li>
     </ol>
   
- ④ <strong>프로젝트 목표</strong> 
- 
+ ④ <strong>프로젝트 목표</strong> <br>
  : 프로젝트 계획, 실행, 모니터링, 통제 및 완료를 효율적으로 관리하는 데 도움을 주는 간트차트, 실시간 채팅, 캘린더 일정 관리 기능을 포함한 PMS(Project Management System) 구현
-
+<br><br>
 ### ⚙️ 개발환경 및 도구
-<img src="https://github.com/user-attachments/assets/f667bc81-6d29-48e4-b801-fd273193754f" alt="개발환경 및 도구" style="width:900px"><br>
+<img src="https://github.com/user-attachments/assets/23ddcd18-b71b-4642-8005-d9389d9b12f9" alt="개발환경 및 도구" style="width:900px"><br>
 
 ### 👩🏻‍💻 팀원 소개
 <table >
