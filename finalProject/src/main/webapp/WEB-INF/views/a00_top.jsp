@@ -86,6 +86,7 @@ function goChat(project_id){
 
             <div class="navbar-collapse collapse">
                <ul class="navbar-nav navbar-align">
+               <%-- 
                   <li class="nav-item dropdown">
                      <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
                         <div class="position-relative">
@@ -151,6 +152,7 @@ function goChat(project_id){
                         </div>
                      </div>
                   </li>
+                  --%>
                <li class="nav-item dropdown" id="chatgo">
 					<a class="nav-icon dropdown-toggle" onclick="goChat()" id="messagesDropdown">
 							<i class="align-middle" data-feather="message-square"></i>
