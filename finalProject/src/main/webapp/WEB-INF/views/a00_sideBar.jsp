@@ -169,7 +169,7 @@
 							Want to learn more about us? Click the button below to find out!
 						</div>
 						<div class="d-grid">
-							<a href="upgrade-to-pro.html" class="btn btn-primary">GIT Link</a>
+							<a href="https://github.com/Eun4ria/final_project" class="btn btn-primary">GIT Link</a>
 						</div>
 					</div>
 				</div>
