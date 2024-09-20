@@ -40,7 +40,7 @@
 
 ### 팀원 소개
 <table >
-  <tr><th width="8%">팀원명</th><th width="12%">프로필</th><th width="80%">역할</th></tr>
+  <tr><th width="80px">팀원명</th><th width="120px>프로필</th><th width="500px">역할</th></tr>
   <tr>
     <td><strong>김은수</strong></td>
     <td><img src="https://github.com/user-attachments/assets/9fd8561a-b9f2-4a93-a0f0-f4e62ff36ad4" alt="김은수프로필" style="width:90%"></td>
