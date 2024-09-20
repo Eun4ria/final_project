@@ -59,8 +59,8 @@
 
 
 ## 🔧 핵심 기술
- <img src="https://github.com/user-attachments/assets/ae2120cb-19df-4b01-9b4b-12e34e2c44f8" alt="핵심기술1" style="width:900px">
- <img src="https://github.com/user-attachments/assets/8bc8ecf9-7f6f-45e3-8de3-91b89f2fe49f" alt="핵심기술2" style="width:900px">
+ <img src="https://github.com/user-attachments/assets/ae2120cb-19df-4b01-9b4b-12e34e2c44f8" alt="핵심기술1" style="width:700px">
+ <img src="https://github.com/user-attachments/assets/8bc8ecf9-7f6f-45e3-8de3-91b89f2fe49f" alt="핵심기술2" style="width:700px">
 
 ## 📈 프로젝트 계획
 
@@ -307,9 +307,22 @@
 
 
 ## ✅ 정리 사항
+#### 1. 일정 관리
+• 일일 점검과 주 점검을 통해 체계적인 일정 관리 <br>
+<img src="https://github.com/user-attachments/assets/8d730dc3-e9a9-4834-b4c3-d5df4f6b9bed" alt="일정 관리" style="width:700px"/><br>
+#### 2. 회의록
+• 회의록 작성을 통한 프로젝트 관리 <br>
+<img src="https://github.com/user-attachments/assets/358fa139-2cda-425b-a8f1-f75fb713e2bc" alt="회의록" style="width:350px"/> <br>
+#### 3. 단위 테스트 & 통합 테스트 
+• 팀원 간 단위테스트 진행을 통해 유효성 및 오류 확인 <br>
+<img src="https://github.com/user-attachments/assets/ab05a850-d07b-47d2-9eb9-76ff3b468d51" alt="단위 테스트" style="width:700px"/> <br><br>
+• 다른 팀과 통합테스트 진행을 통한 시스템 통합성과 유지 보수 <br>
+<img src="https://github.com/user-attachments/assets/56fa6fdf-bbba-4ee7-8fe0-ee358478cf97" alt="통합 테스트" style="width:700px"/> <br>
 
+[[정리 사항 전체 내용]](https://www.canva.com/design/DAGRRRqjKwE/UpCV2BROEsLqjPyxiFWNIw/edit?utm_content=DAGRRRqjKwE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+<br>
 ## 🎥 시연 영상
-[시연 영상](https://drive.google.com/file/d/1wTjkPlC-iC6x0MTefSSsiEB60frAyYDn/view?usp=sharing)
+[[시연 영상]](https://drive.google.com/file/d/1wTjkPlC-iC6x0MTefSSsiEB60frAyYDn/view?usp=sharing)
 
 ## 📁 추가 자료
-<a href="https://www.canva.com/design/DAGK8Pmysik/VNLzYHXvjJOISPXzsI6rUw/edit?utm_content=DAGK8Pmysik&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank">PPT 자료</a>
+[[발표 PPT]](https://www.canva.com/design/DAGK8Pmysik/VNLzYHXvjJOISPXzsI6rUw/edit?utm_content=DAGK8Pmysik&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
