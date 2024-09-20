@@ -63,8 +63,11 @@
 <br><br>
 
 ## 📈 프로젝트 계획
-<h4>1. 프로젝트를 효율적으로 계획하고 관리하는 방법을 제공하는 프로젝트 관리 지침서 (PMBOK : Project Management Body of Knowledge)을 기반으로 PMS 웹 사이트 개발 진행 계획</h4>
-<img src="https://github.com/user-attachments/assets/c9d76220-5965-4342-bfbe-63ebd92b38ca" alt="PMBOK" style="width:1000px"> <br>
+<div>
+  <p><strong>1. 프로젝트 관리 지침서(PMBOK : Project Management Body of Knowledge)를 기반으로 PMS 웹 사이트 개발</strong></p>
+  <p style="margin-top:0;">&nbsp;  + PMBOK : 국제적으로 인정받는 프로젝트 관리 표준으로, 프로젝트 관리의 베스트 프랙티스를 체계적으로 정리한 지침</p>
+  <img src="https://github.com/user-attachments/assets/c9d76220-5965-4342-bfbe-63ebd92b38ca" alt="PMBOK" style="width:1000px"> 
+</div><br>
 <table width="100%" style="border-collapse: collapse; border:none;">
   <tr>
     <td width="50%" style="border:none;padding:"><strong>2. 역할 기반 접근 제어(RBAC : Role-Based Access Control) 적용</strong> <br>
