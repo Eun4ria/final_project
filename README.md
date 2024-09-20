@@ -46,15 +46,15 @@
     <td>
       <strong>조장</strong>
       <br>
-      사용자 로그인 / 회원가입(mail) / 채팅 / 예산 관리 / 차트 / 
-      메인 화면(간략/상세) / To Do List / GitHub 환경 구축 / PPT 제작 
+      사용자 로그인 / 회원가입(mail) / 채팅(WebSocket) / 예산 관리 / 차트 / 
+      메인 화면(간략/상세) / To Do List / GitHub 환경 구축&관리  
     </td>
   </tr>
   <tr><td>박민경</td><td></td>
     <td>비밀번호 찾기(mail) / 아이디 찾기 / 프로젝트 일정 관리(Gantt Chart) / 전체 일정 관리(Calendar) /
       사용자 관리 / 프로젝트 관리 / 마이페이지(file upload) / 다국어 처리 / 고정IP 구축 / DB 환경 구축</td>
   </tr>
-  <tr><td>공통 역할</td><td colspan="2">PMS 분석 / 요구사항 정의서 / 워크플로우 / 설계(화면, DB)</td></tr>
+  <tr><td>공통 역할</td><td colspan="2">PMS 분석 / 요구사항 정의서 / 워크플로우 / 설계(화면, DB) / PPT 제작 </td></tr>
 </table>
 <br><br>
 
