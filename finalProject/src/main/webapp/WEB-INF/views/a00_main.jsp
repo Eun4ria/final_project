@@ -53,156 +53,113 @@
    <link href="${path}/adminkit-3.1.0/static/css/app.css" rel="stylesheet">
 <%--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 --%>
- <script>
- var msg="${msg}"
- if(msg != "") {
-     alert(msg); // 알림 메시지 표시
-
-     if (msg=="생성 완료") {
-        $(".close").click();
-        window.location.href = 'main';
-     }
- }
- // 세션에 저장되어 있는 롤 코드
- var role_code="${sessionScope.role_code}"
- function projectPage(project_id){ // 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
-   if(role_code!="" && role_code!=null){
-      if(role_code=="P"){
-         location.href="dashpmFrm?project_id="+project_id
-      }else{
-         location.href="dashmemFrm?project_id="+project_id
-      }
-   }else{
-      alert("비정상적인 접근! 관리자에게 문의해주세요")
-   }    
- }
-
-
-function goChat(user_id){
-location.href="message?user_id="+user_id
+<%-- taskcss --%>
+<link rel="stylesheet" href="${path}/jobboard-master/css/custom-bs.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/fonts/line-icons/style.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/animate.min.css">
+    <link rel="stylesheet" href="${path}/jobboard-master/css/quill.snow.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<style>
+.project-item:hover{
+	cursor:pointer;
+	background-color:lightgray;
+	border-radius:10px;
+	transition: background-color 0.3s ease;
 }
+.dropdown-menu {
+    max-height: 200px; /* 필요에 따라 높이 조절 */
+    overflow-y: auto;
+}
+.dropdown-item {
+       cursor: pointer; /* 클릭 가능한 커서 */
+   }
+
+</style>
+<script>
+var msg="${msg}"
+if(msg != "") {
+    alert(msg); // 알림 메시지 표시
+
+    if (msg=="생성 완료") {
+       $(".close").click();
+       window.location.href = 'main';
+    }
+}
+// 세션에 저장되어 있는 롤 코드
+var role_code="${sessionScope.role_code}"
+// 프로젝트 리스트에서 해당 프로젝트의 행을 클릭했을 때 실행되는 함수
+function projectPage(project_id){ 
+  if(role_code!="" && role_code!=null){
+	$("[name=project_id]").val(project_id)
+	$("#proPage").attr("action", "dashmemFrm");
+	$("#proPage").submit()
+  }else{
+     alert("비정상적인 접근! 관리자에게 문의해주세요")
+  }    
+}
+
+
+function projectDetail(project_id, event){
+	event.stopPropagation();
+	location.href="projectDetail?project_id="+project_id
+}
+
 </script>
 </head>
 
 <body>
 
    <div class="wrapper">
-<jsp:include page="a00_main_side.jsp"/>   
+<jsp:include page="a00_sideBar.jsp"/>   
    
       <div class="main">
-         <nav class="navbar navbar-expand navbar-light navbar-bg">
-            <a class="sidebar-toggle js-sidebar-toggle">
-          <i class="hamburger align-self-center"></i>
-        </a>
-
-            <div class="navbar-collapse collapse">
-               <ul class="navbar-nav navbar-align">
-                  <li class="nav-item dropdown">
-                     <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
-                        <div class="position-relative">
-                           <i class="align-middle" data-feather="bell"></i>
-                           <span class="indicator">4</span>
-                        </div>
-                     </a>
-                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
-                        <div class="dropdown-menu-header">
-                           4 New Notifications
-                        </div>
-                        <div class="list-group">
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-danger" data-feather="alert-circle"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Update completed</div>
-                                    <div class="text-muted small mt-1">Restart server 12 to complete the update.</div>
-                                    <div class="text-muted small mt-1">30m ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-warning" data-feather="bell"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Lorem ipsum</div>
-                                    <div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate hendrerit et.</div>
-                                    <div class="text-muted small mt-1">2h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-primary" data-feather="home"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Login from 192.186.1.8</div>
-                                    <div class="text-muted small mt-1">5h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-success" data-feather="user-plus"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">New connection</div>
-                                    <div class="text-muted small mt-1">Christina accepted your request.</div>
-                                    <div class="text-muted small mt-1">14h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                        </div>
-                        <div class="dropdown-menu-footer">
-                           <a href="#" class="text-muted">Show all notifications</a>
-                        </div>
-                     </div>
-                  </li>
-                                
-     
-<li class="nav-item dropdown">   
-                     <a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
-				<c:choose>
-				    <c:when test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
-				        <span class="text-dark">Welcome, PM_${user_name}</span>
-				    </c:when>
-				    <c:otherwise>
-				        <span class="text-dark">Welcome, MEM_${user_name}</span>
-				    </c:otherwise>
-				</c:choose>
-              </a>
-                     <!-- <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
-                        <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
-                        <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
-                        <div class="dropdown-divider"></div>
-                        <form method="post" action="/logout">
-                        <input type="submit" class="dropdown-item" value="Log out" >
-                        </form>
-                     </div> -->
-                  </li>
-               </ul>
-            </div>
-         </nav>
+         <jsp:include page="a00_top.jsp"/>
 
          <main class="content">
-            <div class="container-fluid p-0">
+           <div class="row">
+           <div class="col-3 col-xxl-3 d-flex order-1 order-xxl-1  flex-fill w-2"  style="height: 20%">
+							<div class="card flex-fill">
+								<div class="card-header">
 
-               <h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
-               
-         <!-- 프로젝트 생성 버튼 -->
-         <c:if test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
-	         <button class="btn btn-success" data-toggle="modal" data-target="#ModalCenter"
-           type="button">프로젝트 생성</button>
-	    </c:if>
-           
+									<h5 class="card-title text-center mb-0">Count Active Project</h5>
+								</div>
+								<div class="d-flex justify-content-center align-items-center mb-3">
+								    <div class="fw-bold" style="font-size: 1.5rem;">
+								        ${aProCnt}
+								    </div>
+								</div>
+								<div class="card-header">										
+									<h5 class="card-title text-center mt-1 ">Count Complete Project</h5>
+								</div>
+								<div class="d-flex justify-content-center align-items-center mb-5">
+								    <div class="fw-bold" style="font-size: 1.5rem;">
+								        ${cProCnt}
+								    </div>
+								</div>
+							</div>
+						</div>
+			<div class="col-3  col-xxl-3 d-flex order-1 order-xxl-1 flex-fill w-30" style="height: 20%">
+							
+                     <div class="card flex-fill w-100">
+                        <div class="card-header">
+                           <h5 class="card-title">Progress Chart</h5>
+                           <h6 class="card-subtitle text-muted">A line chart is a way of plotting data points on a line.</h6>
+                        </div>
+                        <div class="card-body" >
+                           <div >
+                              <canvas id="chartjs-line"></canvas>
+                           </div>
+                      
+                     </div>
+                  </div> 
+						</div>
+			
+          </div>
+            <div class="container-fluid p-0">
                
             <div class="row mb-4">
         <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
@@ -210,15 +167,17 @@ location.href="message?user_id="+user_id
             <div class="card-header pb-0">
               <div class="row">
                 <div class="col-lg-6 col-7">
-                  <h6>Projects</h6>
-                  <p class="text-sm mb-0">
-                    <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    <span class="font-weight-bold ms-1">30 done</span> this month
-                  </p>
+                  <h4><strong>Active</strong> Projects</h4>
+                  <!-- 프로젝트 생성 버튼 (PM만 보이게)-->
+                  
+         <c:if test="${sessionScope.role_code!=null&&sessionScope.role_code=='P'}">
+	         <button class="btn btn-success" data-toggle="modal" data-target="#ModalCenter"
+           type="button">CREATE PROJECT</button>
+	    </c:if>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
                   <div class="dropdown float-lg-end pe-4">
-                    <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="cursor-pointer"s id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
                       <i class="fa fa-ellipsis-v text-secondary"></i>
                     </a>
                     <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
@@ -235,19 +194,22 @@ location.href="message?user_id="+user_id
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Companies</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Members</th>
+                      <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7">Project name</th>                      
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Budget</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Completion</th>
+                      <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7 ps-2">Info</th>
                     </tr>
                   </thead>
                   <tbody>
                   <c:forEach var="pro" items="${pro}">
-                    <tr onclick="projectPage('${pro.project_id}')">
+                  <form id="proPage" method="post">
+                  	<input type="hidden" name="project_id"/>
+                  </form>
+                    <tr onclick="projectPage('${pro.project_id}')" class="project-item">
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                           <img src="${pro.logo}" class="avatar avatar-sm me-3" alt="xd">
+                           <img src="${pro.logo}" class="avatar avatar-sm me-3" alt="${pro.project_name}">
                           
                           </div>
                           <div class="d-flex flex-column justify-content-center">
@@ -255,36 +217,25 @@ location.href="message?user_id="+user_id
                           </div>
                         </div>
                       </td>
-                      <td>
-                        <div class="avatar-group mt-2">
-                         <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="user1">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                            <img src="${path}/material-dashboard-2/assets/img/team-3.jpg" alt="user2">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alexander Smith">
-                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="user3">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="${path}/material-dashboard-2/assets/img/team-1.jpg" alt="user4">
-                          </a>
-                        </div>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold" >${pro.amount}</span>
+                       <td class="align-middle">
+	                      <div style="text-align: right;">
+	                        <span class="amount text-xs font-weight-bold" >${pro.amount}</span>
+	                      </div>
                       </td>
                       <td class="align-middle">
-                        <div class="progress-wrapper w-75 mx-auto">
+                        <div class="progress-wrapper w-75 mx-auto text-center">
                           <div class="progress-info">
                             <div class="progress-percentage">
                               <span class="text-xs font-weight-bold">${pro.progress}%</span>
                             </div>
                           </div>
-                          <div class="progress">
+                          <div class="progress align-middle mx-auto">
                           <div class="progress-bar bg-gradient-info" style="width: ${pro.progress}%;" role="progressbar" aria-valuenow="${pro.progress}" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </div>
+                      </td>
+                      <td class="align-middle">
+                      	<button class="btn btn-primary" onclick="projectDetail('${pro.project_id}',event)">INFO</button>
                       </td>
                     </tr>
                     </c:forEach>
@@ -294,26 +245,23 @@ location.href="message?user_id="+user_id
             </div>
           </div>
         </div>
-        
-                     
-               </div>
-
-               <div class="row">
-               
-                  
-                  
-                  
-                  
-                  <div class="col-sm-11 col-lg-6 col-md-6 col-xl-6" >
-                        
-                    </div>
-               </div>
-               
+        </div>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const elements = document.querySelectorAll('.amount');
+        elements.forEach(element => {
+            const number = parseFloat(element.innerText);
+            if (!isNaN(number)) {
+                element.innerText = number.toLocaleString();
+            }
+        });
+    });
+</script>
 
             </div>
          </main>
 
-         <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -324,11 +272,20 @@ location.href="message?user_id="+user_id
       </div>
       <div class="modal-body">
       <form id="modalFrm" class="form"  method="post" action="insertProject">
-      <input type="hidden" name="company_id" value="COM_0001"/>
+      <div class="row">
+         <div class="col">
+         <span>Company ID</span>
+           <select class="form-control" name="company_id">
+	           	<c:forEach var="com" items="${com}">
+					<option value="${com.company_id}" style="height:1.5rem;">${com.company_name}</option>					
+				</c:forEach>
+	         </select>
+         </div>
+        </div>
         <div class="row">
          <div class="col">    
          <span>Project Name</span>              
-           <input type="text" class="form-control" name="project_name">
+           <input type="text" class="form-control" name="project_name"/>
          </div>
         </div>
         <div class="row">
@@ -340,30 +297,119 @@ location.href="message?user_id="+user_id
         <div class="row">
          <div class="col">
          <span>Start Date</span>
-           <input type="date" class="form-control" placeholder="직책명 입력" name="start_date">
+           <input type="date" class="form-control" name="start_date"/>
          </div>
         </div>
         <div class="row">
          <div class="col">
          <span>End Date</span>
-           <input type="date" class="form-control" placeholder="직책명 입력" name="end_date">
+           <input type="date" class="form-control" name="end_date"/>
          </div>
-        </div>     
+        </div>  
+        <div class="row">
+         <div class="col">
+         <span>Users</span>
+	         <select class="form-control" name="userIds" multiple>
+	           	<c:forEach var="user" items="${user}">
+					<option value="${user.user_id}" style="height:1.5rem;">
+						${user.user_name}(${user.dname})</option>					
+				</c:forEach>
+	         </select>
+		<%-- <input list="user_list" id="combobox" name="user_id"
+					class="form-control" placeholder="Select Member">
+			<datalist class="dropdown-menu" id="user_list" >
+				<c:forEach var="user" items="${user}">
+					<option value="${user.user_id}" style="width:10rem">${user.user_name}(${user.dname})</option>
+				</c:forEach>
+			</datalist> --%>
+        </div>        
+       </div>
+     </div>           
+        
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" id="regBtn" class="btn btn-success">regist</button>        
-      </div>   
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="submit" id="regBtn" class="btn btn-success">regist</button>        
+     	</div>   
        </form> 
       </div>
       
     </div>
   </div>
 </div>
-      </div>
-   </div>
-
+</div>
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+	    const form = document.querySelector('form'); // 폼 선택
+	    form.addEventListener('submit', (event) => {
+	        const selectedUsers = Array.from(document.querySelectorAll('input[name="user_ids"]:checked'))
+	                                   .map(checkbox => checkbox.value);
+	        console.log('Selected Users:', selectedUsers);
+	        // 예: 서버로 제출하거나 다른 작업을 수행
+	    });
+	});
+</script>
    <script src="${path}/adminkit-3.1.0/static/js/app.js"></script>
-
+<script>
+      document.addEventListener("DOMContentLoaded", function() {
+         // Line chart
+         new Chart(document.getElementById("chartjs-line"), {
+            type: "line",
+            data: {
+               labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+               datasets: [{
+                  label: "Sales ($)",
+                  fill: true,
+                  backgroundColor: "transparent",
+                  borderColor: window.theme.primary,
+                  data: [2115, 1562, 1584, 1892, 1487, 2223, 2966, 2448, 2905, 3838, 2917, 3327]
+               }, {
+                  label: "Orders",
+                  fill: true,
+                  backgroundColor: "transparent",
+                  borderColor: "#adb5bd",
+                  borderDash: [4, 4],
+                  data: [958, 724, 629, 883, 915, 1214, 1476, 1212, 1554, 2128, 1466, 1827]
+               }]
+            },
+            options: {
+               maintainAspectRatio: false,
+               legend: {
+                  display: false
+               },
+               tooltips: {
+                  intersect: false
+               },
+               hover: {
+                  intersect: true
+               },
+               plugins: {
+                  filler: {
+                     propagate: false
+                  }
+               },
+               scales: {
+                  xAxes: [{
+                     reverse: true,
+                     gridLines: {
+                        color: "rgba(0,0,0,0.05)"
+                     }
+                  }],
+                  yAxes: [{
+                     ticks: {
+                        stepSize: 500
+                     },
+                     display: true,
+                     borderDash: [5, 5],
+                     gridLines: {
+                        color: "rgba(0,0,0,0)",
+                        fontColor: "#fff"
+                     }
+                  }]
+               }
+            }
+         });
+      });
+   </script>
 
    
 

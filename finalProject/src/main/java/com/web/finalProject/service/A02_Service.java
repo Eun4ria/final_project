@@ -1,18 +1,29 @@
 package com.web.finalProject.service;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.web.finalProject.mapper.A02_Dao;
 import com.web.finalProject.util.Util;
+import com.web.finalProject.vo.Budget;
+import com.web.finalProject.vo.BudgetSch;
 import com.web.finalProject.vo.Chat;
 import com.web.finalProject.vo.Project;
 import com.web.finalProject.vo.RegMember;
+import com.web.finalProject.vo.Taskfile;
+import com.web.finalProject.vo.Tasks;
 import com.web.finalProject.vo.Users;
 
 import jakarta.mail.Message.RecipientType;
@@ -31,9 +42,6 @@ public class A02_Service {
    public int loginCk(Users user) {
       return dao.loginCk(user); 
    } 
-   public String loginCkMsg(Users user) {
-      return dao.loginCk(user)>0?"로그인 성공":"로그인 정보가 일치하지 않습니다"; 
-   }
    public Users login(Users user) {
       return dao.login(user);
    }
@@ -52,34 +60,32 @@ public class A02_Service {
 //		
 //		return msg;
 //	}
-	  public String insertUser(Users ins) {
-	        String msg = null;
-
-	        int result = dao.insertUser(ins);
-	        if (result > 0) {
-	            msg = "등록 성공";
-	            sendEmail(ins.getEmail(), ins.getUser_id());
-	        } else {
-	            msg = "등록 실패";
-	        }
-
-	        return msg;
+   	// 회원가입 & 메일발송
+	public String insertUser(Users ins) {
+	    String msg = null;
+	
+	    int result = dao.insertUser(ins);
+	    if (result > 0) {
+	        msg = "등록 성공";
+	        sendEmail(ins.getEmail(), ins.getUser_id());
+	    } else {
+	    	msg = "등록 실패";
 	    }
-	 private void sendEmail(String email, String userId) {
-	        SimpleMailMessage message = new SimpleMailMessage();
-	        message.setTo(email);
-	        message.setSubject("HPM 회원 가입이 완료되었습니다.");
-	        message.setText("귀하의 사용자 ID는 " + userId + " 입니다.");
-	        sender.send(message);
-	    }
-// 이메일 유효성 체크
+	    return msg;
+	}
+	private void sendEmail(String email, String userId) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(email);
+		message.setSubject("HPM 회원 가입이 완료되었습니다.");
+		message.setText("귀하의 사용자 ID는 " + userId + " 입니다.");
+		sender.send(message);
+	}
+	// 이메일 유효성 체크
 	public int emailCk(String email) {
 		return dao.emailCk(email); 
 	}
 	
-	
-	
-	
+
 	
 // 메일 발송
 	public String makeEmpMail(RegMember email) {
@@ -118,15 +124,258 @@ public class A02_Service {
 	public List<Project> getProjectList(String user_id){
     	return dao.getProjectList(user_id);
     }
+
+
+
+	//채팅
+		//채팅-멤버 리스트
+			public List<Users> getmemList(Users sch){
+				if(sch.getProject_id()==null) sch.setProject_id("");
+				if(sch.getUser_id()==null) sch.setUser_id("");
+				return dao.getMemList(sch);
+			}
+//			public Chat chat(Chat chat) {
+//				return dao.chat(chat);
+//			}
+		// 채팅방 유무 확인 
+			 public int chatroomCk(Chat ch) {
+				 int cnt = dao.chatroomCk(ch);
+				 
+			      return cnt; 
+			   } 
+			 // 채팅방 아이디, 이름 가져오기
+			 public Chat getchatRoomId(Chat get) {
+				 return dao.getchatRoomId(get); 
+			 } 
+			 
+			 public String getUserName(String project_id, String chatroom_id, String user_id) {
+				 return dao.getUserName(project_id, chatroom_id, user_id);
+			 }
+			
+		//채팅 등록
+			public String insertchatroom(Chat ins) {
+				
+				return dao.insertchatroom(ins)>0?"생성 완료":"생성 실패";
+			}
+		//채팅 등록
+			public String insertchatroom1(Chat ins1) {
+				
+				return dao.insertchatroom1(ins1)>0?"생성 완료":"생성 실패";
+			}
+			
+		//채팅 리스트
+			public List<Chat> getchatList(Chat chsch){
+				return dao.getchatList(chsch);
+			}
+			
+			//채팅 나가기
+			public String delchatroom(String chatroom_id) {
+				return dao.delchatroom(chatroom_id)>0?"삭제완료":"삭제 실패";
+			}
+			
+		
+// 업무(to do) : 멤버
+		public List<Tasks> getTaskList(Tasks sch){
+			return dao.getTaskList(sch);
+		}	
+// 업무(to do) : PM
+		public List<Tasks> getAllTaskList(Tasks sch){
+			return dao.getAllTaskList(sch);
+		}	
+			
+// 업무 SP 변경
+//		public String uptSP(Tasks upt){
+//			return dao.uptSP(upt)>0?"수정성공":"수정실패" ;
+//		}	
+		public String uptSP(Tasks upt) {
+		    return dao.uptSP(upt) > 0 ? "수정성공" : "수정실패";
+		}
+
+		
+// ToDo detail -상세
+		public Tasks getTaskDetail(String task_id){
+			return dao.getTaskDetail(task_id);
+		}	
+		
+		@Value("${user.upload2}")
+		String path;
+// ToDo update -> 수정 + //산출물 관리
+		public String updatetask(Tasks upt) {
+			String msg = null;
+			msg = dao.updatetask(upt)>0? "수정성공":"수정실패";
+			
+			//파일 업로드 
+			if(upt.getReports()!=null && upt.getReports().length>0) {
+				try {
+					// 파일 업로드
+					int fcnt=0;
+					for(MultipartFile mp:upt.getReports() ) { //다중파일
+						String fnm = mp.getOriginalFilename();
+						if( fnm!=null && !fnm.equals("") ) {
+							System.out.println("파일 이름: " + fnm);
+							File fup = new File(path,fnm);
+							mp.transferTo(fup);
+							//fcnt++;
+							// 파일정보 등록.
+							fcnt+=dao.taskfileinsert(
+									new Taskfile(upt.getTask_id(), fnm, upt.getTask_id()+"관련 파일 등록") );
+						}
+					}
+					msg+="\n 파일 "+fcnt+"건 등록 성공";
+				} catch (IllegalStateException e) {
+					msg+="\n 파일 등록 에러 발생:"+e.getMessage();
+					
+				} catch (IOException e) {
+					msg+="\n 파일 등록 에러 발생"+e.getMessage();
+				} catch(Exception e) {
+					msg+="\n 파일 등록 기타 에러 발생"+e.getMessage();
+				}				
+				
+			}
+			System.out.println("메시지:"+msg);
+			
+			return msg;
+		}
+//파일 이름
+		public List<Taskfile> getfilename(String task_id) {
+			return dao.getfilename(task_id);
+		}
 		
 		
-//채팅 리스트
-	public List<Users> getmemList(Users sch){
+// ToDo delete -> 삭제
+		public String deletetask(String del) {
+			return dao.deletetask(del)>0? "삭제성공":"삭제실패";
+		}
+
+// 예산 관리
+	public List<Budget> getBudgetList(BudgetSch sch){
 		if(sch.getProject_id()==null) sch.setProject_id("");
-		if(sch.getUser_id()==null) sch.setUser_id("");
-		return dao.getMemList(sch);
+		// 1. 총데이터 수 (DB)
+			sch.setCount(dao.getBudgetCount(sch));
+		// 2. 현재 클릭한 번호(화면단 요청값) - 초기값 1(첫번째 페이지)
+			if(sch.getCurPage()==0) {
+				sch.setCurPage(1);
+			}
+		// 3. 한 페이지에 보일 데이터 건수(화면단 선택으로 요청값) - 초기값5(첫번째 페이지)
+		if(sch.getPageSize()==0) {
+			sch.setPageSize(7);
+		}	
+		// 4. 총페이지수(수치 연산/알고리즘 - 총데이터 건수/한페이지에 보일 데이터 수)
+		sch.setPageCount((int)( Math.ceil(sch.getCount()/(double)sch.getPageSize())));	
+		//마지막 page block에서 next를 클릭하더라고 더이상 페이지 번호가 증가되지 않게
+			if(sch.getCurPage()>sch.getPageCount()) {
+				sch.setCurPage(sch.getPageCount());
+			}	
+		/* 5. 데이터 값: 시작번호/마지막번호 - 마지막 (한페이지에 보일 데이터 건수*현재 클릭한 번호) */
+			sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
+			int imEnd = sch.getPageSize()*sch.getCurPage();
+			sch.setEnd((imEnd)>sch.getCount()?sch.getCount():imEnd);
+			
+	// 6. 페이징 블럭 처리 
+			// 1) 블럭 크기 설정 
+			sch.setBlockSize(5);
+			// 2) 블럭 번호 지정  -  1~7 ==> 1,  8~14 ==> 2,  15~21 ==> 3
+			int blockNum = (int) Math.ceil(sch.getCurPage()/(double)sch.getBlockSize());
+			// 3) 시작 블럭
+			sch.setStartBlock((blockNum-1)*sch.getBlockSize()+1);
+			// 4) 마지막 블럭
+			int endBlock = blockNum*sch.getBlockSize();
+			sch.setEndBlock((endBlock)>sch.getPageCount()?sch.getPageCount():endBlock);
+		
+		return dao.getBudgetList(sch);
 	}
-	public Chat chat(Chat chat) {
-		return dao.chat(chat);
+// 부모요소 선택
+	public List<Budget> getparentList(BudgetSch sch){
+		return dao.getparentList(sch);
 	}
+	
+	//amount
+	public int getAmount(String parent_id, String project_id) {
+		return dao.getAmount(parent_id,project_id);
+	}
+	//amount
+	public int getParentAmount(String parent_id, String project_id) {
+		return dao.getParentAmount(parent_id,project_id);
+	}
+	//amount
+	public int getChildAmount(String parent_id, String project_id) {
+		return dao.getChildAmount(parent_id,project_id);
+	}
+	
+	// budget 등록 
+	public String budgetInsert(Budget ins) {
+		
+			return dao.budgetInsert(ins)>0?"등록 완료":"등록 실패";
+		
+	}
+	// 예산 상세 
+	public List<Budget> getBudgetById(String budget_id) {
+        return dao.findBudgetId(budget_id);
+    }
+	
+	// budget 수정
+//	public String budgetUpdate(Budget upt) {
+//		
+//		return dao.budgetUpdate(upt)>0?"수정 완료":"수정 실패";
+//	}
+//	
+	public String budgetUpdate(Budget upt) {
+		 // 상위 요소의 usedate 가져오기
+	    if (upt.getParent_id() != null && !upt.getParent_id().equals("N")) {
+	        Timestamp parentRegistDate  = dao.getparentUsedate(upt.getParent_id());
+
+	        // 입력된 usedate가 상위 요소의 usedate보다 이전인지 확인
+	        if (parentRegistDate  != null) {
+	            try {
+	                // 입력된 usedate를 Timestamp로 변환
+	                String usedateStr = upt.getUsedate(); // String 형태로 가져옴
+	                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+	                java.util.Date parsedDate = dateFormat.parse(usedateStr);
+	                Timestamp inputUsedate = new Timestamp(parsedDate.getTime());
+
+	                // 비교 수행
+	                if (inputUsedate.before(parentRegistDate )) {
+	                    return "사용 날짜는 상위 요소의 등록 날짜보다 이를 수 없습니다.";
+	                }
+	            } catch (ParseException e) {
+	                return "날짜 형식이 잘못되었습니다.";
+	            }
+	        }
+	    }
+	    // 실제 업데이트 수행
+	   // int result = dao.budgetUpdate(upt);
+	    
+		return dao.budgetUpdate(upt)>0?"수정 완료":"수정 실패";
+	}
+	
+	// budget 삭제
+	public String deleteBudget(Budget del) {
+		return dao.deleteBudget(del)>0? "삭제 성공":"삭제 실패";
+	}
+	// 자식 확인
+	public boolean countchild(Budget del) {
+		return dao.countchild(del.getBudget_id()) > 0;
+	}
+	// budget 자식 삭제
+	public String deleteChild(Budget del) {
+		return dao.deleteChild(del)>0? "삭제 성공":"삭제 실패";
+	}
+	
+	
+//차트 
+	//level=2 선택
+	public List<Budget> getBudgetparentchartList(String project_id){
+		return dao.getBudgetparentchartList(project_id);
+	}
+	//level=2 선택
+	public List<Budget> getchartAmount(Budget sch){
+		return dao.getchartAmount(sch);
+	}
+	
+	
+	
+	
+	
+
+	    
 }

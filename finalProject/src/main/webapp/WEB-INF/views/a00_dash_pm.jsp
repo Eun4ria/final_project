@@ -63,217 +63,69 @@ function goChat(user_id){
 </head>
 
 <body>
-
+<%--  --%>
+ <c:if test="${sessionScope.user_id == null || sessionScope.user_id == ''}">
+    <script>
+        alert("로그인이 필요한 서비스입니다");
+        location.href = 'signinFrm';
+    </script>
+</c:if>
 	<div class="wrapper">
 <jsp:include page="a00_sideBar.jsp"/>	
 	
 		<div class="main">
-         <nav class="navbar navbar-expand navbar-light navbar-bg">
-            <a class="sidebar-toggle js-sidebar-toggle">
-          <i class="hamburger align-self-center"></i>
-        </a>
-
-            <div class="navbar-collapse collapse">
-               <ul class="navbar-nav navbar-align">
-                  <li class="nav-item dropdown">
-                     <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
-                        <div class="position-relative">
-                           <i class="align-middle" data-feather="bell"></i>
-                           <span class="indicator">4</span>
-                        </div>
-                     </a>
-                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
-                        <div class="dropdown-menu-header">
-                           4 New Notifications
-                        </div>
-                        <div class="list-group">
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-danger" data-feather="alert-circle"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Update completed</div>
-                                    <div class="text-muted small mt-1">Restart server 12 to complete the update.</div>
-                                    <div class="text-muted small mt-1">30m ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-warning" data-feather="bell"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Lorem ipsum</div>
-                                    <div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate hendrerit et.</div>
-                                    <div class="text-muted small mt-1">2h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-primary" data-feather="home"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">Login from 192.186.1.8</div>
-                                    <div class="text-muted small mt-1">5h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                           <a href="#" class="list-group-item">
-                              <div class="row g-0 align-items-center">
-                                 <div class="col-2">
-                                    <i class="text-success" data-feather="user-plus"></i>
-                                 </div>
-                                 <div class="col-10">
-                                    <div class="text-dark">New connection</div>
-                                    <div class="text-muted small mt-1">Christina accepted your request.</div>
-                                    <div class="text-muted small mt-1">14h ago</div>
-                                 </div>
-                              </div>
-                           </a>
-                        </div>
-                        <div class="dropdown-menu-footer">
-                           <a href="#" class="text-muted">Show all notifications</a>
-                        </div>
-                     </div>
-                  </li>
-                 <li class="nav-item ">
-					<span class="nav-icon dropdown-toggle" onclick="goChat('${sessionScope.project_id}')" id="messagesDropdown">
-							<i class="align-middle" data-feather="message-square"></i>
-					</span>
-					
-				</li>        
-     
-<li class="nav-item dropdown">   
-                     <a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <img src="${image}" class="avatar img-fluid rounded me-1" alt="Profile Picture" /> 
-				<c:choose>
-				    <c:when test="${sessionScope.role_code != null && sessionScope.role_code == 'P'}">
-				        <span class="text-dark">Welcome, PM_${user_name}</span>
-				    </c:when>
-				    <c:otherwise>
-				        <span class="text-dark">Welcome, MEM_${user_name}</span>
-				    </c:otherwise>
-				</c:choose>
-              </a>
-                     <!-- <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
-                        <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
-                        <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
-                        <div class="dropdown-divider"></div>
-                        <form method="post" action="/logout">
-                        <input type="submit" class="dropdown-item" value="Log out" >
-                        </form>
-                     </div> -->
-                  </li>
-               </ul>
-            </div>
-         </nav>
+         <jsp:include page="a00_top.jsp"/>
 
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
-					
 		
 					
 				<div class="row mb-4">
-        <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
-          <div class="card">
-            <div class="card-header pb-0">
-              <div class="row">
-                <div class="col-lg-6 col-7">
-                  <h6>Projects</h6>
-                  <p class="text-sm mb-0">
-                    <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    <span class="font-weight-bold ms-1">30 done</span> this month
-                  </p>
-                </div>
-                <div class="col-lg-6 col-5 my-auto text-end">
-                  <div class="dropdown float-lg-end pe-4">
-                    <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-ellipsis-v text-secondary"></i>
-                    </a>
-                    <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card-body px-0 pb-2">
-              <div class="table-responsive">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Companies</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Members</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Budget</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Completion</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  <c:forEach var="pro" items="${pro}">
-                    <tr ondblclick="projectPage('${pro.project_id}')">
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                  <%--프로젝트 이미지 --%>
-                           <img src="${pro.image}" class="avatar avatar-sm me-3" alt="xd">
-                          
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">${pro.project_name}</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="avatar-group mt-2">
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                            <img src="${path}/material-dashboard-2/assets/img/team-1.jpg" alt="team1">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                            <img src="${path}/material-dashboard-2/assets/img/team-2.jpg" alt="team2">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alexander Smith">
-                            <img src="${path}/material-dashboard-2/assets/img/team-3.jpg" alt="team3">
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="${path}/material-dashboard-2/assets/img/team-4.jpg" alt="team4">
-                          </a>
-                        </div>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold" >${pro.amount}</span>
-                      </td>
-                      <td class="align-middle">
-                        <div class="progress-wrapper w-75 mx-auto">
-                          <div class="progress-info">
-                            <div class="progress-percentage">
-                              <span class="text-xs font-weight-bold">60%</span>
-                            </div>
-                          </div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-info w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    </c:forEach>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+      
+         <div class="row">
+           <div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
+							<div class="card flex-fill">
+								<div class="card-header">
+
+									<h5 class="card-title mb-0">진행중인 프로젝트</h5>
+								</div>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+										ㅎㅎ
+									</div>
+								</div>
+							</div>
+						</div>
+			<div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
+							<div class="card flex-fill">
+								<div class="card-header">
+
+									<h5 class="card-title mb-0">완료된 프로젝트</h5>
+								</div>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+										호호
+									</div>
+								</div>
+							</div>
+						</div>
+			<div class="col-5 col-md-4 col-xxl-3 d-flex order-1 order-xxl-1">
+							<div class="card flex-fill">
+								<div class="card-header">
+
+									<h5 class="card-title mb-0">진행예정 프로젝트</h5>
+								</div>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+										후후
+									</div>
+								</div>
+							</div>
+						</div>
           </div>
-        </div>
-        <div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
+  <div class="row">      
+        <div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-1">
 							<div class="card flex-fill">
 								<div class="card-header">
 
@@ -325,7 +177,7 @@ function goChat(user_id){
 							</div>
 						</div>
 					</div>
-
+</div>
 					<div class="row">
 					
 						

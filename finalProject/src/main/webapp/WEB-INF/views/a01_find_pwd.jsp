@@ -103,15 +103,7 @@
     <div class="row">
       <div class="col-12">
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg blur border-radius-xl top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
-          <div class="container-fluid ps-2 pe-0">
-            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="../pages/dashboard.html">
-              HPM main
-            </a>
-            
-            
-          </div>
-        </nav>
+        
         <!-- End Navbar -->
       </div>
     </div>
@@ -123,10 +115,10 @@
         <div class="row">
           <div class="col-lg-4 col-md-8 col-12 mx-auto">
             <div class="card z-index-0 fadeIn3 fadeInBottom">
-              <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2" style="border-radius:50px">
                 <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1" style="background: linear-gradient(#6A82FB,#B06AB3);">
                   <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Find Password</h4>
-                  <div class="row mt-3">
+                  <div class="row mt-2">
                    
                   </div>
                 </div>
@@ -152,6 +144,9 @@
                   <p class="mt-4 text-sm text-center">
                     Are you ready to log in?
                     <a href="signinFrm" class="text-primary text-gradient font-weight-bold" style="color:#3f2b96;">Login</a>
+                  <br>
+                   	Forgot your ID? 
+					<a href="find_id" class="text-primary text-gradient font-weight-bold" style="color: #3f2b96;">Find ID</a> 
                   </p>
                 </form>
               </div>

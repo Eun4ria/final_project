@@ -14,6 +14,7 @@ public class Gantt {
 		this.ganttList = ganttList;
 		this.resource = resource;
 	}
+    
 	public List<GanttTask> getGanttList() {
 		return ganttList;
 	}

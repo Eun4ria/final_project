@@ -1,7 +1,25 @@
 SELECT * FROM users;
+SELECT * FROM chat;
+SELECT * FROM TASK;
+SELECT * FROM budget;
+
+SELECT COUNT(*) FROM chat c
+WHERE owner_id = 'N_0047'
+AND user_id = 'M_0022'
+AND project_id = 'PRO_0001';
+
+DELETE users
+WHERE user_id='N_0047';
+
+DROP SEQUENCE CHATROOM_NAME_SEQ;
+
+SELECT COUNT(*) FROM chat c 
+WHERE ((owner_id = 'N_0047' AND user_id='P_0001')
+OR (owner_id = 'P_0001' AND user_id='N_0047'))
+AND project_id = 'PRO_0003';
 
 SELECT * FROM PROJECT;
-
+SELECT * FROM COMPANY c;
 SELECT * FROM chat;
 
 SELECT * FROM task;
@@ -39,6 +57,16 @@ VALUES
 INSERT INTO task (TASK_ID, TASK_NAME, START_DATE, END_DATE, PRIORITY, PARENT_ID, CONTENT, PROGRESS, BACKGROUNDCOLOR, TEXTCOLOR, TSTATUS, USER_ID, PROJECT_ID)
 VALUES 
 ('TSK_0005', '디자인', TO_DATE('2024-07-17', 'YYYY-MM-DD'), TO_DATE('2024-07-24', 'YYYY-MM-DD'), '중', NULL, '디자인 작업', 30, 'purple', 'white', '진행중', 'M_0026', 'PRO_0001');
+
+-- chat_seq 시퀀스 생성
+CREATE SEQUENCE chat_seq
+START WITH 1
+INCREMENT BY 1;
+
+-- chat_seq2 시퀀스 생성
+CREATE SEQUENCE chatname_seq1
+START WITH 1
+INCREMENT BY 1;
 
 
 SELECT * FROM users WHERE USER_ID = 'P_0012';
@@ -151,3 +179,248 @@ VALUES
 ('PRO_0011', 'M_0024'),
 ('PRO_0012', 'M_0025'), -- KartRider Drift
 ('PRO_0012', 'M_0026');
+
+SELECT * FROM CHAT c;
+SELECT * FROM users;
+
+DELETE CHAT
+WHERE CHATROOM_name = 'M_0003';
+
+
+INSERT INTO chat (
+    chatroom_id, chatroom_name, owner_id, user_id, ban_status, BAN_DATE, UPTDATE, project_id
+)
+SELECT
+    'CHT_' || TO_CHAR(chat_seq.nextval, 'FM0000'),
+    'M_0003',
+    'N_0047',
+    'M_0003',
+    'N',
+    NULL,
+    NULL,
+    'PRO_0001'
+FROM dual
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM chat
+    WHERE owner_id = 'N_0047'
+      AND user_id = 'M_0003'
+);
+
+SELECT * FROM chat;
+
+DELETE chat
+WHERE chatroom_name='M_0003';
+
+SELECT * FROM task
+WHERE user_id ='N_0047'
+AND project_id = 'PRO_0003';
+
+UPDATE task 
+SET project_id='PRO_0003'
+WHERE user_id = 'N_0047';
+
+DELETE FROM CHAT c WHERE owner_id = 'N_0047' AND user_id <> 'P_0001';
+
+CREATE SEQUENCE chatroom_name_seq
+    START WITH 1
+    INCREMENT BY 1;
+    NOCACHE
+    NOCYCLE;
+   
+SELECT * FROM chat;
+
+SELECT * FROM CHAT 
+WHERE project_id = 'PRO_0003'
+AND (user_id = 'N_0047' OR owner_id='N_0047');
+
+SELECT constraint_name
+FROM user_constraints
+WHERE table_name = 'CHAT'
+  AND constraint_type = 'P';
+
+ALTER TABLE CHAT DROP CONSTRAINT SYS_C007359;
+
+
+CREATE TABLE chat (
+    chatroom_id char(8) ,
+    chatroom_name VARCHAR2(50) NOT NULL,
+    owner_id char(8) NOT NULL,
+    user_id char(8) NOT NULL,
+    ban_status VARCHAR2(1),
+    ban_date DATE,
+    uptdate DATE DEFAULT SYSDATE,
+    project_id char(8)
+  
+);
+SELECT * FROM chat;
+
+SELECT COUNT(*) FROM chat c 
+WHERE owner_id = 'B_0047'
+AND user_id = 'P_0001'
+AND project_id = 'PRO_0003';
+
+SELECT * FROM CHAT ;
+WHERE project_id = 'PRO_0003'
+AND  owner_id= 'B_0047';
+AND owner_id != 'B_0047';
+
+select chatroom_id, chatroom_name from chat 
+where owner_id='B_0047' 
+and user_id='P_0001';
+
+// B_0047
+// PRO_0003
+// P_0001
+
+/*
+		@Select("SELECT COUNT(*) FROM chat c \r\n"
+				+ "WHERE owner_id = #{owner_id}\r\n"
+				+ "AND user_id = #{user_id}\r\n"
+				+ "AND project_id = #{project_id}")
+				
+ * */
+
+SELECT * FROM chat;
+COMMIT;
+SELECT COUNT(*) FROM chat c
+				WHERE owner_id = 'B_0047'
+				AND user_id = 'P_0001' 
+				AND project_id = 'PRO_0003';
+CREATE TABLE chat2
+AS SELECT * FROM chat;
+SELECT * FROM chat2;
+COMMIT;
+SELECT * FROM userfile;		
+
+
+CREATE TABLE userfile (
+    user_id char(6) PRIMARY KEY, -- 사용자 ID, 고유 식별자로 설정
+    image VARCHAR2(100)              -- 이미지 파일 이름, 최대 길이 255자로 설정
+         -- 기타 정보, 최대 길이 4000자로 설정
+);
+
+DROP TABLE userfile;
+			
+PRO_0003
+P_0001
+B_0047
+
+SELECT * from(
+SELECT rownum cnt, LEVEL, b.*
+FROM budget b
+WHERE project_id = 'PRO_0003'
+START WITH parent_id IS NULL
+CONNECT BY PRIOR budget_id = parent_id
+ORDER siblings BY budget_id DESC)
+WHERE CNT BETWEEN 1 AND 7;
+
+SELECT count(*)
+FROM BUDGET
+WHERE project_id = 'PRO_0003';
+
+SELECT * FROM BUDGET b 
+WHERE project_id='PRO_0003';
+
+SELECT * FROM BUDGET;
+
+DELETE budget WHERE budget_id = 'BUG_0033';
+
+delete budget 
+where parent_id = #{budget_id};
+
+SELECT * FROM BUDGET;
+INSERT INTO budget (budget_id, budget_name, amount, regdate, usedate, project_id, parent_id, user_id)
+VALUES ('BUG_'||TO_CHAR(budget_seq.nextval, 'FM0000'), '예산', 10000, sysdate, null, 'PRO_0003', NULL ,'B_0047');
+
+SELECT * FROM budget;
+
+ALTER TABLE budget
+add (uptdate DATE) ;
+
+SELECT * from(
+			SELECT rownum cnt, LEVEL AS lvl, b.*
+			FROM budget b
+			WHERE project_id = 'PRO_0003'
+			START WITH parent_id ='N'
+			CONNECT BY PRIOR budget_id = parent_id
+			ORDER siblings BY budget_id DESC)
+			WHERE lvl= 2 OR lvl =1;
+		
+		SELECT * FROM BUDGET b ;
+SELECT* FROM BUDGET b;	
+SELECT * from(
+			SELECT rownum cnt, LEVEL AS lvl, b.*
+			FROM budget b
+			WHERE project_id = 'PRO_0003'
+			START WITH parent_id ='N'
+			CONNECT BY PRIOR budget_id = parent_id
+			ORDER siblings BY budget_id DESC)
+		WHERE lvl= 2 or lvl=1;
+	
+	SELECT AMOUNT FROM BUDGET b 
+WHERE BUDGET_ID = 'BUG_0023'
+AND PROJECT_ID = 'PRO_0003';
+
+SELECT * FROM BUDGET WHERE project_id = 'PRO_0003';
+SELECT SUM(amount) 
+        FROM ( 
+           SELECT LEVEL AS lvl, budget_id, amount, parent_id 
+           FROM budget 
+           WHERE project_id = 'PRO_0003'
+           START WITH budget_id = 'BUG_0023'
+           CONNECT BY PRIOR budget_id = parent_id
+        ) 
+        WHERE lvl = 2 AND parent_id ='BUG_0023';
+		
+UPDATE budget
+SET amount = amount - #{subAmount}
+WHERE budget_id = #{parent_id}
+
+INSERT INTO BUDGET (BUDGET_ID, BUDGET_NAME, AMOUNT, REGDATE, USEDATE, PROJECT_ID, PARENT_ID, USER_ID, ETC, UPTDATE) VALUES
+('BUG_0102', '기술 지원 예산', 15000000, TO_DATE('2024-09-02 10:15:00', 'YYYY-MM-DD HH24:MI:SS'), NULL, 'PRO_0011', 'BUG_0101', 'U_0002', '기술 관련 비용', NULL);
+
+INSERT INTO BUDGET (BUDGET_ID, BUDGET_NAME, AMOUNT, REGDATE, USEDATE, PROJECT_ID, PARENT_ID, USER_ID, ETC, UPTDATE) VALUES
+('BUG_0103', '연구 개발 예산', 30000000, TO_DATE('2024-09-05 11:30:00', 'YYYY-MM-DD HH24:MI:SS'), NULL, 'PRO_0012', 'BUG_0101', 'U_0003', 'R&D 관련 비용', NULL);
+
+INSERT INTO BUDGET (BUDGET_ID, BUDGET_NAME, AMOUNT, REGDATE, USEDATE, PROJECT_ID, PARENT_ID, USER_ID, ETC, UPTDATE) VALUES
+('BUG_0104', '마케팅 예산', 20000000, TO_DATE('2024-09-07 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), NULL, 'PRO_0013', 'BUG_0101', 'U_0004', '마케팅 활동 비용', NULL);
+
+INSERT INTO BUDGET (BUDGET_ID, BUDGET_NAME, AMOUNT, REGDATE, USEDATE, PROJECT_ID, PARENT_ID, USER_ID, ETC, UPTDATE) VALUES
+('BUG_0105', '운영비 예산', 10000000, TO_DATE('2024-09-10 16:45:00', 'YYYY-MM-DD HH24:MI:SS'), NULL, 'PRO_0014', 'BUG_0102', 'U_0005', '일상 운영비', NULL);	
+
+
+
+-- 상위 예산 항목
+INSERT INTO BUDGET (BUDGET_ID, BUDGET_NAME, AMOUNT, REGDATE, USEDATE, PROJECT_ID, PARENT_ID, USER_ID, ETC, UPTDATE) VALUES
+('BUG_2001', '총괄 예산', 500000000, TO_DATE('2024-10-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), NULL, 'PRO_0020', NULL, 'U_0010', '전체 프로젝트 예산', NULL);
+
+INSERT INTO BUDGET (BUDGET_ID, BUDGET_NAME, AMOUNT, REGDATE, USEDATE, PROJECT_ID, PARENT_ID, USER_ID, ETC, UPTDATE) VALUES
+('BUG_2002', '연간 예산', 300000000, TO_DATE('2024-10-02 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), NULL, 'PRO_0021', NULL, 'U_0011', '연간 계획 예산', NULL);
+
+-- 하위 예산 항목 1 (총괄 예산의 자식 항목)
+INSERT INTO BUDGET (BUDGET_ID, BUDGET_NAME, AMOUNT, REGDATE, USEDATE, PROJECT_ID, PARENT_ID, USER_ID, ETC, UPTDATE) VALUES
+('BUG_2003', '개발 예산', 150000000, TO_DATE('2024-10-03 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), NULL, 'PRO_0020', 'BUG_2001', 'U_0012', '개발 관련 비용', NULL);
+
+-- 하위 예산 항목 2 (총괄 예산의 자식 항목)
+INSERT INTO BUDGET (BUDGET_ID, BUDGET_NAME, AMOUNT, REGDATE, USEDATE, PROJECT_ID, PARENT_ID, USER_ID, ETC, UPTDATE) VALUES
+('BUG_2004', '마케팅 예산', 80000000, TO_DATE('2024-10-04 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), NULL, 'PRO_0020', 'BUG_2001', 'U_0013', '마케팅 활동 비용', NULL);
+
+-- 하위 예산 항목 3 (연간 예산의 자식 항목)
+INSERT INTO BUDGET (BUDGET_ID, BUDGET_NAME, AMOUNT, REGDATE, USEDATE, PROJECT_ID, PARENT_ID, USER_ID, ETC, UPTDATE) VALUES
+('BUG_2005', '자산 관리 예산', 50000000, TO_DATE('2024-10-05 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), NULL, 'PRO_0021', 'BUG_2002', 'U_0014', '자산 관리 비용', NULL);
+
+-- 하위 예산 항목 4 (연간 예산의 자식 항목)
+INSERT INTO BUDGET (BUDGET_ID, BUDGET_NAME, AMOUNT, REGDATE, USEDATE, PROJECT_ID, PARENT_ID, USER_ID, ETC, UPTDATE) VALUES
+('BUG_2006', '운영 예산', 70000000, TO_DATE('2024-10-06 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), NULL, 'PRO_0021', 'BUG_2002', 'U_0015', '운영 비용', NULL);
+
+
+SELECT * FROM USERS;
+SELECT * FROM BUDGET;
+SELECT * FROM chat;
+
+DELETE FROM chat 
+WHERE chatroom_id = 'CHT_0037';
+
+
+		

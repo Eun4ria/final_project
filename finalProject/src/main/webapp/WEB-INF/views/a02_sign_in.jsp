@@ -73,7 +73,36 @@ $(document).ready(function() {
        }); 
    // 버튼 클릭 시 동작 처리
    $("#inBtn").click(function() {
-       $("form").submit();
+	 	const idInput = document.querySelector('input[name="user_id"]');
+	 	const passwordInput = document.querySelector('input[name="password"]');
+	 	
+	 	const userId = idInput.value; //사용자 이름
+	 	const password = passwordInput.value; //사용자 이름
+	 	 let empcnt = 0;
+	 	
+	 	 if (userId === '') {
+         	empcnt++;
+         }
+         if (password === '') {
+         	empcnt++;
+         }
+	 	
+         if(empcnt===1){
+        	 if (userId === '') {
+                 alert('아이디를 입력해 주세요.');
+                 event.preventDefault(); // 폼 제출 방지
+             }else{
+                 alert('비밀번호를 입력해 주세요.');
+                 event.preventDefault(); // 폼 제출 방지
+             }
+         }else if(empcnt == 2){
+        	 alert('정보를 입력하세요');
+             event.preventDefault(); // 폼 제출 방지
+         }else{
+        	 $("form").submit();
+		}
+	 	
+      
    });
    var errorMessage = "${errorMessage}";
    if (errorMessage) {
@@ -85,6 +114,7 @@ $(document).ready(function() {
    }
    });
 </script>
+
 </head>
 
 <body class="bg-gray-200">
@@ -103,13 +133,13 @@ $(document).ready(function() {
 					<div class="col-lg-4 col-md-8 col-12 mx-auto">
 						<div class="card z-index-0 fadeIn3 fadeInBottom">
 							<div
-								class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+								class="card-header p-0 position-relative mt-n4 mx-3 z-index-2" style="border-radius:50px">
 								<div
 									class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1"
 									style="background: linear-gradient(#6A82FB, #B06AB3);">
 									<h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Log
 										In</h4>
-									<div class="row mt-3"></div>
+									<div class="row mt-2"></div>
 								</div>
 							</div>
 							<div class="card-body">

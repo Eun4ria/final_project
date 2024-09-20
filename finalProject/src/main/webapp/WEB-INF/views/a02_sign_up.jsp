@@ -80,11 +80,10 @@
 		
 		var msg = "${msg}";
 		if (msg !== "") {
-			alert(msg);
+			alert(msg + "\n아이디가 이메일로 발송되었습니다.");
 			if (msg === "등록 성공") {
 				location.href = "signinFrm";
-				//location.href = "regEmpTmp";
-			}
+				}
 		}
 		
 		   // 비밀번호 확인 로직
@@ -106,7 +105,7 @@
                 passwordMessage.className = 'password-message success'; // 성공 스타일
             } else if (password.length > 0 || passwordConfirm.length > 0) {
                 if (password.length < minLength) {
-                    passwordMessage.textContent = `비밀번호는 6자 이상이어야 합니다`;
+                    passwordMessage.textContent = '비밀번호는 6자 이상이어야 합니다';
                     passwordMessage.className = 'password-message error'; // 실패 스타일
                 } else if (!hasLetter || !hasDigit || !hasSpecialChar) {
                     passwordMessage.textContent = '비밀번호는 문자, 숫자, 특수문자를 각각 하나 이상 포함해야 합니다';
@@ -124,8 +123,12 @@
         passwordInput.addEventListener('input', checkPasswords);
         passwordConfirmInput.addEventListener('input', checkPasswords);
 
+
+       	const nameInput = document.querySelector('input[name="user_name"]');
+       	const companyInput = document.querySelector('input[name="company_id"]');
+        
         // 이메일 유효성 검사 및 중복 확인
-       const emailInput = document.querySelector('input[name="email"]');
+       	const emailInput = document.querySelector('input[name="email"]');
         const emailMessage = document.getElementById('email-message');
         const validateEmailBtn = document.getElementById('validate-email-btn');
 
@@ -142,7 +145,7 @@
                     data: { email: email },
                     success: function(response) {
                         if (response.exists) {
-                            emailMessage.textContent = '이 이메일 주소는 이미 사용 중입니다';
+                            emailMessage.textContent = '이미 사용중인 이메일입니다';
                             emailMessage.className = 'email-message error'; // 실패 스타일
                         } else {
                             emailMessage.textContent = '사용 가능한 이메일 주소입니다';
@@ -170,20 +173,73 @@
 
         // 폼 제출 전 비밀번호 및 이메일 검사
         $("form").on('submit', function(event) {
-            const password = passwordInput.value;
+
+        	const name = nameInput.value; //사용자 이름
+        	const email = emailInput.value; //이메일
+        	const password = passwordInput.value; //비밀번호
+        	const CompanyId = companyInput.value; // 회사 아이디
+        	
+           
             const passwordConfirm = passwordConfirmInput.value;
-            const email = emailInput.value;
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            if (password !== passwordConfirm && password == '') {
-                alert('비밀번호가 일치하지 않습니다.');
-                event.preventDefault(); // 폼 제출 방지
+            let isValid = true;
+            let empcnt = 0;
+         
+            if (name === '') {
+			
+            	empcnt++;
             }
-
-            if (!emailPattern.test(email)) {
-                alert('유효하지 않은 이메일 주소입니다.');
-                event.preventDefault(); // 폼 제출 방지
+            
+            if (password === '') {
+            	empcnt++;
             }
+            if (email === '') {
+            	empcnt++;
+            }
+   //모든 정보가 입력되어있는 경우 유효성 체크        
+            if(empcnt === 0){
+            	if (emailMessage.textContent === '이미 사용중인 이메일입니다'){
+            		  alert('다른 이메일을 사용해주세요.');
+                      event.preventDefault(); // 폼 제출 방지
+            	}else if(emailMessage.textContent !== '사용 가능한 이메일 주소입니다'){
+            		 alert('이메일을 확인해주세요.');
+                     event.preventDefault(); // 폼 제출 방지
+				}else if(passwordMessage.textContent !== '비밀번호가 일치합니다'){
+            		alert('비밀번호를 확인해주세요.');
+                    event.preventDefault(); // 폼 제출 방지
+            	}
+				
+            }else if(empcnt === 1){// 하나의 정보만 비워있는 경우  
+            	if (name === '') {
+                    alert('이름을 입력해 주세요.');
+                    event.preventDefault(); // 폼 제출 방지
+                }
+                               
+                if (email === '') {
+                    alert('이메일을 입력해 주세요.');
+                    event.preventDefault(); // 폼 제출 방지
+                }
+                 
+                if (password === '') {
+                    alert('비밀번호를 입력해 주세요.');
+                    event.preventDefault(); // 폼 제출 방지
+                }
+               /* 
+                if (CompanyId === '') {
+                    alert('회사아이디를 입력해 주세요.');
+                    event.preventDefault(); // 폼 제출 방지
+                }*/
+            
+            }else { // 2개 이상
+				alert('정보를 확인해주세요');
+				isValid = false;
+				if (!isValid) {
+		            event.preventDefault(); // 폼 제출 방지
+		        }
+            }
+            
+            
         });
        
 		
@@ -209,10 +265,10 @@
           <div class="col-lg-4 col-md-8 col-12 mx-auto">
             <div class="card z-index-0 fadeIn3 fadeInBottom">
     <!-- title 배경 위한 div -->
-              <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2" style="border-radius:50px">
                 <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1" style="background: linear-gradient(#6A82FB,#B06AB3);">
                   <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Sign Up</h4>
-                  <div class="row mt-3">
+                  <div class="row mt-2">
                     
                   </div>
                 </div>
@@ -258,11 +314,11 @@
                 
 				    
 				<select  class="form-control"  v-model="aff.role_code" name="role_code">
-		        	<option value="N">N/A</option>
-		        	<option value="C">회사</option>
-		        	<option value="P">프로젝트 관리자</option>
-		        	<option value="M">팀원</option>
-		        	<option value="40">마케팅</option>
+		        	<option value="N">권한은 회사에서 할당받으세요</option> <%-- 프로젝트 할당 안된 사람 --%>
+		     <%--  	<option value="C">회사</option> 
+		        <%-- 	<option value="P">프로젝트 관리자</option>--%> 
+		      <%--  <option value="M">팀원</option>  프로젝트 할당된 사람 --%>
+		         <%--		<option value="B">예산관리자</option>--%>
 		        	
 		        </select>
 		      </div>  
@@ -286,7 +342,7 @@
                   </div>--%>
 				    
 				<select  class="form-control"  v-model="dept.deptno" name="deptno">
-		        	<option value="0">N/A</option>
+		        	<option value="0">회사 아이디가 있는 경우 선택</option>
 		        	<option value="10">관리</option>
 		        	<option value="20">인사</option>
 		        	<option value="30">재무</option>
