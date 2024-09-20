@@ -91,9 +91,19 @@
 [[워크플로우]](https://www.figma.com/board/opzHpVHtO5iQWfDB1N8F6U/HPM-project?node-id=0-1&node-type=canvas&t=7x8JArXV9LgCTFms-0)
 
 ### 요구사항 정의서
- <img src="https://github.com/user-attachments/assets/45524788-78de-4eb6-b0f9-f6ab153cac9f" alt="시스템 요구사항" style="width:1000px">
- <img src="https://github.com/user-attachments/assets/1aeb6f63-4ce3-4e62-a407-c807f5394ca6" alt="박민경 요구사항" style="width:1000px">
- <img src="https://github.com/user-attachments/assets/d59bca45-f8e9-4eb7-a6d1-9f4ff3b80e7b" alt="김은수 요구사항" style="width:1000px">
+<details>
+  <summary>시스템 요구사항</summary>
+  <img src="https://github.com/user-attachments/assets/45524788-78de-4eb6-b0f9-f6ab153cac9f" style="width:1000px">
+</details>
+<details>
+  <summary>박민경 요구사항</summary>
+   <img src="https://github.com/user-attachments/assets/436b6060-c151-4e00-b16a-e984d857c3cd" style="width:1000px">
+</details>
+<details>
+  <summary>김은수 요구사항</summary>
+ <img src="https://github.com/user-attachments/assets/b22167f4-2502-497a-88a2-2164058721e7"  style="width:1000px">
+</details>
+
 
 ### ERD
  <img src="/images/ERD.png" alt="회원가입" style="width:900px"><br>
