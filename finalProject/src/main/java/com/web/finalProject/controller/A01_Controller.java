@@ -409,8 +409,13 @@ public class A01_Controller {
     }
     // 프로필 수정
     @PostMapping("profile")
-    public String updateProfileWithFile(Users user, Model d) {    
+    public String updateProfileWithFile(Users user, Model d, HttpServletRequest request) {     	
         String msg = service.updateProfileWithFile(user.getImageFname(), user);
+        if(msg=="이미지 포함 수정 성공") {
+        	HttpSession session = request.getSession(true);
+        	session.setAttribute("image", user.getImage());
+        }
+        System.out.println(msg);
         d.addAttribute("msg", msg);
         d.addAttribute("profile", service.getProfile(user.getUser_id()));
         System.out.println(msg);
