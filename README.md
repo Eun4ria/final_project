@@ -83,7 +83,16 @@
 <br>
 
 ## ✏️ 설계
-### 서버 구축
+### 화면 설계
+[[화면 설계]](https://www.canva.com/design/DAGRRVo5Ysk/Dh0dAUbUg2vKpnnsG1A38A/edit?utm_content=DAGRRVo5Ysk&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
+### 워크플로우
+[[워크플로우]](https://www.figma.com/board/opzHpVHtO5iQWfDB1N8F6U/HPM-project?node-id=0-1&node-type=canvas&t=7x8JArXV9LgCTFms-0)
+
+### 요구사항 정의서
+ <img src="https://github.com/user-attachments/assets/45524788-78de-4eb6-b0f9-f6ab153cac9f" alt="시스템 요구사항" style="width:1000px">
+ <img src="https://github.com/user-attachments/assets/1aeb6f63-4ce3-4e62-a407-c807f5394ca6" alt="박민경 요구사항" style="width:1000px">
+ <img src="https://github.com/user-attachments/assets/d59bca45-f8e9-4eb7-a6d1-9f4ff3b80e7b" alt="김은수 요구사항" style="width:1000px">
 
 ### ERD
  <img src="/images/ERD.png" alt="회원가입" style="width:900px"><br>
