@@ -196,7 +196,7 @@ function updateTask(task_id, field, value) {
         #toggleDiv {
             position: fixed;
             top: 4rem;
-            right: -130%; /* Start off-screen to the right */
+            right: -140%; /* Start off-screen to the right */
             width: 50%; /* Adjust width as needed */
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
@@ -205,7 +205,7 @@ function updateTask(task_id, field, value) {
             justify-content: flex-start;
             align-items: center;
             text-align: center;
-            transition: right 0.8s; /* Smooth transition */
+            transition: right 0.5s; /* Smooth transition */
             overflow-x: hidden; /* 가로 스크롤 숨기기 */
             
         }
@@ -246,10 +246,7 @@ function updateTask(task_id, field, value) {
               <div class="row">
                 <div class="col-lg-6 col-7">
                   <h6>Projects ${project_id}</h6>
-                  <p class="text-sm mb-0">
-                    <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    <%-- 프로젝트 이름이나 기간 넣기?--%>
-                  </p>
+                  
                 </div>
                 
        
@@ -390,40 +387,52 @@ function updateTask(task_id, field, value) {
  
 
 
- function toggleDiv() {
-     var toggleDiv = document.getElementById('toggleDiv');
-     if (toggleDiv.style.right === '0px') {
-         toggleDiv.style.right = '-130%'; // Slide out
-         document.removeEventListener('click', outsideClickListener);
-     } else {
-         toggleDiv.style.right = '0'; // Slide in
-         setTimeout(() => {
-             document.addEventListener('click', outsideClickListener);
-         }, 0); // Ensure the listener is added after the current event loop
-     }
- }
+ async function toggleDiv() { //async => promise 반환 & 내부에거 await 사용가능 : 비동기 작업 수행 가능
+	    var toggleDiv = document.getElementById('toggleDiv');
+	    if (toggleDiv.style.right === '0px') {
+	        await slideOutDiv(toggleDiv); // 비동기적으로 닫기 //promise(slideOutDiv())가 종료될 때까지 함수 실행 중지 
+	        												//=> 작업이 완료된 후에 다음 코드 실행 되므로 비동기적 실행이 가능
+	        document.removeEventListener('click', outsideClickListener);
+	    } else {
+	        toggleDiv.style.right = '0'; // Slide in
+	        setTimeout(() => {
+	            document.addEventListener('click', outsideClickListener);
+	        }, 0); // Ensure the listener is added after the current event loop
+	    }
+	}
 
- function outsideClickListener(event) {
-     var toggleDiv = document.getElementById('toggleDiv');
-     if (!toggleDiv.contains(event.target) ) {
-         toggleDiv.style.right = '-130%'; // Slide out
-         document.removeEventListener('click', outsideClickListener);
-         
-         window.location.reload();
-     }
- }
- window.addEventListener("message", function(event) {
-     if (event.data === "closeAndReload") {
-         var toggleDiv = document.getElementById('toggleDiv');
-         toggleDiv.style.right = '-130%'; // Slide out
-         document.removeEventListener('click', outsideClickListener);
-         window.location.reload();
-     }
- }, false);
+	// 비동기적으로 Div를 슬라이드 아웃시키는 함수
+	function slideOutDiv(div) {
+	    return new Promise((resolve) => { //await 이전 실행되는 promise 코드 부분으로 resolve가 호출되면 종료
+	        // Slide out animation
+	        div.style.transition = 'right 0.5s'; // 슬라이드 속도 조절
+	        div.style.right = '-140%'; 
+	        div.addEventListener('transitionend', resolve, { once: true }); // 애니메이션이 끝나면 resolve 호출
+	    });
+	}
 
- function setupOutsideClickListener() {
-     document.addEventListener('click', outsideClickListener);
- }
+	async function outsideClickListener(event) {
+	    var toggleDiv = document.getElementById('toggleDiv');
+	    if (!toggleDiv.contains(event.target)) {
+	        await slideOutDiv(toggleDiv); // 비동기적으로 닫기
+	        document.removeEventListener('click', outsideClickListener);
+	       // window.location.reload();
+	    }
+	}
+
+	window.addEventListener("message", async function(event) {
+	    if (event.data === "closeAndReload") {
+	        var toggleDiv = document.getElementById('toggleDiv');
+	        await slideOutDiv(toggleDiv); // 비동기적으로 닫기
+	        document.removeEventListener('click', outsideClickListener);
+	        //window.location.reload();
+	    }
+	}, false);
+
+	function setupOutsideClickListener() {
+	    document.addEventListener('click', outsideClickListener);
+	}
+
     </script>
            
            

@@ -102,24 +102,58 @@ var proc = "${proc}"
      if (isExpanded) {
          sendResizeMessage('50%');  // 기본 너비
      } else {
-         sendResizeMessage('79%'); // 확장된 너비
+         sendResizeMessage('81%'); // 확장된 너비
      }
      // 상태 토글
      isExpanded = !isExpanded;
+     updateToggleDiv();
  }
+
+ function updateToggleDiv() {
+     const toggleDiv = document.getElementById('toggleDiv');
+     if (isExpanded) {
+         toggleDiv.style.right = '0'; // Slide in
+         setupOutsideClickListener(); // Add outside click listener
+     } else {
+         toggleDiv.style.right = '-140%'; // Slide out
+         document.removeEventListener('click', outsideClickListener); // Remove outside click listener
+     }
+ }
+
+ function slideOutDiv(div) {
+     return new Promise((resolve) => {
+         div.style.transition = 'right 0.5s';
+         div.style.right = '-140%';
+         div.addEventListener('transitionend', resolve, { once: true });
+     });
+ }
+
+ async function outsideClickListener(event) {
+     const toggleDiv = document.getElementById('toggleDiv');
+     if (!toggleDiv.contains(event.target)) {
+         await slideOutDiv(toggleDiv); // Close asynchronously
+         document.removeEventListener('click', outsideClickListener); // Remove listener
+         isExpanded = false; // Reset state
+     }
+ }
+
+ function setupOutsideClickListener() {
+     document.addEventListener('click', outsideClickListener);
+ }
+
+ window.addEventListener('message', function(event) {
+     if (event.data.type === 'reset') {
+         sendResizeMessage('50%'); // Set to default width
+         isExpanded = false; // Reset state
+         updateToggleDiv(); // Update toggleDiv based on state
+     }
+ });
 
  document.addEventListener('DOMContentLoaded', function() {
      var sidebarToggle = document.querySelector('.js-sidebar-toggle');
      sidebarToggle.addEventListener('click', function() {
          toggleResize();
      });
- });
-
- window.addEventListener('message', function(event) {
-     if (event.data.type === 'reset') {
-         sendResizeMessage('50%');  // 기본 너비로 설정
-         isExpanded = false;  // 상태 리셋
-     }
  });
 
  
