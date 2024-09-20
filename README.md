@@ -38,6 +38,8 @@
  : 프로젝트 계획, 실행, 모니터링, 통제 및 완료를 효율적으로 관리하는 데 도움을 주는 간트차트, 실시간 채팅, 캘린더 일정 관리 기능을 포함한 PMS(Project Management System) 구현
 
 ### 개발환경 및 도구
+<img src="https://github.com/user-attachments/assets/2f6dd1ce-7f62-4566-960a-812569594651" alt="개발환경 및 도구" style="width:90%">
+
 
 ### 팀원 소개
 <table >
