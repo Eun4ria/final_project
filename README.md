@@ -59,6 +59,8 @@
 
 
 ## 🔧 핵심 기술
+ <img src="https://github.com/user-attachments/assets/ae2120cb-19df-4b01-9b4b-12e34e2c44f8" alt="핵심기술1" style="width:900px">
+ <img src="https://github.com/user-attachments/assets/8bc8ecf9-7f6f-45e3-8de3-91b89f2fe49f" alt="핵심기술2" style="width:900px">
 
 ## 📈 프로젝트 계획
 
