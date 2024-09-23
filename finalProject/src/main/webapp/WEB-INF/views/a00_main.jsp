@@ -311,7 +311,7 @@ function projectDetail(project_id, event){
          <span>Users</span>
 	         <select class="form-control" name="userIds" multiple>
 	           	<c:forEach var="user" items="${user}">
-					<option value="${user.user_id}" style="height:1.5rem;">
+					<option value="${user.user_id}" style="height:2rem;">
 						${user.user_name}(${user.dname})</option>					
 				</c:forEach>
 	         </select>
