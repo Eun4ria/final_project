@@ -223,30 +223,30 @@
     <details>
       <summary>회원관리-비밀번호 찾기/아이디 찾기</summary>      
       <h3>1. 비밀번호 찾기</h3>
-      <img src="https://github.com/user-attachments/assets/d8b8fff8-457f-4a5f-b0fd-e30039b6478b" alt="비밀번호 찾기 초기화면" style="width:500px">
+      <img src="https://github.com/user-attachments/assets/d8b8fff8-457f-4a5f-b0fd-e30039b6478b" alt="비밀번호 찾기 초기화면" style="width:400px">
       <ul>
         <li>필수 입력 검증</li>
-        <img src="https://github.com/user-attachments/assets/650417ed-50b0-4408-a517-599202157d0e" alt="필수 입력 검증" style="width:500px">
+        <img src="https://github.com/user-attachments/assets/650417ed-50b0-4408-a517-599202157d0e" alt="필수 입력 검증" style="width:400px">
         <li>이메일 형식 검증</li>
-        <img src="https://github.com/user-attachments/assets/ae73ae5c-c8f6-464b-bba0-8e26bd6623ac" alt="이메일 형식 검증" style="width:500px">
+        <img src="https://github.com/user-attachments/assets/ae73ae5c-c8f6-464b-bba0-8e26bd6623ac" alt="이메일 형식 검증" style="width:400px">
         <li>데이터 유효성 검증</li>
-        <img src="https://github.com/user-attachments/assets/e4830037-ea5e-4a3a-a7e6-655943819105" alt="데이터 유효성 검증" style="width:500px">
+        <img src="https://github.com/user-attachments/assets/e4830037-ea5e-4a3a-a7e6-655943819105" alt="데이터 유효성 검증" style="width:400px">
         <h4>임시 비밀번호 메일 발송</h4>
         <p>유효한 사용자 정보 입력하였을 경우 임시 비밀번호 생성 및 SMTP를 이용한 임시 비밀번호 메일 발송</p>
         <img src="https://github.com/user-attachments/assets/541a633a-b34f-4d86-8444-9121fe9ad7fb" alt="임시 비밀번호 확인" style="width:900px">
       </ul>
       <h3>2. 아이디 찾기</h3>
-      <img src="https://github.com/user-attachments/assets/542563bd-8881-4e28-9cf3-1acf5c877ab1" alt="아이디 찾기 초기화면" style="width:500px">
+      <img src="https://github.com/user-attachments/assets/542563bd-8881-4e28-9cf3-1acf5c877ab1" alt="아이디 찾기 초기화면" style="width:400px">
       <ul>
         <li>필수 입력 검증</li>
-        <img src="https://github.com/user-attachments/assets/2d2576e2-fe27-4206-a49e-4c02e87faf23" alt="필수 입력 검증" style="width:500px">
+        <img src="https://github.com/user-attachments/assets/2d2576e2-fe27-4206-a49e-4c02e87faf23" alt="필수 입력 검증" style="width:400px">
         <li>이메일 형식 검증</li>
-        <img src="https://github.com/user-attachments/assets/aaedf903-75c1-4ed0-9c09-aa111a1398eb" alt="이메일 형식 검증" style="width:500px">
+        <img src="https://github.com/user-attachments/assets/aaedf903-75c1-4ed0-9c09-aa111a1398eb" alt="이메일 형식 검증" style="width:400px">
         <li>데이터 유효성 검증</li>
-        <img src="https://github.com/user-attachments/assets/3a2e6f57-531f-4f7c-844e-a545188fecba" alt="데이터 유효성 검증" style="width:500px">
+        <img src="https://github.com/user-attachments/assets/3a2e6f57-531f-4f7c-844e-a545188fecba" alt="데이터 유효성 검증" style="width:400px">
         <h4>아이디 찾기 결과</h4>
         <p>유효한 사용자 정보를 입력하였을 경우 ID 확인</p>
-        <img src="https://github.com/user-attachments/assets/b6453a0d-8b50-43c2-b34e-904e84ea49a6" alt="아이디 확인" style="width:500px">
+        <img src="https://github.com/user-attachments/assets/b6453a0d-8b50-43c2-b34e-904e84ea49a6" alt="아이디 확인" style="width:400px">
       </ul>
     </details>
     <details>
